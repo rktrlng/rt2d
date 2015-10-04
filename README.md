@@ -65,6 +65,8 @@ Make sure to add any new files you create to the `CMakeLists.txt` file.
 MS Windows (VS2015)
 -------------------
 
+Install the following:
+
 - Visual Studio 2015 Community Edition (VS2013 also works fine).
 - git
 - cmake
@@ -95,6 +97,8 @@ Links
 - <http://simonschreibt.de/gat/renderhell/>
 
 The `CMakeLists.txt` file and `rt2d/shader.cpp` are based on the ones found here: <http://www.opengl-tutorial.org/>.
+
+If you're having trouble compiling this project, follow instructions on the site mentioned above. Once that compiles, this will also compile.
 
 License
 -------
