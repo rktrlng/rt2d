@@ -102,6 +102,10 @@ add_library(rt2d
 	rt2d/util.h
 	rt2d/vectorx.h
 )
+file(
+	COPY ${CMAKE_SOURCE_DIR}/rt2d/shaders
+	DESTINATION ${CMAKE_BINARY_DIR}
+)
 
 ####################################################################
 # demo                                                             #
@@ -124,10 +128,6 @@ target_link_libraries(demo
 # Copy assets to the build directory
 file(
 	COPY demo/assets
-	DESTINATION ${CMAKE_BINARY_DIR}
-)
-file(
-	COPY demo/shaders
 	DESTINATION ${CMAKE_BINARY_DIR}
 )
 ####################################################################

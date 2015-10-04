@@ -15,7 +15,6 @@ Sprite::Sprite()
 {
 	_texturename = "";
 	
-	// WARNING this depends on files to be in the user directory
 	_fragmentshader = "shaders/sprite.frag";
 	_vertexshader = "shaders/sprite.vert";
 	
