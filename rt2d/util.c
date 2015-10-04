@@ -19,7 +19,7 @@ uint8_t highByte(uint16_t wrd)
 	return (uint8_t) ((wrd) >> 8);
 }
 
-unsigned int makeWord(unsigned char high, unsigned char low)
+uint16_t makeWord(unsigned char high, unsigned char low)
 {
 	return (high << 8) | low;
 }

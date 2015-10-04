@@ -38,7 +38,7 @@ uint8_t highByte(uint16_t wrd);
  * @param low The low byte for the word
  * @return the word
  */
-unsigned int makeWord(unsigned char high, unsigned char low);
+uint16_t makeWord(unsigned char high, unsigned char low);
 /**
  * @brief maps a value from 1 range to another
  * usage example: int val = map(973, 0, 1023, 0, 255); // returns: 242
