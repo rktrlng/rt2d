@@ -36,6 +36,14 @@ class Sprite
 		/// @brief get the vertexshader (path to the file)
 		/// @return std::string _vertexshader
 		std::string vertexshader() { return _vertexshader; };
+		/// @brief set the fragmentshader (path to the file)
+		/// @param fragmentshader path to fragmentshader
+		/// @return void
+		void fragmentshader(std::string fragmentshader) { _fragmentshader = fragmentshader; };
+		/// @brief set the vertexshader (path to the file)
+		/// @param vertexshader path to vertexshader
+		/// @return void
+		void vertexshader(std::string vertexshader) { _vertexshader = vertexshader; };
 
 		/// @brief set the current frame
 		/// @return int _frame

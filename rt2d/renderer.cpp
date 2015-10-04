@@ -90,7 +90,7 @@ int Renderer::init()
 	glEnable(GL_CULL_FACE);
 	
 	if (UBERSHADER) { // from config.h
-		_uberShader =_resman.getShader(VERTEXSHADER, FRAGMENTSHADER);
+		_uberShader =_resman.getShader(SPRITEVERTEXSHADER, SPRITEFRAGMENTSHADER);
 		printf("Renderer using uberShader\n");
 	}
 

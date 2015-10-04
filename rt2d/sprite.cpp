@@ -9,14 +9,15 @@
 
 #include <iostream>
 
+#include <rt2d/config.h>
 #include <rt2d/sprite.h>
 
 Sprite::Sprite()
 {
 	_texturename = "";
 	
-	_fragmentshader = "shaders/sprite.frag";
-	_vertexshader = "shaders/sprite.vert";
+	_fragmentshader = SPRITEFRAGMENTSHADER;
+	_vertexshader = SPRITEVERTEXSHADER;
 	
 	pivot = glm::vec2(0.5f, 0.5f);
 	uvdim = glm::vec2(1.0f, 1.0f);

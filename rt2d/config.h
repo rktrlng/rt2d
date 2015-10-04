@@ -26,9 +26,9 @@
 #define WINDOWNAME "RT2D"	///< The window name
 
 // renderer uses ubershader
-#define UBERSHADER		1	///< use UberShader or not (0/1)
-#define VERTEXSHADER	"shaders/sprite.vert"	///< vertexshader name
-#define FRAGMENTSHADER	"shaders/sprite.frag"	///< fragmentshader name
+#define UBERSHADER				1	///< use UberShader or not (0/1)
+#define SPRITEVERTEXSHADER		"shaders/sprite.vert"	///< vertexshader name
+#define SPRITEFRAGMENTSHADER	"shaders/sprite.frag"	///< fragmentshader name
 
 
 #ifdef _WIN32
