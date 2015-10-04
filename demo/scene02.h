@@ -12,6 +12,7 @@
 
 #include <vector>
 #include <rt2d/scene.h>
+#include <rt2d/timer.h>
 #include "boidentity.h"
 
 class Scene02: public Scene
@@ -24,6 +25,7 @@ class Scene02: public Scene
 	
 	private:
 		std::vector<BoidEntity*> boids;
+		Timer t;
 };
 
 #endif /* SCENE02_H */ 

@@ -71,6 +71,8 @@ Scene02::Scene02() : Scene()
 				break;
 		}
 	}
+	
+	t.start();
 }
 
 
@@ -91,5 +93,13 @@ void Scene02::update(float deltaTime)
 	// ###############################################################
 	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
 		this->stop();
+	}
+	
+	// ###############################################################
+	// Nervous red Boid
+	// ###############################################################
+	if (t.seconds() > 0.25f) {
+		boids[4]->velocity = Vector2((rand()%500)-250, (rand()%500)-250);
+		t.start();
 	}
 }
