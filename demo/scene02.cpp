@@ -25,49 +25,31 @@ Scene02::Scene02() : Scene()
 		switch (i)
 		{
 			case 0:
-				s->color.r = 0.4f;
-				s->color.g = 0.4f;
-				s->color.b = 0.4f;
+				s->color = Color(0.4f, 0.4f, 0.4f, 0.4f);
 				break;
 			case 1:
-				s->color.r = 0.0f;
-				s->color.g = 0.0f;
-				s->color.b = 1.0f;
+				s->color = Color(0.0f, 0.0f, 1.0f, 1.0f);
 				break;
 			case 2:
-				s->color.r = 0.0f;
-				s->color.g = 1.0f;
-				s->color.b = 0.0f;
+				s->color = Color(0.0f, 1.0f, 0.0f, 1.0f);
 				break;
 			case 3:
-				s->color.r = 0.0f;
-				s->color.g = 1.0f;
-				s->color.b = 1.0f;
+				s->color = Color(0.0f, 1.0f, 1.0f, 1.0f);
 				break;
 			case 4:
-				s->color.r = 1.0f;
-				s->color.g = 0.0f;
-				s->color.b = 0.0f;
+				s->color = Color(1.0f, 0.0f, 0.0f, 1.0f);
 				break;
 			case 5:
-				s->color.r = 1.0f;
-				s->color.g = 0.0f;
-				s->color.b = 1.0f;
+				s->color = Color(1.0f, 0.0f, 1.0f, 1.0f);
 				break;
 			case 6:
-				s->color.r = 1.0f;
-				s->color.g = 1.0f;
-				s->color.b = 0.0f;
+				s->color = Color(1.0f, 1.0f, 0.0f, 1.0f);
 				break;
 			case 7:
-				s->color.r = 1.0f;
-				s->color.g = 1.0f;
-				s->color.b = 1.0f;
+				s->color = Color(1.0f, 1.0f, 1.0f, 1.0f);
 				break;
 			default:
-				s->color.r = 1.0f;
-				s->color.g = 1.0f;
-				s->color.b = 1.0f;
+				s->color = Color(); // default color (white)
 				break;
 		}
 	}

@@ -21,6 +21,24 @@
  */
 struct Color
 {
+	/// @brief constructor
+	Color() {
+		r = 1.0f;
+		g = 1.0f;
+		b = 1.0f;
+		a = 1.0f;
+	}
+	/// @brief constructor
+	/// @param r The red component of the color
+	/// @param g The green component of the color
+	/// @param b The blue component of the color
+	/// @param a The alpha component of the color
+	Color(float r, float g, float b, float a) {
+		r = r;
+		g = g;
+		b = b;
+		a = a;
+	}
 	/**
 	 * @brief The red component of the color
 	 * 
