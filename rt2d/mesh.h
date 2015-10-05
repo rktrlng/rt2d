@@ -27,9 +27,9 @@ class Mesh
 		/// @brief get the vertices of the Mesh
 		/// @return GLuint _vertexbuffer
 		GLuint vertexbuffer() { return _vertexbuffer; };
-		/// @brief get the normals of the Mesh
-		/// @return GLuint _vnormalbuffer
-		GLuint normalbuffer() { return _normalbuffer; };
+		// @brief get the normals of the Mesh
+		// @return GLuint _normalbuffer
+		//GLuint normalbuffer() { return _normalbuffer; };
 		/// @brief get the UV's of the Mesh
 		/// @return GLuint _uvbuffer
 		GLuint uvbuffer() { return _uvbuffer; };
@@ -49,7 +49,7 @@ class Mesh
 	
 	private:
 		GLuint _vertexbuffer;	///< @brief internal list of vertices
-		GLuint _normalbuffer;	///< @brief internal list of normals
+		//GLuint _normalbuffer;	///< @brief internal list of normals
 		GLuint _uvbuffer;		///< @brief internal list of UV's
 };
 

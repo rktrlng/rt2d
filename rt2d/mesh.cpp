@@ -12,7 +12,7 @@
 Mesh::Mesh()
 {
 	_vertexbuffer = 0;
-	_normalbuffer = 0;
+	//_normalbuffer = 0;
 	_uvbuffer = 0;
 }
 
