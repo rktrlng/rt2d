@@ -74,7 +74,7 @@ Texture* ResourceManager::getTexture(const std::string& filename)
 		//std::cout << "return existing resource: " << filename << " (texture)" << std::endl;
 		return _textures[filename];
 	} else {
-		Texture * t = new Texture();
+		Texture* t = new Texture();
 		t->loadImage(_prefix+filename);
 		_textures[filename] = t;
 		std::cout << "return new resource: " << filename << " (texture)" << std::endl;
@@ -104,7 +104,7 @@ Shader* ResourceManager::getShader(const std::string& vs, const std::string& fs)
 		//std::cout << "return existing resource: " << filename << " (shader)" << std::endl;
 		return _shaders[filename];
 	} else {
-		Shader * s = new Shader();
+		Shader* s = new Shader();
 		std::string fss = _prefix;
 		fss.append(fs);
 		std::string vss = _prefix;
@@ -126,7 +126,7 @@ void ResourceManager::deleteShader(const std::string& shadername)
 
 	delete _shaders[filename];
 	_shaders[filename] = NULL;
-		
+	
 	std::cout << "==> deleting resource: " << filename << " (shader)" << std::endl;
 }
 
@@ -142,7 +142,7 @@ Mesh* ResourceManager::getSpriteMesh(int width, int height, float pivotx, float 
 		//std::cout << "return existing resource: " << meshname << " (mesh)" << std::endl;
 		return _meshes[meshname];
 	} else {
-		Mesh * m = new Mesh();
+		Mesh* m = new Mesh();
 		m->generateSpriteMesh(width, height, pivotx, pivoty, uvwidth, uvheight);
 		_meshes[meshname] = m;
 		

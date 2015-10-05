@@ -83,9 +83,7 @@ void Entity::removeChild(Entity* child)
 	if ((*it)->_guid == child->_guid) {
 		child->_parent = NULL;
 		it = _children.erase(it);
-		// You probably do NOT want to delete it here.
-		// TODO add it to parent of parent in stead?
-		//delete *it;
+		// TODO make it a sibling?
 	}
 }
 

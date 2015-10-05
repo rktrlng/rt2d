@@ -37,7 +37,7 @@ void Camera::updateCamera(float deltaTime)
 	
 	// View matrix
 	_viewMatrix = glm::lookAt(
-			position - _offset, // Camera is at (xpos,ypos,5), in World Space
+			position - _offset, // Camera is at (xpos,ypos,1), in World Space
 			position - _offset + direction, // and looks towards Z
 			up  // Head is up
 	);
