@@ -29,15 +29,15 @@ struct Color
 		a = 1.0f;
 	}
 	/// @brief constructor
-	/// @param r The red component of the color
-	/// @param g The green component of the color
-	/// @param b The blue component of the color
-	/// @param a The alpha component of the color
-	Color(float r, float g, float b, float a) {
-		r = r;
-		g = g;
-		b = b;
-		a = a;
+	/// @param red The red component of the color
+	/// @param green The green component of the color
+	/// @param blue The blue component of the color
+	/// @param alpha The alpha component of the color
+	Color(float red, float green, float blue, float alpha) {
+		r = red;
+		g = green;
+		b = blue;
+		a = alpha;
 	}
 	/**
 	 * @brief The red component of the color

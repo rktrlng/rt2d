@@ -25,7 +25,7 @@ Scene02::Scene02() : Scene()
 		switch (i)
 		{
 			case 0:
-				s->color = Color(0.4f, 0.4f, 0.4f, 0.4f);
+				s->color = Color(0.4f, 0.4f, 0.4f, 1.0f);
 				break;
 			case 1:
 				s->color = Color(0.0f, 0.0f, 1.0f, 1.0f);
