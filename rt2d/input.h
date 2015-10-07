@@ -17,8 +17,6 @@
 // Include GLFW
 #include <glfw3.h>
 
-#define NUMKEYS GLFW_KEY_LAST ///< @brief Number of possible keys (GLFW_KEY_LAST = 348) */
-
 /*
 #define 	GLFW_KEY_UNKNOWN   -1
 #define 	GLFW_KEY_SPACE   32
@@ -145,9 +143,9 @@ class Input
 		GLFWwindow* _window;		///< @brief GLFWwindow* _window
 		void _handleKey(int key);	///< @brief update internal array of keys
 
-		bool _keys[NUMKEYS];		///< @brief internal array of pressed keys
-		bool _keysUp[NUMKEYS];		///< @brief internal array of released keys
-		bool _keysDown[NUMKEYS];	///< @brief internal array of keys pressed the first time
+		bool _keys[GLFW_KEY_LAST];		///< @brief internal array of pressed keys
+		bool _keysUp[GLFW_KEY_LAST];	///< @brief internal array of released keys
+		bool _keysDown[GLFW_KEY_LAST];	///< @brief internal array of keys pressed the first time
 
 		double _mouseX;		///< @brief X position of the Mouse
 		double _mouseY;		///< @brief Y position of the Mouse

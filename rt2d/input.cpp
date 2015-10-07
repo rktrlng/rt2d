@@ -15,7 +15,7 @@ Input::Input()
 	_window = NULL;
 	
 	int i;
-	for(i=0; i<NUMKEYS;i++) {
+	for(i=0; i<GLFW_KEY_LAST;i++) {
 		_keys[i] = false;
 		_keysUp[i] = false;
 		_keysDown[i] = false;
@@ -39,7 +39,7 @@ void Input::updateInput(GLFWwindow* w)
 		_handleKey(i);
 	}
 	// Func + arrows + esc, etc
-	for(i=255; i<326;i++) {
+	for(i=255; i<GLFW_KEY_LAST;i++) {
 		_handleKey(i);
 	}
 
