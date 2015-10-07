@@ -17,8 +17,7 @@
 // Include GLFW
 #include <glfw3.h>
 
-// safe margin. 32-97 + 255-326
-#define NUMKEYS 350 ///< @brief Number of possible keys */
+#define NUMKEYS GLFW_KEY_LAST ///< @brief Number of possible keys (GLFW_KEY_LAST = 348) */
 
 /*
 #define 	GLFW_KEY_UNKNOWN   -1
