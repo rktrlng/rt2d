@@ -30,7 +30,7 @@ void Mesh::generateSpriteMesh(int width, int height, float pivotx, float pivoty,
 {
 	// Our vertices. Tree consecutive floats give a 3D vertex; Three consecutive vertices give a triangle.
 	// A sprite has 1 face (quad) with 2 triangles each, so this makes 1*2=2 triangles, and 2*3 vertices
-	GLfloat g_vertex_buffer_data[] = {
+	const GLfloat g_vertex_buffer_data[] = {
 		-width * pivotx, -height * pivoty, 0.0f,
 		-width * pivotx, height - (height * pivoty), 0.0f,
 		 width - (width * pivotx), height - (height * pivoty), 0.0f,
@@ -41,7 +41,7 @@ void Mesh::generateSpriteMesh(int width, int height, float pivotx, float pivoty,
 	};
 /*
 	// Normals for each vertex.
-	GLfloat g_normal_buffer_data[] = {
+	const GLfloat g_normal_buffer_data[] = {
 		0.0f, 0.0f, -1.0f,
 		0.0f, 0.0f, -1.0f,
 		0.0f, 0.0f, -1.0f,
@@ -52,7 +52,7 @@ void Mesh::generateSpriteMesh(int width, int height, float pivotx, float pivoty,
 	};
 */
 	// UV coordinates for each vertex.
-	GLfloat g_uv_buffer_data[] = {
+	const GLfloat g_uv_buffer_data[] = {
 		0.0f, uvheight,
 		0.0f, 0.0f,
 		uvwidth, 0.0f,
