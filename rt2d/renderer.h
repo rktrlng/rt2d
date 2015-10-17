@@ -73,7 +73,7 @@ class Renderer
 		void _cullScene(Scene* scene);
 		/// @brief Culls an Entity with all its children.
 		/// @param campos The position of the Camera
-		/// @param scene The Entity that needs to be culled
+		/// @param entity The Entity that needs to be culled
 		/// @return void
 		void _cullEntity(Vector2 campos, Entity* entity);
 		
