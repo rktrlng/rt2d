@@ -26,6 +26,9 @@ Entity::Entity()
 	rotation = 0.0f;
 	scale = Vector2(1.0f, 1.0f);
 	
+	_worldpos = Vector2(0.0f, 0.0f);
+	_culled = false;
+
 	_sprite = NULL;
 }
 

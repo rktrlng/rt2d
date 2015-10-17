@@ -67,6 +67,12 @@ class Renderer
 		/// @return void
 		void _renderSprite(const glm::mat4& MVP, Sprite* sprite);
 		
+		/// @brief Culls a Scene with all its children.
+		/// @param scene The Scene that needs to be culled
+		/// @return void
+		void _cullScene(Scene* scene);
+		void _cullEntity(Vector2 campos, Entity* entity);
+		
 		// temp 'local' variables.
 		glm::mat4 _projectionMatrix;	///< @brief The _projectionMatrix we get from the Camera. We only get the ProjectionMatrix from the orthographic camera once
 		glm::mat4 _viewMatrix;			///< @brief The _viewMatrix we get from the Camera once per frame.

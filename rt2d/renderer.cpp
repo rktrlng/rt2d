@@ -112,11 +112,45 @@ void Renderer::renderScene(Scene* scene)
 	// 'root' scene node has identity Matrix
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 
+	_cullScene(scene);
+
 	// start rendering everything, starting from the scene 'rootnode'
 	this->_renderEntity(modelMatrix, scene);
 
 	// Swap buffers
 	glfwSwapBuffers(_window);
+}
+
+void Renderer::_cullScene(Scene* scene)
+{
+	Vector2 cp = Vector2(scene->camera()->position.x, scene->camera()->position.y);
+	this->_cullEntity(cp, scene);
+}
+
+void Renderer::_cullEntity(Vector2 campos, Entity* entity)
+{
+	// Cull all Children (recursively)
+	std::vector<Entity*> children = entity->children();
+/*
+	int half_width = SWIDTH/2;
+	int half_height = SHEIGHT/2;
+	
+	int left_edge = campos.x - half_width;
+	int right_edge = campos.x + half_width;
+	int top_edge = campos.y - half_height;
+	int bottom_edge = campos.y + half_height;
+	
+	std::cout << left_edge << std::endl;
+*/
+	int s = children.size();
+	for (int i = 0; i < s; i++) {
+		// check for being out of frame
+		bool c = false;
+		//if (entity->_worldpos.x < left_edge) { c = true; }
+		children[i]->_culled = c;
+		
+		this->_cullEntity(campos, children[i]);
+	}
 }
 
 void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
@@ -134,14 +168,23 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 	// multiply ModelMatrix of children with the ModelMatrix of the parent (the caller of this method)
 	// the first time we do this (for the root-parent), modelMatrix is identity.
 	modelMatrix *= translationMatrix * rotationMatrix * scalingMatrix;
+	
+	// #######################################################
+	// fill _worldpos in Entity
+	glm::vec4 realpos = modelMatrix * glm::vec4(0,0,0,1);
+	// send the real world position after these transforms back to Entity->worldpos
+	entity->_worldpos = Vector2(realpos.x, realpos.y);
+	// #######################################################
 
 	// Check for Sprites to see if we need to render anything
 	Sprite* sprite = entity->sprite();
 	if (sprite != NULL) {
-		// Finally, generate our MVP...
-		glm::mat4 MVP = _projectionMatrix * _viewMatrix * modelMatrix;
-		// ... and render the Sprite.
-		this->_renderSprite(MVP, sprite);
+		if (!entity->_culled) {
+			// Finally, generate our MVP...
+			glm::mat4 MVP = _projectionMatrix * _viewMatrix * modelMatrix;
+			// ... and render the Sprite.
+			this->_renderSprite(MVP, sprite);
+		}
 	}
 	
 	// Render all Children (recursively)

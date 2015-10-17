@@ -121,4 +121,8 @@ void Scene01::update(float deltaTime)
 	if (input()->getKey( GLFW_KEY_LEFT )) {
 		camera()->position -= right * deltaTime * speed;
 	}
+	
+	// Test the real world position of child2_entity
+	//std::cout << "pos: " << child2_entity->position.x << ", " << child2_entity->position.y << " -> ";
+	//std::cout << child2_entity->_worldpos.x << ", " << child2_entity->_worldpos.y << std::endl;
 }
