@@ -131,7 +131,7 @@ void Renderer::_cullEntity(Vector2 campos, Entity* entity)
 {
 	// Cull all Children (recursively)
 	std::vector<Entity*> children = entity->children();
-/*
+
 	int half_width = SWIDTH/2;
 	int half_height = SHEIGHT/2;
 	
@@ -139,14 +139,30 @@ void Renderer::_cullEntity(Vector2 campos, Entity* entity)
 	int right_edge = campos.x + half_width;
 	int top_edge = campos.y - half_height;
 	int bottom_edge = campos.y + half_height;
-	
-	std::cout << left_edge << std::endl;
-*/
+
 	int s = children.size();
 	for (int i = 0; i < s; i++) {
 		// check for being out of frame
 		bool c = false;
-		//if (entity->_worldpos.x < left_edge) { c = true; }
+		if (entity->guid() != 0) {
+			if (entity->_worldpos.x < left_edge) {
+				//std::cout << "left_edge: " << left_edge << " -> " << entity->_worldpos.x << ", " << entity->_worldpos.y << " guid: " << entity->guid() << std::endl;
+				c = true;
+			}
+			if (entity->_worldpos.x > right_edge) {
+				//std::cout << "right_edge: " << right_edge << " -> " << entity->_worldpos.x << ", " << entity->_worldpos.y << " guid: " << entity->guid() << std::endl;
+				c = true;
+			}
+			if (entity->_worldpos.y > bottom_edge) {
+				//std::cout << "bottom_edge: " << bottom_edge << " -> " << entity->_worldpos.x << ", " << entity->_worldpos.y << " guid: " << entity->guid() << std::endl;
+				c = true;
+			}
+			if (entity->_worldpos.y < top_edge) {
+				//std::cout << "top_edge: " << top_edge << " -> " << entity->_worldpos.x << ", " << entity->_worldpos.y << " guid: " << entity->guid() << std::endl;
+				c = true;
+			}
+		}
+		
 		children[i]->_culled = c;
 		
 		this->_cullEntity(campos, children[i]);
