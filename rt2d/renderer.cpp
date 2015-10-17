@@ -112,6 +112,7 @@ void Renderer::renderScene(Scene* scene)
 	// 'root' scene node has identity Matrix
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 
+	// check for entitities being out of frame and cull them
 	_cullScene(scene);
 
 	// start rendering everything, starting from the scene 'rootnode'
