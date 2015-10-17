@@ -67,6 +67,12 @@ class Renderer
 		/// @return void
 		void _renderSprite(const glm::mat4& MVP, Sprite* sprite);
 		
+		/// @brief Renders the Line 'component' of an Entity.
+		/// @param MVP The ModelViewProjection Matrix of the Entity
+		/// @param line The Line 'component' of the Entity
+		/// @return void
+		void _renderLine(const glm::mat4& MVP, Line* line);
+		
 		/// @brief Culls a Scene with all its children.
 		/// @param scene The Scene that needs to be culled
 		/// @return void

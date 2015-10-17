@@ -49,6 +49,10 @@ class ResourceManager
 		/// @param uvheight the UV height of the SpriteSheet
 		/// @return Mesh* a pointer to the generated Mesh
 		Mesh* getSpriteMesh(int width, int height, float pivotx, float pivoty, float uvwidth, float uvheight);
+		/// @brief Generate a Line Mesh
+		/// @param line pointer to a Line
+		/// @return Mesh* a pointer to the generated Mesh
+		Mesh* getLineMesh(Line* line);
 		/// @brief Get a Shader (from disk if need be)
 		/// @param vs the vertex Shader
 		/// @param fs the fragment Shader ('pixelshader')

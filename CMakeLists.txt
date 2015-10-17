@@ -79,6 +79,8 @@ add_library(rt2d
 	rt2d/entity.h
 	rt2d/input.cpp
 	rt2d/input.h
+	rt2d/line.cpp
+	rt2d/line.h
 	rt2d/mesh.cpp
 	rt2d/mesh.h
 	rt2d/pointx.h
@@ -120,6 +122,8 @@ add_executable(demo
 	demo/scene01.h
 	demo/scene02.cpp
 	demo/scene02.h
+	demo/scene03.cpp
+	demo/scene03.h
 )
 target_link_libraries(demo
 	${ALL_LIBS}

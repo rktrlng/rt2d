@@ -14,6 +14,8 @@
 #ifndef MESH_H
 #define MESH_H
 
+#include <rt2d/line.h>
+
 // Include GLEW
 #include <GL/glew.h>
 
@@ -46,6 +48,11 @@ class Mesh
 			float pivotx, float pivoty,
 			float uvwidth, float uvheight
 		);
+		
+		/// @brief fills vertices with values for a Line Mesh
+		/// @param line a Line pointer
+		/// @return void
+		void generateLineMesh(Line* line);
 	
 	private:
 		GLuint _vertexbuffer;	///< @brief internal list of vertices

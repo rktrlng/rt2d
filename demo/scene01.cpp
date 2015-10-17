@@ -43,6 +43,7 @@ Scene01::Scene01() : Scene()
 	// An example of using a SpriteSheet ("animated texture").
 	// Remember you also animate UV's of any Sprite (uvoffset).
 	animated_entity = new BasicEntity();
+	animated_entity->addLine("assets/default.line"); // Add a line (default line fits nicely)
 	animated_entity->addSpriteSheet("assets/spritesheet.tga", 4, 4);
 	animated_entity->position.x = SWIDTH/2;
 	animated_entity->position.y = SHEIGHT/2;
@@ -83,6 +84,7 @@ void Scene01::update(float deltaTime)
 	// Rotate default_entity
 	// ###############################################################
 	default_entity->rotation += 3.1415f / 2 * deltaTime; // 90 deg. per sec.
+	animated_entity->rotation -= 3.1415f / 8 * deltaTime;
 	
 	// ###############################################################
 	// Animate animated_entity

@@ -77,3 +77,41 @@ void Mesh::generateSpriteMesh(int width, int height, float pivotx, float pivoty,
 	glBindBuffer(GL_ARRAY_BUFFER, _uvbuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
 }
+
+void Mesh::generateLineMesh(Line* line)
+{
+	std::vector<glm::vec3> points = line->points();
+	std::vector<glm::vec2> uvs = line->uvs();
+	int s = points.size();
+	
+	GLfloat g_vertex_buffer_data[s*3];
+	GLfloat g_uv_buffer_data[s*3];
+	
+	int counter = 0;
+	for (int i = 0; i < s; i++) {
+		g_vertex_buffer_data[counter+0] = points[i].x;
+		g_vertex_buffer_data[counter+1] = points[i].y;
+		g_vertex_buffer_data[counter+2] = points[i].z;
+		
+		counter += 3;
+		//std::cout << points[i].x << ", " << points[i].y << ", " << points[i].z << std::endl;
+	}
+	
+	counter = 0;
+	for (int i = 0; i < s; i++) {
+		g_uv_buffer_data[counter+0] = uvs[i].x;
+		g_uv_buffer_data[counter+1] = uvs[i].y;
+		
+		counter += 2;
+	}
+
+	//GLuint _vertexbuffer;
+	glGenBuffers(1, &_vertexbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, _vertexbuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+	
+	//GLuint _uvbuffer;
+	glGenBuffers(1, &_uvbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, _uvbuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
+}

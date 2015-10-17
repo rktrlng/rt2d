@@ -26,6 +26,7 @@
 
 #include <rt2d/config.h>
 #include <rt2d/sprite.h>
+#include <rt2d/line.h>
 #include <rt2d/vectorx.h>
 
 /// @brief The Entity class is the Base class for the elements in your Scene.
@@ -88,6 +89,19 @@ class Entity
 		/// @return void
 		void addSpriteSheet(const std::string& filename, int u, int v);
 		
+		// line
+		/// @brief get the Line from this Entity.
+		/// @return Line* _line
+		Line* line() { return _line; };
+		/// @brief add a Line to this Entity by Line*.
+		/// @param line A pointer to a Line.
+		/// @return void
+		void addLine(Line* line);
+		/// @brief add a Line to this Entity.
+		/// @param filename The filename of the line you want to add.
+		/// @return void
+		void addLine(const std::string& filename);
+		
 		/// @brief get the guid of this Entity.
 		/// @return int _guid
 		int guid() { return _guid; };
@@ -95,6 +109,7 @@ class Entity
 		// updated world position after all transforms
 		Vector2 _worldpos;	/**< @brief The position of the Entity in the real world */
 		bool _culled;	/**< @brief This Entity should be culled or not */
+		
 	protected:
 		
 		
@@ -109,6 +124,7 @@ class Entity
 		
 		// sprite
 		Sprite* _sprite;		///< @brief The _sprite of this Entity
+		Line* _line;		///< @brief The _line of this Entity
 };
 
 #endif /* ENTITY_H */ 

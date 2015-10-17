@@ -205,6 +205,15 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 			this->_renderSprite(MVP, sprite);
 		}
 	}
+
+	// Check for Lines to see if we need to render anything
+	Line* line = entity->line();
+	if (line != NULL) {
+		// Finally, generate our MVP...
+		glm::mat4 MVP = _projectionMatrix * _viewMatrix * modelMatrix;
+		// ... and render the Line.
+		this->_renderLine(MVP, line);
+	}
 	
 	// Render all Children (recursively)
 	std::vector<Entity*> children = entity->children();
@@ -285,6 +294,76 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite)
 	// Draw the triangles !
 	glDrawArrays(GL_TRIANGLES, 0, 2*3); // 2*3 indices starting at 0 -> 2 triangles
 	//glDrawArrays(GL_LINES, 0, numpoints); // draw lines
+
+	glDisableVertexAttribArray(vertexPositionID);
+	glDisableVertexAttribArray(vertexUVID);
+}
+
+void Renderer::_renderLine(const glm::mat4& MVP, Line* line)
+{
+	Shader* shader = _uberShader;
+	// ask resourcemanager
+	if (shader == NULL) {
+		// only uberShader for now TODO fix
+		//shader = _resman.getShader(sprite->vertexshader().c_str(), sprite->fragmentshader().c_str());
+	}
+	
+	Texture* texture = _resman.getTexture("assets/white.tga");
+	
+	Mesh* mesh = _resman.getLineMesh(line);
+	
+	// use our shader program
+	glUseProgram(shader->programID());
+	
+	// Bind our texture in Texture Unit 0
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
+	
+	// ... and send our transformation to the currently bound shader, in the "MVP" uniform
+	glUniformMatrix4fv(shader->matrixID(), 1, GL_FALSE, &MVP[0][0]);
+
+	// _blendColorID
+	Color blendcolor = line->color;
+	glUniform4f(shader->blendColorID(), blendcolor.r, blendcolor.g, blendcolor.b, blendcolor.a);
+
+	// Set our "textureSampler" sampler to user Texture Unit 0
+	glUniform1i(shader->textureID(), 0);
+	
+	// Note: We generated vertices in the correct order, with normals facing the camera.
+	// We can also get the normalbuffer from the Mesh, but that's ignored here.
+	// Use the normalbuffer (with links to the Shader) if you want to use lighting on your Sprites.
+	// TODO: implement
+	GLuint vertexPositionID =  glGetAttribLocation(shader->programID(), "vertexPosition"); // Mesh::_vertexbuffer
+	GLuint vertexUVID =        glGetAttribLocation(shader->programID(), "vertexUV"); // Mesh::_uvbuffer
+
+	// 1st attribute buffer : vertices
+	glEnableVertexAttribArray(vertexPositionID);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexbuffer());
+	glVertexAttribPointer(
+		vertexPositionID,             // The attribute we want to configure
+		3,                            // size : x+y+z => 3
+		GL_FLOAT,                     // type
+		GL_FALSE,                     // normalized?
+		0,                            // stride
+		(void*)0                      // array buffer offset
+	);
+
+	// 2nd attribute buffer : UVs
+	glEnableVertexAttribArray(vertexUVID);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->uvbuffer());
+	glVertexAttribPointer(
+		vertexUVID,                   // The attribute we want to configure
+		2,                            // size : U+V => 2
+		GL_FLOAT,                     // type
+		GL_FALSE,                     // normalized?
+		0,                            // stride
+		(void*)0                      // array buffer offset
+	);
+
+	int numpoints = line->points().size();
+	
+	// Draw the Line !
+	glDrawArrays(GL_LINES, 0, numpoints); // draw lines
 
 	glDisableVertexAttribArray(vertexPositionID);
 	glDisableVertexAttribArray(vertexUVID);

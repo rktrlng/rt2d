@@ -153,6 +153,26 @@ Mesh* ResourceManager::getSpriteMesh(int width, int height, float pivotx, float 
 	return NULL;
 }
 
+
+Mesh* ResourceManager::getLineMesh(Line* line)
+{
+	std::string meshname = line->filename();
+	
+	if (_meshes[meshname] != NULL) {
+		//std::cout << "return existing resource: " << meshname << " (mesh)" << std::endl;
+		return _meshes[meshname];
+	} else {
+		Mesh* m = new Mesh();
+		m->generateLineMesh(line);
+		_meshes[meshname] = m;
+		
+		std::cout << "return new resource: " << meshname << " (mesh)" << std::endl;
+		return m;
+	}
+	
+	return NULL;
+}
+
 void ResourceManager::deleteMesh(const std::string& meshname)
 {
 	delete _meshes[meshname];

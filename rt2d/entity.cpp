@@ -30,6 +30,7 @@ Entity::Entity()
 	_culled = false;
 
 	_sprite = NULL;
+	_line = NULL;
 }
 
 
@@ -40,6 +41,22 @@ Entity::~Entity()
 	if (_sprite != NULL) {
 		delete _sprite;
 	}
+	
+	if (_line != NULL) {
+		delete _line;
+	}
+}
+
+void Entity::addLine(const std::string& filename)
+{
+	if (_line == NULL) {
+		_line = new Line(filename);
+	}
+}
+
+void Entity::addLine(Line* line)
+{
+	_line = line;
 }
 
 void Entity::addSprite(Sprite* spr)
