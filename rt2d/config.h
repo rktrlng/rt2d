@@ -29,6 +29,7 @@
 #define SPRITEVERTEXSHADER		"shaders/sprite.vert"	///< vertexshader name
 #define SPRITEFRAGMENTSHADER	"shaders/sprite.frag"	///< fragmentshader name
 
+#define CULLSCENE				0	///< cull Entities outside frame or not
 
 #ifdef _WIN32
 	//static std::string _prefix = "C:/Users/[you]/path/to/rt2d/demo/";
