@@ -9,11 +9,18 @@
 
 #include <rt2d/line.h>
 
+int Line::_nextGuid = 0;
 
 Line::Line()
 {
-	// TODO make unique for each Line
-	_filename = "none";
+	_guid = _nextGuid;
+	_nextGuid++;
+	
+	char buf[12]; // should be big enough: "Line99999"
+	sprintf(buf, "line%d", _guid);
+	std::string linename(buf);
+	
+	_filename = linename;
 }
 
 Line::Line(const std::string& filename)

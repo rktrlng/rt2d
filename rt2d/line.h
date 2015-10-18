@@ -55,7 +55,11 @@ class Line
 	private:
 		std::string _filename;	///< @brief _filename filename of the Line
 		std::vector<glm::vec3> _points;	///< @brief _points points of the Line
-		std::vector<glm::vec2> _uvs;	///< @brief _uvs UB's of the Line
+		std::vector<glm::vec2> _uvs;	///< @brief _uvs UV's of the Line
+		
+		// identity
+		int _guid;				///< @brief The _guid of this Line
+		static int _nextGuid;	///< @brief The _nextGuid of this Line
 };
 
 #endif /* LINE_H */ 
