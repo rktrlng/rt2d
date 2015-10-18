@@ -117,16 +117,9 @@ void Renderer::renderScene(Scene* scene)
 		_cullScene(scene);
 	}
 	
-	// Render all Children of this Scene (recursively)
-	std::vector<Entity*> children = scene->children();
-	std::vector<Entity*>::iterator child;
-	for (child = children.begin(); child != children.end(); child++) {
-		// Transform child's children...
-		this->_renderEntity(modelMatrix, *child);
-		// ... then reset modelMatrix for siblings.
-		modelMatrix = glm::mat4(1.0f);
-	}
-
+	// start rendering everything, starting from the scene 'rootnode'
+	this->_renderEntity(modelMatrix, scene);
+	
 	// Swap buffers
 	glfwSwapBuffers(_window);
 }
@@ -228,6 +221,8 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 	for (child = children.begin(); child != children.end(); child++) {
 		// Transform child's children...
 		this->_renderEntity(modelMatrix, *child);
+		// ... then reset modelMatrix for siblings.
+		modelMatrix = glm::mat4(1.0f);
 	}
 }
 
