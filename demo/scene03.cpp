@@ -45,9 +45,9 @@ Scene03::Scene03() : Scene()
 	//Create a BoidEntity this time, and add the Line.
 	custom_line = new BoidEntity();
 	custom_line->addLine(tmp);
-	custom_line->velocity = Vector2(350, 300);
-	custom_line->position.x = 600;
-	custom_line->position.y = 200;
+	custom_line->velocity = Vector2((rand()%500)-250, (rand()%500)-250);
+	custom_line->position.x = SWIDTH/2;
+	custom_line->position.y = SHEIGHT/2;
 	
 	this->addChild(default_line);
 	this->addChild(custom_line);
@@ -70,11 +70,12 @@ void Scene03::update(float deltaTime)
 	}
 	
 	// ###############################################################
-	// color default line
+	// custom_line
 	// ###############################################################
 	static int counter = 0;
-	if (t.seconds() >= 0.5f) {
-		default_line->line()->color = colors[counter%6];
+	if (t.seconds() >= 0.25f) {
+		custom_line->line()->color = colors[counter%6];
+		custom_line->velocity = Vector2((rand()%500)-250, (rand()%500)-250);
 		counter++;
 		t.start();
 	}
