@@ -222,7 +222,22 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 		// Transform child's children...
 		this->_renderEntity(modelMatrix, *child);
 		// ... then reset modelMatrix for siblings.
-		modelMatrix = glm::mat4(1.0f);
+		//modelMatrix = glm::mat4(1.0f);
+		
+		// ... then reset modelMatrix for siblings to the modelMatrix of the parent.
+		Entity* parent = (*child)->parent();
+		// OpenGL doesn't understand our Vector2. Make it glm::vec3 compatible.
+		glm::vec3 position = glm::vec3(parent->position.x, parent->position.y, 0.0f);
+		glm::vec3 rotation = glm::vec3(0.0f, 0.0f, parent->rotation);
+		glm::vec3 scale = glm::vec3(parent->scale.x, parent->scale.y, 1.0f);
+		
+		// Build the Model matrix
+		glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), position);
+		glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, rotation.z);
+		glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), scale);
+
+		// The modelMatrix of the sibling starts with the modelMatrix of the parent.
+		modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
 	}
 }
 
