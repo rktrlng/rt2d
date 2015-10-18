@@ -105,12 +105,14 @@ class Entity
 		/// @brief get the guid of this Entity.
 		/// @return int _guid
 		int guid() { return _guid; };
+		/// @brief get the parent of this Entity.
+		/// @return Entity* _parent
+		Entity* parent() { return _parent; };
 		
 		// updated world position after all transforms
 		Vector2 _worldpos;	/**< @brief The position of the Entity in the real world */
 		bool _culled;	/**< @brief This Entity should be culled or not */
 		
-		Entity* parent() { return _parent; };
 	protected:
 		
 		

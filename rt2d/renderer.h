@@ -61,6 +61,11 @@ class Renderer
 		/// @return void
 		void _renderEntity(glm::mat4& modelMatrix, Entity* entity);
 		
+		/// @brief get the modelMatrix from an Entity
+		/// @param entity The Entity we need the modelMatrix from.
+		/// @return glm::mat4
+		inline glm::mat4 _getModelMatrix(Entity* entity);
+		
 		/// @brief Renders the Sprite 'component' of an Entity.
 		/// @param MVP The ModelViewProjection Matrix of the Entity
 		/// @param sprite The Sprite 'component' of the Entity
@@ -72,6 +77,19 @@ class Renderer
 		/// @param line The Line 'component' of the Entity
 		/// @return void
 		void _renderLine(const glm::mat4& MVP, Line* line);
+		
+		/// @brief Renders the Mesh 'component' of a Sprite or Line.
+		/// @param MVP The ModelViewProjection Matrix of the Mesh
+		/// @param shader The Shader
+		/// @param texture The Texture
+		/// @param mesh The Mesh
+		/// @param numverts The number of vertices to render
+		/// @param mode The mode: GL_LINES or GL_TRIANGLES
+		/// @param blendcolor The Color to use for blending
+		/// @return void
+		inline void _renderMesh(const glm::mat4& MVP, Shader* shader, 
+			Texture* texture, Mesh* mesh, int numverts,
+			GLuint mode, Color blendcolor);
 		
 		/// @brief Culls a Scene with all its children.
 		/// @param scene The Scene that needs to be culled

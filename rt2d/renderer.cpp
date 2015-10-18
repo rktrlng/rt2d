@@ -124,6 +124,166 @@ void Renderer::renderScene(Scene* scene)
 	glfwSwapBuffers(_window);
 }
 
+void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
+{
+	modelMatrix *= this->_getModelMatrix(entity);
+	
+	// #######################################################
+	// fill _worldpos in Entity
+	glm::vec4 realpos = modelMatrix * glm::vec4(0,0,0,1);
+	// send the real world position after these transforms back to Entity->worldpos
+	entity->_worldpos = Vector2(realpos.x, realpos.y);
+	// #######################################################
+
+	// Check for Sprites to see if we need to render anything
+	Sprite* sprite = entity->sprite();
+	if (sprite != NULL) {
+		if (!entity->_culled) {
+			// Finally, generate our MVP...
+			glm::mat4 MVP = _projectionMatrix * _viewMatrix * modelMatrix;
+			// ... and render the Sprite.
+			this->_renderSprite(MVP, sprite);
+		}
+	}
+
+	// Check for Lines to see if we need to render anything
+	Line* line = entity->line();
+	if (line != NULL) {
+		// Finally, generate our MVP...
+		glm::mat4 MVP = _projectionMatrix * _viewMatrix * modelMatrix;
+		// ... and render the Line.
+		this->_renderLine(MVP, line);
+	}
+	
+	// Render all Children (recursively)
+	std::vector<Entity*> children = entity->children();
+	std::vector<Entity*>::iterator child;
+	for (child = children.begin(); child != children.end(); child++) {
+		// Transform child's children...
+		this->_renderEntity(modelMatrix, *child);
+		// ...then reset modelMatrix for siblings to the modelMatrix of the parent.
+		modelMatrix = this->_getModelMatrix( (*child)->parent() );
+	}
+}
+
+glm::mat4 Renderer::_getModelMatrix(Entity* entity)
+{
+	// OpenGL doesn't understand our Vector2. Make it glm::vec3 compatible.
+	glm::vec3 position = glm::vec3(entity->position.x, entity->position.y, 0.0f);
+	glm::vec3 rotation = glm::vec3(0.0f, 0.0f, entity->rotation);
+	glm::vec3 scale = glm::vec3(entity->scale.x, entity->scale.y, 1.0f);
+	
+	// Build the Model matrix
+	glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), position);
+	glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, rotation.z);
+	glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), scale);
+	
+	glm::mat4 mm = translationMatrix * rotationMatrix * scalingMatrix;
+	
+	return mm;
+}
+
+void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite)
+{
+	Shader* shader = _uberShader;
+	// ask resourcemanager
+	if (shader == NULL) {
+		shader = _resman.getShader(sprite->vertexshader().c_str(), sprite->fragmentshader().c_str());
+	}
+	Texture* texture = _resman.getTexture(sprite->texturename());
+
+	glm::vec2 uvdim = sprite->uvdim;
+	glm::vec2 pivot = sprite->pivot;
+	int width = texture->width() * uvdim.x;
+	int height = texture->height() * uvdim.y;
+	Mesh* mesh = _resman.getSpriteMesh(width, height, pivot.x, pivot.y, uvdim.x, uvdim.y);
+	
+	Color blendcolor = sprite->color;
+
+	_renderMesh(MVP, shader, texture, mesh, 6, GL_TRIANGLES, blendcolor);
+}
+
+void Renderer::_renderLine(const glm::mat4& MVP, Line* line)
+{
+	Shader* shader = _uberShader;
+	// ask resourcemanager
+	if (shader == NULL) {
+		// only uberShader for now TODO fix
+		//shader = _resman.getShader(sprite->vertexshader().c_str(), sprite->fragmentshader().c_str());
+	}
+	
+	Texture* texture = _resman.getTexture("assets/white.tga");
+	Mesh* mesh = _resman.getLineMesh(line);
+	
+	int numpoints = line->points().size();
+	Color blendcolor = line->color;
+	
+	_renderMesh(MVP, shader, texture, mesh, numpoints, GL_LINES, blendcolor);
+}
+
+void Renderer::_renderMesh(const glm::mat4& MVP, Shader* shader,
+	Texture* texture, Mesh* mesh, int numverts,
+	GLuint mode, Color blendcolor)
+{
+	// use our shader program
+	glUseProgram(shader->programID());
+	
+	// Bind our texture in Texture Unit 0
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
+	
+	// ... and send our transformation to the currently bound shader, in the "MVP" uniform
+	glUniformMatrix4fv(shader->matrixID(), 1, GL_FALSE, &MVP[0][0]);
+
+	// _blendColorID
+	glUniform4f(shader->blendColorID(), blendcolor.r, blendcolor.g, blendcolor.b, blendcolor.a);
+
+	// Set our "textureSampler" sampler to user Texture Unit 0
+	glUniform1i(shader->textureID(), 0);
+	
+	// Note: We generated vertices in the correct order, with normals facing the camera.
+	// We can also get the normalbuffer from the Mesh, but that's ignored here.
+	// Use the normalbuffer (with links to the Shader) if you want to use lighting on your Sprites.
+	// TODO: implement
+	GLuint vertexPositionID =  glGetAttribLocation(shader->programID(), "vertexPosition"); // Mesh::_vertexbuffer
+	GLuint vertexUVID =        glGetAttribLocation(shader->programID(), "vertexUV"); // Mesh::_uvbuffer
+
+	// 1st attribute buffer : vertices
+	glEnableVertexAttribArray(vertexPositionID);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexbuffer());
+	glVertexAttribPointer(
+		vertexPositionID,             // The attribute we want to configure
+		3,                            // size : x+y+z => 3
+		GL_FLOAT,                     // type
+		GL_FALSE,                     // normalized?
+		0,                            // stride
+		(void*)0                      // array buffer offset
+	);
+
+	// 2nd attribute buffer : UVs
+	glEnableVertexAttribArray(vertexUVID);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->uvbuffer());
+	glVertexAttribPointer(
+		vertexUVID,                   // The attribute we want to configure
+		2,                            // size : U+V => 2
+		GL_FLOAT,                     // type
+		GL_FALSE,                     // normalized?
+		0,                            // stride
+		(void*)0                      // array buffer offset
+	);
+
+	// Draw the triangles or lines
+	glDrawArrays(mode, 0, numverts);
+
+	glDisableVertexAttribArray(vertexPositionID);
+	glDisableVertexAttribArray(vertexUVID);
+}
+
+void Renderer::cleanup()
+{
+	_resman.cleanup();
+}
+
 void Renderer::_cullScene(Scene* scene)
 {
 	Vector2 cp = Vector2(scene->camera()->position.x, scene->camera()->position.y);
@@ -170,221 +330,4 @@ void Renderer::_cullEntity(Vector2 campos, Entity* entity)
 		
 		this->_cullEntity(campos, children[i]);
 	}
-}
-
-void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
-{
-	// OpenGL doesn't understand our Vector2. Make it glm::vec3 compatible.
-	glm::vec3 position = glm::vec3(entity->position.x, entity->position.y, 0.0f);
-	glm::vec3 rotation = glm::vec3(0.0f, 0.0f, entity->rotation);
-	glm::vec3 scale = glm::vec3(entity->scale.x, entity->scale.y, 1.0f);
-	
-	// Build the Model matrix
-	glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), position);
-	glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, rotation.z);
-	glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), scale);
-
-	// multiply ModelMatrix of children with the ModelMatrix of the parent (the caller of this method)
-	// the first time we do this (for the root-parent), modelMatrix is identity.
-	modelMatrix *= translationMatrix * rotationMatrix * scalingMatrix;
-	
-	// #######################################################
-	// fill _worldpos in Entity
-	glm::vec4 realpos = modelMatrix * glm::vec4(0,0,0,1);
-	// send the real world position after these transforms back to Entity->worldpos
-	entity->_worldpos = Vector2(realpos.x, realpos.y);
-	// #######################################################
-
-	// Check for Sprites to see if we need to render anything
-	Sprite* sprite = entity->sprite();
-	if (sprite != NULL) {
-		if (!entity->_culled) {
-			// Finally, generate our MVP...
-			glm::mat4 MVP = _projectionMatrix * _viewMatrix * modelMatrix;
-			// ... and render the Sprite.
-			this->_renderSprite(MVP, sprite);
-		}
-	}
-
-	// Check for Lines to see if we need to render anything
-	Line* line = entity->line();
-	if (line != NULL) {
-		// Finally, generate our MVP...
-		glm::mat4 MVP = _projectionMatrix * _viewMatrix * modelMatrix;
-		// ... and render the Line.
-		this->_renderLine(MVP, line);
-	}
-	
-	// Render all Children (recursively)
-	std::vector<Entity*> children = entity->children();
-	std::vector<Entity*>::iterator child;
-	for (child = children.begin(); child != children.end(); child++) {
-		// Transform child's children...
-		this->_renderEntity(modelMatrix, *child);
-		// ... then reset modelMatrix for siblings.
-		//modelMatrix = glm::mat4(1.0f);
-		
-		// ... then reset modelMatrix for siblings to the modelMatrix of the parent.
-		Entity* parent = (*child)->parent();
-		// OpenGL doesn't understand our Vector2. Make it glm::vec3 compatible.
-		glm::vec3 position = glm::vec3(parent->position.x, parent->position.y, 0.0f);
-		glm::vec3 rotation = glm::vec3(0.0f, 0.0f, parent->rotation);
-		glm::vec3 scale = glm::vec3(parent->scale.x, parent->scale.y, 1.0f);
-		
-		// Build the Model matrix
-		glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), position);
-		glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, rotation.z);
-		glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), scale);
-
-		// The modelMatrix of the sibling starts with the modelMatrix of the parent.
-		modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
-	}
-}
-
-void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite)
-{
-	Shader* shader = _uberShader;
-	// ask resourcemanager
-	if (shader == NULL) {
-		shader = _resman.getShader(sprite->vertexshader().c_str(), sprite->fragmentshader().c_str());
-	}
-	Texture* texture = _resman.getTexture(sprite->texturename());
-
-	glm::vec2 uvdim = sprite->uvdim;
-	glm::vec2 pivot = sprite->pivot;
-	int width = texture->width() * uvdim.x;
-	int height = texture->height() * uvdim.y;
-	Mesh* mesh = _resman.getSpriteMesh(width, height, pivot.x, pivot.y, uvdim.x, uvdim.y);
-	
-	// use our shader program
-	glUseProgram(shader->programID());
-
-	// Bind our texture in Texture Unit 0
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
-	
-	// ... and send our transformation to the currently bound shader, in the "MVP" uniform
-	glUniformMatrix4fv(shader->matrixID(), 1, GL_FALSE, &MVP[0][0]);
-
-	// _blendColorID
-	Color blendcolor = sprite->color;
-	glUniform4f(shader->blendColorID(), blendcolor.r, blendcolor.g, blendcolor.b, blendcolor.a);
-	// _uvOffsetID
-	glUniform2f(shader->uvOffsetID(), sprite->uvoffset.x, sprite->uvoffset.y);
-	
-	// Set our "textureSampler" sampler to user Texture Unit 0
-	glUniform1i(shader->textureID(), 0);
-
-	// Note: We generated vertices in the correct order, with normals facing the camera.
-	// We can also get the normalbuffer from the Mesh, but that's ignored here.
-	// Use the normalbuffer (with links to the Shader) if you want to use lighting on your Sprites.
-	// TODO: implement
-	GLuint vertexPositionID =  glGetAttribLocation(shader->programID(), "vertexPosition"); // Mesh::_vertexbuffer
-	GLuint vertexUVID =        glGetAttribLocation(shader->programID(), "vertexUV"); // Mesh::_uvbuffer
-
-	// 1st attribute buffer : vertices
-	glEnableVertexAttribArray(vertexPositionID);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexbuffer());
-	glVertexAttribPointer(
-		vertexPositionID,             // The attribute we want to configure
-		3,                            // size : x+y+z => 3
-		GL_FLOAT,                     // type
-		GL_FALSE,                     // normalized?
-		0,                            // stride
-		(void*)0                      // array buffer offset
-	);
-
-	// 2nd attribute buffer : UVs
-	glEnableVertexAttribArray(vertexUVID);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->uvbuffer());
-	glVertexAttribPointer(
-		vertexUVID,                   // The attribute we want to configure
-		2,                            // size : U+V => 2
-		GL_FLOAT,                     // type
-		GL_FALSE,                     // normalized?
-		0,                            // stride
-		(void*)0                      // array buffer offset
-	);
-
-	// Draw the triangles !
-	glDrawArrays(GL_TRIANGLES, 0, 2*3); // 2*3 indices starting at 0 -> 2 triangles
-	//glDrawArrays(GL_LINES, 0, numpoints); // draw lines
-
-	glDisableVertexAttribArray(vertexPositionID);
-	glDisableVertexAttribArray(vertexUVID);
-}
-
-void Renderer::_renderLine(const glm::mat4& MVP, Line* line)
-{
-	Shader* shader = _uberShader;
-	// ask resourcemanager
-	if (shader == NULL) {
-		// only uberShader for now TODO fix
-		//shader = _resman.getShader(sprite->vertexshader().c_str(), sprite->fragmentshader().c_str());
-	}
-	
-	Texture* texture = _resman.getTexture("assets/white.tga");
-	
-	Mesh* mesh = _resman.getLineMesh(line);
-	
-	// use our shader program
-	glUseProgram(shader->programID());
-	
-	// Bind our texture in Texture Unit 0
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
-	
-	// ... and send our transformation to the currently bound shader, in the "MVP" uniform
-	glUniformMatrix4fv(shader->matrixID(), 1, GL_FALSE, &MVP[0][0]);
-
-	// _blendColorID
-	Color blendcolor = line->color;
-	glUniform4f(shader->blendColorID(), blendcolor.r, blendcolor.g, blendcolor.b, blendcolor.a);
-
-	// Set our "textureSampler" sampler to user Texture Unit 0
-	glUniform1i(shader->textureID(), 0);
-	
-	// Note: We generated vertices in the correct order, with normals facing the camera.
-	// We can also get the normalbuffer from the Mesh, but that's ignored here.
-	// Use the normalbuffer (with links to the Shader) if you want to use lighting on your Sprites.
-	// TODO: implement
-	GLuint vertexPositionID =  glGetAttribLocation(shader->programID(), "vertexPosition"); // Mesh::_vertexbuffer
-	GLuint vertexUVID =        glGetAttribLocation(shader->programID(), "vertexUV"); // Mesh::_uvbuffer
-
-	// 1st attribute buffer : vertices
-	glEnableVertexAttribArray(vertexPositionID);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexbuffer());
-	glVertexAttribPointer(
-		vertexPositionID,             // The attribute we want to configure
-		3,                            // size : x+y+z => 3
-		GL_FLOAT,                     // type
-		GL_FALSE,                     // normalized?
-		0,                            // stride
-		(void*)0                      // array buffer offset
-	);
-
-	// 2nd attribute buffer : UVs
-	glEnableVertexAttribArray(vertexUVID);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->uvbuffer());
-	glVertexAttribPointer(
-		vertexUVID,                   // The attribute we want to configure
-		2,                            // size : U+V => 2
-		GL_FLOAT,                     // type
-		GL_FALSE,                     // normalized?
-		0,                            // stride
-		(void*)0                      // array buffer offset
-	);
-
-	int numpoints = line->points().size();
-	
-	// Draw the Line !
-	glDrawArrays(GL_LINES, 0, numpoints); // draw lines
-
-	glDisableVertexAttribArray(vertexPositionID);
-	glDisableVertexAttribArray(vertexUVID);
-}
-
-void Renderer::cleanup()
-{
-	_resman.cleanup();
 }
