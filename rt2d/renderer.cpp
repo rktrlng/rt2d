@@ -199,8 +199,11 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite)
 	Mesh* mesh = _resman.getSpriteMesh(width, height, pivot.x, pivot.y, uvdim.x, uvdim.y);
 	
 	Color blendcolor = sprite->color;
+	
+	// _uvOffsetID
+	glUniform2f(shader->uvOffsetID(), sprite->uvoffset.x, sprite->uvoffset.y);
 
-	_renderMesh(MVP, shader, texture, mesh, 6, GL_TRIANGLES, blendcolor);
+	this->_renderMesh(MVP, shader, texture, mesh, 6, GL_TRIANGLES, blendcolor);
 }
 
 void Renderer::_renderLine(const glm::mat4& MVP, Line* line)
@@ -218,7 +221,7 @@ void Renderer::_renderLine(const glm::mat4& MVP, Line* line)
 	int numpoints = line->points().size();
 	Color blendcolor = line->color;
 	
-	_renderMesh(MVP, shader, texture, mesh, numpoints, GL_LINES, blendcolor);
+	this->_renderMesh(MVP, shader, texture, mesh, numpoints, GL_LINES, blendcolor);
 }
 
 void Renderer::_renderMesh(const glm::mat4& MVP, Shader* shader,
