@@ -25,10 +25,10 @@ Scene03::Scene03() : Scene()
 	
 	//Load Line from file.
 	//This is the preferred method.
-	default_line = new BasicEntity();
-	default_line->addLine("assets/default.line");
-	default_line->position.x = SWIDTH/3;
-	default_line->position.y = SHEIGHT/3;
+	rt2d_line = new BasicEntity();
+	rt2d_line->addLine("assets/rt2d.line");
+	rt2d_line->position.x = SWIDTH/3;
+	rt2d_line->position.y = SHEIGHT/3;
 	
 	//Or create a new Line and add it to an Entity later.
 	//It will be deleted when the Entity is deleted.
@@ -69,7 +69,7 @@ Scene03::Scene03() : Scene()
 		shape_container->addChild(b);
 	}
 	
-	this->addChild(default_line);
+	this->addChild(rt2d_line);
 	this->addChild(custom_line);
 	this->addChild(circle_line);
 	this->addChild(shape_container);
@@ -78,7 +78,7 @@ Scene03::Scene03() : Scene()
 
 Scene03::~Scene03()
 {
-	delete default_line;
+	delete rt2d_line;
 	delete custom_line;
 	delete circle_line;
 	
@@ -113,6 +113,8 @@ void Scene03::update(float deltaTime)
 		t.start();
 	}
 	
-	default_line->rotation += 3.14f / 2 * deltaTime;
+	rt2d_line->rotation += 3.14f / 2 * deltaTime;
+	rt2d_line->scale.x = sin(rt2d_line->rotation);
+	
 	shape_container->rotation -= 3.14f / 8 * deltaTime;
 }

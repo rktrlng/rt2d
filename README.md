@@ -1,7 +1,9 @@
 RT2D
 ====
 
-RT2D is a RealTime 2D framework, based on 'modern' OpenGL (2.1+). It runs on Mac, Linux and Windows.
+RT2D is a RealTime 2D framework, based on somewhat 'modern' OpenGL (2.1+). It compiles and runs on Mac, Linux and Windows.
+
+Compatibility is chosen over features. Readability over efficiency. Simplicity over speed. There's no fancy OpenGL stuff here. No batching of sprites, no indexing of vertices. Just update and render scenes with entities that contain (colored) sprites, spritesheets and lines.
 
 Compiling
 ---------
@@ -98,7 +100,7 @@ Links
 
 The `CMakeLists.txt` file and `rt2d/shader.cpp` are based on the ones found here: <http://www.opengl-tutorial.org/>.
 
-If you're having trouble compiling this project, follow instructions on the site mentioned above. Once that compiles, this will also compile.
+If you're having trouble compiling this project, follow instructions on <http://www.opengl-tutorial.org/>. Once that compiles, this will probably also compile.
 
 License
 -------

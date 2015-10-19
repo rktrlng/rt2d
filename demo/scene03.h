@@ -26,7 +26,7 @@ class Scene03: public Scene
 	
 	private:
 		Timer t;
-		BasicEntity* default_line;
+		BasicEntity* rt2d_line;
 		BoidEntity* custom_line;
 		BoidEntity* circle_line;
 		
