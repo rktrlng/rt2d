@@ -95,7 +95,8 @@ void Mesh::generateLineMesh(Line* line)
 		g_vertex_buffer_data[counter+1] = points[i].y;
 		g_vertex_buffer_data[counter+2] = points[i].z;
 		
-		// 'double up' every vertex but the first (create from-to points)
+		// 'double up' every vertex but the first.
+		// the endpoint of the previous segment is the startpoint of the next.
 		if (i != 0) {
 			g_vertex_buffer_data[counter+3] = points[i].x;
 			g_vertex_buffer_data[counter+4] = points[i].y;
@@ -114,8 +115,8 @@ void Mesh::generateLineMesh(Line* line)
 	// Copy the UV's
 	counter = 0;
 	for (int i = 0; i < s*2; i++) {
-		g_uv_buffer_data[counter+0] = uvs[i].x;
-		g_uv_buffer_data[counter+1] = uvs[i].y;
+		g_uv_buffer_data[counter+0] = 0.5f;
+		g_uv_buffer_data[counter+1] = 0.5f;
 		
 		counter += 2;
 	}
