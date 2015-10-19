@@ -44,6 +44,23 @@ void Line::addPoint(float x, float y)
 	_uvs.push_back(uv);
 }
 
+void Line::createCircle(int radius, int segments)
+{
+	int step = 360 / segments;
+	
+	for (int i = 0; i < 360; i += step) {
+		float x = cos(i*(3.151592f/180))*radius;
+		float y = sin(i*(3.151592f/180))*radius;
+		this->addPoint(x, y);
+	}
+	
+	char buf[24]; // should be big enough: "circle_r999_s999"
+	sprintf(buf, "circle_r%d_s%d", radius, segments);
+	std::string linename(buf);
+	
+	_filename = linename;
+}
+
 bool Line::loadLineFile(const std::string& filename)
 {
 	FILE * file = fopen(filename.c_str(), "r");

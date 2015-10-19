@@ -28,6 +28,10 @@ class Scene03: public Scene
 		Timer t;
 		BasicEntity* default_line;
 		BoidEntity* custom_line;
+		BoidEntity* circle_line;
+		
+		BasicEntity* shape_container;
+		std::vector<BasicEntity*> shapes;
 };
 
 #endif /* SCENE03_H */ 

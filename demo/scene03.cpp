@@ -43,11 +43,36 @@ Scene03::Scene03() : Scene()
 	custom_line = new BoidEntity();
 	custom_line->addLine(tmp);
 	custom_line->velocity = Vector2((rand()%500)-250, (rand()%500)-250);
-	custom_line->position.x = SWIDTH/2;
-	custom_line->position.y = SHEIGHT/2;
+	custom_line->position = Point2(SWIDTH/2, SHEIGHT/2);
+	
+	// Create a BoidEntity with a Circle.
+	Line* c = new Line();
+	c->createCircle(15, 30);
+	circle_line = new BoidEntity();
+	circle_line->addLine(c);
+	circle_line->velocity = Vector2((rand()%1000)-500, (rand()%1000)-500);
+	circle_line->position = Point2(SWIDTH/2, SHEIGHT/2);
+	
+	// Shapes!!
+	shape_container = new BasicEntity();
+	shape_container->position = Point2(SWIDTH/2, SHEIGHT/2);
+	// fill shapes vector with variants of a circle
+	for (int i = 3; i < 11; i++) {
+		Line* circle = new Line();
+		circle->createCircle(30, i);
+		circle->color = colors[i%6];
+		
+		BasicEntity* b = new BasicEntity();
+		b->position.x = (i*80) - 520;
+		b->addLine(circle);
+		shapes.push_back(b);
+		shape_container->addChild(b);
+	}
 	
 	this->addChild(default_line);
 	this->addChild(custom_line);
+	this->addChild(circle_line);
+	this->addChild(shape_container);
 }
 
 
@@ -55,6 +80,17 @@ Scene03::~Scene03()
 {
 	delete default_line;
 	delete custom_line;
+	delete circle_line;
+	
+	int s = shapes.size();
+	for (int i=0; i<s; i++) {
+		shape_container->removeChild(shapes[i]);
+		delete shapes[i];
+		shapes[i] = NULL;
+	}
+	shapes.clear();
+	
+	delete shape_container;
 }
 
 void Scene03::update(float deltaTime)
@@ -78,4 +114,5 @@ void Scene03::update(float deltaTime)
 	}
 	
 	default_line->rotation += 3.14f / 2 * deltaTime;
+	shape_container->rotation -= 3.14f / 8 * deltaTime;
 }
