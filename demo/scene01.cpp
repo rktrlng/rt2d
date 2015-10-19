@@ -27,7 +27,6 @@ Scene01::Scene01() : Scene()
 	child1_entity->position.x = 100;	// position relative to parent (default_entity)
 	child1_entity->position.y = -100;
 	
-	
 	// A different approach: create Sprite first, then add it to an Entity later.
 	Sprite* f_spr = new Sprite();
 	f_spr->setupSprite("assets/letterF.tga", 0.5f, 0.5f, 1.0f, 1.0f);
@@ -120,10 +119,4 @@ void Scene01::update(float deltaTime)
 	if (input()->getKey( GLFW_KEY_LEFT )) {
 		camera()->position -= right * deltaTime * speed;
 	}
-	
-	// Test the real world position of child2_entity
-	//std::cout << "pos: " << child2_entity->position.x << ", " << child2_entity->position.y << " -> ";
-	//std::cout << child2_entity->_worldpos.x << ", " << child2_entity->_worldpos.y << std::endl;
-	
-	//std::cout << default_entity->_worldpos.x << ", " << default_entity->_worldpos.y << std::endl;
 }
