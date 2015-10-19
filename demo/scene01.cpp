@@ -23,18 +23,15 @@ Scene01::Scene01() : Scene()
 	// Create an Entity that's going to be a Child of the Entity above.
 	child1_entity = new BasicEntity();
 	child1_entity->addSprite("assets/letterF.tga");
+	child1_entity->sprite()->color = Color(1.0f, 0.0f, 0.0f, 1.0f);
 	child1_entity->position.x = 100;	// position relative to parent (default_entity)
 	child1_entity->position.y = -100;
-	child1_entity->sprite()->color.r = 1.0f;
-	child1_entity->sprite()->color.g = 0.0f;
-	child1_entity->sprite()->color.b = 0.0f;
+	
 	
 	// A different approach: create Sprite first, then add it to an Entity later.
 	Sprite* f_spr = new Sprite();
 	f_spr->setupSprite("assets/letterF.tga", 0.5f, 0.5f, 1.0f, 1.0f);
-	f_spr->color.r = 0.0f;
-	f_spr->color.g = 1.0f;
-	f_spr->color.b = 0.0f;
+	f_spr->color = Color(0.0f, 1.0f, 0.0f, 1.0f);
 	child2_entity = new BasicEntity();
 	child2_entity->position.x = 64;	// position relative to parent (child1_entity)
 	child2_entity->position.y = 64;
