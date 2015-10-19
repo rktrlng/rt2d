@@ -49,8 +49,8 @@ void Line::createCircle(int radius, int segments)
 	int step = 360 / segments;
 	
 	for (int i = 0; i < 360; i += step) {
-		float x = cos(i*(3.151592f/180))*radius;
-		float y = sin(i*(3.151592f/180))*radius;
+		float x = cos(i*(3.14159265f/180))*radius;
+		float y = sin(i*(3.14159265f/180))*radius;
 		this->addPoint(x, y);
 	}
 	
