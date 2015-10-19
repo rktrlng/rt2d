@@ -37,10 +37,7 @@ Scene03::Scene03() : Scene()
 	tmp->color = green;
 	tmp->addPoint(-10.0f, -10.0f);
 	tmp->addPoint(20.0f, 0.0f);
-	tmp->addPoint(20.0f, 0.0f);
 	tmp->addPoint(-10.0f, 10.0f);
-	tmp->addPoint(-10.0f, 10.0f);
-	tmp->addPoint(-10.0f, -10.0f);
 	
 	//Create a BoidEntity this time, and add the Line.
 	custom_line = new BoidEntity();

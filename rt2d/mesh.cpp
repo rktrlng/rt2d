@@ -7,6 +7,7 @@
  *   - [description]
  */
 
+#include <iostream>
 #include "mesh.h"
 
 Mesh::Mesh()
@@ -84,21 +85,35 @@ void Mesh::generateLineMesh(Line* line)
 	std::vector<glm::vec2> uvs = line->uvs();
 	int s = points.size();
 	
-	GLfloat g_vertex_buffer_data[s*3];
-	GLfloat g_uv_buffer_data[s*3];
+	GLfloat g_vertex_buffer_data[s*3*2];
+	GLfloat g_uv_buffer_data[s*3*2];
 	
+	// Copy the vertices
 	int counter = 0;
 	for (int i = 0; i < s; i++) {
 		g_vertex_buffer_data[counter+0] = points[i].x;
 		g_vertex_buffer_data[counter+1] = points[i].y;
 		g_vertex_buffer_data[counter+2] = points[i].z;
 		
+		// 'double up' every vertex but the first (create from-to points)
+		if (i != 0) {
+			g_vertex_buffer_data[counter+3] = points[i].x;
+			g_vertex_buffer_data[counter+4] = points[i].y;
+			g_vertex_buffer_data[counter+5] = points[i].z;
+			counter += 3;
+		}
 		counter += 3;
 		//std::cout << points[i].x << ", " << points[i].y << ", " << points[i].z << std::endl;
 	}
+	// close the line by going back to the first point
+	g_vertex_buffer_data[counter+0] = points[0].x;
+	g_vertex_buffer_data[counter+1] = points[0].y;
+	g_vertex_buffer_data[counter+2] = points[0].z;
 	
+	
+	// Copy the UV's
 	counter = 0;
-	for (int i = 0; i < s; i++) {
+	for (int i = 0; i < s*2; i++) {
 		g_uv_buffer_data[counter+0] = uvs[i].x;
 		g_uv_buffer_data[counter+1] = uvs[i].y;
 		
