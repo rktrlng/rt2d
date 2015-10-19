@@ -115,6 +115,7 @@ void Scene03::update(float deltaTime)
 	
 	rt2d_line->rotation += 3.14f / 2 * deltaTime;
 	rt2d_line->scale.x = sin(rt2d_line->rotation);
+	rt2d_line->scale.y = cos(rt2d_line->rotation);
 	
 	shape_container->rotation -= 3.14f / 8 * deltaTime;
 }
