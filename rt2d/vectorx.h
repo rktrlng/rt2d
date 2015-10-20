@@ -44,7 +44,7 @@
 #define RAD_TO_DEG	57.295779513082320876798154814105
 
 /**
- * @brief A helper class, to calculate distances and angles
+ * @brief A helper class to calculate distances and angles
  * 
  * Extends Point. A Vector_t<T> contains the end position, but also direction.
  * The origin is always 0,0,0
@@ -586,5 +586,99 @@ const bool VectorX_t<T>::operator>=(VectorX_t<T> other) const
 {
 	return (this->getLengthSquared() >= other.getLengthSquared());
 }
+
+
+
+// =================================================
+// Class definition of Polar_t<T>
+// =================================================
+/// @brief Polar (to Cartesian) coordinates helper class
+///
+/// Usage:
+/// @code
+///   Polar p = Polar(36.8699*DEG_TO_RAD, 5.0f);
+///   Vector2 vel = p.cartesian();
+///   std::cout << vel << std::endl; // (4, 3, 0)
+/// @endcode
+template <class T>
+class Polar_t
+{
+public:
+	T angle;	///< @brief angle of Polar_t
+	T radius;	///< @brief radius of Polar_t
+	
+	/// @brief Default Polar_t<T> constructor.
+	Polar_t<T>();
+	/// @brief Overloaded Polar_t<T> constructor.
+	/// @param a angle
+	/// @param r radius
+	Polar_t<T>(T a, T r);
+	
+	/// @brief Get the Cartesian coordinates of this Polar_t
+	/// @return VectorX_t<T> A VectorX_t with the cartesian coordinates of this Polar_t
+	const VectorX_t<T> cartesian() const;
+	
+	/// @brief Set this Polar from a VectorX_t
+	/// @return Polar_t<T>
+	Polar_t<T> fromCartesian(const VectorX_t<T> vec);
+	
+	/// @brief Set this Polar from an x and y
+	/// @return Polar_t<T>
+	Polar_t<T> fromCartesian(T x, T y);
+};
+
+template <class T>
+Polar_t<T>::Polar_t()
+{
+	this->angle = 0;
+	this->radius = 1;
+}
+
+template <class T>
+Polar_t<T>::Polar_t(T a, T r)
+{
+	this->angle = a;
+	this->radius = r;
+}
+
+template <class T>
+const VectorX_t<T> Polar_t<T>::cartesian() const
+{
+	VectorX_t<T> cartesian = VectorX_t<T>();
+	
+	cartesian.x = cos(this->angle) * this->radius;
+	cartesian.y = sin(this->angle) * this->radius;
+	cartesian.z = 0;
+	
+	return cartesian;
+}
+
+template <class T>
+Polar_t<T> Polar_t<T>::fromCartesian(const VectorX_t<T> vec)
+{
+	this->angle = vec.getAngle();
+	this->radius = vec.getLength();
+	
+	return *this;
+}
+
+template <class T>
+Polar_t<T> Polar_t<T>::fromCartesian(T x, T y)
+{
+	const VectorX_t<T> vec = VectorX_t<T>(x, y);
+	
+	return this->fromCartesian(vec);
+}
+
+/// @brief A typedef for creating a Polar of ints
+typedef Polar_t<int> Polari;
+/// @brief A typedef for creating a Polar of floats
+typedef Polar_t<float> Polarf;
+/// @brief A typedef for creating a Polar of doubles
+typedef Polar_t<double> Polard;
+/// @brief A typedef for creating a default Polar
+typedef Polarf Polar;
+
+
 
 #endif // VECTORX_H_
