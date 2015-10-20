@@ -16,6 +16,8 @@ Line::Line()
 	_guid = _nextGuid;
 	_nextGuid++;
 	
+	_dynamic = false;
+	
 	char buf[12]; // should be big enough: "Line99999"
 	sprintf(buf, "line%d", _guid);
 	std::string linename(buf);
@@ -42,6 +44,15 @@ void Line::addPoint(float x, float y)
 	glm::vec2 uv(0.5f, 0.5f);
 	_points.push_back(pnt);
 	_uvs.push_back(uv);
+}
+
+
+void Line::editPoint(int id, float x, float y)
+{
+	if (id < _points.size()) {
+		_points[id].x = x;
+		_points[id].y = y;
+	}
 }
 
 void Line::createCircle(int radius, int segments)

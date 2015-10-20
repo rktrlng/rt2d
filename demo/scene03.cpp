@@ -22,6 +22,7 @@ Color colors[6] = {red, yellow, green, cyan, blue, magenta};
 Scene03::Scene03() : Scene()
 {
 	t.start();
+	t2.start();
 	
 	//Load Line from file.
 	//This is the preferred method.
@@ -69,6 +70,25 @@ Scene03::Scene03() : Scene()
 		shape_container->addChild(b);
 	}
 	
+	// Dynamic Line
+	Line* dynamic = new Line();
+	dynamic->dynamic(true);
+	dynamic->color = green;
+	float y = (SHEIGHT/4)*3;
+	int spacing = 25;
+	int amount = SWIDTH/spacing;
+	int i=0;
+	dynamic->addPoint(i-5, y);
+	for (i = 0; i < amount+1; i++) {
+		dynamic->addPoint(i*spacing, y);
+	}
+	dynamic->addPoint(i*10+5, y);
+	
+	dynamic_line = new BasicEntity();
+	dynamic_line->addLine(dynamic);
+	
+	// Create Tree
+	this->addChild(dynamic_line);
 	this->addChild(rt2d_line);
 	this->addChild(custom_line);
 	this->addChild(circle_line);
@@ -78,6 +98,7 @@ Scene03::Scene03() : Scene()
 
 Scene03::~Scene03()
 {
+	delete dynamic_line;
 	delete rt2d_line;
 	delete custom_line;
 	delete circle_line;
@@ -113,9 +134,28 @@ void Scene03::update(float deltaTime)
 		t.start();
 	}
 	
+	// ###############################################################
+	// dynamic_line
+	// ###############################################################
+	if (t2.seconds() >= 0.05f) {
+		Line* line = dynamic_line->line();
+		unsigned int s = line->points().size();
+		for (unsigned int i = 2; i < s-2; i++) {
+			float x = line->points()[i].x;
+			line->editPoint(i, x, (random()%100)-50+(SHEIGHT/4)*3);
+		}
+		t2.start();
+	}
+	
+	// ###############################################################
+	// rt2d_line
+	// ###############################################################
 	rt2d_line->rotation += 3.14f / 2 * deltaTime;
 	rt2d_line->scale.x = sin(rt2d_line->rotation);
 	rt2d_line->scale.y = cos(rt2d_line->rotation);
 	
+	// ###############################################################
+	// shape_container
+	// ###############################################################
 	shape_container->rotation -= 3.14f / 8 * deltaTime;
 }

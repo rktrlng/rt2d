@@ -26,12 +26,16 @@ class Scene03: public Scene
 	
 	private:
 		Timer t;
+		Timer t2;
+		
 		BasicEntity* rt2d_line;
 		BoidEntity* custom_line;
 		BoidEntity* circle_line;
 		
 		BasicEntity* shape_container;
 		std::vector<BasicEntity*> shapes;
+		
+		BasicEntity* dynamic_line;
 };
 
 #endif /* SCENE03_H */ 

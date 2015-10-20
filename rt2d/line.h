@@ -42,6 +42,7 @@ class Line
 		/// @param y coordinate of the Point
 		/// @return void
 		void addPoint(float x, float y);
+		void editPoint(int id, float x, float y);
 		/// @brief Create a circle of points
 		/// @param radius the radius of the circle
 		/// @param segments the number of segments
@@ -57,6 +58,9 @@ class Line
 		
 		Color color;		///< @brief blend Color of the Line
 	
+		bool dynamic() { return _dynamic; };
+		void dynamic(bool d) { _dynamic = d; };
+		
 	private:
 		std::string _filename;	///< @brief _filename filename of the Line
 		std::vector<glm::vec3> _points;	///< @brief _points points of the Line
@@ -65,6 +69,8 @@ class Line
 		// identity
 		int _guid;				///< @brief The _guid of this Line
 		static int _nextGuid;	///< @brief The _nextGuid of this Line
+		
+		bool _dynamic;
 };
 
 #endif /* LINE_H */ 
