@@ -79,12 +79,15 @@ void Scene01::update(float deltaTime)
 	// ###############################################################
 	// Rotate default_entity
 	// ###############################################################
-	default_entity->rotation += 3.1415f / 2 * deltaTime; // 90 deg. per sec.
-	animated_entity->rotation -= 3.1415f / 8 * deltaTime;
+	default_entity->rotation += 90 * DEG_TO_RAD * deltaTime; // 90 deg. per sec.
+	if (default_entity->rotation > TWO_PI) { default_entity->rotation -= TWO_PI; }
 	
 	// ###############################################################
 	// Animate animated_entity
 	// ###############################################################
+	animated_entity->rotation -= 22.5 * DEG_TO_RAD * deltaTime;
+	if (animated_entity->rotation < -TWO_PI) { animated_entity->rotation += TWO_PI; }
+	
 	static int f = 0;
 	if (f > 15) { f = 0; }
 	

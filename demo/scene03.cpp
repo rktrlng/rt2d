@@ -150,12 +150,14 @@ void Scene03::update(float deltaTime)
 	// ###############################################################
 	// rt2d_line
 	// ###############################################################
-	rt2d_line->rotation += 3.14f / 2 * deltaTime;
+	rt2d_line->rotation += 90 * DEG_TO_RAD * deltaTime;
+	if (rt2d_line->rotation > TWO_PI) { rt2d_line->rotation -= TWO_PI; }
 	rt2d_line->scale.x = sin(rt2d_line->rotation);
 	rt2d_line->scale.y = cos(rt2d_line->rotation);
 	
 	// ###############################################################
 	// shape_container
 	// ###############################################################
-	shape_container->rotation -= 3.14f / 8 * deltaTime;
+	shape_container->rotation -= 22.5 * DEG_TO_RAD * deltaTime;
+	if (shape_container->rotation < -TWO_PI) { shape_container->rotation += TWO_PI; }
 }
