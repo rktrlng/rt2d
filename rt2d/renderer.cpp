@@ -217,9 +217,12 @@ void Renderer::_renderLine(const glm::mat4& MVP, Line* line)
 	
 	Texture* texture = _resman.getTexture("assets/white.tga");
 	Mesh* mesh = NULL;
-	
-	int numpoints = line->points().size()*2;
 	Color blendcolor = line->color;
+	
+	int numpoints = (line->points().size()*2) - 1;
+	if (line->closed()) {
+		numpoints += 1;
+	}
 	
 	if (line->dynamic()) {
 		mesh = new Mesh();

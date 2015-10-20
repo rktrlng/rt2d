@@ -118,7 +118,6 @@ void Mesh::generateLineMesh(Line* line)
 	g_vertex_buffer_data[counter+1] = points[0].y;
 	g_vertex_buffer_data[counter+2] = points[0].z;
 	
-	
 	// Copy the UV's
 	counter = 0;
 	for (int i = 0; i < s*2; i++) {

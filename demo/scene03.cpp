@@ -39,6 +39,7 @@ Scene03::Scene03() : Scene()
 	tmp->addPoint(-10.0f, -10.0f);
 	tmp->addPoint(20.0f, 0.0f);
 	tmp->addPoint(-10.0f, 10.0f);
+	tmp->addPoint(-10.0f, -10.0f);
 	
 	//Create a BoidEntity this time, and add the Line.
 	custom_line = new BoidEntity();
@@ -73,15 +74,14 @@ Scene03::Scene03() : Scene()
 	// Dynamic Line
 	Line* dynamic = new Line();
 	dynamic->dynamic(true);
+	//dynamic->closed(true);
 	dynamic->color = green;
 	int spacing = 25;
 	int amount = SWIDTH/spacing;
 	int i=0;
-	dynamic->addPoint(i-spacing, 0);
-	for (i = 0; i < amount+1; i++) {
+	for (i = 1; i < amount; i++) {
 		dynamic->addPoint(i*spacing, 0);
 	}
-	dynamic->addPoint(i*spacing, 0);
 	
 	dynamic_line = new BasicEntity();
 	dynamic_line->position.y = SHEIGHT-60;
@@ -127,7 +127,7 @@ void Scene03::update(float deltaTime)
 	// custom_line
 	// ###############################################################
 	static int counter = 0;
-	if (t.seconds() >= 0.25f) {
+	if (t.seconds() >= 0.5f) {
 		custom_line->line()->color = colors[counter%6];
 		custom_line->velocity = Vector2((rand()%500)-250, (rand()%500)-250);
 		counter++;
@@ -137,10 +137,10 @@ void Scene03::update(float deltaTime)
 	// ###############################################################
 	// dynamic_line
 	// ###############################################################
-	if (t2.seconds() >= 0.05f) {
+	if (t2.seconds() >= 0.1f) {
 		Line* line = dynamic_line->line();
 		unsigned int s = line->points().size();
-		for (unsigned int i = 2; i < s-2; i++) {
+		for (unsigned int i = 1; i < s-1; i++) {
 			float x = line->points()[i].x;
 			line->editPoint(i, x, (rand()%100)-50);
 		}

@@ -17,6 +17,7 @@ Line::Line()
 	_nextGuid++;
 	
 	_dynamic = false;
+	_closed = false;
 	
 	char buf[12]; // should be big enough: "Line99999"
 	sprintf(buf, "line%d", _guid);
@@ -64,6 +65,7 @@ void Line::createCircle(int radius, int segments)
 		float y = sin(i*(3.14159265f/180))*radius;
 		this->addPoint(x, y);
 	}
+	this->addPoint(_points[0].x, _points[0].y);
 	
 	char buf[24]; // should be big enough: "circle_r999_s999"
 	sprintf(buf, "circle_r%d_s%d", radius, segments);
@@ -108,6 +110,9 @@ bool Line::loadLineFile(const std::string& filename)
 	
 	fclose (file);
 
+	// close the line
+	_points.push_back(_points[0]);
+	
 	// fill uv's
 	std::vector<glm::vec3>::iterator v;
 	for (v = _points.begin(); v != _points.end(); v++) {

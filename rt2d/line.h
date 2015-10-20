@@ -70,6 +70,13 @@ class Line
 		/// @return void
 		void dynamic(bool d) { _dynamic = d; };
 		
+		/// @brief is this Line closed or not?
+		/// @return bool _closed
+		bool closed() { return _closed; };
+		/// @brief set this Line to be closed or not
+		/// @return void
+		void closed(bool c) { _closed = c; };
+		
 	private:
 		std::string _filename;	///< @brief _filename filename of the Line
 		std::vector<glm::vec3> _points;	///< @brief _points points of the Line
@@ -80,6 +87,7 @@ class Line
 		static int _nextGuid;	///< @brief The _nextGuid property of this Line
 		
 		bool _dynamic;	///< @brief The _dynamic property of this Line
+		bool _closed;	///< @brief The _closed property of this Line
 };
 
 #endif /* LINE_H */ 
