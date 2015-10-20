@@ -42,7 +42,12 @@ class Line
 		/// @param y coordinate of the Point
 		/// @return void
 		void addPoint(float x, float y);
-		void editPoint(int id, float x, float y);
+		/// @brief Edit a Point on the Line
+		/// @param id the Point to edit
+		/// @param x coordinate of the Point
+		/// @param y coordinate of the Point
+		/// @return void
+		void editPoint(unsigned int id, float x, float y);
 		/// @brief Create a circle of points
 		/// @param radius the radius of the circle
 		/// @param segments the number of segments

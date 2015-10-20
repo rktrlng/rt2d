@@ -85,10 +85,11 @@ void Mesh::generateLineMesh(Line* line)
 	std::vector<glm::vec2> uvs = line->uvs();
 	int s = points.size();
 	
+	const int maxsize = 100;
+	GLfloat g_vertex_buffer_data[maxsize*3*2];
+	GLfloat g_uv_buffer_data[maxsize*3*2];
 	//GLfloat g_vertex_buffer_data[s*3*2];
 	//GLfloat g_uv_buffer_data[s*3*2];
-	GLfloat g_vertex_buffer_data[600];
-	GLfloat g_uv_buffer_data[600];
 	
 	// Copy the vertices
 	int counter = 0;

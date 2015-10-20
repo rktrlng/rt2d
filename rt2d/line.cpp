@@ -47,7 +47,7 @@ void Line::addPoint(float x, float y)
 }
 
 
-void Line::editPoint(int id, float x, float y)
+void Line::editPoint(unsigned int id, float x, float y)
 {
 	if (id < _points.size()) {
 		_points[id].x = x;
