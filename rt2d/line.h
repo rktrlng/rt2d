@@ -29,6 +29,8 @@ class Line
 		Line(const std::string& filename); ///< @brief Custom constructor of the Line
 		virtual ~Line(); ///< @brief Destructor of the Line
 		
+		Color color; ///< @brief blend Color of the Line
+		
 		/// @brief get the filename (path to the file)
 		/// @return std::string _filename
 		std::string filename() { return _filename; };
@@ -61,9 +63,11 @@ class Line
 		/// @return std::vector<glm::vec2> _uvs
 		const std::vector<glm::vec2>& uvs() { return _uvs; };
 		
-		Color color;		///< @brief blend Color of the Line
-	
+		/// @brief is this Line dynamic or not?
+		/// @return bool _dynamic
 		bool dynamic() { return _dynamic; };
+		/// @brief set this Line to be dynamic or not
+		/// @return void
 		void dynamic(bool d) { _dynamic = d; };
 		
 	private:
@@ -72,10 +76,10 @@ class Line
 		std::vector<glm::vec2> _uvs;	///< @brief _uvs UV's of the Line
 		
 		// identity
-		int _guid;				///< @brief The _guid of this Line
-		static int _nextGuid;	///< @brief The _nextGuid of this Line
+		int _guid;	///< @brief The _guid property of this Line
+		static int _nextGuid;	///< @brief The _nextGuid property of this Line
 		
-		bool _dynamic;
+		bool _dynamic;	///< @brief The _dynamic property of this Line
 };
 
 #endif /* LINE_H */ 
