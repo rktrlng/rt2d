@@ -74,17 +74,17 @@ Scene03::Scene03() : Scene()
 	Line* dynamic = new Line();
 	dynamic->dynamic(true);
 	dynamic->color = green;
-	float y = (SHEIGHT/4)*3;
 	int spacing = 25;
 	int amount = SWIDTH/spacing;
 	int i=0;
-	dynamic->addPoint(i-5, y);
+	dynamic->addPoint(i-spacing, 0);
 	for (i = 0; i < amount+1; i++) {
-		dynamic->addPoint(i*spacing, y);
+		dynamic->addPoint(i*spacing, 0);
 	}
-	dynamic->addPoint(i*10+5, y);
+	dynamic->addPoint(i*spacing, 0);
 	
 	dynamic_line = new BasicEntity();
+	dynamic_line->position.y = SHEIGHT-60;
 	dynamic_line->addLine(dynamic);
 	
 	// Create Tree
@@ -142,7 +142,7 @@ void Scene03::update(float deltaTime)
 		unsigned int s = line->points().size();
 		for (unsigned int i = 2; i < s-2; i++) {
 			float x = line->points()[i].x;
-			line->editPoint(i, x, (rand()%100)-50+(SHEIGHT/4)*3);
+			line->editPoint(i, x, (rand()%100)-50);
 		}
 		t2.start();
 	}
