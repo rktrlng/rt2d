@@ -142,7 +142,7 @@ void Scene03::update(float deltaTime)
 		unsigned int s = line->points().size();
 		for (unsigned int i = 2; i < s-2; i++) {
 			float x = line->points()[i].x;
-			line->editPoint(i, x, (random()%100)-50+(SHEIGHT/4)*3);
+			line->editPoint(i, x, (rand()%100)-50+(SHEIGHT/4)*3);
 		}
 		t2.start();
 	}
