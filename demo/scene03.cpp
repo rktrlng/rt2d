@@ -15,7 +15,6 @@ Color colors[6] = { RED, YELLOW, GREEN, CYAN, BLUE, MAGENTA };
 Scene03::Scene03() : Scene()
 {
 	t.start();
-	t2.start();
 	
 	//Load Line from file.
 	//This is the preferred method.
@@ -40,11 +39,10 @@ Scene03::Scene03() : Scene()
 	tmp->addPoint(-10.0f, 10.0f);
 	tmp->addPoint(-10.0f, -10.0f);
 	
-	//Create a BoidEntity this time, and add the Line.
-	custom_line = new BoidEntity();
-	custom_line->addLine(tmp);
-	custom_line->velocity = Vector2((rand()%500)-250, (rand()%500)-250);
-	custom_line->position = Point2(SWIDTH/2, SHEIGHT/2);
+	//Create a BasicEntity as our spaceship.
+	spaceship = new BasicEntity();
+	spaceship->addLine(tmp);
+	spaceship->position = Point2(SWIDTH/2, SHEIGHT/2);
 	
 	// Shapes!!
 	shape_container = new BasicEntity();
@@ -84,7 +82,7 @@ Scene03::Scene03() : Scene()
 	this->addChild(dynamic_line);
 	this->addChild(rt2d_line);
 	this->addChild(default_line);
-	this->addChild(custom_line);
+	this->addChild(spaceship);
 	this->addChild(shape_container);
 }
 
@@ -94,7 +92,7 @@ Scene03::~Scene03()
 	delete dynamic_line;
 	delete rt2d_line;
 	delete default_line;
-	delete custom_line;
+	delete spaceship;
 	
 	int s = shapes.size();
 	for (int i=0; i<s; i++) {
@@ -117,27 +115,16 @@ void Scene03::update(float deltaTime)
 	}
 	
 	// ###############################################################
-	// custom_line
-	// ###############################################################
-	static int counter = 0;
-	if (t.seconds() >= 0.25f) {
-		custom_line->line()->color = colors[counter%6];
-		//custom_line->velocity = Vector2((rand()%500)-250, (rand()%500)-250);
-		counter++;
-		t.start();
-	}
-	
-	// ###############################################################
 	// dynamic_line
 	// ###############################################################
-	if (t2.seconds() >= 0.1f) {
+	if (t.seconds() >= 0.1f) {
 		Line* line = dynamic_line->line();
 		unsigned int s = line->points().size();
 		for (unsigned int i = 1; i < s-1; i++) {
 			float x = line->points()[i].x;
 			line->editPoint(i, x, (rand()%100)-50);
 		}
-		t2.start();
+		t.start();
 	}
 	
 	// ###############################################################
@@ -156,4 +143,38 @@ void Scene03::update(float deltaTime)
 	if (s > TWO_PI) { s -= TWO_PI; }
 	default_line->scale.x = sin(s);
 	default_line->scale.y = cos(s);
+	
+	// ###############################################################
+	// spaceship
+	// ###############################################################
+	this->updateSpaceShip(deltaTime);
+}
+
+void Scene03::updateSpaceShip(float deltaTime)
+{
+	spaceship->line()->color = WHITE;
+	
+	float rotspeed = 3.14f;
+	
+	static Vector2 velocity = Vector2(0, 0);
+	static Polar polar = Polar(0.0f, 2.0f);
+	
+	if (input()->getKey( GLFW_KEY_UP )) {
+		spaceship->line()->color = RED;
+		velocity += polar.cartesian() * deltaTime * polar.radius; // thrust
+	}
+	if (input()->getKey( GLFW_KEY_RIGHT )) {
+		polar.angle += rotspeed * deltaTime; // rotate right
+	}
+	if (input()->getKey( GLFW_KEY_LEFT )) {
+		polar.angle -= rotspeed * deltaTime; // rotate left
+	}
+	
+	spaceship->rotation = polar.angle;
+	spaceship->position += velocity;
+	
+	if (spaceship->position.x < 0) { spaceship->position.x = SWIDTH; }
+	if (spaceship->position.x > SWIDTH) { spaceship->position.x = 0; }
+	if (spaceship->position.y < 0) { spaceship->position.y = SHEIGHT; }
+	if (spaceship->position.y > SHEIGHT) { spaceship->position.y = 0; }
 }
