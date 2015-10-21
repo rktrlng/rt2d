@@ -14,6 +14,8 @@ BoidEntity::BoidEntity()
 {
 	position = Vector2(SWIDTH/2, SHEIGHT/2);
 	velocity = Vector2((rand()%500)-250, (rand()%500)-250);
+	waittime = 0.0f;
+	t.start();
 }
 
 
@@ -24,6 +26,12 @@ BoidEntity::~BoidEntity()
 
 void BoidEntity::update(float deltaTime)
 {
+	if (t.seconds() > waittime) {
+		velocity = Vector2((rand()%500)-250, (rand()%500)-250);
+		waittime = (float) (rand()%10)/10;
+		t.start();
+	}
+	
 	// ###############################################################
 	// Keep this Entity within borders of Screen
 	// ###############################################################

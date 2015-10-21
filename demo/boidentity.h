@@ -10,6 +10,7 @@
 #ifndef BOIDENTITY_H
 #define BOIDENTITY_H
 
+#include <rt2d/timer.h>
 #include <rt2d/entity.h>
 
 class BoidEntity: public Entity
@@ -23,7 +24,8 @@ class BoidEntity: public Entity
 		Vector2 velocity;
 	
 	private:
-		/* add your private declarations */
+		float waittime;
+		Timer t;
 };
 
 #endif /* BOIDENTITY_H */ 

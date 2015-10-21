@@ -14,7 +14,7 @@ Scene02::Scene02() : Scene()
 {
 	srand((unsigned)time(NULL));
 	
-	for (int i=0; i<16; i++) {
+	for (int i=0; i<8; i++) {
 		BoidEntity* b = new BoidEntity();
 		b->addSprite("assets/boid.tga");
 		
@@ -75,13 +75,5 @@ void Scene02::update(float deltaTime)
 	// ###############################################################
 	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
 		this->stop();
-	}
-	
-	// ###############################################################
-	// Nervous red Boid
-	// ###############################################################
-	if (t.seconds() > 0.25f) {
-		boids[4]->velocity = Vector2((rand()%500)-250, (rand()%500)-250);
-		t.start();
 	}
 }

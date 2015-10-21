@@ -30,7 +30,6 @@ class Scene03: public Scene
 		
 		BasicEntity* rt2d_line;
 		BoidEntity* custom_line;
-		BoidEntity* circle_line;
 		
 		BasicEntity* shape_container;
 		std::vector<BasicEntity*> shapes;
