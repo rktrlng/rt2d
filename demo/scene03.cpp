@@ -10,14 +10,7 @@
 #include <time.h>
 #include "scene03.h"
 
-Color red     = Color(1.0f, 0.0f, 0.0f, 1.0f);
-Color yellow  = Color(1.0f, 1.0f, 0.0f, 1.0f);
-Color green   = Color(0.0f, 1.0f, 0.0f, 1.0f);
-Color cyan    = Color(0.0f, 1.0f, 1.0f, 1.0f);
-Color blue    = Color(0.0f, 0.0f, 1.0f, 1.0f);
-Color magenta = Color(1.0f, 0.0f, 1.0f, 1.0f);
-
-Color colors[6] = {red, yellow, green, cyan, blue, magenta};
+Color colors[6] = { RED, YELLOW, GREEN, CYAN, BLUE, MAGENTA };
 
 Scene03::Scene03() : Scene()
 {
@@ -42,7 +35,6 @@ Scene03::Scene03() : Scene()
 	//It will be deleted when the Entity is deleted.
 	//Not adding it to an Entity will create a memory leak.
 	Line* tmp = new Line();
-	tmp->color = green;
 	tmp->addPoint(-10.0f, -10.0f);
 	tmp->addPoint(20.0f, 0.0f);
 	tmp->addPoint(-10.0f, 10.0f);
@@ -76,7 +68,7 @@ Scene03::Scene03() : Scene()
 	Line* dynamic = new Line();
 	dynamic->dynamic(true);
 	//dynamic->closed(true);
-	dynamic->color = green;
+	dynamic->color = GREEN;
 	int spacing = 25;
 	int amount = SWIDTH/spacing;
 	int i=0;
