@@ -596,9 +596,13 @@ const bool VectorX_t<T>::operator>=(VectorX_t<T> other) const
 ///
 /// Usage:
 /// @code
+///   Vector2 vec = Vector2(4, 3);
+///   std::cout << vec.getAngle()*RAD_TO_DEG << std::endl; // 36.8699
+///   std::cout << vec.getLength() << std::endl; // 5.0
+///
 ///   Polar p = Polar(36.8699*DEG_TO_RAD, 5.0f);
-///   Vector2 vel = p.cartesian();
-///   std::cout << vel << std::endl; // (4, 3, 0)
+///   Vector2 velocity = p.cartesian();
+///   std::cout << velocity << std::endl; // (4, 3)
 /// @endcode
 template <class T>
 class Polar_t
@@ -627,6 +631,9 @@ public:
 	Polar_t<T> fromCartesian(T x, T y);
 };
 
+// =================================================
+// Class implementation of Polar_t<T>
+// =================================================
 template <class T>
 Polar_t<T>::Polar_t()
 {
