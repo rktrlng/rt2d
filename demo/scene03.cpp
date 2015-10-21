@@ -31,6 +31,13 @@ Scene03::Scene03() : Scene()
 	rt2d_line->position.x = SWIDTH/3;
 	rt2d_line->position.y = SHEIGHT/3;
 	
+	//Load Line from file.
+	//This is the preferred method.
+	default_line = new BasicEntity();
+	default_line->addLine("assets/default.line");
+	default_line->position.x = (SWIDTH/3)*2;
+	default_line->position.y = SHEIGHT/3;
+	
 	//Or create a new Line and add it to an Entity later.
 	//It will be deleted when the Entity is deleted.
 	//Not adding it to an Entity will create a memory leak.
@@ -49,15 +56,17 @@ Scene03::Scene03() : Scene()
 	
 	// Shapes!!
 	shape_container = new BasicEntity();
-	shape_container->position = Point2(SWIDTH/2, SHEIGHT/2);
+	shape_container->position = Point2(SWIDTH/2, (SHEIGHT/3)*2);
+	int numshapes = 12;
 	// fill shapes vector with variants of a circle
-	for (int i = 3; i < 11; i++) {
+	for (int i = 3; i <= numshapes; i++) {
 		Line* circle = new Line();
 		circle->createCircle(30, i);
-		circle->color = colors[i%6];
+		circle->color = colors[(i-3)%6];
 		
 		BasicEntity* b = new BasicEntity();
-		b->position.x = (i*80) - 520;
+		int spacing = 80;
+		b->position.x = ((i-3)*spacing) - ((numshapes*spacing)/2) + (1.5f*spacing);
 		b->addLine(circle);
 		shapes.push_back(b);
 		shape_container->addChild(b);
@@ -82,6 +91,7 @@ Scene03::Scene03() : Scene()
 	// Create Tree
 	this->addChild(dynamic_line);
 	this->addChild(rt2d_line);
+	this->addChild(default_line);
 	this->addChild(custom_line);
 	this->addChild(shape_container);
 }
@@ -91,6 +101,7 @@ Scene03::~Scene03()
 {
 	delete dynamic_line;
 	delete rt2d_line;
+	delete default_line;
 	delete custom_line;
 	
 	int s = shapes.size();
@@ -146,8 +157,11 @@ void Scene03::update(float deltaTime)
 	rt2d_line->scale.y = cos(rt2d_line->rotation);
 	
 	// ###############################################################
-	// shape_container
+	// default_line
 	// ###############################################################
-	shape_container->rotation -= 22.5 * DEG_TO_RAD * deltaTime;
-	if (shape_container->rotation < -TWO_PI) { shape_container->rotation += TWO_PI; }
+	static float s = 0.0f;
+	s += 2 * deltaTime;
+	if (s > TWO_PI) { s -= TWO_PI; }
+	default_line->scale.x = sin(s);
+	default_line->scale.y = cos(s);
 }
