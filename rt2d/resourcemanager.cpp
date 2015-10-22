@@ -18,8 +18,7 @@ ResourceManager::ResourceManager()
 
 ResourceManager::~ResourceManager()
 {
-	std::cout << "#######################" << std::endl;
-	std::cout << "resourcemanager cleanup" << std::endl;
+	std::cout << "################ ResourceManager::delete ################" << std::endl;
 	
 	// delete shaders only in destructor. There might be an ubershader.
 	// shaders
@@ -44,6 +43,7 @@ ResourceManager::~ResourceManager()
 
 void ResourceManager::cleanup()
 {
+	std::cout << "################ ResourceManager::cleanup ################" << std::endl;
 	// textures
 	std::cout << "---------- Delete Textures ----------" << std::endl;
 	std::map<std::string, Texture*>::iterator text_it;
