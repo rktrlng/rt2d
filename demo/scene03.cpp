@@ -157,11 +157,11 @@ void Scene03::updateSpaceShip(float deltaTime)
 	float rotspeed = 3.14f;
 	
 	static Vector2 velocity = Vector2(0, 0);
-	static Polar polar = Polar(0.0f, 2.0f);
+	static Polar polar = Polar(0.0f, 20.0f);
 	
 	if (input()->getKey( GLFW_KEY_UP )) {
 		spaceship->line()->color = RED;
-		velocity += polar.cartesian() * deltaTime * polar.radius; // thrust
+		velocity += polar.cartesian() * polar.radius * deltaTime; // thrust
 	}
 	if (input()->getKey( GLFW_KEY_RIGHT )) {
 		polar.angle += rotspeed * deltaTime; // rotate right
@@ -171,7 +171,7 @@ void Scene03::updateSpaceShip(float deltaTime)
 	}
 	
 	spaceship->rotation = polar.angle;
-	spaceship->position += velocity;
+	spaceship->position += velocity * deltaTime;
 	
 	if (spaceship->position.x < 0) { spaceship->position.x = SWIDTH; }
 	if (spaceship->position.x > SWIDTH) { spaceship->position.x = 0; }
