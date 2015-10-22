@@ -27,7 +27,7 @@ if(WIN32)
 	include(CreateLaunchers)
 	include(MSVCMultipleProcessCompile) # /MP
 	
-	add_definitions( "/W3 /D_CRT_SECURE_NO_WARNINGS /wd4514 /nologo" ) # suppress pedantic warnings
+	add_definitions( "/W3 /D_CRT_SECURE_NO_WARNINGS /wd4514 /C4244 /C4305 /nologo" ) # suppress pedantic warnings
 endif(WIN32)
 
 
