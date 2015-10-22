@@ -27,7 +27,7 @@ if(WIN32)
 	include(CreateLaunchers)
 	include(MSVCMultipleProcessCompile) # /MP
 	
-	add_definitions( "/W3 /D_CRT_SECURE_NO_WARNINGS /wd4514 /C4244 /C4305 /nologo" ) # suppress pedantic warnings
+	add_definitions( "/W3 /D_CRT_SECURE_NO_WARNINGS /wd4514 /nologo" ) # suppress pedantic warnings
 endif(WIN32)
 
 
@@ -49,6 +49,7 @@ link_directories(
 	${CMAKE_SOURCE_DIR}/external/glfw-3.0.3/src/
 	${CMAKE_SOURCE_DIR}/external/glew-1.9.0/
 	${CMAKE_SOURCE_DIR}/external/rs232
+	${CMAKE_SOURCE_DIR}/external/
 	${CMAKE_SOURCE_DIR}/rt2d
 )
 
