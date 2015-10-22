@@ -10,21 +10,19 @@
 #include <time.h>
 #include "scene02.h"
 
-Color boidcolors[8] = { GRAY, RED, YELLOW, GREEN, CYAN, BLUE, MAGENTA, WHITE };
-
 Scene02::Scene02() : Scene()
 {
 	srand((unsigned)time(NULL));
 	
+	Color c = RED;
 	for (int i=0; i<32; i++) {
 		BoidEntity* b = new BoidEntity();
 		b->addSprite("assets/boid.tga");
+		c.rotate(0.2f);
+		b->sprite()->color = c;
 		
 		boids.push_back(b);
 		this->addChild(b);
-		
-		Sprite* s = b->sprite();
-		s->color = boidcolors[i%8];
 	}
 	
 	t.start();

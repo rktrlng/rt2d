@@ -39,6 +39,16 @@ struct Color
 		b = blue;
 		a = alpha;
 	}
+	/// @brief constructor
+	/// @param red The red component of the color
+	/// @param green The green component of the color
+	/// @param blue The blue component of the color
+	Color(float red, float green, float blue) {
+		r = red;
+		g = green;
+		b = blue;
+		a = 1.0f;
+	}
 	/**
 	 * @brief The red component of the color
 	 * 
@@ -71,6 +81,27 @@ struct Color
 	 * @var a
 	 */
 	float a = 1.0f;
+	
+	void rotate(float step) {
+		// make sure we're not white (the default color)
+		if (this->r == 1.0f && this->g == 1.0f && this->b == 1.0f) { this->b = 0.0f; }
+		
+		// rotate
+		if (this->b == 1.0f && this->r < 1.0f && this->g == 0.0f) { this->r += step; }
+		if (this->g == 1.0f && this->r > 0.0f && this->b == 0.0f) { this->r -= step; }
+		if (this->r == 1.0f && this->g < 1.0f && this->b == 0.0f) { this->g += step; }
+		if (this->b == 1.0f && this->g > 0.0f && this->r == 0.0f) { this->g -= step; }
+		if (this->g == 1.0f && this->b < 1.0f && this->r == 0.0f) { this->b += step; }
+		if (this->r == 1.0f && this->b > 0.0f && this->g == 0.0f) { this->b -= step; }
+		
+		// limit
+		if (this->r > 1.0f) { this->r = 1.0f; }
+		if (this->r < 0.0f) { this->r = 0.0f; }
+		if (this->g > 1.0f) { this->g = 1.0f; }
+		if (this->g < 0.0f) { this->g = 0.0f; }
+		if (this->b > 1.0f) { this->b = 1.0f; }
+		if (this->b < 0.0f) { this->b = 0.0f; }
+	}
 };
 
 #define BLACK   Color(0.0f, 0.0f, 0.0f, 1.0f) ///< @brief Color black

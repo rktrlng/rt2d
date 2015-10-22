@@ -92,6 +92,7 @@ void Scene01::update(float deltaTime)
 	
 	animated_entity->sprite()->frame(f);
 	if (t.seconds() > 0.25f) {
+		animated_entity->sprite()->color.rotate(0.5f);
 		f++;
 		t.start();
 	}
