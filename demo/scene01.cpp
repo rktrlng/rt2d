@@ -28,6 +28,8 @@ Scene01::Scene01() : Scene()
 	child1_entity->position.y = -100;
 	
 	// A different approach: create Sprite first, then add it to an Entity later.
+	// It will be unique once you added it to an Entity.
+	// You must delete it yourself after you've added it to all the Entities you want.
 	Sprite* f_spr = new Sprite();
 	f_spr->setupSprite("assets/letterF.tga", 0.5f, 0.5f, 1.0f, 1.0f);
 	f_spr->color = Color(0.0f, 1.0f, 0.0f, 1.0f);
@@ -35,6 +37,7 @@ Scene01::Scene01() : Scene()
 	child2_entity->position.x = 64;	// position relative to parent (child1_entity)
 	child2_entity->position.y = 64;
 	child2_entity->addSprite(f_spr);
+	delete f_spr;
 	
 	// An example of using a SpriteSheet ("animated texture").
 	// Remember you also animate UV's of any Sprite (uvoffset).

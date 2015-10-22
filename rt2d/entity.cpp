@@ -56,12 +56,14 @@ void Entity::addLine(const std::string& filename)
 
 void Entity::addLine(Line* line)
 {
-	_line = line;
+	_line = new Line();
+	*_line = *line;
 }
 
 void Entity::addSprite(Sprite* spr)
 {
-	_sprite = spr;
+	_sprite = new Sprite();
+	*_sprite = *spr;
 }
 
 void Entity::addSprite(const std::string& filename)

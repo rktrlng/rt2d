@@ -16,23 +16,22 @@ Scene03::Scene03() : Scene()
 {
 	t.start();
 	
-	//Load Line from file.
-	//This is the preferred method.
+	// Load Line from file (rt2d logo)
+	// This is the preferred method.
 	rt2d_line = new BasicEntity();
 	rt2d_line->addLine("assets/rt2d.line");
 	rt2d_line->position.x = SWIDTH/3;
 	rt2d_line->position.y = SHEIGHT/3;
 	
-	//Load Line from file.
-	//This is the preferred method.
+	// and another one (square)
 	default_line = new BasicEntity();
 	default_line->addLine("assets/default.line");
 	default_line->position.x = (SWIDTH/3)*2;
 	default_line->position.y = SHEIGHT/3;
 	
-	//Or create a new Line and add it to an Entity later.
-	//It will be deleted when the Entity is deleted.
-	//Not adding it to an Entity will create a memory leak.
+	// Or create a new Line and add it to an Entity later.
+	// It will be unique once you added it to an Entity.
+	// You must delete it yourself after you've added it to all the Entities you want.
 	Line* tmp = new Line();
 	tmp->addPoint(-10.0f, -10.0f);
 	tmp->addPoint(20.0f, 0.0f);
@@ -43,6 +42,7 @@ Scene03::Scene03() : Scene()
 	spaceship = new BasicEntity();
 	spaceship->addLine(tmp);
 	spaceship->position = Point2(SWIDTH/2, SHEIGHT/2);
+	delete tmp;
 	
 	// Shapes!!
 	shape_container = new BasicEntity();
