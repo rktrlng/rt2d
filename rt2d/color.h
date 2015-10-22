@@ -76,11 +76,13 @@ struct Color
 #define BLACK   Color(0.0f, 0.0f, 0.0f, 1.0f) ///< @brief Color black
 #define GRAY    Color(0.5f, 0.5f, 0.5f, 1.0f) ///< @brief Color gray
 #define RED     Color(1.0f, 0.0f, 0.0f, 1.0f) ///< @brief Color red
+#define ORANGE  Color(1.0f, 0.5f, 0.0f, 1.0f) ///< @brief Color orange
 #define YELLOW  Color(1.0f, 1.0f, 0.0f, 1.0f) ///< @brief Color yellow
 #define GREEN   Color(0.0f, 1.0f, 0.0f, 1.0f) ///< @brief Color green
 #define CYAN    Color(0.0f, 1.0f, 1.0f, 1.0f) ///< @brief Color cyan
 #define BLUE    Color(0.0f, 0.0f, 1.0f, 1.0f) ///< @brief Color blue
 #define MAGENTA Color(1.0f, 0.0f, 1.0f, 1.0f) ///< @brief Color magenta
+#define PINK    Color(1.0f, 0.5f, 1.0f, 1.0f) ///< @brief Color pink
 #define WHITE   Color(1.0f, 1.0f, 1.0f, 1.0f) ///< @brief Color white
 
 #endif /* COLOR_H_ */

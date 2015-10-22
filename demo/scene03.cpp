@@ -10,7 +10,7 @@
 #include <time.h>
 #include "scene03.h"
 
-Color colors[6] = { RED, YELLOW, GREEN, CYAN, BLUE, MAGENTA };
+Color colors[10] = { WHITE, GRAY, RED, ORANGE, YELLOW, GREEN, CYAN, BLUE, PINK, MAGENTA };
 
 Scene03::Scene03() : Scene()
 {
@@ -52,7 +52,7 @@ Scene03::Scene03() : Scene()
 	for (int i = 3; i <= numshapes; i++) {
 		Line* circle = new Line();
 		circle->createCircle(30, i);
-		circle->color = colors[(i-3)%6];
+		circle->color = colors[(i-3)%10];
 		
 		BasicEntity* b = new BasicEntity();
 		int spacing = 80;
