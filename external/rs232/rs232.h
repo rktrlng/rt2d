@@ -46,7 +46,7 @@ extern "C" {
 
 
 
-#if defined(__linux__) || defined(__FreeBSD__) || defined(__APPLE__) || defined(__MACOSX__)
+#if defined(__linux__) || defined(__FreeBSD__)
 
 #include <termios.h>
 #include <sys/ioctl.h>
@@ -56,6 +56,8 @@ extern "C" {
 #include <sys/stat.h>
 #include <limits.h>
 #include <sys/file.h>
+
+#elif defined(__APPLE__) || defined(__MACOSX__) || defined( DARWIN )
 
 #else
 

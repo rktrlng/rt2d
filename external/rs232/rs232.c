@@ -422,6 +422,7 @@ void RS232_disableRTS(int comport_number)
   }
 }
 
+#elif defined(__APPLE__) || defined(__MACOSX__) || defined( DARWIN )
 
 #else         /* windows */
 
