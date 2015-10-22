@@ -33,6 +33,7 @@ Scene01::Scene01() : Scene()
 	f_spr->color = Color(0.0f, 1.0f, 0.0f, 1.0f);
 	child2_entity = new BasicEntity();
 	child2_entity->position = Point2(64, 64); // position relative to parent (child1_entity)
+	child2_entity->addSprite(f_spr);
 	delete f_spr;
 	
 	// An example of using a SpriteSheet ("animated texture").
