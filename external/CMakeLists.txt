@@ -63,4 +63,5 @@ include_directories(
 
 add_library( rs232 STATIC
 	rs232/rs232.c
+	rs232/rs232.h
 )
