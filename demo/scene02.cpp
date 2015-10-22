@@ -18,8 +18,7 @@ Scene02::Scene02() : Scene()
 	for (int i=0; i<32; i++) {
 		BoidEntity* b = new BoidEntity();
 		b->addSprite("assets/boid.tga");
-		c.rotate(0.2f);
-		b->sprite()->color = c;
+		b->sprite()->color = c.rotate(0.2f);
 		
 		boids.push_back(b);
 		this->addChild(b);

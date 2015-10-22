@@ -82,7 +82,7 @@ struct Color
 	 */
 	float a = 1.0f;
 	
-	void rotate(float step) {
+	Color rotate(float step) {
 		// make sure we're not white (the default color)
 		if (this->r == 1.0f && this->g == 1.0f && this->b == 1.0f) { this->b = 0.0f; }
 		
@@ -101,6 +101,8 @@ struct Color
 		if (this->g < 0.0f) { this->g = 0.0f; }
 		if (this->b > 1.0f) { this->b = 1.0f; }
 		if (this->b < 0.0f) { this->b = 0.0f; }
+		
+		return *this;
 	}
 };
 

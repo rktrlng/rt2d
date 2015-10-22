@@ -46,14 +46,13 @@ Scene03::Scene03() : Scene()
 	shape_container = new BasicEntity();
 	shape_container->position = Point2(SWIDTH/2, (SHEIGHT/3)*2);
 	int numshapes = 12;
-	Color c = RED;
+	//Color c = RED;
 	// fill shapes vector with variants of a circle
 	for (int i = 3; i <= numshapes; i++) {
 		Line* circle = new Line();
 		circle->createCircle(30, i);
 		circle->color = colors[(i-3)%10];
-		c.rotate(0.5f);
-		//circle->color = c;
+		//circle->color = c.rotate(0.5f);
 		
 		BasicEntity* b = new BasicEntity();
 		int spacing = 80;
