@@ -17,15 +17,13 @@ Scene01::Scene01() : Scene()
 	// Create an Entity with a custom pivot point.
 	default_entity = new BasicEntity();
 	default_entity->addSprite("assets/default.tga", 0.75f, 0.25f); // custom pivot point
-	default_entity->position.x = 500;
-	default_entity->position.y = 300;
+	default_entity->position = Point2(500, 300);
 	
 	// Create an Entity that's going to be a Child of the Entity above.
 	child1_entity = new BasicEntity();
 	child1_entity->addSprite("assets/letterF.tga");
 	child1_entity->sprite()->color = Color(1.0f, 0.0f, 0.0f, 1.0f);
-	child1_entity->position.x = 100;	// position relative to parent (default_entity)
-	child1_entity->position.y = -100;
+	child1_entity->position = Point2(100, -100); // position relative to parent (default_entity)
 	
 	// A different approach: create Sprite first, then add it to an Entity later.
 	// It will be unique once you added it to an Entity.
@@ -34,9 +32,7 @@ Scene01::Scene01() : Scene()
 	f_spr->setupSprite("assets/letterF.tga", 0.5f, 0.5f, 1.0f, 1.0f);
 	f_spr->color = Color(0.0f, 1.0f, 0.0f, 1.0f);
 	child2_entity = new BasicEntity();
-	child2_entity->position.x = 64;	// position relative to parent (child1_entity)
-	child2_entity->position.y = 64;
-	child2_entity->addSprite(f_spr);
+	child2_entity->position = Point2(64, 64); // position relative to parent (child1_entity)
 	delete f_spr;
 	
 	// An example of using a SpriteSheet ("animated texture").
@@ -44,8 +40,7 @@ Scene01::Scene01() : Scene()
 	animated_entity = new BasicEntity();
 	animated_entity->addLine("assets/default.line"); // Add a line (default line fits nicely)
 	animated_entity->addSpriteSheet("assets/spritesheet.tga", 4, 4);
-	animated_entity->position.x = SWIDTH/2;
-	animated_entity->position.y = SHEIGHT/2;
+	animated_entity->position = Point2(SWIDTH/2, SHEIGHT/2);
 	
 	// create a tree-structure to send to the Renderer
 	// by adding them to each other and/or the scene ('this')

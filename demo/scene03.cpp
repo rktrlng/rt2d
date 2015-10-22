@@ -20,14 +20,12 @@ Scene03::Scene03() : Scene()
 	// This is the preferred method.
 	rt2d_line = new BasicEntity();
 	rt2d_line->addLine("assets/rt2d.line");
-	rt2d_line->position.x = SWIDTH/3;
-	rt2d_line->position.y = SHEIGHT/3;
+	rt2d_line->position = Point2(SWIDTH/3, SHEIGHT/3);
 	
 	// and another one (square)
 	default_line = new BasicEntity();
 	default_line->addLine("assets/default.line");
-	default_line->position.x = (SWIDTH/3)*2;
-	default_line->position.y = SHEIGHT/3;
+	default_line->position = Point2((SWIDTH/3)*2, SHEIGHT/3);
 	
 	// Or create a new Line and add it to an Entity later.
 	// It will be unique once you added it to an Entity.
