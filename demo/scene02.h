@@ -26,7 +26,6 @@ class Scene02: public Scene
 	
 	private:
 		std::vector<BoidEntity*> boids;
-		Timer t;
 		
 		BasicEntity* ui_element;
 };

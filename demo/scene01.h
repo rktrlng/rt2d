@@ -27,7 +27,6 @@ class Scene01: public Scene
 		BasicEntity* child1_entity;
 		BasicEntity* child2_entity;
 		BasicEntity* animated_entity;
-		
 		BasicEntity* white;
 		
 		Timer t;

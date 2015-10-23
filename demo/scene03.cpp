@@ -22,7 +22,7 @@ Scene03::Scene03() : Scene()
 	rt2d_line->addLine("assets/rt2d.line");
 	rt2d_line->position = Point2(SWIDTH/3, SHEIGHT/3);
 	
-	// and another one (square)
+	// and another one (default 128x128 square)
 	default_line = new BasicEntity();
 	default_line->addLine("assets/default.line");
 	default_line->position = Point2((SWIDTH/3)*2, SHEIGHT/3);
@@ -40,7 +40,7 @@ Scene03::Scene03() : Scene()
 	spaceship = new BasicEntity();
 	spaceship->addLine(tmp);
 	spaceship->position = Point2(SWIDTH/2, SHEIGHT/2);
-	delete tmp;
+	delete tmp; // delete when you're done with it.
 	
 	// Shapes!!
 	shape_container = new BasicEntity();
@@ -56,6 +56,7 @@ Scene03::Scene03() : Scene()
 		
 		BasicEntity* b = new BasicEntity();
 		int spacing = 80;
+		// shape_container acts as pivot point (center of the shapes).
 		b->position.x = ((i-3)*spacing) - ((numshapes*spacing)/2) + (1.5f*spacing);
 		b->addLine(circle);
 		shapes.push_back(b);
