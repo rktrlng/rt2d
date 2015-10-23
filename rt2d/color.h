@@ -82,6 +82,9 @@ struct Color
 	 */
 	float a = 1.0f;
 	
+	/// @brief constructor
+	/// @param step rotate step
+	/// @return Color (*this)
 	Color rotate(float step) {
 		// make sure we're not white (the default color)
 		if (this->r == 1.0f && this->g == 1.0f && this->b == 1.0f) { this->b = 0.0f; }
