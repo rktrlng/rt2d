@@ -15,8 +15,8 @@ Scene02::Scene02() : Scene()
 	srand((unsigned)time(NULL));
 	
 	ui_element = new BasicEntity();
-	ui_element->position = Point2(10,10);
-	ui_element->addSprite("assets/default.tga", 0.0f, 0.0f);
+	ui_element->position = Point2(SWIDTH/2, 10);
+	ui_element->addSprite("assets/default.tga", 0.5f, 0.0f);
 	Sprite* s = ui_element->sprite();
 	s->size = Point2(1024, 64);
 	s->uvdim = Point2(2.0f, 0.125f);
