@@ -17,11 +17,9 @@ Scene02::Scene02() : Scene()
 	ui_element = new BasicEntity();
 	ui_element->position = Point2(SWIDTH/2, 10);
 	ui_element->addSprite("assets/default.tga", 0.5f, 0.0f);
-	Sprite* s = ui_element->sprite();
-	s->size = Point2(1024, 64);
-	s->uvdim = Point2(2.0f, 0.125f);
+	ui_element->sprite()->size = Point2(1024, 64);
+	ui_element->sprite()->uvdim = Point2(2.0f, 0.125f);
 	this->addChild(ui_element);
-	
 	
 	Color c = RED;
 	for (int i=0; i<32; i++) {
@@ -62,8 +60,7 @@ void Scene02::update(float deltaTime)
 	// ###############################################################
 	// ui_element uvoffset
 	// ###############################################################
-	Sprite* s = ui_element->sprite();
-	static float offset = 0.0f;
-	offset += deltaTime / 8;
-	s->uvoffset = Point2(offset, 0.0f);
+	static float xoffset = 0.0f;
+	xoffset += deltaTime / 4;
+	ui_element->sprite()->uvoffset = Point2(xoffset, 0.0f);
 }
