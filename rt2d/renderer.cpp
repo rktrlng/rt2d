@@ -213,8 +213,7 @@ void Renderer::_renderLine(const glm::mat4& MVP, Line* line)
 		// only uberShader for now TODO fix
 		//shader = _resman.getShader(sprite->vertexshader().c_str(), sprite->fragmentshader().c_str());
 	}
-	
-	Texture* texture = _resman.getTextureWhite();
+	Texture* texture = _resman.getTexture(AUTOGENWHITE);
 	Mesh* mesh = NULL;
 	Color blendcolor = line->color;
 	

@@ -14,7 +14,7 @@
 
 Sprite::Sprite()
 {
-	_texturename = "";
+	_texturename = AUTOGENWHITE;
 	
 	_fragmentshader = SPRITEFRAGMENTSHADER;
 	_vertexshader = SPRITEVERTEXSHADER;
@@ -26,10 +26,7 @@ Sprite::Sprite()
 	
 	_frame = 0;
 	
-	color.r = 1.0f;
-	color.g = 1.0f;
-	color.b = 1.0f;
-	color.a = 1.0f;
+	color = Color(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 Sprite::~Sprite()

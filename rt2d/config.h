@@ -28,6 +28,7 @@
 #define UBERSHADER				1	///< use UberShader or not (0/1)
 #define SPRITEVERTEXSHADER		"shaders/sprite.vert"	///< vertexshader name
 #define SPRITEFRAGMENTSHADER	"shaders/sprite.frag"	///< fragmentshader name
+#define AUTOGENWHITE			"#autogen-white-TGA#"	///< auto generated Texture
 
 #define CULLSCENE				0	///< cull Entities outside frame or not
 
