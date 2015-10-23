@@ -82,7 +82,7 @@ struct Color
 	 */
 	float a = 1.0f;
 	
-	/// @brief constructor
+	/// @brief rotate this color with a step
 	/// @param step rotate step
 	/// @return Color (*this)
 	Color rotate(float step) {
