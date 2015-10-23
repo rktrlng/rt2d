@@ -63,7 +63,7 @@ int Renderer::init()
 	glfwMakeContextCurrent(_window);
 	
 	// vsync (0=off, 1=on)
-	glfwSwapInterval(0);
+	glfwSwapInterval(1);
 
 	// Initialize GLEW
 	if (glewInit() != GLEW_OK) {
