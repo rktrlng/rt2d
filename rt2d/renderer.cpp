@@ -192,19 +192,10 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite)
 	}
 	Texture* texture = _resman.getTexture(sprite->texturename());
 
-	int width = 0;
-	int height = 0;
-	if (sprite->size.x == 0 && sprite->size.y == 0) {
-		width = texture->width() * sprite->uvdim.x;
-		height = texture->height() * sprite->uvdim.y;
-		sprite->size.x = width;
-		sprite->size.y = height;
-	} else {
-		width = sprite->size.x;
-		height = sprite->size.y;
-	}
+	if (sprite->size.x == 0) { sprite->size.x = texture->width() * sprite->uvdim.x; }
+	if (sprite->size.y == 0) { sprite->size.y = texture->height() * sprite->uvdim.y; }
 	
-	Mesh* mesh = _resman.getSpriteMesh(width, height, sprite->pivot.x, sprite->pivot.y, sprite->uvdim.x, sprite->uvdim.y);
+	Mesh* mesh = _resman.getSpriteMesh(sprite->size.x, sprite->size.y, sprite->pivot.x, sprite->pivot.y, sprite->uvdim.x, sprite->uvdim.y);
 	
 	Color blendcolor = sprite->color;
 	
