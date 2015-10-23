@@ -624,7 +624,7 @@ public:
 	
 	/// @brief Set this Polar from a VectorX_t
 	/// @return Polar_t<T>
-	Polar_t<T> fromCartesian(const VectorX_t<T> vec);
+	Polar_t<T> fromCartesian(const VectorX_t<T>& vec);
 	
 	/// @brief Set this Polar from an x and y
 	/// @return Polar_t<T>
@@ -661,7 +661,7 @@ const VectorX_t<T> Polar_t<T>::cartesian() const
 }
 
 template <class T>
-Polar_t<T> Polar_t<T>::fromCartesian(const VectorX_t<T> vec)
+Polar_t<T> Polar_t<T>::fromCartesian(const VectorX_t<T>& vec)
 {
 	this->angle = vec.getAngle();
 	this->radius = vec.getLength();
