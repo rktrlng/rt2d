@@ -92,15 +92,15 @@ void Entity::addChild(Entity* child)
 	this->_children.push_back(child);
 }
 
-void Entity::removeChild(Entity* child)
+Entity* Entity::removeChild(Entity* child)
 {
 	std::vector<Entity*>::iterator it;
 	it = std::find(_children.begin(), _children.end(), child);
 	if ((*it)->_guid == child->_guid) {
 		child->_parent = NULL;
 		it = _children.erase(it);
-		// TODO make it a sibling?
 	}
+	return child;
 }
 
 Entity* Entity::getChild(unsigned int i)
