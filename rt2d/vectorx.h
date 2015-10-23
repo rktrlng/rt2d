@@ -211,6 +211,15 @@ public:
 	 */
 	void rotate(T angle);
 	/**
+	 * @brief set the Rotation of this Vector2 in radians.
+	 * 
+	 * This only makes sense with a Vector2
+	 * 
+	 * @param angle
+	 * the angle of rotation on the Z-axis
+	 */
+	void rotation(T angle);
+	/**
 	 * @brief Rotate this Vector2 in degrees.
 	 * 
 	 * This only makes sense with a Vector2
@@ -219,6 +228,15 @@ public:
 	 * the angle to rotate on the Z-axis
 	 */
 	void rotateDeg(T angle);
+	/**
+	 * @brief set the Rotation of this Vector2 in degrees.
+	 * 
+	 * This only makes sense with a Vector2
+	 * 
+	 * @param angle
+	 * the angle of rotation on the Z-axis
+	 */
+	void rotationDeg(T angle);
 	/**
 	 * @brief Get a rotated copy of this Vector2 in radians.
 	 * 
@@ -483,7 +501,10 @@ const VectorX_t<T> VectorX_t<T>::getNormalized() const
 template <class T>
 void VectorX_t<T>::normalize()
 {
-	*this /= this->getLength();
+	T l = this->getLength();
+	if (l != 0) {
+		*this /= l;
+	}
 }
 
 template <class T>
@@ -527,15 +548,27 @@ template <class T>
 void VectorX_t<T>::rotate(T angle)
 {
 	T aa = this->getAngle() + angle;
+	this->rotation(aa);
+}
+
+template <class T>
+void VectorX_t<T>::rotation(T angle)
+{
 	T l = this->getLength();
-	this->x = cos(aa) * l;
-	this->y = sin(aa) * l;
+	this->x = cos(angle) * l;
+	this->y = sin(angle) * l;
 }
 
 template <class T>
 void VectorX_t<T>::rotateDeg(T angle)
 {
 	this->rotate(angle * DEG_TO_RAD);
+}
+
+template <class T>
+void VectorX_t<T>::rotationDeg(T angle)
+{
+	this->rotation(angle * DEG_TO_RAD);
 }
 
 template <class T>
