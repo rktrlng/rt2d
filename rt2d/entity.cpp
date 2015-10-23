@@ -37,31 +37,26 @@ Entity::Entity()
 Entity::~Entity()
 {
 	//printf("Entity dtor %d\n", _guid);
-	
-	if (_sprite != NULL) {
-		delete _sprite;
-	}
-	
-	if (_line != NULL) {
-		delete _line;
-	}
+	deleteSprite();
+	deleteLine();
 }
 
 void Entity::addLine(const std::string& filename)
 {
-	if (_line == NULL) {
-		_line = new Line(filename);
-	}
+	deleteLine();
+	_line = new Line(filename);
 }
 
 void Entity::addLine(Line* line)
 {
+	deleteLine();
 	_line = new Line();
 	*_line = *line;
 }
 
 void Entity::addSprite(Sprite* spr)
 {
+	deleteSprite();
 	_sprite = new Sprite();
 	*_sprite = *spr;
 }
@@ -73,20 +68,19 @@ void Entity::addSprite(const std::string& filename)
 
 void Entity::addSprite(const std::string& filename, float pivotx, float pivoty)
 {
-	if (_sprite == NULL) {
-		_sprite = new Sprite();
-		_sprite->setupSprite(filename, pivotx, pivoty, 1.0f, 1.0f);
-	}
+	deleteSprite();
+	
+	_sprite = new Sprite();
+	_sprite->setupSprite(filename, pivotx, pivoty, 1.0f, 1.0f);
 }
 
 void Entity::addSpriteSheet(const std::string& filename, int u, int v)
 {
-	if (_sprite == NULL) {
-		_sprite = new Sprite();
-		float uvwidth = 1.0f / u;
-		float uvheight = 1.0f / v;
-		_sprite->setupSprite(filename, 0.5f, 0.5f, uvwidth, uvheight);
-	}
+	deleteSprite();
+	_sprite = new Sprite();
+	float uvwidth = 1.0f / u;
+	float uvheight = 1.0f / v;
+	_sprite->setupSprite(filename, 0.5f, 0.5f, uvwidth, uvheight);
 }
 
 void Entity::addChild(Entity* child)

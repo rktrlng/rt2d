@@ -130,6 +130,23 @@ class Entity
 		// sprite
 		Sprite* _sprite;		///< @brief The _sprite of this Entity
 		Line* _line;		///< @brief The _line of this Entity
+		
+		/// @brief delete the Sprite of this Entity.
+		/// @return void
+		void deleteSprite() {
+			if (_sprite != NULL) {
+				delete _sprite;
+				_sprite = NULL;
+			}
+		};
+		/// @brief delete the Line of this Entity.
+		/// @return void
+		void deleteLine() {
+			if (_line != NULL) {
+				delete _line;
+				_line = NULL;
+			}
+		};
 };
 
 #endif /* ENTITY_H */ 
