@@ -192,8 +192,8 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite)
 	}
 	Texture* texture = _resman.getTexture(sprite->texturename());
 
-	glm::vec2 uvdim = sprite->uvdim;
-	glm::vec2 pivot = sprite->pivot;
+	glm::vec2 uvdim = glm::vec2(sprite->uvdim.x, sprite->uvdim.y);
+	glm::vec2 pivot = glm::vec2(sprite->pivot.x, sprite->pivot.y);
 	int width = texture->width() * uvdim.x;
 	int height = texture->height() * uvdim.y;
 	Mesh* mesh = _resman.getSpriteMesh(width, height, pivot.x, pivot.y, uvdim.x, uvdim.y);

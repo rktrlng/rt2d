@@ -17,6 +17,7 @@
 #include <glm/glm.hpp>
 
 #include <rt2d/color.h>
+#include <rt2d/pointx.h>
 
 /// @brief The Sprite class defines the Texture, Shader, blend Color and pivot point of a Sprite.
 class Sprite
@@ -51,9 +52,9 @@ class Sprite
 		/// @return int _frame
 		int frame() { return _frame; };
 		
-		glm::vec2 pivot;	///< @brief Pivot Point_t of the Sprite
-		glm::vec2 uvdim;	///< @brief UVdim Point_t of the Sprite (uvwidth, uvheight. The size of the part we need to render)
-		glm::vec2 uvoffset;	///< @brief UVoffset Point_t of the Sprite (which part do we need to render)
+		Point2 pivot;	///< @brief Pivot Point_t of the Sprite
+		Point2 uvdim;	///< @brief UVdim Point_t of the Sprite (uvwidth, uvheight. The size of the part we need to render)
+		Point2 uvoffset;	///< @brief UVoffset Point_t of the Sprite (which part do we need to render)
 		Color color;		///< @brief blend Color of the Sprite
 
 		/// @brief prepare Sprite for creation by ResourceManager
