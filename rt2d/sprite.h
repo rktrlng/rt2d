@@ -55,6 +55,7 @@ class Sprite
 		Point2 pivot;	///< @brief Pivot Point_t of the Sprite
 		Point2 uvdim;	///< @brief UVdim Point_t of the Sprite (uvwidth, uvheight. The size of the part we need to render)
 		Point2 uvoffset;	///< @brief UVoffset Point_t of the Sprite (which part do we need to render)
+		Point2 size;	///< @brief size Point_t of the Sprite (width and height of the Sprite)
 		Color color;		///< @brief blend Color of the Sprite
 
 		/// @brief prepare Sprite for creation by ResourceManager
