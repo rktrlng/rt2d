@@ -17,7 +17,7 @@ Scene01::Scene01() : Scene()
 	// Create an Entity with a custom pivot point.
 	default_entity = new BasicEntity();
 	default_entity->addSprite("assets/default.tga", 0.75f, 0.25f); // custom pivot point
-	default_entity->position = Point2(500, 300);
+	default_entity->position = Point2(SWIDTH/3, SHEIGHT/2);
 	
 	// Create an Entity that's going to be a Child of the Entity above.
 	child1_entity = new BasicEntity();
@@ -41,7 +41,14 @@ Scene01::Scene01() : Scene()
 	animated_entity = new BasicEntity();
 	animated_entity->addLine("assets/default.line"); // Add a line (default line fits nicely)
 	animated_entity->addSpriteSheet("assets/spritesheet.tga", 4, 4);
-	animated_entity->position = Point2(SWIDTH/2, SHEIGHT/2);
+	animated_entity->position = Point2(SWIDTH/3*2, SHEIGHT/2);
+	
+	// Everything to its defaults results in a white 32x32 Sprite.
+	Sprite* whitesprite = new Sprite();
+	white = new BasicEntity();
+	white->addSprite(whitesprite);
+	white->position = Point2(64, 64);
+	delete whitesprite;
 	
 	// create a tree-structure to send to the Renderer
 	// by adding them to each other and/or the scene ('this')
@@ -49,6 +56,8 @@ Scene01::Scene01() : Scene()
 	default_entity->addChild(child1_entity);
 	this->addChild(default_entity);
 	this->addChild(animated_entity);
+	
+	this->addChild(white);
 }
 
 
@@ -78,14 +87,14 @@ void Scene01::update(float deltaTime)
 	// ###############################################################
 	// Rotate default_entity
 	// ###############################################################
-	default_entity->rotation += 90 * DEG_TO_RAD * deltaTime; // 90 deg. per sec.
-	if (default_entity->rotation > TWO_PI) { default_entity->rotation -= TWO_PI; }
+	default_entity->rotation -= 90 * DEG_TO_RAD * deltaTime; // 90 deg. per sec.
+	if (default_entity->rotation < TWO_PI) { default_entity->rotation += TWO_PI; }
 	
 	// ###############################################################
 	// Animate animated_entity
 	// ###############################################################
-	animated_entity->rotation -= 22.5 * DEG_TO_RAD * deltaTime;
-	if (animated_entity->rotation < -TWO_PI) { animated_entity->rotation += TWO_PI; }
+	animated_entity->rotation += 22.5 * DEG_TO_RAD * deltaTime;
+	if (animated_entity->rotation > -TWO_PI) { animated_entity->rotation -= TWO_PI; }
 	
 	static int f = 0;
 	if (f > 15) { f = 0; }

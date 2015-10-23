@@ -28,6 +28,8 @@ class Scene01: public Scene
 		BasicEntity* child2_entity;
 		BasicEntity* animated_entity;
 		
+		BasicEntity* white;
+		
 		Timer t;
 };
 
