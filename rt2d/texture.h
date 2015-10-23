@@ -42,6 +42,11 @@ class Texture
 		/// @param filename the path to the image
 		/// @return GLuint _gltexture, 0 if failed
 		GLuint loadImage(const std::string& filename);
+		/// @brief Autogenerates white RGB texture
+		/// @param width the width of the white Texture
+		/// @param height the height of the white Texture
+		/// @return GLuint _gltexture, 0 if failed
+		GLuint createWhite(int width, int height);
 	
 	private:
 		GLuint _gltexture;	///< @brief texture handle

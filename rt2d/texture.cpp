@@ -77,11 +77,26 @@ GLuint Texture::loadTGA(const char * imagepath)
 	_gltexture = tga.pixelData();
 	
 	// get Width & Height
-	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &_width);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &_height);
-	//std::cout << "size: " << (int)_textureWidth << " , " << (int)_textureHeight << std::endl;
+	_width = tga.width();
+	_height = tga.height();
 	
 	_filterTexture(_filtering);
+	
+	return _gltexture;
+}
+
+GLuint Texture::createWhite(int width, int height)
+{
+	// Create white TGA 'file'
+	TGA tga;
+	tga.createWhiteTGA(width, height);
+	_gltexture = tga.pixelData();
+	
+	// get Width & Height
+	_width = tga.width();
+	_height = tga.height();
+	
+	_filterTexture(0);
 	
 	return _gltexture;
 }

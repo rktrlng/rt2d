@@ -39,6 +39,8 @@ class TGA
 		/// @brief load an image from disk
 		/// @param filename the path to the file
 		bool loadImage(const std::string& filename);
+		/// @brief create a width x height white TGA file
+		bool createWhiteTGA(int width, int height);
 
 		/// @brief width of the tga
 		/// @return int _width
@@ -86,9 +88,9 @@ class TGA
 		};
 
 		/// @brief swap every first and third byte of the pixels
-		void TGABGR2RGB(STGA& tga);
+		void TGABGR2RGB(STGA& stga);
 		/// @brief generate the OpenGL texture
-		void generateTexture(STGA& tga);
+		void generateTexture(STGA& stga);
 
 		/// @brief the width of the file
 		int _width;
@@ -97,7 +99,7 @@ class TGA
 		/// @brief the color depth of the pixels
 		int _depth;
 		/// @brief a pointer to the TGA file
-		STGA * _tgaFile;
+		STGA * _stgaFile;
 		/// @brief a number of texture names
 		GLuint _tex[1];
 		/// @brief a texture buffer of bytes

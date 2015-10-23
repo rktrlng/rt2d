@@ -11,7 +11,7 @@
 
 TGA::TGA()
 {
-	this->_tgaFile = NULL;
+	this->_stgaFile = NULL;
 	this->_tex_buf = NULL;
 	this->_tex[0] = 0;
 	
@@ -26,34 +26,34 @@ TGA::TGA()
 
 TGA::~TGA()
 {
-	if (this->_tgaFile != NULL) {
-		delete this->_tgaFile;
+	if (this->_stgaFile != NULL) {
+		delete this->_stgaFile;
 	}
 	//std::cout << "TGA closed" << std::endl;
 }
 
-void TGA::TGABGR2RGB(STGA& tga)
+void TGA::TGABGR2RGB(STGA& stga)
 {
 	// this also works as BGRA2RGBA
 	long counter = 0;
-	long s = tga.width * tga.height;
+	long s = stga.width * stga.height;
 	for (long i=0; i<s; i++) {
 		//swap every 1st byte with every 3rd byte
-		unsigned char temp = tga.data[counter];
-		tga.data[counter] = tga.data[counter+2];
-		tga.data[counter+2] = temp;
+		unsigned char temp = stga.data[counter];
+		stga.data[counter] = stga.data[counter+2];
+		stga.data[counter+2] = temp;
 		
-		counter += tga.byteCount;
+		counter += stga.byteCount;
 	}
 }
 
-void TGA::generateTexture(STGA& tga)
+void TGA::generateTexture(STGA& stga)
 {
 	// set Entity properties
-	this->_width = tga.width;
-	this->_height = tga.height;
-	this->_depth = tga.byteCount;
-	this->_tex_buf = tga.data;
+	this->_width = stga.width;
+	this->_height = stga.height;
+	this->_depth = stga.byteCount;
+	this->_tex_buf = stga.data;
 	// =================================================================
 	
 	// generate a number of texturenames (just 1 for now)
@@ -74,9 +74,42 @@ void TGA::generateTexture(STGA& tga)
 	}
 }
 
+bool TGA::createWhiteTGA(int width, int height)
+{
+	std::cout << "Creating TGA: white " << width << "x" << height << std::endl;
+	
+	_stgaFile = new STGA();
+	
+	_stgaFile->width = width;
+	_stgaFile->height = width;
+	_stgaFile->byteCount = 3;
+
+	long file_size = _stgaFile->width * _stgaFile->height * _stgaFile->byteCount;
+
+	//allocate memory for image data
+	_stgaFile->data = new unsigned char[file_size];
+
+	//read in image data
+	// this also works as BGRA2RGBA
+	long counter = 0;
+	long s = _stgaFile->width * _stgaFile->height;
+	for (long i=0; i<s; i++) {
+		_stgaFile->data[counter+0] = 255;
+		_stgaFile->data[counter+1] = 255;
+		_stgaFile->data[counter+2] = 255;
+		
+		counter += _stgaFile->byteCount;
+	}
+	
+	// Generate the OpenGL Texture
+	generateTexture(*_stgaFile);
+	
+	return true;
+}
+
 bool TGA::loadImage(const std::string& filename)
 {
-	std::cout << "Loading: " << filename << std::endl;
+	std::cout << "Loading TGA: " << filename << std::endl;
 	
 	// Load .tga file
 	FILE *file;
@@ -103,49 +136,49 @@ bool TGA::loadImage(const std::string& filename)
 		return false;
 	}
 	
-	_tgaFile = new STGA();
+	_stgaFile = new STGA();
 	
-	_tgaFile->width = info[0] + info[1] * 256;
-	_tgaFile->height = info[2] + info[3] * 256;
-	_tgaFile->byteCount = info[4] / 8;
+	_stgaFile->width = info[0] + info[1] * 256;
+	_stgaFile->height = info[2] + info[3] * 256;
+	_stgaFile->byteCount = info[4] / 8;
 
-	if (_tgaFile->byteCount != 3 && _tgaFile->byteCount != 4) {
+	if (_stgaFile->byteCount != 3 && _stgaFile->byteCount != 4) {
 		std::cout << "bytecount not 3 or 4" << std::endl;
 		fclose(file);
 		return false;
 	}
 	
-	long file_size = _tgaFile->width * _tgaFile->height * _tgaFile->byteCount;
+	long file_size = _stgaFile->width * _stgaFile->height * _stgaFile->byteCount;
 
 	//allocate memory for image data
-	_tgaFile->data = new unsigned char[file_size];
+	_stgaFile->data = new unsigned char[file_size];
 
 	//read in image data
-	s = fread(_tgaFile->data, sizeof(unsigned char), file_size, file);
+	s = fread(_stgaFile->data, sizeof(unsigned char), file_size, file);
 	if (s == 0) return false;
 
 	//close file
 	fclose(file);
 	
 	// BGR(A) to RGB(A)
-	TGABGR2RGB(*_tgaFile);
+	TGABGR2RGB(*_stgaFile);
 	
 	// =================================================================
 	// Check if the image's width and height is a power of 2. No biggie, we can handle it.
-	if ((_tgaFile->width & (_tgaFile->width - 1)) != 0) {
+	if ((_stgaFile->width & (_stgaFile->width - 1)) != 0) {
 		//std::cout << "warning: " << filename << "’s width is not a power of 2" << std::endl;
 	}
-	if ((_tgaFile->height & (_tgaFile->height - 1)) != 0) {
+	if ((_stgaFile->height & (_stgaFile->height - 1)) != 0) {
 		//std::cout << "warning: " << filename << "’s height is not a power of 2" << std::endl;
 	}
 	// But we can't handle non-square images. no-show. silent fail.
-	if (_tgaFile->width != _tgaFile->height) {
+	if (_stgaFile->width != _stgaFile->height) {
 		std::cout << "warning: " << filename << " is not square *** WARNING *** THIS WILL BREAK (softly) ***" << std::endl;
 	}
 	// =================================================================
 	
 	// Generate the OpenGL Texture
-	generateTexture(*_tgaFile);
+	generateTexture(*_stgaFile);
 	
 	return true;
 }

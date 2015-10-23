@@ -63,7 +63,7 @@ int Renderer::init()
 	glfwMakeContextCurrent(_window);
 	
 	// vsync (0=off, 1=on)
-	glfwSwapInterval(1);
+	glfwSwapInterval(0);
 
 	// Initialize GLEW
 	if (glewInit() != GLEW_OK) {
@@ -214,7 +214,7 @@ void Renderer::_renderLine(const glm::mat4& MVP, Line* line)
 		//shader = _resman.getShader(sprite->vertexshader().c_str(), sprite->fragmentshader().c_str());
 	}
 	
-	Texture* texture = _resman.getTexture("assets/white.tga");
+	Texture* texture = _resman.getTextureWhite();
 	Mesh* mesh = NULL;
 	Color blendcolor = line->color;
 	
