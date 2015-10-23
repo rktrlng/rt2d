@@ -151,8 +151,8 @@ void ResourceManager::deleteShader(const std::string& shadername)
 // Meshes
 Mesh* ResourceManager::getSpriteMesh(int width, int height, float pivotx, float pivoty, float uvwidth, float uvheight)
 {
-	char buf[48]; // should be big enough: "1024x1024_0.50x0.50_1.00x1.00"
-	sprintf(buf, "%dx%d_%.2fx%.2f_%.2fx%.2f", width, height, pivotx, pivoty, uvwidth, uvheight);
+	char buf[48]; // should be big enough: "1024x1024_0.5000x0.5000_1.0000x1.0000"
+	sprintf(buf, "%dx%d_%.4fx%.4f_%.4fx%.4f", width, height, pivotx, pivoty, uvwidth, uvheight);
 	std::string meshname(buf);
 	
 	if (_meshes[meshname] != NULL) {
