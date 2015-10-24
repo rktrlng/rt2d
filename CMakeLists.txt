@@ -17,6 +17,7 @@ endif()
 if(UNIX)
 	#set(CMAKE_CXX_FLAGS "-Wall -std=c++0x -pedantic -O2 -g -pg")
 	#set(CMAKE_CXX_FLAGS "-Wall -Wstrict-aliasing -std=c++0x -O2")
+	#set(CMAKE_CXX_FLAGS "-Wall -pg -std=c++11")
 	set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
 endif(UNIX)
 
