@@ -28,8 +28,8 @@ class Texture
 		virtual ~Texture();	///< @brief Destructor of the Texture
 
 		/// @brief get the OpenGL texture
-		/// @return GLuint _gltexture
-		GLuint getGLTexture() { return _gltexture; };
+		/// @return GLuint _texture
+		GLuint getGLTexture() { return _texture; };
 
 		/// @brief get the width of the OpenGL texture
 		/// @return int _width
@@ -40,16 +40,16 @@ class Texture
 
 		/// @brief load an image from file (tga only)
 		/// @param filename the path to the image
-		/// @return GLuint _gltexture, 0 if failed
+		/// @return GLuint _texture, 0 if failed
 		GLuint loadImage(const std::string& filename);
 		/// @brief Autogenerates white RGB texture
 		/// @param width the width of the white Texture
 		/// @param height the height of the white Texture
-		/// @return GLuint _gltexture, 0 if failed
+		/// @return GLuint _texture, 0 if failed
 		GLuint createWhite(int width, int height);
 	
 	private:
-		GLuint _gltexture;	///< @brief texture handle
+		GLuint _texture;	///< @brief texture handle
 		int _width;			///< @brief texture width
 		int _height;		///< @brief texture height
 
@@ -69,7 +69,7 @@ class Texture
 
 		/// @brief load a tga from file
 		/// @param imagepath the path to the image.tga
-		/// @return GLuint _gltexture
+		/// @return GLuint _texture
 		GLuint loadTGA(const char * imagepath);
 };
 

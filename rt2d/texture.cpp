@@ -12,13 +12,13 @@
 #include <string.h>
 
 #include <rt2d/texture.h>
-#include <rt2d/tga.h>
+#include <rt2d/image.h>
 
 //#pragma GCC diagnostic ignored "-Wstrict-aliasing"
 
 Texture::Texture()
 {
-	_gltexture = 0; // texture handle
+	_texture = 0; // texture handle
 
 	_width = 0;
 	_height = 0;
@@ -26,10 +26,9 @@ Texture::Texture()
 	_filtering = 3;
 }
 
-
 Texture::~Texture()
 {
-	glDeleteTextures(1, &_gltexture);
+	glDeleteTextures(1, &_texture);
 	//std::cout << "========> Texture deleted" << std::endl;
 }
 
@@ -42,6 +41,22 @@ GLuint Texture::loadImage(const std::string& filename)
 	}
 	printf("Can not load Texture: %s (only tga)\n", filename.c_str());
 	return 0;
+}
+
+GLuint Texture::createWhite(int width, int height)
+{
+	// Create white Texture
+	Image image;
+	image.createWhitePixels(width, height);
+	_texture = image.textureData();
+	
+	// get Width & Height
+	_width = image.width();
+	_height = image.height();
+	
+	_filterTexture(0);
+	
+	return _texture;
 }
 
 void Texture::_filterTexture(int level)
@@ -72,9 +87,9 @@ void Texture::_filterTexture(int level)
 GLuint Texture::loadTGA(const char * imagepath)
 {
 	// Load texture from TGA file
-	TGA tga;
-	tga.loadImage(imagepath);
-	_gltexture = tga.pixelData();
+	Image tga;
+	tga.loadTGAImage(imagepath);
+	_texture = tga.textureData();
 	
 	// get Width & Height
 	_width = tga.width();
@@ -82,21 +97,5 @@ GLuint Texture::loadTGA(const char * imagepath)
 	
 	_filterTexture(_filtering);
 	
-	return _gltexture;
-}
-
-GLuint Texture::createWhite(int width, int height)
-{
-	// Create white TGA 'file'
-	TGA tga;
-	tga.createWhiteTGA(width, height);
-	_gltexture = tga.pixelData();
-	
-	// get Width & Height
-	_width = tga.width();
-	_height = tga.height();
-	
-	_filterTexture(0);
-	
-	return _gltexture;
+	return _texture;
 }

@@ -82,6 +82,8 @@ add_library(rt2d
 	rt2d/core.h
 	rt2d/entity.cpp
 	rt2d/entity.h
+	rt2d/image.cpp
+	rt2d/image.h
 	rt2d/input.cpp
 	rt2d/input.h
 	rt2d/line.cpp
@@ -101,8 +103,6 @@ add_library(rt2d
 	rt2d/sprite.h
 	rt2d/texture.cpp
 	rt2d/texture.h
-	rt2d/tga.cpp
-	rt2d/tga.h
 	rt2d/timer.cpp
 	rt2d/timer.h
 	rt2d/util.c

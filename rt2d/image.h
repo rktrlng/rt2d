@@ -1,7 +1,7 @@
 /**
- * @file tga.h
+ * @file image.h
  * 
- * @brief The TGA header file.
+ * @brief The Image header file.
  * 
  * This file is part of RT2D, a 2D OpenGL framework.
  * 
@@ -11,8 +11,8 @@
  *   - [description]
  */
 
-#ifndef TGA_H
-#define TGA_H
+#ifndef IMAGE_H
+#define IMAGE_H
 
 #include <string>
 #include <iostream>
@@ -24,23 +24,23 @@
 // Include GLFW
 #include <glfw3.h>
 
-/// @brief a TGA contains the OpenGL pixeldata
-class TGA
+/// @brief an Image contains the OpenGL pixeldata
+class Image
 {
 	public:
 		/// @brief constructor
-		TGA();
+		Image();
 		/// @brief destructor
-		virtual ~TGA();
+		virtual ~Image();
 
 		/// @brief the pixeldata of the Texture
-		GLuint pixelData() { return _tex[0]; };
+		GLuint textureData() { return _gltexture[0]; };
 
-		/// @brief load an image from disk
+		/// @brief load a TGA image from disk
 		/// @param filename the path to the file
-		bool loadImage(const std::string& filename);
-		/// @brief create a width x height white TGA file
-		bool createWhiteTGA(int width, int height);
+		bool loadTGAImage(const std::string& filename);
+		/// @brief create a width x height white PixelBuffer & GL pixeldata
+		bool createWhitePixels(int width, int height);
 
 		/// @brief width of the tga
 		/// @return int _width
@@ -53,29 +53,29 @@ class TGA
 		int depth() { return _depth; };
 
 	private:
-		/// @brief defines a TGA file
-		struct STGA
+		/// @brief defines a PixelBuffer
+		struct PixelBuffer
 		{
 			/// @brief constructor
-			STGA()
+			PixelBuffer()
 			{
 				/// @brief initialize the pixel data
 				data = (unsigned char*)0;
-				/// @brief initialize the width of the file
+				/// @brief initialize the width of the buffer
 				width = 0;
-				/// @brief initialize the height of the file
+				/// @brief initialize the height of the buffer
 				height = 0;
 				/// @brief initialize the color depth of the pixels
 				byteCount = 0;
 				
-				//std::cout << "create STGA" << std::endl;
+				//std::cout << "create PixelBuffer" << std::endl;
 			}
 
 			/// @brief destructor
-			~STGA() { delete[] data; data = 0; /*std::cout << "delete STGA" << std::endl;*/ }
+			~PixelBuffer() { delete[] data; data = 0; /*std::cout << "delete PixelBuffer" << std::endl;*/ }
 
 			/// @brief destroy the pixel data
-			void destroy() { delete[] data; data = 0; /*std::cout << "destroy STGA" << std::endl;*/ }
+			void destroy() { delete[] data; data = 0; /*std::cout << "destroy PixelBuffer" << std::endl;*/ }
 
 			/// @brief the width of the file
 			int width;
@@ -88,9 +88,9 @@ class TGA
 		};
 
 		/// @brief swap every first and third byte of the pixels
-		void TGABGR2RGB(STGA& stga);
+		void BGR2RGB(PixelBuffer& pixels);
 		/// @brief generate the OpenGL texture
-		void generateTexture(STGA& stga);
+		void generateTexture(PixelBuffer& pixels);
 
 		/// @brief the width of the file
 		int _width;
@@ -99,11 +99,9 @@ class TGA
 		/// @brief the color depth of the pixels
 		int _depth;
 		/// @brief a pointer to the TGA file
-		STGA * _stgaFile;
+		PixelBuffer* _pixels;
 		/// @brief a number of texture names
-		GLuint _tex[1];
-		/// @brief a texture buffer of bytes
-		unsigned char * _tex_buf;
+		GLuint _gltexture[1];
 };
 
-#endif /* TGA_H */ 
+#endif /* IMAGE_H */ 
