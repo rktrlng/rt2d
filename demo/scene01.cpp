@@ -74,6 +74,7 @@ Scene01::~Scene01()
 	delete child2_entity;
 	delete child1_entity;
 	delete default_entity;
+	delete white;
 }
 
 void Scene01::update(float deltaTime)

@@ -61,6 +61,7 @@ Scene03::Scene03() : Scene()
 		b->addLine(circle);
 		shapes.push_back(b);
 		shape_container->addChild(b);
+		delete circle;
 	}
 	
 	// Dynamic Line
@@ -78,6 +79,7 @@ Scene03::Scene03() : Scene()
 	dynamic_line = new BasicEntity();
 	dynamic_line->position.y = SHEIGHT-60;
 	dynamic_line->addLine(dynamic);
+	delete dynamic;
 	
 	// Create Tree
 	this->addChild(dynamic_line);
