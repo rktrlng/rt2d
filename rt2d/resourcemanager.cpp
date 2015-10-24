@@ -76,9 +76,9 @@ Texture* ResourceManager::getTexture(const std::string& filename)
 	} else {
 		Texture* t = new Texture();
 		if (filename == AUTOGENWHITE) {
-			t->createWhite(32, 32);
+			t->createWhitePixels(32, 32);
 		} else {
-			t->loadImage(_prefix+filename);
+			t->loadTGAImage(_prefix+filename);
 		}
 		_textures[filename] = t;
 		std::cout << "return new resource: " << filename << " (texture)" << std::endl;

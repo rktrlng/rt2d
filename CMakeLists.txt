@@ -82,8 +82,6 @@ add_library(rt2d
 	rt2d/core.h
 	rt2d/entity.cpp
 	rt2d/entity.h
-	rt2d/image.cpp
-	rt2d/image.h
 	rt2d/input.cpp
 	rt2d/input.h
 	rt2d/line.cpp
