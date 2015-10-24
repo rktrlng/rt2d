@@ -21,7 +21,7 @@ class SuperScene: public Scene
 		virtual ~SuperScene();
 
 		// must be explicitly called from subclass
-		virtual void update(float deltaTime)
+		virtual void update(float deltaTime);
 
 	protected:
 		unsigned int top_layer;
