@@ -12,7 +12,7 @@
 
 Color colors[10] = { WHITE, GRAY, RED, ORANGE, YELLOW, GREEN, CYAN, BLUE, PINK, MAGENTA };
 
-Scene03::Scene03() : Scene()
+Scene03::Scene03() : SuperScene()
 {
 	t.start();
 	
@@ -82,16 +82,22 @@ Scene03::Scene03() : Scene()
 	delete dynamic;
 	
 	// Create Tree
-	this->addChild(dynamic_line);
-	this->addChild(rt2d_line);
-	this->addChild(default_line);
-	this->addChild(spaceship);
-	this->addChild(shape_container);
+	layers[0]->addChild(dynamic_line);
+	layers[0]->addChild(rt2d_line);
+	layers[0]->addChild(default_line);
+	layers[0]->addChild(spaceship);
+	layers[0]->addChild(shape_container);
 }
 
 
 Scene03::~Scene03()
 {
+	layers[0]->removeChild(shape_container);
+	layers[0]->removeChild(spaceship);
+	layers[0]->removeChild(default_line);
+	layers[0]->removeChild(rt2d_line);
+	layers[0]->removeChild(dynamic_line);
+	
 	delete dynamic_line;
 	delete rt2d_line;
 	delete default_line;
@@ -111,11 +117,9 @@ Scene03::~Scene03()
 void Scene03::update(float deltaTime)
 {
 	// ###############################################################
-	// Escape key stops the Scene
+	// Make SuperScene do what it needs to do (Escape key stops Scene)
 	// ###############################################################
-	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
-		this->stop();
-	}
+	SuperScene::update(deltaTime);
 	
 	// ###############################################################
 	// dynamic_line

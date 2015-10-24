@@ -129,6 +129,8 @@ add_executable(demo
 	demo/scene02.h
 	demo/scene03.cpp
 	demo/scene03.h
+	demo/superscene.cpp
+	demo/superscene.h
 )
 target_link_libraries(demo
 	${ALL_LIBS}
