@@ -55,9 +55,8 @@ Scene01::Scene01() : SuperScene()
 	// by adding them to each other and/or the scene ('this')
 	child1_entity->addChild(child2_entity);
 	default_entity->addChild(child1_entity);
-	layers[0]->addChild(default_entity);
-	layers[0]->addChild(animated_entity);
-	
+	layers[1]->addChild(default_entity);
+	layers[1]->addChild(animated_entity);
 	layers[0]->addChild(white);
 }
 
@@ -67,8 +66,9 @@ Scene01::~Scene01()
 	// deconstruct and delete the Tree
 	child1_entity->removeChild(child2_entity);
 	default_entity->removeChild(child1_entity);
-	layers[0]->removeChild(default_entity);
-	layers[0]->removeChild(animated_entity);
+	layers[1]->removeChild(default_entity);
+	layers[1]->removeChild(animated_entity);
+	layers[0]->removeChild(white);
 	
 	delete animated_entity;
 	delete child2_entity;

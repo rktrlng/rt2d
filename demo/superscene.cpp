@@ -19,7 +19,7 @@ SuperScene::SuperScene() : Scene()
 		this->addChild(layer);
 	}
 
-	// Create a logo entity
+	// Create a logo entity on the top layer
 	logo = new BasicEntity();
 	logo->position = Point2(SWIDTH/2, SHEIGHT - 50);
 	logo->addLine("assets/rt2d.line");
@@ -50,4 +50,10 @@ void SuperScene::update(float deltaTime)
 	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
 		this->stop();
 	}
+	
+	// ###############################################################
+	// logo follows camera
+	// ###############################################################
+	Point2 logo_pos = Point2(camera()->position.x, camera()->position.y - 50 + SHEIGHT/2);
+	logo->position = logo_pos;
 }
