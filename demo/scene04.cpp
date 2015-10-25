@@ -52,11 +52,11 @@ void Scene04::update(float deltaTime)
 		long counter = 0;
 		for (long y=0; y<buff->width; y++) {
 			for (long x=0; x<buff->height; x++) {
-				buff->data[counter+0] = random()%255;
-				buff->data[counter+1] = random()%255;
-				buff->data[counter+2] = random()%255;
+				buff->data[counter+0] = rand()%255;
+				buff->data[counter+1] = rand()%255;
+				buff->data[counter+2] = rand()%255;
 				if (buff->bitdepth == 4) {
-					buff->data[counter+3] = random()%255;
+					buff->data[counter+3] = rand()%255;
 				}
 				
 				counter += buff->bitdepth;
