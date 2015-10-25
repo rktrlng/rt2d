@@ -29,8 +29,8 @@ class Scene04: public SuperScene
 		Timer t;
 		Timer rt;
 		
-		void randomPixels(PixelBuffer* pixels);
-		void rainbowPixels(PixelBuffer* pixels);
+		void randomPixels(PixelBuffer* pixels, int filter);
+		void rainbowPixels(PixelBuffer* pixels, float step, int filter);
 };
 
 #endif /* SCENE04_H */ 

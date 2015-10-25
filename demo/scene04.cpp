@@ -23,10 +23,6 @@ Scene04::Scene04() : SuperScene()
 	PixelBuffer* pixels = new PixelBuffer(64, 64, 3, 0);
 	pixel_container->addDynamicSprite(pixels);
 	delete pixels;
-	
-	// fill with rainbow
-	PixelBuffer* buff = pixel_container->sprite()->pixels();
-	rainbowPixels(buff);
 
 	layers[0]->addChild(pixel_container);
 }
@@ -50,26 +46,39 @@ void Scene04::update(float deltaTime)
 	// ###############################################################
 	pixel_container->rotation += PI / 8 * deltaTime;
 	
-	static int counter = 0;
-	if (t.seconds() > 1.0f) {
-		counter++;
-		if (counter > 1) { counter=0; }
+	// change state every n seconds
+	static int state = 0;
+	if (t.seconds() > 2.0f) {
+		state++;
+		if (state > 3) { state=0; }
 		t.start();
 	}
 	
+	// change pixels according to state
 	if (rt.seconds() > 0.05f) {
 		// get the pixels
 		PixelBuffer* buff = pixel_container->sprite()->pixels();
-		if (counter%2) {
-			rainbowPixels(buff);
-		} else {
-			randomPixels(buff);
+		switch (state) {
+			case 0:
+				rainbowPixels(buff, 0.25f, 3);
+				break;
+			case 1:
+				randomPixels(buff, 0);
+				break;
+			case 2:
+				rainbowPixels(buff, 0.1f, 0);
+				break;
+			case 3:
+				randomPixels(buff, 1);
+				break;
+			default:
+				break;
 		}
 		rt.start();
 	}
 }
 
-void Scene04::randomPixels(PixelBuffer* pixels)
+void Scene04::randomPixels(PixelBuffer* pixels, int filter)
 {
 	long counter = 0;
 	for (long y=0; y<pixels->height; y++) {
@@ -84,15 +93,15 @@ void Scene04::randomPixels(PixelBuffer* pixels)
 			counter += pixels->bitdepth;
 		}
 	}
-	pixels->filter = 0;
+	pixels->filter = filter;
 }
 
-void Scene04::rainbowPixels(PixelBuffer* pixels)
+void Scene04::rainbowPixels(PixelBuffer* pixels, float step, int filter)
 {
 	static Color c = Color(1.0, 0.0f, 0.0f, 1.0f);
 	long counter = 0;
 	for (long y=0; y<pixels->height; y++) {
-		c.rotate(0.25);
+		c.rotate(step);
 		for (long x=0; x<pixels->width; x++) {
 			pixels->data[counter+0] = c.r * 255;
 			pixels->data[counter+1] = c.g * 255;
@@ -104,5 +113,5 @@ void Scene04::rainbowPixels(PixelBuffer* pixels)
 			counter += pixels->bitdepth;
 		}
 	}
-	pixels->filter = 3;
+	pixels->filter = filter;
 }
