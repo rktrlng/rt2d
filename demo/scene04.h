@@ -27,6 +27,10 @@ class Scene04: public SuperScene
 	private:
 		BasicEntity* pixel_container;
 		Timer t;
+		Timer rt;
+		
+		void randomPixels(PixelBuffer* pixels);
+		void rainbowPixels(PixelBuffer* pixels);
 };
 
 #endif /* SCENE04_H */ 
