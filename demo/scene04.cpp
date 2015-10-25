@@ -50,8 +50,8 @@ void Scene04::update(float deltaTime)
 		PixelBuffer* buff = pixel_container->sprite()->pixels();
 	
 		long counter = 0;
-		for (long y=0; y<buff->width; y++) {
-			for (long x=0; x<buff->height; x++) {
+		for (long y=0; y<buff->height; y++) {
+			for (long x=0; x<buff->width; x++) {
 				buff->data[counter+0] = rand()%255;
 				buff->data[counter+1] = rand()%255;
 				buff->data[counter+2] = rand()%255;
