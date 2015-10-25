@@ -45,6 +45,7 @@ void Scene04::update(float deltaTime)
 	// pixel_container
 	// ###############################################################
 	pixel_container->rotation += PI / 16 * deltaTime;
+	//pixel_container->sprite()->uvoffset += Point2(deltaTime/8, deltaTime/8);
 	
 	// change state every n seconds, pause timer when SPACE is pressed
 	static int state = 0;
@@ -57,7 +58,7 @@ void Scene04::update(float deltaTime)
 	
 	if (t.seconds() > 1.0f) {
 		state++;
-		if (state > 10) { state = 0; }
+		if (state > 12) { state = 0; }
 		t.start();
 	}
 	
@@ -68,7 +69,7 @@ void Scene04::update(float deltaTime)
 		PixelBuffer* buff = pixel_container->sprite()->pixels();
 		switch (state) {
 			case 0:
-				checkerPixels(buff, 64, GRAY, GRAY);
+				randomPixels(buff, 0);
 				break;
 			case 1:
 				checkerPixels(buff, 32, WHITE, BLACK);
@@ -92,12 +93,18 @@ void Scene04::update(float deltaTime)
 				randomPixels(buff, 0);
 				break;
 			case 8:
-				rainbowPixels(buff, 0.25f, 3);
+				rainbowPixels(buff, 0.25f, 0);
 				break;
 			case 9:
-				randomPixels(buff, 1);
+				rainbowPixels(buff, 0.25f, 3);
 				break;
 			case 10:
+				randomPixels(buff, 1);
+				break;
+			case 11:
+				rainbowPixels(buff, 0.1f, 0);
+				break;
+			case 12:
 				rainbowPixels(buff, 0.1f, 3);
 				break;
 			default:
@@ -127,7 +134,7 @@ void Scene04::randomPixels(PixelBuffer* pixels, int filter)
 
 void Scene04::rainbowPixels(PixelBuffer* pixels, float step, int filter)
 {
-	static Color c = Color(1.0, 0.0f, 0.0f, 1.0f);
+	Color c = RED;
 	long counter = 0;
 	for (long y=0; y<pixels->height; y++) {
 		c.rotate(step);
@@ -147,7 +154,7 @@ void Scene04::rainbowPixels(PixelBuffer* pixels, float step, int filter)
 
 void Scene04::checkerPixels(PixelBuffer* pixels, int cellwidth, Color a, Color b)
 {
-	static Color color = Color(1.0, 1.0f, 1.0f, 1.0f);
+	Color color;
 	int swapper = 1;
 	long counter = 0;
 	for (long y=0; y<pixels->height; y++) {
