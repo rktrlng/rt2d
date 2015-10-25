@@ -76,8 +76,7 @@ class Entity
 		/// @return void
 		void addSprite(Sprite* spr);
 		/// @brief add Dynamic Sprite to this Entity by PixelBuffer*.
-		/// @param id The id of the PixelBuffer you want to add as a Sprite.
-		/// @param pixel A pointer to a PixelBuffer.
+		/// @param pixels A pointer to a PixelBuffer.
 		/// @return void
 		void addDynamicSprite(PixelBuffer* pixels);
 		/// @brief add a Sprite to this Entity by filename.

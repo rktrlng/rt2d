@@ -24,8 +24,6 @@ struct PixelBuffer
 	/// @brief constructor
 	PixelBuffer()
 	{
-		/// @brief initialize the pixel data
-		data = (unsigned char*)0;
 		/// @brief initialize the width of the buffer
 		width = 0;
 		/// @brief initialize the height of the buffer
@@ -34,13 +32,12 @@ struct PixelBuffer
 		bitdepth = 0;
 		/// @brief initialize the filtering of the pixels
 		filter = 0;
+		/// @brief initialize the pixel data
+		data = (unsigned char*)0;
 	}
 	/// @brief overloaded constructor
 	PixelBuffer(int w, int h, unsigned char b, int f)
 	{
-		/// @brief initialize the pixel data
-		long size = w * h * b;
-		data = new unsigned char[size];
 		/// @brief initialize the width of the buffer
 		width = w;
 		/// @brief initialize the height of the buffer
@@ -49,7 +46,9 @@ struct PixelBuffer
 		bitdepth = b;
 		/// @brief initialize the filtering of the pixels
 		filter = f;
-		
+		/// @brief initialize the pixel data
+		long size = w * h * b;
+		data = new unsigned char[size];
 		//create white opaque pixels
 		for (long i=0; i<size; i++) {
 			data[i] = 255;
@@ -68,10 +67,10 @@ struct PixelBuffer
 	int height;
 	/// @brief the size of the file
 	unsigned char bitdepth;
-	/// @brief the pixel data
-	unsigned char* data;
 	/// @brief the filtering level of the pixel data
 	int filter;
+	/// @brief the pixel data
+	unsigned char* data;
 };
 
 /// @brief The Texture class loads images from files and converts them to OpenGL textures.
