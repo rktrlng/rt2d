@@ -27,11 +27,13 @@ Sprite::Sprite()
 	_frame = 0;
 	
 	color = Color(1.0f, 1.0f, 1.0f, 1.0f);
+	
+	_pixelbuffer = NULL;
 }
 
 Sprite::~Sprite()
 {
-	
+	deletePixelBuffer();
 }
 
 void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty, float uvwidth, float uvheight)
@@ -47,6 +49,31 @@ void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty
 	// 0.125 = 8x8 spritesheet
 	uvdim.x = uvwidth;
 	uvdim.y = uvheight;
+}
+
+void Sprite::setupSpriteByPixelBuffer(PixelBuffer* pixels)
+{
+	std::cout << "Sprite::setupSpriteByPixelBuffer() " <<  std::endl;
+	
+	_texturename = "PixelBuffer";
+	
+	pivot.x = 0.5f;
+	pivot.y = 0.5f;
+	
+	uvdim.x = 1.0f;
+	uvdim.y = 1.0f;
+	
+	size.x = pixels->width;
+	size.y = pixels->height;
+	
+	//allocate memory and copy image data
+	deletePixelBuffer();
+	_pixelbuffer = new PixelBuffer(pixels->width, pixels->height, pixels->bitdepth, pixels->filter);
+	//long file_size = _pixelbuffer->width * _pixelbuffer->height * _pixelbuffer->bitdepth;
+	//for (long i=0; i<file_size; i++) {
+	//	_pixelbuffer->data[i] = pixels->data[i];
+	//}
+	*_pixelbuffer->data = *pixels->data;
 }
 
 int Sprite::frame(int f)

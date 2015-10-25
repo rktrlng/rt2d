@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <GL/glew.h>
+
 #include <rt2d/texture.h>
 
 //#pragma GCC diagnostic ignored "-Wstrict-aliasing"
@@ -23,9 +25,6 @@ Texture::Texture()
 	_height = 0;
 	_depth = 3;
 	
-	_filtering = 3;
-	
-	this->_pixels = NULL;
 	this->_gltexture[0] = 0;
 	
 	//std::cout << "texture created" << std::endl;
@@ -35,9 +34,6 @@ Texture::~Texture()
 {
 	glDeleteTextures(1, &_gltexture[0]);
 	
-	if (this->_pixels != NULL) {
-		delete this->_pixels;
-	}
 	//std::cout << "========> Texture deleted" << std::endl;
 }
 
@@ -45,32 +41,12 @@ GLuint Texture::createWhitePixels(int width, int height)
 {
 	std::cout << "Creating PixelBuffer: white " << width << "x" << height << std::endl;
 	
-	_pixels = new PixelBuffer();
-	
-	_pixels->width = width;
-	_pixels->height = width;
-	_pixels->byteCount = 3;
-
-	long file_size = _pixels->width * _pixels->height * _pixels->byteCount;
-
-	//allocate memory for image data
-	_pixels->data = new unsigned char[file_size];
-
-	//create image data
-	long counter = 0;
-	long s = _pixels->width * _pixels->height;
-	for (long i=0; i<s; i++) {
-		_pixels->data[counter+0] = 255;
-		_pixels->data[counter+1] = 255;
-		_pixels->data[counter+2] = 255;
-		
-		counter += _pixels->byteCount;
-	}
+	PixelBuffer* pixels = new PixelBuffer(width, height, 3, 0);
 	
 	// Generate the OpenGL Texture
-	generateTexture();
+	createFromBuffer(pixels);
 	
-	_filterTexture(0);
+	delete pixels;
 	
 	return _gltexture[0];
 }
@@ -104,101 +80,77 @@ GLuint Texture::loadTGAImage(const std::string& filename)
 		return false;
 	}
 	
-	_pixels = new PixelBuffer();
+	PixelBuffer* pixels = new PixelBuffer();
 	
-	_pixels->width = info[0] + info[1] * 256;
-	_pixels->height = info[2] + info[3] * 256;
-	_pixels->byteCount = info[4] / 8;
+	pixels->width = info[0] + info[1] * 256;
+	pixels->height = info[2] + info[3] * 256;
+	pixels->bitdepth = info[4] / 8;
+	pixels->filter = 3;
 
-	if (_pixels->byteCount != 3 && _pixels->byteCount != 4) {
+	if (pixels->bitdepth != 3 && pixels->bitdepth != 4) {
 		std::cout << "bytecount not 3 or 4" << std::endl;
 		fclose(file);
 		return false;
 	}
 	
-	long file_size = _pixels->width * _pixels->height * _pixels->byteCount;
+	long file_size = pixels->width * pixels->height * pixels->bitdepth;
 
 	//allocate memory for image data
-	_pixels->data = new unsigned char[file_size];
+	pixels->data = new unsigned char[file_size];
 
 	//read in image data
-	s = fread(_pixels->data, sizeof(unsigned char), file_size, file);
+	s = fread(pixels->data, sizeof(unsigned char), file_size, file);
 	if (s == 0) return false;
 
 	//close file
 	fclose(file);
 	
 	// BGR(A) to RGB(A)
-	BGR2RGB();
+	BGR2RGB(pixels);
 	
 	// =================================================================
 	// Check if the image's width and height is a power of 2. No biggie, we can handle it.
-	if ((_pixels->width & (_pixels->width - 1)) != 0) {
+	if ((pixels->width & (pixels->width - 1)) != 0) {
 		//std::cout << "warning: " << filename << "’s width is not a power of 2" << std::endl;
 	}
-	if ((_pixels->height & (_pixels->height - 1)) != 0) {
+	if ((pixels->height & (pixels->height - 1)) != 0) {
 		//std::cout << "warning: " << filename << "’s height is not a power of 2" << std::endl;
 	}
 	// But we can't handle non-square images. no-show. silent fail.
-	if (_pixels->width != _pixels->height) {
+	if (pixels->width != pixels->height) {
 		std::cout << "warning: " << filename << " is not square *** WARNING *** THIS WILL BREAK (softly) ***" << std::endl;
 	}
 	// =================================================================
 	
 	// Generate the OpenGL Texture
-	generateTexture();
+	createFromBuffer(pixels);
 	
-	_filterTexture(3);
+	delete pixels;
 	
 	return _gltexture[0];
 }
 
-void Texture::BGR2RGB()
+void Texture::BGR2RGB(PixelBuffer* pixels)
 {
 	// this also works as BGRA2RGBA
 	long counter = 0;
-	long s = _pixels->width * _pixels->height;
+	long s = pixels->width * pixels->height;
 	for (long i=0; i<s; i++) {
 		//swap every 1st byte with every 3rd byte
-		unsigned char temp = _pixels->data[counter];
-		_pixels->data[counter] = _pixels->data[counter+2];
-		_pixels->data[counter+2] = temp;
+		unsigned char temp = pixels->data[counter];
+		pixels->data[counter] = pixels->data[counter+2];
+		pixels->data[counter+2] = temp;
 		
-		counter += _pixels->byteCount;
+		counter += pixels->bitdepth;
 	}
 }
 
-void Texture::_filterTexture(int level)
-{
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	if (level == 0) {
-		// No filtering.
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); 
-	} else if (level == 1) {
-		// Linear filtering.
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	} else if (level == 2) {
-		// Bilinear filtering.
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR); 
-		glGenerateMipmap(GL_TEXTURE_2D);
-	} else if (level == 3) {
-		// Trilinear filtering.
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); 
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-}
-
-void Texture::generateTexture()
+void Texture::createFromBuffer(PixelBuffer* pixels)
 {
 	// set Entity properties
-	this->_width =  this->_pixels->width;
-	this->_height =  this->_pixels->height;
-	this->_depth =  this->_pixels->byteCount;
+	this->_width =  pixels->width;
+	this->_height =  pixels->height;
+	this->_depth =  pixels->bitdepth;
 	// =================================================================
 	
 	// generate a number of texturenames (just 1 for now)
@@ -213,8 +165,31 @@ void Texture::generateTexture()
 	if (this->_depth == 4) {
 		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->_width, this->_height, 0, GL_RGBA, GL_UNSIGNED_BYTE,  this->_pixels->data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->_width, this->_height, 0, GL_RGBA, GL_UNSIGNED_BYTE,  pixels->data);
 	} else {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->_width, this->_height, 0, GL_RGB, GL_UNSIGNED_BYTE,  this->_pixels->data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->_width, this->_height, 0, GL_RGB, GL_UNSIGNED_BYTE,  pixels->data);
+	}
+	
+	// filter the Texture
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	if (pixels->filter == 0) {
+		// No filtering.
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); 
+	} else if (pixels->filter == 1) {
+		// Linear filtering.
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	} else if (pixels->filter == 2) {
+		// Bilinear filtering.
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR); 
+		glGenerateMipmap(GL_TEXTURE_2D);
+	} else if (pixels->filter == 3) {
+		// Trilinear filtering.
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); 
+		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 }

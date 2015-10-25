@@ -16,6 +16,7 @@
 
 #include <glm/glm.hpp>
 
+#include <rt2d/texture.h>
 #include <rt2d/color.h>
 #include <rt2d/pointx.h>
 
@@ -29,6 +30,9 @@ class Sprite
 		/// @brief get the texturename (path to the file)
 		/// @return std::string _texturename
 		std::string texturename() { return _texturename; };
+		/// @brief get the PixelBuffer
+		/// @return PixelBuffer* _pixelbuffer
+		PixelBuffer* pixels() { return _pixelbuffer; };
 
 		/// @brief get the fragmentshader (path to the file)
 		/// @return std::string _fragmentshader
@@ -66,16 +70,31 @@ class Sprite
 		/// @param uvheight 1.0f=full texture, 0.5f=2x2 texture, 0.25f=4x4 texture etc.
 		/// @return void
 		void setupSprite(const std::string& filename, float pivotx, float pivoty, float uvwidth, float uvheight);
+		/// @brief Fill the PixelBuffer of this Sprite.
+		/// @param pixels a PixelBuffer pointer
+		/// @return void
+		void setupSpriteByPixelBuffer(PixelBuffer* pixels);
 	
 	protected:
 	
 	private:
-		int _frame;						///< @brief the active frame of the SpriteSheet
+		int _frame;	///< @brief the active frame of the SpriteSheet
 		
-		std::string _texturename;		///< @brief texturename (path to the file)
+		std::string _texturename; ///< @brief texturename (path to the file)
 		
-		std::string _fragmentshader;	///< @brief fragmentshader (path to the file)
-		std::string _vertexshader;		///< @brief vertexshader (path to the file)
+		std::string _fragmentshader; ///< @brief fragmentshader (path to the file)
+		std::string _vertexshader; ///< @brief vertexshader (path to the file)
+		
+		PixelBuffer* _pixelbuffer; ///< @brief pixelbuffer pointer. Will not be used if NULL.
+		
+		/// @brief delete the PixelBuffer of this Entity.
+		/// @return void
+		void deletePixelBuffer() {
+			if (_pixelbuffer != NULL) {
+				delete _pixelbuffer;
+				_pixelbuffer = NULL;
+			}
+		};
 };
 
 #endif /* SPRITE_H */ 

@@ -61,6 +61,13 @@ void Entity::addSprite(Sprite* spr)
 	*_sprite = *spr;
 }
 
+void Entity::addDynamicSprite(PixelBuffer* pixels)
+{
+	deleteSprite();
+	_sprite = new Sprite();
+	_sprite->setupSpriteByPixelBuffer(pixels);
+}
+
 void Entity::addSprite(const std::string& filename)
 {
 	this->addSprite(filename, 0.5f, 0.5f);
@@ -69,7 +76,6 @@ void Entity::addSprite(const std::string& filename)
 void Entity::addSprite(const std::string& filename, float pivotx, float pivoty)
 {
 	deleteSprite();
-	
 	_sprite = new Sprite();
 	_sprite->setupSprite(filename, pivotx, pivoty, 1.0f, 1.0f);
 }

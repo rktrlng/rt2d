@@ -25,6 +25,7 @@
 #include <glm/glm.hpp>
 
 #include <rt2d/config.h>
+#include <rt2d/timer.h>
 #include <rt2d/sprite.h>
 #include <rt2d/line.h>
 #include <rt2d/input.h>
@@ -74,6 +75,11 @@ class Entity
 		/// @param spr A pointer to a Sprite.
 		/// @return void
 		void addSprite(Sprite* spr);
+		/// @brief add Dynamic Sprite to this Entity by PixelBuffer*.
+		/// @param id The id of the PixelBuffer you want to add as a Sprite.
+		/// @param pixel A pointer to a PixelBuffer.
+		/// @return void
+		void addDynamicSprite(PixelBuffer* pixels);
 		/// @brief add a Sprite to this Entity by filename.
 		/// @param filename The filename of the image you want to add as a Sprite.
 		/// @return void

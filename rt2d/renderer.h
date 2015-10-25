@@ -69,8 +69,9 @@ class Renderer
 		/// @brief Renders the Sprite 'component' of an Entity.
 		/// @param MVP The ModelViewProjection Matrix of the Entity
 		/// @param sprite The Sprite 'component' of the Entity
+		/// @param dynamic Render what we get from ResourceManager or PixelBuffer
 		/// @return void
-		void _renderSprite(const glm::mat4& MVP, Sprite* sprite);
+		void _renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic);
 		
 		/// @brief Renders the Line 'component' of an Entity.
 		/// @param MVP The ModelViewProjection Matrix of the Entity

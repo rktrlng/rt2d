@@ -16,8 +16,6 @@
 
 #include <string>
 
-#include <GL/glew.h>
-
 #include <glfw3.h>
 
 /// @brief defines a PixelBuffer
@@ -33,9 +31,29 @@ struct PixelBuffer
 		/// @brief initialize the height of the buffer
 		height = 0;
 		/// @brief initialize the color depth of the pixels
-		byteCount = 0;
+		bitdepth = 0;
+		/// @brief initialize the filtering of the pixels
+		filter = 0;
+	}
+	/// @brief overloaded constructor
+	PixelBuffer(int w, int h, unsigned char b, int f)
+	{
+		/// @brief initialize the pixel data
+		long size = w * h * b;
+		data = new unsigned char[size];
+		/// @brief initialize the width of the buffer
+		width = w;
+		/// @brief initialize the height of the buffer
+		height = h;
+		/// @brief initialize the color depth of the pixels
+		bitdepth = b;
+		/// @brief initialize the filtering of the pixels
+		filter = f;
 		
-		//std::cout << "create PixelBuffer" << std::endl;
+		//create white opaque pixels
+		for (long i=0; i<size; i++) {
+			data[i] = 255;
+		}
 	}
 
 	/// @brief destructor
@@ -49,9 +67,11 @@ struct PixelBuffer
 	/// @brief the height of the file
 	int height;
 	/// @brief the size of the file
-	unsigned char byteCount;
+	unsigned char bitdepth;
 	/// @brief the pixel data
 	unsigned char* data;
+	/// @brief the filtering level of the pixel data
+	int filter;
 };
 
 /// @brief The Texture class loads images from files and converts them to OpenGL textures.
@@ -84,13 +104,14 @@ class Texture
 		/// @param height the height of the white Texture
 		/// @return GLuint _texture, 0 if failed
 		GLuint createWhitePixels(int width, int height);
+		/// @brief create a Texture from a PixelBuffer
+		/// @param pixels a PixelBuffer pointer
+		/// @return GLuint _texture, 0 if failed
+		void createFromBuffer(PixelBuffer* pixels);
 	
 	private:
 		/// @brief swap every first and third byte of the pixels
-		//void BGR2RGB(PixelBuffer& pixels);
-		void BGR2RGB();
-		/// @brief generate the OpenGL texture
-		void generateTexture();
+		void BGR2RGB(PixelBuffer* pixels);
 
 		/// @brief the width of the file
 		int _width;
@@ -98,24 +119,8 @@ class Texture
 		int _height;
 		/// @brief the color depth of the pixels
 		int _depth;
-		/// @brief a pointer to the PixelBuffer
-		PixelBuffer* _pixels;
 		/// @brief a number of texture names (1 for now)
 		GLuint _gltexture[1];
-		
-		/// @brief save filter level for this Texture
-		int _filtering;
-		/**
-		 * @brief level of filtering
-		 * 
-		 * 0 = no filtering.
-		 * 1 = Linear filtering.
-		 * 2 = Bilinear filtering.
-		 * 3 = Trilinear filtering.
-		 * 
-		 * @param level
-		 */
-		void _filterTexture(int level);
 };
 
 #endif
