@@ -44,7 +44,7 @@ void Scene04::update(float deltaTime)
 	// ###############################################################
 	// pixel_container
 	// ###############################################################
-	pixel_container->rotation += PI / 8 * deltaTime;
+	pixel_container->rotation += PI / 16 * deltaTime;
 	
 	// change state every n seconds, pause timer when SPACE is pressed
 	static int state = 0;
@@ -55,9 +55,9 @@ void Scene04::update(float deltaTime)
 		t.unpause();
 	}
 	
-	if (t.seconds() > 2.0f) {
+	if (t.seconds() > 1.0f) {
 		state++;
-		if (state > 4) { state = 0; }
+		if (state > 10) { state = 0; }
 		t.start();
 	}
 	
@@ -68,18 +68,36 @@ void Scene04::update(float deltaTime)
 		PixelBuffer* buff = pixel_container->sprite()->pixels();
 		switch (state) {
 			case 0:
-				checkerPixels(buff, 4, 0);
+				checkerPixels(buff, 64, GRAY, GRAY);
 				break;
 			case 1:
-				randomPixels(buff, 0);
+				checkerPixels(buff, 32, WHITE, BLACK);
 				break;
 			case 2:
-				rainbowPixels(buff, 0.25f, 3);
+				checkerPixels(buff, 16, RED, BLUE);
 				break;
 			case 3:
-				randomPixels(buff, 1);
+				checkerPixels(buff, 8, ORANGE, CYAN);
 				break;
 			case 4:
+				checkerPixels(buff, 4, YELLOW, RED);
+				break;
+			case 5:
+				checkerPixels(buff, 2, YELLOW, BLUE);
+				break;
+			case 6:
+				checkerPixels(buff, 1, WHITE, BLACK);
+				break;
+			case 7:
+				randomPixels(buff, 0);
+				break;
+			case 8:
+				rainbowPixels(buff, 0.25f, 3);
+				break;
+			case 9:
+				randomPixels(buff, 1);
+				break;
+			case 10:
 				rainbowPixels(buff, 0.1f, 3);
 				break;
 			default:
@@ -127,7 +145,7 @@ void Scene04::rainbowPixels(PixelBuffer* pixels, float step, int filter)
 	pixels->filter = filter;
 }
 
-void Scene04::checkerPixels(PixelBuffer* pixels, int cellwidth, int filter)
+void Scene04::checkerPixels(PixelBuffer* pixels, int cellwidth, Color a, Color b)
 {
 	static Color color = Color(1.0, 1.0f, 1.0f, 1.0f);
 	int swapper = 1;
@@ -137,8 +155,8 @@ void Scene04::checkerPixels(PixelBuffer* pixels, int cellwidth, int filter)
 		for (long x=0; x<pixels->width; x++) {
 			if (x%cellwidth == 0) { swapper *= -1; }
 			
-			if (swapper == 1) { color = RED; }
-			if (swapper == -1) { color = YELLOW; }
+			if (swapper == 1) { color = a; }
+			if (swapper == -1) { color = b; }
 			
 			pixels->data[counter+0] = color.r * 255;
 			pixels->data[counter+1] = color.g * 255;
@@ -150,5 +168,5 @@ void Scene04::checkerPixels(PixelBuffer* pixels, int cellwidth, int filter)
 			counter += pixels->bitdepth;
 		}
 	}
-	pixels->filter = filter;
+	pixels->filter = 0;
 }
