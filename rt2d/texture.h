@@ -107,11 +107,12 @@ class Texture
 		/// @param pixels a PixelBuffer pointer
 		/// @return GLuint _texture, 0 if failed
 		void createFromBuffer(PixelBuffer* pixels);
+		/*
 		/// @brief create a PixelBuffer from a Texture
 		/// @param pixels a PixelBuffer pointer is going to be filled with the Texture
 		/// @return void
 		void textureToPixelBuffer(PixelBuffer* pixels);
-	
+		*/
 	private:
 		/// @brief swap every first and third byte of the pixels
 		void BGR2RGB(PixelBuffer* pixels);

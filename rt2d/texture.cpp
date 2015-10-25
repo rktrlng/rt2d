@@ -193,7 +193,8 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 }
-
+/*
+//TODO make it work
 void Texture::textureToPixelBuffer(PixelBuffer* pixels)
 {
 	GLenum err;
@@ -209,3 +210,4 @@ void Texture::textureToPixelBuffer(PixelBuffer* pixels)
 		puts("Ran out of memory allocating texture!"); // You ran out of memory
 	}
 }
+*/

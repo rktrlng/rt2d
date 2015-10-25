@@ -46,30 +46,41 @@ void Scene04::update(float deltaTime)
 	// ###############################################################
 	pixel_container->rotation += PI / 8 * deltaTime;
 	
-	// change state every n seconds
+	// change state every n seconds, pause timer when SPACE is pressed
 	static int state = 0;
+	if (input()->getKey( GLFW_KEY_SPACE )) {
+		t.pause();
+	}
+	if (input()->getKeyUp( GLFW_KEY_SPACE )) {
+		t.unpause();
+	}
+	
 	if (t.seconds() > 2.0f) {
 		state++;
-		if (state > 3) { state=0; }
+		if (state > 4) { state = 0; }
 		t.start();
 	}
 	
 	// change pixels according to state
-	if (rt.seconds() > 0.05f) {
+	float statetime = 0.02f; // 0.0167 is 60 fps
+	if (rt.seconds() > statetime) {
 		// get the pixels
 		PixelBuffer* buff = pixel_container->sprite()->pixels();
 		switch (state) {
 			case 0:
-				rainbowPixels(buff, 0.25f, 3);
+				checkerPixels(buff, 4, 0);
 				break;
 			case 1:
 				randomPixels(buff, 0);
 				break;
 			case 2:
-				rainbowPixels(buff, 0.1f, 0);
+				rainbowPixels(buff, 0.25f, 3);
 				break;
 			case 3:
 				randomPixels(buff, 1);
+				break;
+			case 4:
+				rainbowPixels(buff, 0.1f, 3);
 				break;
 			default:
 				break;
@@ -108,6 +119,32 @@ void Scene04::rainbowPixels(PixelBuffer* pixels, float step, int filter)
 			pixels->data[counter+2] = c.b * 255;
 			if (pixels->bitdepth == 4) {
 				pixels->data[counter+3] = c.a * 255;
+			}
+			
+			counter += pixels->bitdepth;
+		}
+	}
+	pixels->filter = filter;
+}
+
+void Scene04::checkerPixels(PixelBuffer* pixels, int cellwidth, int filter)
+{
+	static Color color = Color(1.0, 1.0f, 1.0f, 1.0f);
+	int swapper = 1;
+	long counter = 0;
+	for (long y=0; y<pixels->height; y++) {
+		if (y%cellwidth == 0) { swapper *= -1; }
+		for (long x=0; x<pixels->width; x++) {
+			if (x%cellwidth == 0) { swapper *= -1; }
+			
+			if (swapper == 1) { color = RED; }
+			if (swapper == -1) { color = YELLOW; }
+			
+			pixels->data[counter+0] = color.r * 255;
+			pixels->data[counter+1] = color.g * 255;
+			pixels->data[counter+2] = color.b * 255;
+			if (pixels->bitdepth == 4) {
+				pixels->data[counter+3] = color.a * 255;
 			}
 			
 			counter += pixels->bitdepth;
