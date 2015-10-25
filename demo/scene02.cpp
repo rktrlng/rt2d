@@ -10,7 +10,7 @@
 #include <time.h>
 #include "scene02.h"
 
-Scene02::Scene02() : Scene()
+Scene02::Scene02() : SuperScene()
 {
 	srand((unsigned)time(NULL));
 	
@@ -21,7 +21,7 @@ Scene02::Scene02() : Scene()
 	ui_element->sprite()->size = Point2(1024, 64); // texture is 512x512. Make Mesh twice the width, 1 row of squares (512/8).
 	ui_element->sprite()->uvdim = Point2(2.0f, 0.125f); // UV repeats horizontally twice, 1/8 of the height.
 	ui_element->sprite()->uvoffset = Point2(0.0f, 0.125f * 7); // Show top row. UV(0,0) is bottom left.
-	this->addChild(ui_element);
+	layers[0]->addChild(ui_element);
 	
 	// create Boids
 	Color c = RED;
@@ -31,7 +31,7 @@ Scene02::Scene02() : Scene()
 		b->sprite()->color = c.rotate(0.2f);
 		
 		boids.push_back(b);
-		this->addChild(b);
+		layers[0]->addChild(b);
 	}
 }
 
@@ -40,23 +40,22 @@ Scene02::~Scene02()
 {
 	int s = boids.size();
 	for (int i=0; i<s; i++) {
-		this->removeChild(boids[i]);
+		layers[0]->removeChild(boids[i]);
 		delete boids[i];
+		boids[i] = NULL;
 	}
 	boids.clear();
 	
-	this->removeChild(ui_element);
+	layers[0]->removeChild(ui_element);
 	delete ui_element;
 }
 
 void Scene02::update(float deltaTime)
 {
 	// ###############################################################
-	// Escape key stops the Scene
+	// Make SuperScene do what it needs to do (Escape key stops Scene)
 	// ###############################################################
-	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
-		this->stop();
-	}
+	SuperScene::update(deltaTime);
 	
 	// ###############################################################
 	// ui_element uvoffset

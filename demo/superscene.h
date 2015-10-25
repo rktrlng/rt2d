@@ -7,29 +7,28 @@
  *     - What you did
  */
 
-#ifndef SCENE01_H
-#define SCENE01_H
+#ifndef SUPERSCENE_H
+#define SUPERSCENE_H
 
-#include <rt2d/timer.h>
-#include "superscene.h"
+#include <vector>
+#include <rt2d/scene.h>
 #include "basicentity.h"
 
-class Scene01: public SuperScene
+class SuperScene: public Scene
 {
 	public:
-		Scene01();
-		virtual ~Scene01();
+		SuperScene();
+		virtual ~SuperScene();
 
+		// must be explicitly called from subclass
 		virtual void update(float deltaTime);
-	
+
+	protected:
+		unsigned int top_layer;
+		std::vector<BasicEntity*> layers;
+
 	private:
-		BasicEntity* default_entity;
-		BasicEntity* child1_entity;
-		BasicEntity* child2_entity;
-		BasicEntity* animated_entity;
-		BasicEntity* white;
-		
-		Timer t;
+		BasicEntity* logo;
 };
 
-#endif /* SCENE01_H */ 
+#endif /* SUPERSCENE_H */ 

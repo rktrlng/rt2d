@@ -17,6 +17,7 @@ endif()
 if(UNIX)
 	#set(CMAKE_CXX_FLAGS "-Wall -std=c++0x -pedantic -O2 -g -pg")
 	#set(CMAKE_CXX_FLAGS "-Wall -Wstrict-aliasing -std=c++0x -O2")
+	#set(CMAKE_CXX_FLAGS "-Wall -pg -std=c++11")
 	set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
 endif(UNIX)
 
@@ -100,8 +101,6 @@ add_library(rt2d
 	rt2d/sprite.h
 	rt2d/texture.cpp
 	rt2d/texture.h
-	rt2d/tga.cpp
-	rt2d/tga.h
 	rt2d/timer.cpp
 	rt2d/timer.h
 	rt2d/util.c
@@ -128,6 +127,10 @@ add_executable(demo
 	demo/scene02.h
 	demo/scene03.cpp
 	demo/scene03.h
+	demo/scene04.cpp
+	demo/scene04.h
+	demo/superscene.cpp
+	demo/superscene.h
 )
 target_link_libraries(demo
 	${ALL_LIBS}

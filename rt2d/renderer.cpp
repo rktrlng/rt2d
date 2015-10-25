@@ -146,7 +146,11 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 			// Finally, generate our MVP...
 			glm::mat4 MVP = _projectionMatrix * _viewMatrix * modelMatrix;
 			// ... and render the Sprite.
-			this->_renderSprite(MVP, sprite);
+			if (sprite->pixels() != NULL) {
+				this->_renderSprite(MVP, sprite, true); // dynamic Sprite from PixelBuffer
+			} else {
+				this->_renderSprite(MVP, sprite, false); // static Sprite from ResourceManager
+			}
 		}
 	}
 
@@ -187,15 +191,21 @@ glm::mat4 Renderer::_getModelMatrix(Entity* entity)
 	return mm;
 }
 
-void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite)
+void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic)
 {
 	Shader* shader = _uberShader;
 	// ask resourcemanager
 	if (shader == NULL) {
 		shader = _resman.getShader(sprite->vertexshader().c_str(), sprite->fragmentshader().c_str());
 	}
-	Texture* texture = _resman.getTexture(sprite->texturename());
-
+	Texture* texture = NULL;
+	if (dynamic) {
+		texture = new Texture();
+		texture->createFromBuffer(sprite->pixels());
+	} else {
+		texture = _resman.getTexture(sprite->texturename());
+	}
+	
 	if (sprite->size.x == 0) { sprite->size.x = texture->width() * sprite->uvdim.x; }
 	if (sprite->size.y == 0) { sprite->size.y = texture->height() * sprite->uvdim.y; }
 	
@@ -207,6 +217,10 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite)
 	glUniform2f(shader->uvOffsetID(), sprite->uvoffset.x, sprite->uvoffset.y);
 
 	this->_renderMesh(MVP, shader, texture, mesh, 6, GL_TRIANGLES, blendcolor);
+	
+	if (dynamic) {
+		delete texture;
+	}
 }
 
 void Renderer::_renderLine(const glm::mat4& MVP, Line* line)

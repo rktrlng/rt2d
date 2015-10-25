@@ -9,7 +9,7 @@
 
 #include "scene01.h"
 
-Scene01::Scene01() : Scene()
+Scene01::Scene01() : SuperScene()
 {
 	// Start Timer t
 	t.start();
@@ -55,10 +55,9 @@ Scene01::Scene01() : Scene()
 	// by adding them to each other and/or the scene ('this')
 	child1_entity->addChild(child2_entity);
 	default_entity->addChild(child1_entity);
-	this->addChild(default_entity);
-	this->addChild(animated_entity);
-	
-	this->addChild(white);
+	layers[1]->addChild(default_entity);
+	layers[1]->addChild(animated_entity);
+	layers[0]->addChild(white);
 }
 
 
@@ -67,23 +66,23 @@ Scene01::~Scene01()
 	// deconstruct and delete the Tree
 	child1_entity->removeChild(child2_entity);
 	default_entity->removeChild(child1_entity);
-	this->removeChild(default_entity);
-	this->removeChild(animated_entity);
+	layers[1]->removeChild(default_entity);
+	layers[1]->removeChild(animated_entity);
+	layers[0]->removeChild(white);
 	
 	delete animated_entity;
 	delete child2_entity;
 	delete child1_entity;
 	delete default_entity;
+	delete white;
 }
 
 void Scene01::update(float deltaTime)
 {
 	// ###############################################################
-	// Escape key stops the Scene
+	// Make SuperScene do what it needs to do (Escape key stops Scene)
 	// ###############################################################
-	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
-		this->stop();
-	}
+	SuperScene::update(deltaTime);
 	
 	// ###############################################################
 	// Rotate default_entity

@@ -7,29 +7,30 @@
  *     - What you did
  */
 
-#ifndef SCENE01_H
-#define SCENE01_H
+#ifndef SCENE04_H
+#define SCENE04_H
 
+#include <vector>
 #include <rt2d/timer.h>
 #include "superscene.h"
+#include "boidentity.h"
 #include "basicentity.h"
 
-class Scene01: public SuperScene
+class Scene04: public SuperScene
 {
 	public:
-		Scene01();
-		virtual ~Scene01();
+		Scene04();
+		virtual ~Scene04();
 
 		virtual void update(float deltaTime);
 	
 	private:
-		BasicEntity* default_entity;
-		BasicEntity* child1_entity;
-		BasicEntity* child2_entity;
-		BasicEntity* animated_entity;
-		BasicEntity* white;
-		
+		BasicEntity* pixel_container;
 		Timer t;
+		Timer rt;
+		
+		void randomPixels(PixelBuffer* pixels, int filter);
+		void rainbowPixels(PixelBuffer* pixels, float step, int filter);
 };
 
-#endif /* SCENE01_H */ 
+#endif /* SCENE04_H */ 
