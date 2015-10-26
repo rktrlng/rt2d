@@ -63,7 +63,7 @@ int Renderer::init()
 	glfwMakeContextCurrent(_window);
 	
 	// vsync (0=off, 1=on)
-	glfwSwapInterval(1);
+	glfwSwapInterval(0);
 
 	// Initialize GLEW
 	if (glewInit() != GLEW_OK) {
@@ -204,6 +204,16 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic)
 		texture->createFromBuffer(sprite->pixels());
 	} else {
 		texture = _resman.getTexture(sprite->texturename());
+		
+		// this copies the Loaded Texture to the Sprite->PixelBuffer every frame
+		// TODO: make it work
+		/*
+		PixelBuffer* pix = new PixelBuffer(texture->width(), texture->height(), texture->depth(), 3);
+		texture->textureToPixelBuffer(pix);
+		//sprite->setPixelBuffer(pix);
+		delete pix;
+		std::cout << sprite->texturename() << std::endl;
+		*/
 	}
 	
 	if (sprite->size.x == 0) { sprite->size.x = texture->width() * sprite->uvdim.x; }
