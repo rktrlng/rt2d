@@ -126,6 +126,10 @@ void Renderer::renderScene(Scene* scene)
 
 void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 {
+	if (!entity->enabled()) {
+		return;
+	}
+	
 	modelMatrix *= this->_getModelMatrix(entity);
 	
 	// #######################################################
