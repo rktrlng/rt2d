@@ -126,7 +126,7 @@ void Renderer::renderScene(Scene* scene)
 
 void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 {
-	if (!entity->isEnabled()) {
+	if (!entity->enabled()) {
 		return;
 	}
 	
