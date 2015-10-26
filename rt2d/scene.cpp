@@ -35,6 +35,10 @@ void Scene::updateScene(float deltaTime)
 
 void Scene::_updateEntity(Entity* entity, float deltaTime)
 {
+	if (!entity->enabled()) {
+		return;
+	}
+
 	// call update() for this entity
 	entity->update(deltaTime);
 	

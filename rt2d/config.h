@@ -20,7 +20,7 @@
 
 // screenwidth, screenheight
 #define SWIDTH  1280		///< The screen width
-#define SHEIGHT 720		///< The screen height
+#define SHEIGHT 1024		///< The screen height
 
 #define WINDOWNAME "RT2D"	///< The window name
 
