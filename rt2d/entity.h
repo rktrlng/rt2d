@@ -119,6 +119,14 @@ class Entity
 		// updated world position after all transforms
 		Vector2 _worldpos;	/**< @brief The position of the Entity in the real world */
 		bool _culled;	/**< @brief This Entity should be culled or not */
+
+		/// @brief enable or disble the update and rendering of the Entity
+		/// @param e enable or disable
+		/// @return void
+		void enabled(bool e) {_enabled = true;}
+		/// @brief get if the Entity is enabled or disabled
+		/// #return bool
+		bool enabled() {return _enabled;}
 		
 	protected:
 		
@@ -127,6 +135,9 @@ class Entity
 		// identity
 		int _guid;				///< @brief The _guid of this Entity
 		static int _nextGuid;	///< @brief The _nextGuid of this Entity
+
+		//misc 
+		bool _enabled = true; ///< @brief The enabled state of this Entity
 		
 		// data structure
 		Entity* _parent;				///< @brief The _parent of this Entity
