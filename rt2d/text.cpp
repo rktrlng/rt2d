@@ -42,8 +42,7 @@ void Text::message(std::string str)
 		character->addSpriteSheet("assets/font.tga", 16, 8);
 		char c = _message[i];
 		character->position.x = i*32; // half spacing between 64px wide characters
-		int index = (int) c-31;
-		if (c < 48) { index--; }
+		int index = (int) c-32;
 		if (index<0) { index = 0; }
 		character->sprite()->frame(index);
 		
