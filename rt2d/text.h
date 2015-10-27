@@ -1,58 +1,54 @@
-/*
- * text.h
+/**
+ * @file text.h
  * 
- * Copyright 2015 rik <rik@4770K>
+ * @brief The Text header file.
  * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This file is part of RT2D, a 2D OpenGL framework.
  * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301, USA.
- * 
- * 
+ * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
+ *   - Initial commit
+ * - Copyright [year] [your name] <you@yourhost.com>
+ *   - [description]
  */
-
 
 #ifndef TEXT_H
 #define TEXT_H
 
 #include <rt2d/entity.h>
 
+/// @brief The Character class is a default Enity container for a Characters' Sprite.
 class Character: public Entity
 {
 	public:
-		Character() { };
-		virtual ~Character() { };
+		Character() { }; ///< @brief Constructor of the Character
+		virtual ~Character() { }; ///< @brief Destructor of the Character
 		
-		virtual void update(float deltaTime) { };
+		virtual void update(float deltaTime) { }; ///< @brief empty update function
 };
 
-
+/// @brief The Text class is a collection of drawable Characters.
 class Text: public Entity
 {
 	public:
-		Text();
-		virtual ~Text();
+		Text(); ///< @brief Constructor of the Text
+		virtual ~Text(); ///< @brief Destructor of the Text
 		
-		virtual void update(float deltaTime) { }; // implementation is empty
+		virtual void update(float deltaTime) { }; ///< @brief empty update function
 		
+		/// @brief clears all Sprites for characters
+		/// @return void
 		void clearMessage();
+		/// @brief message getter
+		/// @return std::string _message
 		std::string message() { return _message; };
+		/// @brief message setter also creates Characters
+		/// @param m the message to be created
+		/// @return void
 		void message( std::string m );
 	
 	private:
-		std::string _message;
-		
-		std::vector<Character*> characters;
+		std::string _message; ///< @brief the message string
+		std::vector<Character*> characters; ///< @brief collection of characters ceated from _message
 };
 
 #endif /* TEXT_H */ 
