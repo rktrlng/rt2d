@@ -27,7 +27,7 @@ class Scene01: public SuperScene
 		BasicEntity* child1_entity;
 		BasicEntity* child2_entity;
 		BasicEntity* animated_entity;
-		BasicEntity* white;
+		BasicEntity* ui_element;
 		
 		Timer t;
 };

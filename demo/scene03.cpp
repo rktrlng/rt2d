@@ -16,6 +16,9 @@ Scene03::Scene03() : SuperScene()
 {
 	t.start();
 	
+	text0->message("<ESC> next scene");
+	text1->message("<Arrow keys> fly spaceship");
+	
 	// Load Line from file (rt2d logo)
 	// This is the preferred method.
 	rt2d_line = new BasicEntity();

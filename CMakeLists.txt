@@ -99,6 +99,8 @@ add_library(rt2d
 	rt2d/shader.h
 	rt2d/sprite.cpp
 	rt2d/sprite.h
+	rt2d/text.cpp
+	rt2d/text.h
 	rt2d/texture.cpp
 	rt2d/texture.h
 	rt2d/timer.cpp

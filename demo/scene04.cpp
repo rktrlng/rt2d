@@ -14,6 +14,9 @@ Scene04::Scene04() : SuperScene()
 	t.start();
 	rt.start();
 	
+	text0->message("<ESC> quit game");
+	text1->message("<SPACE> pause state");
+	
 	// container for Sprite with custom Texture
 	pixel_container = new BasicEntity();
 	pixel_container->position = Point2(SWIDTH/2, SHEIGHT/2);

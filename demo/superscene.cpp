@@ -24,13 +24,27 @@ SuperScene::SuperScene() : Scene()
 	logo->position = Point2(SWIDTH/2, SHEIGHT - 50);
 	logo->addLine("assets/rt2d.line");
 	layers[top_layer]->addChild(logo);
+	
+	// text
+	text0 = new Text();
+	//text0->message("<ESC> next scene");
+	//text0->position = Point2(50, 50);
+	text0->scale = Point2(0.5f, 0.5f);
+	layers[top_layer]->addChild(text0);
+	
+	text1 = new Text();
+	//text1->message("<Arrow keys> move camera");
+	//text1->position = Point2(50, 80);
+	text1->scale = Point2(0.5f, 0.5f);
+	layers[top_layer]->addChild(text1);
 }
 
 
 SuperScene::~SuperScene()
 {
 	layers[top_layer]->removeChild(logo);
-	delete logo;
+	layers[top_layer]->removeChild(text0);
+	layers[top_layer]->removeChild(text1);
 
 	int s = layers.size();
 	for (int i=0; i<s; i++) {
@@ -39,6 +53,10 @@ SuperScene::~SuperScene()
 		layers[i] = NULL;
 	}
 	layers.clear();
+	
+	delete logo;
+	delete text0;
+	delete text1;
 }
 
 // must be explicitly called from subclass
@@ -52,8 +70,16 @@ void SuperScene::update(float deltaTime)
 	}
 	
 	// ###############################################################
-	// logo follows camera
+	// logo and text follow camera
 	// ###############################################################
-	Point2 logo_pos = Point2(camera()->position.x, camera()->position.y - 50 + SHEIGHT/2);
+	Point2 cam_pos = Point2(camera()->position.x, camera()->position.y);
+	
+	Point2 logo_pos = Point2(cam_pos.x, cam_pos.y - 50 + SHEIGHT/2);
 	logo->position = logo_pos;
+	
+	Point2 text0_pos = Point2(cam_pos.x + 50 - SWIDTH/2, cam_pos.y + 50 - SHEIGHT/2);
+	text0->position = text0_pos;
+
+	Point2 text1_pos = Point2(cam_pos.x + 50 - SWIDTH/2, cam_pos.y + 80 - SHEIGHT/2);
+	text1->position = text1_pos;
 }

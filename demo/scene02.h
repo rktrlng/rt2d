@@ -26,8 +26,6 @@ class Scene02: public SuperScene
 	
 	private:
 		std::vector<BoidEntity*> boids;
-		
-		BasicEntity* ui_element;
 };
 
 #endif /* SCENE02_H */ 

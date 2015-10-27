@@ -12,6 +12,7 @@
 
 #include <vector>
 #include <rt2d/scene.h>
+#include <rt2d/text.h>
 #include "basicentity.h"
 
 class SuperScene: public Scene
@@ -26,6 +27,9 @@ class SuperScene: public Scene
 	protected:
 		unsigned int top_layer;
 		std::vector<BasicEntity*> layers;
+		
+		Text* text0;
+		Text* text1;
 
 	private:
 		BasicEntity* logo;

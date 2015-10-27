@@ -116,9 +116,8 @@ GLuint Texture::loadTGAImage(const std::string& filename)
 	if ((pixels->height & (pixels->height - 1)) != 0) {
 		//std::cout << "warning: " << filename << "’s height is not a power of 2" << std::endl;
 	}
-	// But we can't handle non-square images. no-show. silent fail.
 	if (pixels->width != pixels->height) {
-		std::cout << "warning: " << filename << " is not square *** WARNING *** THIS WILL BREAK (softly) ***" << std::endl;
+		//std::cout << "warning: " << filename << " is not square *** WARNING *** THIS WILL BREAK (softly) ***" << std::endl;
 	}
 	// =================================================================
 	
