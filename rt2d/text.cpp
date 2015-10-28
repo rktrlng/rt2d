@@ -30,6 +30,8 @@ void Text::clearMessage()
 		characters[i] = NULL;
 	}
 	characters.clear();
+
+	_message = "";
 }
 
 void Text::message(std::string str)
@@ -37,7 +39,8 @@ void Text::message(std::string str)
 	clearMessage();
 	_message = str;
 	
-	for (unsigned int i = 0; i < _message.size(); i++) {
+	unsigned int s = _message.size();
+	for (unsigned int i = 0; i < s; i++) {
 		Character* character = new Character();
 		character->addSpriteSheet("assets/font.tga", 16, 8);
 		char c = _message[i];

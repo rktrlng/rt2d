@@ -14,8 +14,9 @@ Scene02::Scene02() : SuperScene()
 {
 	srand((unsigned)time(NULL));
 	
-	text0->message("<ESC> next scene");
-	//text1->message("");
+	text[0]->message("Scene02: Lists of n Things");
+	//text[1]->message("");
+	text[2]->message("<ESC> next scene");
 	
 	// create Boids
 	Color c = RED;

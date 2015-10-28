@@ -14,8 +14,11 @@ Scene01::Scene01() : SuperScene()
 	// Start Timer t
 	t.start();
 	
-	text0->message("<ESC> next scene");
-	text1->message("<Arrow keys> move camera");
+	text[0]->message("Scene01: Parent/Child & Sprites & Spritesheets");
+	//text[1]->message("");
+	text[2]->message("<ESC> next scene");
+	text[3]->message("<Arrow keys> move camera");
+	text[4]->message("<SPACE> reset UV animation");
 
 	// Create an Entity with a custom pivot point.
 	default_entity = new BasicEntity();
@@ -48,7 +51,7 @@ Scene01::Scene01() : SuperScene()
 	
 	// Create a UI entity
 	ui_element = new BasicEntity();
-	ui_element->position = Point2(SWIDTH-150, 20);
+	//ui_element->position = Point2(SWIDTH-150, 20); // sticks to camera in update()
 	ui_element->addSprite("assets/default.tga", 0.5f, 0.0f); // Default texture. Pivot point top middle. Pivot(0,0) is top left.
 	ui_element->sprite()->size = Point2(256, 64); // texture is 512x512. Make Mesh half the width, 1 row of squares (512/8).
 	ui_element->sprite()->uvdim = Point2(0.5f, 0.125f); // UV 1/8 of the height.
@@ -60,7 +63,7 @@ Scene01::Scene01() : SuperScene()
 	default_entity->addChild(child1_entity);
 	layers[1]->addChild(default_entity);
 	layers[1]->addChild(animated_entity);
-	layers[0]->addChild(ui_element);
+	layers[top_layer]->addChild(ui_element);
 }
 
 
@@ -71,7 +74,7 @@ Scene01::~Scene01()
 	default_entity->removeChild(child1_entity);
 	layers[1]->removeChild(default_entity);
 	layers[1]->removeChild(animated_entity);
-	layers[0]->removeChild(ui_element);
+	layers[top_layer]->removeChild(ui_element);
 	
 	delete animated_entity;
 	delete child2_entity;
@@ -118,6 +121,7 @@ void Scene01::update(float deltaTime)
 		xoffset = 0.0f;
 	}
 	ui_element->sprite()->uvoffset.x = xoffset;
+	ui_element->position = Point2(camera()->position.x + SWIDTH/2 - 150, camera()->position.y - SHEIGHT/2 + 20);
 	
 	// ###############################################################
 	// Move Camera (Arrow up, down, left, right)

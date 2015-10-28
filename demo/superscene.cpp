@@ -19,44 +19,45 @@ SuperScene::SuperScene() : Scene()
 		this->addChild(layer);
 	}
 
+	for (unsigned int i = 0; i < 8; i++) {
+		Text* line = new Text();
+		//line->message("");
+		//line->position = Point2(50, 30*(i+2));
+		line->scale = Point2(0.5f, 0.5f);
+		
+		text.push_back(line);
+		layers[top_layer]->addChild(line);
+	}
+
 	// Create a logo entity on the top layer
 	logo = new BasicEntity();
 	logo->position = Point2(SWIDTH/2, SHEIGHT - 50);
 	logo->addLine("assets/rt2d.line");
 	layers[top_layer]->addChild(logo);
-	
-	// text
-	text0 = new Text();
-	//text0->message("<ESC> next scene");
-	//text0->position = Point2(50, 50);
-	text0->scale = Point2(0.5f, 0.5f);
-	layers[top_layer]->addChild(text0);
-	
-	text1 = new Text();
-	//text1->message("<Arrow keys> move camera");
-	//text1->position = Point2(50, 80);
-	text1->scale = Point2(0.5f, 0.5f);
-	layers[top_layer]->addChild(text1);
 }
 
 
 SuperScene::~SuperScene()
 {
 	layers[top_layer]->removeChild(logo);
-	layers[top_layer]->removeChild(text0);
-	layers[top_layer]->removeChild(text1);
 
-	int s = layers.size();
-	for (int i=0; i<s; i++) {
+	int ls = layers.size();
+	for (int i=0; i<ls; i++) {
 		this->removeChild(layers[i]);
 		delete layers[i];
 		layers[i] = NULL;
 	}
 	layers.clear();
+
+	int ts = text.size();
+	for (int i=0; i<ts; i++) {
+		this->removeChild(text[i]);
+		delete text[i];
+		text[i] = NULL;
+	}
+	text.clear();
 	
 	delete logo;
-	delete text0;
-	delete text1;
 }
 
 // must be explicitly called from subclass
@@ -76,10 +77,9 @@ void SuperScene::update(float deltaTime)
 	
 	Point2 logo_pos = Point2(cam_pos.x, cam_pos.y - 50 + SHEIGHT/2);
 	logo->position = logo_pos;
-	
-	Point2 text0_pos = Point2(cam_pos.x + 50 - SWIDTH/2, cam_pos.y + 50 - SHEIGHT/2);
-	text0->position = text0_pos;
 
-	Point2 text1_pos = Point2(cam_pos.x + 50 - SWIDTH/2, cam_pos.y + 80 - SHEIGHT/2);
-	text1->position = text1_pos;
+	unsigned int s = text.size();
+	for (unsigned int i = 0; i < s; i++) {
+		text[i]->position = Point2(cam_pos.x + 50 - SWIDTH/2, cam_pos.y + 50 + (30*i) - SHEIGHT/2);
+	}
 }

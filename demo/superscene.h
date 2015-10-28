@@ -27,9 +27,7 @@ class SuperScene: public Scene
 	protected:
 		unsigned int top_layer;
 		std::vector<BasicEntity*> layers;
-		
-		Text* text0;
-		Text* text1;
+		std::vector<Text*> text;
 
 	private:
 		BasicEntity* logo;

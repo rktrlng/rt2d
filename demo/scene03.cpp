@@ -16,8 +16,10 @@ Scene03::Scene03() : SuperScene()
 {
 	t.start();
 	
-	text0->message("<ESC> next scene");
-	text1->message("<Arrow keys> fly spaceship");
+	text[0]->message("Scene03: Static or dynamic lines");
+	//text[1]->message("");
+	text[2]->message("<ESC> next scene");
+	text[3]->message("<Arrow keys> fly spaceship");
 	
 	// Load Line from file (rt2d logo)
 	// This is the preferred method.
