@@ -196,6 +196,14 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 //TODO make it work
 void Texture::textureToPixelBuffer(PixelBuffer* pixels)
 {
+	// generate a number of texturenames (just 1 for now)
+	// if you want to create more, fine. Leave &this->_gltexture[0] on 0 here. Only change the first argument.
+	glGenTextures(1, &this->_gltexture[0]);
+
+	// setup first texture (the only one in this case)
+	// if you create more, use this->_gltexture[x], where x is the id of the texturename.
+	glBindTexture(GL_TEXTURE_2D, this->_gltexture[0]);
+	
 	GLenum err;
 
 	if (this->_depth == 4) {
