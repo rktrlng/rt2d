@@ -14,7 +14,7 @@ Scene01::Scene01() : SuperScene()
 	// Start Timer t
 	t.start();
 	
-	text[0]->message("Scene01: Parent/Child & Sprites & Spritesheets");
+	text[0]->message("Scene01: Parent/child, Sprite, Spritesheet, blendcolor");
 	//text[1]->message("");
 	text[2]->message("<ESC> next scene");
 	text[3]->message("<Arrow keys> move camera");

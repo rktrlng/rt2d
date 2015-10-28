@@ -75,42 +75,55 @@ void Scene04::update(float deltaTime)
 		switch (state) {
 			case 0:
 				randomPixels(buff, 0);
+				text[3]->message("<SPACE> pause state (random unfiltered)");
 				break;
 			case 1:
 				checkerPixels(buff, 32, WHITE, BLACK);
+				text[3]->message("<SPACE> pause state (checker 2x2)");
 				break;
 			case 2:
 				checkerPixels(buff, 16, RED, BLUE);
+				text[3]->message("<SPACE> pause state (checker 4x4)");
 				break;
 			case 3:
 				checkerPixels(buff, 8, ORANGE, CYAN);
+				text[3]->message("<SPACE> pause state (checker 8x8)");
 				break;
 			case 4:
 				checkerPixels(buff, 4, YELLOW, RED);
+				text[3]->message("<SPACE> pause state (checker 16x16)");
 				break;
 			case 5:
 				checkerPixels(buff, 2, YELLOW, BLUE);
+				text[3]->message("<SPACE> pause state (checker 32x32)");
 				break;
 			case 6:
 				checkerPixels(buff, 1, WHITE, BLACK);
+				text[3]->message("<SPACE> pause state (checker 64x64)");
 				break;
 			case 7:
 				randomPixels(buff, 0);
+				text[3]->message("<SPACE> pause state (random unfiltered)");
 				break;
 			case 8:
 				rainbowPixels(buff, 0.25f, 0);
+				text[3]->message("<SPACE> pause state (rainbow 0.25 unfiltered)");
 				break;
 			case 9:
 				rainbowPixels(buff, 0.25f, 3);
+				text[3]->message("<SPACE> pause state (rainbow 0.25 filtered)");
 				break;
 			case 10:
 				randomPixels(buff, 1);
+				text[3]->message("<SPACE> pause state (random filtered)");
 				break;
 			case 11:
 				rainbowPixels(buff, 0.1f, 0);
+				text[3]->message("<SPACE> pause state (rainbow 0.1 unfiltered)");
 				break;
 			case 12:
 				rainbowPixels(buff, 0.1f, 3);
+				text[3]->message("<SPACE> pause state (rainbow 0.1 filtered)");
 				break;
 			default:
 				break;
