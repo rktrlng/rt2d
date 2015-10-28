@@ -117,7 +117,7 @@ GLuint Texture::loadTGAImage(const std::string& filename)
 		//std::cout << "warning: " << filename << "’s height is not a power of 2" << std::endl;
 	}
 	if (pixels->width != pixels->height) {
-		//std::cout << "warning: " << filename << " is not square *** WARNING *** THIS WILL BREAK (softly) ***" << std::endl;
+		//std::cout << "warning: " << filename << " is not square" << std::endl;
 	}
 	// =================================================================
 	
@@ -169,9 +169,11 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->_width, this->_height, 0, GL_RGB, GL_UNSIGNED_BYTE,  pixels->data);
 	}
 	
+	// GL_CLAMP_TO_EDGE, GL_MIRRORED_REPEAT, GL_REPEAT
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+
 	// filter the Texture
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	if (pixels->filter == 0) {
 		// No filtering.
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
