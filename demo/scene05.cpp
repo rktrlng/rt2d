@@ -36,9 +36,7 @@ Scene05::~Scene05()
 	layers[0]->removeChild(sprite_container);
 	
 	delete sprite_container;
-	//if (dynamic_sprite != NULL) {
-		delete dynamic_sprite;
-	//}
+	delete dynamic_sprite;
 }
 
 void Scene05::update(float deltaTime)
@@ -80,9 +78,6 @@ void Scene05::rotatePixels(PixelBuffer* pixels)
 
 			Color color = Color(r/255.0f, g/255.0f, b/255.0f);
 			color.rotate(0.1);
-			//r++; if (r > 255) { r=0; }
-			//g--; if (g < 0) { g=255; }
-			//b++; if (b > 255) { b=0; }
 			
 			pixels->data[counter+0] = color.r * 255;
 			pixels->data[counter+1] = color.g * 255;

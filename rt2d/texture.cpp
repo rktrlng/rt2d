@@ -84,7 +84,6 @@ GLuint Texture::loadTGAImage(const std::string& filename)
 	}
 	
 	PixelBuffer* pixels = new PixelBuffer();
-	//_pixelbuffer = new PixelBuffer();
 	
 	pixels->width = info[0] + info[1] * 256;
 	pixels->height = info[2] + info[3] * 256;
