@@ -116,12 +116,12 @@ class Entity
 		/// @return Entity* _parent
 		Entity* parent() { return _parent; };
 		
+		friend class Renderer;
+		
+	protected:
 		// updated world position after all transforms
 		Vector2 _worldpos;	/**< @brief The position of the Entity in the real world */
 		bool _culled;	/**< @brief This Entity should be culled or not */
-		
-	protected:
-		
 		
 	private:
 		// identity

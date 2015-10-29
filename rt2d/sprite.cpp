@@ -55,6 +55,7 @@ void Sprite::setupSpriteByPixelBuffer(PixelBuffer* pixels)
 {
 	std::cout << "Sprite::setupSpriteByPixelBuffer() " <<  std::endl;
 	
+	// TODO generate unique dynamic name from dimensions for ResourceManager
 	_texturename = "PixelBuffer";
 	
 	pivot.x = 0.5f;
@@ -69,10 +70,6 @@ void Sprite::setupSpriteByPixelBuffer(PixelBuffer* pixels)
 	//allocate memory and copy image data
 	deletePixelBuffer();
 	_pixelbuffer = new PixelBuffer(pixels->width, pixels->height, pixels->bitdepth, pixels->filter);
-	//long file_size = _pixelbuffer->width * _pixelbuffer->height * _pixelbuffer->bitdepth;
-	//for (long i=0; i<file_size; i++) {
-	//	_pixelbuffer->data[i] = pixels->data[i];
-	//}
 	*_pixelbuffer->data = *pixels->data;
 }
 

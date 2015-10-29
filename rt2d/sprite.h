@@ -33,20 +33,6 @@ class Sprite
 		/// @brief get the PixelBuffer
 		/// @return PixelBuffer* _pixelbuffer
 		PixelBuffer* pixels() { return _pixelbuffer; };
-		/*
-		// This is an attempt to copy pixels to the PixelBuffer
-		// TODO: make it work (@see Renderer::_renderSprite())
-		void setPixelBuffer(PixelBuffer* px) { 
-			//setupSpriteByPixelBuffer(px);
-			deletePixelBuffer();
-			_pixelbuffer = new PixelBuffer(px->width, px->height, px->bitdepth, px->filter);
-			long file_size = _pixelbuffer->width * _pixelbuffer->height * _pixelbuffer->bitdepth;
-			for (long i=0; i<file_size; i++) {
-				_pixelbuffer->data[i] = px->data[i];
-			}
-			// *_pixelbuffer->data = *px->data;
-		};
-		*/
 
 		/// @brief get the fragmentshader (path to the file)
 		/// @return std::string _fragmentshader
