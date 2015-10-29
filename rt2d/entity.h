@@ -57,8 +57,8 @@ class Entity
 		void addChild(Entity* child);
 		/// @brief remove this Entity from list of children.
 		/// @param child The Entity you want to remove from your children.
-		/// @return Entity* the child that was removed
-		Entity* removeChild(Entity* child);
+		/// @return void
+		void removeChild(Entity* child);
 		/// @brief get nth Entity from list of children.
 		/// @param i The id of the Entity you want to get.
 		/// @return Entity* child

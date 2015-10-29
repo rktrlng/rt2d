@@ -98,15 +98,16 @@ void Entity::addChild(Entity* child)
 	this->_children.push_back(child);
 }
 
-Entity* Entity::removeChild(Entity* child)
+void Entity::removeChild(Entity* child)
 {
-	std::vector<Entity*>::iterator it;
-	it = std::find(_children.begin(), _children.end(), child);
-	if ((*it)->_guid == child->_guid) {
-		child->_parent = NULL;
-		it = _children.erase(it);
+	std::vector< Entity* >::iterator it = _children.begin();
+	while (it != _children.end()) {
+		if ((*it)->_guid == child->_guid) {
+			it = _children.erase(it);
+		} else {
+			++it;
+		}
 	}
-	return child;
 }
 
 Entity* Entity::getChild(unsigned int i)
