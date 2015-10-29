@@ -30,9 +30,6 @@ class Sprite
 		/// @brief get the texturename (path to the file)
 		/// @return std::string _texturename
 		std::string texturename() { return _texturename; };
-		/// @brief get the PixelBuffer
-		/// @return PixelBuffer* _pixelbuffer
-		PixelBuffer* pixels() { return _pixelbuffer; };
 
 		/// @brief get the fragmentshader (path to the file)
 		/// @return std::string _fragmentshader
@@ -74,6 +71,20 @@ class Sprite
 		/// @param pixels a PixelBuffer pointer
 		/// @return void
 		void setupSpriteByPixelBuffer(PixelBuffer* pixels);
+		/// @brief Fill the PixelBuffer of this Sprite with pixels from a file.
+		/// @param filename path to the image.tga
+		/// @return void
+		void setupSpriteTGAPixelBuffer(const std::string& filename);
+		
+		/// @brief get the dynamic texture
+		/// @return Texture* _dyntexture
+		Texture* texture() { return _dyntexture; };
+		/// @brief is this Line dynamic or not?
+		/// @return bool _dynamic
+		bool dynamic() { return _dynamic; };
+		/// @brief set this Line to be dynamic or not
+		/// @return void
+		void dynamic(bool d) { _dynamic = d; };
 	
 	protected:
 	
@@ -85,16 +96,8 @@ class Sprite
 		std::string _fragmentshader; ///< @brief fragmentshader (path to the file)
 		std::string _vertexshader; ///< @brief vertexshader (path to the file)
 		
-		PixelBuffer* _pixelbuffer; ///< @brief pixelbuffer pointer. Will not be used if NULL.
-		
-		/// @brief delete the PixelBuffer of this Entity.
-		/// @return void
-		void deletePixelBuffer() {
-			if (_pixelbuffer != NULL) {
-				delete _pixelbuffer;
-				_pixelbuffer = NULL;
-			}
-		};
+		Texture* _dyntexture; ///< @brief the dynamic texture
+		bool _dynamic; ///< @brief dynamic or not
 };
 
 #endif /* SPRITE_H */ 

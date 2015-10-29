@@ -26,6 +26,7 @@ Texture::Texture()
 	_depth = 3;
 	
 	this->_gltexture[0] = 0;
+	_pixelbuffer = NULL;
 	
 	//std::cout << "texture created" << std::endl;
 }
@@ -33,6 +34,8 @@ Texture::Texture()
 Texture::~Texture()
 {
 	glDeleteTextures(1, &_gltexture[0]);
+	
+	deletePixelBuffer();
 	
 	//std::cout << "========> Texture deleted" << std::endl;
 }
@@ -81,6 +84,7 @@ GLuint Texture::loadTGAImage(const std::string& filename)
 	}
 	
 	PixelBuffer* pixels = new PixelBuffer();
+	//_pixelbuffer = new PixelBuffer();
 	
 	pixels->width = info[0] + info[1] * 256;
 	pixels->height = info[2] + info[3] * 256;
@@ -146,6 +150,14 @@ void Texture::BGR2RGB(PixelBuffer* pixels)
 
 void Texture::createFromBuffer(PixelBuffer* pixels)
 {
+	//allocate memory and copy image data to pixelBuffer
+	deletePixelBuffer();
+	_pixelbuffer = new PixelBuffer(pixels->width, pixels->height, pixels->bitdepth, pixels->filter);
+	int size = pixels->width * pixels->height * pixels->bitdepth;
+	for (int i = 0; i < size; i++) {
+		_pixelbuffer->data[i] = pixels->data[i];
+	}
+	
 	// set Entity properties
 	this->_width =  pixels->width;
 	this->_height =  pixels->height;
@@ -164,9 +176,9 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 	if (this->_depth == 4) {
 		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->_width, this->_height, 0, GL_RGBA, GL_UNSIGNED_BYTE,  pixels->data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->_width, this->_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels->data);
 	} else {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->_width, this->_height, 0, GL_RGB, GL_UNSIGNED_BYTE,  pixels->data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->_width, this->_height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels->data);
 	}
 	
 	// GL_CLAMP_TO_EDGE, GL_MIRRORED_REPEAT, GL_REPEAT

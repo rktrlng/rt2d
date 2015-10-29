@@ -17,8 +17,13 @@ endif()
 if(UNIX)
 	#set(CMAKE_CXX_FLAGS "-Wall -std=c++0x -pedantic -O2 -g -pg")
 	#set(CMAKE_CXX_FLAGS "-Wall -Wstrict-aliasing -std=c++0x -O2")
-	#set(CMAKE_CXX_FLAGS "-Wall -pg -std=c++11")
+	
 	set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
+	
+	# valgrind --leak-check=yes ./demo
+	# ./demo # creates cmon.out
+	# gprof demo gmon.out > analysis.txt
+	#set(CMAKE_CXX_FLAGS "-Wall -pg -std=c++11")
 endif(UNIX)
 
 
@@ -131,6 +136,8 @@ add_executable(demo
 	demo/scene03.h
 	demo/scene04.cpp
 	demo/scene04.h
+	demo/scene05.cpp
+	demo/scene05.h
 	demo/superscene.cpp
 	demo/superscene.h
 )

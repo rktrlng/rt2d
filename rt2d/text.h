@@ -20,20 +20,26 @@
 class Character: public Entity
 {
 	public:
-		Character() { }; ///< @brief Constructor of the Character
-		virtual ~Character() { }; ///< @brief Destructor of the Character
+		/// @brief Constructor of the Character
+		Character() { };
+		/// @brief Destructor of the Character
+		virtual ~Character() { };
 		
-		virtual void update(float deltaTime) { }; ///< @brief empty update function
+		/// @brief empty update function
+		virtual void update(float deltaTime) { };
 };
 
 /// @brief The Text class is a collection of drawable Characters.
 class Text: public Entity
 {
 	public:
-		Text(); ///< @brief Constructor of the Text
-		virtual ~Text(); ///< @brief Destructor of the Text
+		/// @brief Constructor of the Text
+		Text();
+		 /// @brief Destructor of the Text
+		virtual ~Text();
 		
-		virtual void update(float deltaTime) { }; ///< @brief empty update function
+		/// @brief empty update function
+		virtual void update(float deltaTime) { };
 		
 		/// @brief clears all Sprites for characters
 		/// @return void
@@ -48,7 +54,7 @@ class Text: public Entity
 	
 	private:
 		std::string _message; ///< @brief the message string
-		std::vector<Character*> characters; ///< @brief collection of characters ceated from _message
+		std::vector<Character*> characters; ///< @brief collection of characters created from _message
 };
 
 #endif /* TEXT_H */ 

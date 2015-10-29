@@ -83,6 +83,10 @@ class Texture
 		/// @brief get the OpenGL texture
 		/// @return GLuint _texture
 		GLuint getGLTexture() { return _gltexture[0]; };
+		
+		/// @brief get the PixelBuffer
+		/// @return PixelBuffer* _pixelbuffer
+		PixelBuffer* pixels() { return _pixelbuffer; };
 
 		/// @brief get the width of the OpenGL texture
 		/// @return int _width
@@ -120,6 +124,17 @@ class Texture
 		int _depth;
 		/// @brief a number of texture names (1 for now)
 		GLuint _gltexture[1];
+		
+		PixelBuffer* _pixelbuffer; ///< @brief pixelbuffer pointer. Will not be used if NULL.
+		
+		/// @brief delete the PixelBuffer of this Entity.
+		/// @return void
+		void deletePixelBuffer() {
+			if (_pixelbuffer != NULL) {
+				delete _pixelbuffer;
+				_pixelbuffer = NULL;
+			}
+		};
 };
 
 #endif

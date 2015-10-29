@@ -35,7 +35,7 @@ void Core::run(Scene* scene)
 	
 	// Render Scene
 	_renderer.renderScene(scene);
-
+	
 	// user clicked the 'close' button in the window
 	if (glfwWindowShouldClose(_renderer.window()) == 1) { scene->stop(); }
 }

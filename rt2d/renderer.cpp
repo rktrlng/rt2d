@@ -142,7 +142,8 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 			// Finally, generate our MVP...
 			glm::mat4 MVP = _projectionMatrix * _viewMatrix * modelMatrix;
 			// ... and render the Sprite.
-			if (sprite->pixels() != NULL) {
+			if (sprite->dynamic()) {
+				//std:: cout << "reached" << std::endl;
 				this->_renderSprite(MVP, sprite, true); // dynamic Sprite from PixelBuffer
 			} else {
 				this->_renderSprite(MVP, sprite, false); // static Sprite from ResourceManager
@@ -196,8 +197,10 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic)
 	}
 	Texture* texture = NULL;
 	if (dynamic) {
-		texture = new Texture();
-		texture->createFromBuffer(sprite->pixels());
+		if (sprite->texture() != NULL) {
+			texture = new Texture();
+			texture->createFromBuffer(sprite->texture()->pixels());
+		}
 	} else {
 		texture = _resman.getTexture(sprite->texturename());
 	}
@@ -212,9 +215,11 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic)
 	// _uvOffsetID
 	glUniform2f(shader->uvOffsetID(), sprite->uvoffset.x, sprite->uvoffset.y);
 
-	this->_renderMesh(MVP, shader, texture, mesh, 6, GL_TRIANGLES, blendcolor);
+	if (texture != NULL) {
+		this->_renderMesh(MVP, shader, texture, mesh, 6, GL_TRIANGLES, blendcolor);
+	}
 	
-	if (dynamic) {
+	if (dynamic && texture != NULL) {
 		delete texture;
 	}
 }

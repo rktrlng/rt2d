@@ -7,30 +7,28 @@
  *     - What you did
  */
 
-#ifndef SCENE04_H
-#define SCENE04_H
+#ifndef SCENE05_H
+#define SCENE05_H
 
 #include <vector>
 #include <rt2d/timer.h>
 #include "superscene.h"
 #include "basicentity.h"
 
-class Scene04: public SuperScene
+class Scene05: public SuperScene
 {
 	public:
-		Scene04();
-		virtual ~Scene04();
+		Scene05();
+		virtual ~Scene05();
 
 		virtual void update(float deltaTime);
 	
 	private:
-		BasicEntity* pixel_container;
+		Sprite* dynamic_sprite;
+		BasicEntity* sprite_container;
 		Timer t;
-		Timer rt;
 		
-		void randomPixels(PixelBuffer* pixels, int filter);
-		void rainbowPixels(PixelBuffer* pixels, float step, int filter);
-		void checkerPixels(PixelBuffer* pixels, int cellwidth, Color a, Color b);
+		void rotatePixels(PixelBuffer* pixels);
 };
 
-#endif /* SCENE04_H */ 
+#endif /* SCENE05_H */ 

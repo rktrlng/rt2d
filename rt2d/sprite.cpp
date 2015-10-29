@@ -26,14 +26,20 @@ Sprite::Sprite()
 	
 	_frame = 0;
 	
-	color = Color(1.0f, 1.0f, 1.0f, 1.0f);
+	_dyntexture = NULL;
+	_dynamic = false;
 	
-	_pixelbuffer = NULL;
+	color = Color(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 Sprite::~Sprite()
 {
-	deletePixelBuffer();
+	//if (_dyntexture != NULL) {
+	// TODO this leaks the dynamic textures (get rid of !dynamic)
+	if (_dyntexture != NULL && !_dynamic) {
+		delete _dyntexture;
+		_dyntexture = NULL;
+	}
 }
 
 void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty, float uvwidth, float uvheight)
@@ -43,10 +49,12 @@ void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty
 	pivot.x = pivotx;
 	pivot.y = pivoty;
 
-	// 1.00  = 1x1 spritesheet (basic sprite)
-	// 0.50  = 2x2 spritesheet
-	// 0.25  = 4x4 spritesheet
-	// 0.125 = 8x8 spritesheet
+	// 1.00000 = 1x1 spritesheet (basic sprite)
+	// 0.50000 = 2x2 spritesheet
+	// 0.25000 = 4x4 spritesheet
+	// 0.12500 = 8x8 spritesheet
+	// 0.06250 = 16x16 spritesheet
+	// 0.03125 = 32x32 spritesheet
 	uvdim.x = uvwidth;
 	uvdim.y = uvheight;
 }
@@ -55,7 +63,6 @@ void Sprite::setupSpriteByPixelBuffer(PixelBuffer* pixels)
 {
 	std::cout << "Sprite::setupSpriteByPixelBuffer() " <<  std::endl;
 	
-	// TODO generate unique dynamic name from dimensions for ResourceManager
 	_texturename = "PixelBuffer";
 	
 	pivot.x = 0.5f;
@@ -67,10 +74,29 @@ void Sprite::setupSpriteByPixelBuffer(PixelBuffer* pixels)
 	size.x = pixels->width;
 	size.y = pixels->height;
 	
-	//allocate memory and copy image data
-	deletePixelBuffer();
-	_pixelbuffer = new PixelBuffer(pixels->width, pixels->height, pixels->bitdepth, pixels->filter);
-	*_pixelbuffer->data = *pixels->data;
+	_dyntexture = new Texture();
+	_dyntexture->createFromBuffer(pixels);
+	_dynamic = true;
+}
+
+void Sprite::setupSpriteTGAPixelBuffer(const std::string& filename)
+{
+	std::cout << "Sprite::setupSpriteByPixelBuffer() " <<  std::endl;
+	
+	_texturename = "dyn_" + filename;
+	
+	pivot.x = 0.5f;
+	pivot.y = 0.5f;
+	
+	uvdim.x = 1.0f;
+	uvdim.y = 1.0f;
+	
+	_dyntexture = new Texture();
+	_dyntexture->loadTGAImage(filename);
+	_dynamic = true;
+	
+	size.x = (float) _dyntexture->width();
+	size.y = (float) _dyntexture->height();
 }
 
 int Sprite::frame(int f)
@@ -79,7 +105,6 @@ int Sprite::frame(int f)
 	int h = 1.0f / uvdim.y;
 
 	if (f >= w*h) {
-		/// TODO take modulo to wrap around?
 		_frame = 0;
 		return _frame;
 	}
