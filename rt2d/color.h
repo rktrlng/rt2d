@@ -14,6 +14,8 @@
 #ifndef COLOR_H_
 #define COLOR_H_
 
+#include <algorithm>
+
 /// @brief A 24 bit HSV color.
 ///
 /// A struct that defines an HSV Color (Hue, Saturation, Brightness). Each value is a float between 0.0f and 1.0f.
