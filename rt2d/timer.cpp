@@ -38,7 +38,7 @@ void Timer::stop()
 
 void Timer::pause()
 {
-	if( (_started) && (!_paused) ) {
+	if( _started && !_paused ) {
 		_paused = true;
 		_pausedTicks = _tsec() - _startTicks;
 	}
@@ -50,6 +50,15 @@ void Timer::unpause()
 		_paused = false;
 		_startTicks = _tsec() - _pausedTicks;
 		_pausedTicks = 0;
+	}
+}
+
+void Timer::paused(bool b)
+{
+	if (b) {
+		pause();
+	} else {
+		unpause();
 	}
 }
 

@@ -24,7 +24,7 @@ Scene05::Scene05() : SuperScene()
 	sprite_container->scale = Point2(5.0f, 5.0f);
 
 	dynamic_sprite = new Sprite();
-	dynamic_sprite->setupSpriteTGAPixelBuffer("assets/polar.tga");
+	dynamic_sprite->setupSpriteTGAPixelBuffer("assets/pencils.tga");
 	sprite_container->addSprite(dynamic_sprite);
 
 	layers[0]->addChild(sprite_container);
@@ -49,9 +49,6 @@ void Scene05::update(float deltaTime)
 	// ###############################################################
 	// sprite_container
 	// ###############################################################
-	sprite_container->rotation += PI / 16 * deltaTime;
-	sprite_container->sprite()->uvoffset += Point2(deltaTime/8, deltaTime/8);
-	
 	// pause timer when SPACE is pressed
 	if (input()->getKey( GLFW_KEY_SPACE )) {
 		t.pause();
@@ -59,15 +56,18 @@ void Scene05::update(float deltaTime)
 	if (input()->getKeyUp( GLFW_KEY_SPACE )) {
 		t.unpause();
 	}
-	
-	if (t.seconds() > 0.05f) {
+	if (!t.paused()) {
+		sprite_container->sprite()->uvoffset += Point2(deltaTime/8, deltaTime/8);
+		sprite_container->rotation += PI / 16 * deltaTime;
+	}
+	if (t.seconds() > 0.5f) {
 		PixelBuffer* buffer = dynamic_sprite->texture()->pixels();
-		rotatePixels(buffer);
+		negativePixels(buffer);
 		t.start();
 	}
 }
 
-void Scene05::rotatePixels(PixelBuffer* pixels)
+void Scene05::negativePixels(PixelBuffer* pixels)
 {
 	long counter = 0;
 	for (long y=0; y<pixels->height; y++) {
@@ -75,19 +75,12 @@ void Scene05::rotatePixels(PixelBuffer* pixels)
 			int r = pixels->data[counter+0];
 			int g = pixels->data[counter+1];
 			int b = pixels->data[counter+2];
-
-			Color color = Color(r/255.0f, g/255.0f, b/255.0f);
-			color.rotate(0.1);
 			
-			pixels->data[counter+0] = color.r * 255;
-			pixels->data[counter+1] = color.g * 255;
-			pixels->data[counter+2] = color.b * 255;
-			if (pixels->bitdepth == 4) {
-				pixels->data[counter+3] = 1.0f;
-			}
+			pixels->data[counter+0] = 255 - r;
+			pixels->data[counter+1] = 255 - g;
+			pixels->data[counter+2] = 255 - b;
 			
 			counter += pixels->bitdepth;
 		}
 	}
-	pixels->filter = 1;
 }

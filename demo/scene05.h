@@ -28,7 +28,7 @@ class Scene05: public SuperScene
 		BasicEntity* sprite_container;
 		Timer t;
 		
-		void rotatePixels(PixelBuffer* pixels);
+		void negativePixels(PixelBuffer* pixels);
 };
 
 #endif /* SCENE05_H */ 
