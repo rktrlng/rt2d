@@ -16,7 +16,7 @@ Scene04::Scene04() : SuperScene()
 	
 	text[0]->message("Scene04: Dynamic PixelBuffer as Texture");
 	//text[1]->message("");
-	text[2]->message("<ESC> quit demo");
+	text[2]->message("<ESC> next scene");
 	text[3]->message("<SPACE> pause state");
 	
 	// container for Sprite with custom Texture

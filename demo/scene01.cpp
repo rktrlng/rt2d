@@ -27,7 +27,7 @@ Scene01::Scene01() : SuperScene()
 	
 	// Create an Entity that's going to be a Child of the Entity above.
 	child1_entity = new BasicEntity();
-	child1_entity->addSprite("assets/letterF.tga");
+	child1_entity->addSprite("assets/grayscale.tga");
 	child1_entity->sprite()->color = Color(1.0f, 0.0f, 0.0f, 1.0f); // red
 	child1_entity->position = Point2(100, -100); // position relative to parent (default_entity)
 	
@@ -35,7 +35,7 @@ Scene01::Scene01() : SuperScene()
 	// It will be unique once you added it to an Entity.
 	// You must delete it yourself after you've added it to all the Entities you want.
 	Sprite* f_spr = new Sprite();
-	f_spr->setupSprite("assets/letterF.tga", 0.5f, 0.5f, 1.0f, 1.0f); // filename, pivot.x, pivot.y, uvdim.x, uvdim.y
+	f_spr->setupSprite("assets/grayscale.tga", 0.5f, 0.5f, 1.0f, 1.0f); // filename, pivot.x, pivot.y, uvdim.x, uvdim.y
 	f_spr->color = Color(0.0f, 1.0f, 0.0f, 1.0f); // green
 	child2_entity = new BasicEntity();
 	child2_entity->position = Point2(64, 64); // position relative to parent (child1_entity)

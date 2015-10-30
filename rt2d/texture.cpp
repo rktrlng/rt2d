@@ -90,8 +90,8 @@ GLuint Texture::loadTGAImage(const std::string& filename)
 	pixels->bitdepth = info[4] / 8;
 	pixels->filter = 3;
 
-	if (pixels->bitdepth != 3 && pixels->bitdepth != 4) {
-		std::cout << "bytecount not 3 or 4" << std::endl;
+	if (pixels->bitdepth != 1 && pixels->bitdepth != 3 && pixels->bitdepth != 4) {
+		std::cout << "bytecount not 1, 3 or 4" << std::endl;
 		fclose(file);
 		return false;
 	}
@@ -109,7 +109,9 @@ GLuint Texture::loadTGAImage(const std::string& filename)
 	fclose(file);
 	
 	// BGR(A) to RGB(A)
-	BGR2RGB(pixels);
+	if (pixels->bitdepth == 3 || pixels->bitdepth == 4) {
+		BGR2RGB(pixels);
+	}
 	
 	// =================================================================
 	// Check if the image's width and height is a power of 2. No biggie, we can handle it.
@@ -151,16 +153,32 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 {
 	//allocate memory and copy image data to pixelBuffer
 	deletePixelBuffer();
-	_pixelbuffer = new PixelBuffer(pixels->width, pixels->height, pixels->bitdepth, pixels->filter);
-	int size = pixels->width * pixels->height * pixels->bitdepth;
-	for (int i = 0; i < size; i++) {
-		_pixelbuffer->data[i] = pixels->data[i];
+	
+	if (pixels->bitdepth == 1) {
+		// use 8-bit grayscale texture as 32-bit white + alpha
+		_pixelbuffer = new PixelBuffer(pixels->width, pixels->height, 4, pixels->filter);
+		int size = pixels->width * pixels->height;
+		int counter = 0;
+		for (int i = 0; i < size; i++) {
+			_pixelbuffer->data[counter+0] = 255;
+			_pixelbuffer->data[counter+1] = 255;
+			_pixelbuffer->data[counter+2] = 255;
+			_pixelbuffer->data[counter+3] = pixels->data[(counter+3)/4];
+			
+			counter += 4;
+		}
+	} else {
+		_pixelbuffer = new PixelBuffer(pixels->width, pixels->height, pixels->bitdepth, pixels->filter);
+		int size = pixels->width * pixels->height * pixels->bitdepth;
+		for (int i = 0; i < size; i++) {
+			_pixelbuffer->data[i] = pixels->data[i];
+		}
 	}
 	
 	// set Entity properties
-	this->_width =  pixels->width;
-	this->_height =  pixels->height;
-	this->_depth =  pixels->bitdepth;
+	this->_width = pixels->width;
+	this->_height = pixels->height;
+	this->_depth = pixels->bitdepth;
 	// =================================================================
 	
 	// generate a number of texturenames (just 1 for now)
@@ -176,8 +194,14 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->_width, this->_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels->data);
-	} else {
+	}
+	if (this->_depth == 3) {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->_width, this->_height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels->data);
+	}
+	if (this->_depth == 1) {
+		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->_width, this->_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, _pixelbuffer->data);
 	}
 	
 	// GL_CLAMP_TO_EDGE, GL_MIRRORED_REPEAT, GL_REPEAT
