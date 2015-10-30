@@ -82,11 +82,11 @@ struct RGBAColor
 	/// @param color The color as a 32 bits int
 	RGBAColor(uint32_t color) {
 		r = color >> 24 & 0xFF;
-        g = color >> 16 & 0xFF;
-        b = color >> 8 & 0xFF;
-        a = color & 0xFF;
+		g = color >> 16 & 0xFF;
+		b = color >> 8 & 0xFF;
+		a = color & 0xFF;
 	}
-	/// @brief constructor
+	/// @brief get color as a uint32_t
 	/// @return uint32_t color as a 32 bits int
 	uint32_t asInt() {
 		uint32_t color = (r << 24) + (g << 16) + (b << 8) + (a);
