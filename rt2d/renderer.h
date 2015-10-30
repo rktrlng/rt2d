@@ -90,7 +90,7 @@ class Renderer
 		/// @return void
 		inline void _renderMesh(const glm::mat4& MVP, Shader* shader, 
 			Texture* texture, Mesh* mesh, int numverts,
-			GLuint mode, Color blendcolor);
+			GLuint mode, RGBAColor blendcolor);
 		
 		/// @brief Culls a Scene with all its children.
 		/// @param scene The Scene that needs to be culled

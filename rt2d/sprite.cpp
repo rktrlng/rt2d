@@ -29,7 +29,7 @@ Sprite::Sprite()
 	_dyntexture = NULL;
 	_dynamic = false;
 	
-	color = Color(1.0f, 1.0f, 1.0f, 1.0f);
+	color = RGBAColor(255, 255, 255, 255);
 }
 
 Sprite::~Sprite()

@@ -210,7 +210,7 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic)
 	
 	Mesh* mesh = _resman.getSpriteMesh(sprite->size.x, sprite->size.y, sprite->pivot.x, sprite->pivot.y, sprite->uvdim.x, sprite->uvdim.y);
 	
-	Color blendcolor = sprite->color;
+	RGBAColor blendcolor = sprite->color;
 	
 	// _uvOffsetID
 	glUniform2f(shader->uvOffsetID(), sprite->uvoffset.x, sprite->uvoffset.y);
@@ -234,7 +234,7 @@ void Renderer::_renderLine(const glm::mat4& MVP, Line* line)
 	}
 	Texture* texture = _resman.getTexture(AUTOGENWHITE);
 	Mesh* mesh = NULL;
-	Color blendcolor = line->color;
+	RGBAColor blendcolor = line->color;
 	
 	int numpoints = (line->points().size()*2) - 1;
 	if (line->closed()) {
@@ -257,7 +257,7 @@ void Renderer::_renderLine(const glm::mat4& MVP, Line* line)
 
 void Renderer::_renderMesh(const glm::mat4& MVP, Shader* shader,
 	Texture* texture, Mesh* mesh, int numverts,
-	GLuint mode, Color blendcolor)
+	GLuint mode, RGBAColor blendcolor)
 {
 	// use our shader program
 	glUseProgram(shader->programID());
@@ -270,7 +270,8 @@ void Renderer::_renderMesh(const glm::mat4& MVP, Shader* shader,
 	glUniformMatrix4fv(shader->matrixID(), 1, GL_FALSE, &MVP[0][0]);
 
 	// _blendColorID
-	glUniform4f(shader->blendColorID(), blendcolor.r, blendcolor.g, blendcolor.b, blendcolor.a);
+	//glUniform4f(shader->blendColorID(), blendcolor.r, blendcolor.g, blendcolor.b, blendcolor.a);
+	glUniform4f(shader->blendColorID(), (float) blendcolor.r/255.0f, (float) blendcolor.g/255.0f, (float) blendcolor.b/255.0f, (float) blendcolor.a/255.0f);
 
 	// Set our "textureSampler" sampler to user Texture Unit 0
 	glUniform1i(shader->textureID(), 0);

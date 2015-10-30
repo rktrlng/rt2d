@@ -29,7 +29,7 @@ class Line
 		Line(const std::string& filename); ///< @brief Custom constructor of the Line
 		virtual ~Line(); ///< @brief Destructor of the Line
 		
-		Color color; ///< @brief blend Color of the Line
+		RGBAColor color; ///< @brief blend Color of the Line
 		
 		/// @brief get the filename (path to the file)
 		/// @return std::string _filename

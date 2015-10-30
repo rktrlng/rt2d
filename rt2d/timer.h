@@ -28,8 +28,9 @@ public:
 	void stop();		///< @brief stop the Timer
 	void pause();		///< @brief pause the Timer
 	void unpause();		///< @brief unpause the Timer
-	bool paused() { return _paused; }; ///< @brief paused or not
 	void paused(bool b); ///< @brief set paused or not
+	/// @brief paused or not
+	bool paused() { return _paused; };
 
 	/// @brief the number of seconds passed since Timer::start()
 	/// @return double time in seconds

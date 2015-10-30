@@ -19,11 +19,16 @@ Scene02::Scene02() : SuperScene()
 	text[2]->message("<ESC> next scene");
 	
 	// create Boids
-	Color c = RED;
-	for (int i=0; i<32; i++) {
+	int amount = 64;
+	for (int i=0; i<amount; i++) {
 		BoidEntity* b = new BoidEntity();
 		b->addSprite("assets/boid.tga");
-		b->sprite()->color = c.rotate(0.2f);
+		
+		static HSVColor hsv = HSVColor(0.0f, 1.0f, 1.0f); // initially red
+		RGBAColor rgb = Color::HSV2RGBA(hsv);
+		b->sprite()->color = rgb;
+		hsv.h += 1.0f/amount;
+		if (hsv.h > 1.0f) { hsv.h -= 1.0f; }
 		
 		boids.push_back(b);
 		layers[0]->addChild(b);

@@ -14,26 +14,52 @@
 #ifndef COLOR_H_
 #define COLOR_H_
 
-/**
- * @brief A 24 bit RGBA color.
- * 
- * A struct that defines an RGBA Color. Each value is a float between 0.0f and 1.0f.
- */
-struct Color
+/// @brief A 24 bit HSV color.
+///
+/// A struct that defines an HSV Color (Hue, Saturation, Brightness). Each value is a float between 0.0f and 1.0f.
+struct HSVColor {
+	/// @brief constructor
+	HSVColor() {
+		h = 0.0f;
+		s = 0.0f;
+		v = 1.0f;
+	}
+	/// @brief constructor
+	/// @param hue The hue component of the color
+	/// @param sat The saturation component of the color
+	/// @param val The brightness/lightness/value component of the color
+	HSVColor(float hue, float sat, float val) {
+		h = hue;
+		s = sat;
+		v = val;
+	}
+	/// @brief The Hue component of the color
+	float h = 0.0f;
+	/// @brief The Saturation component of the color
+	float s = 0.0f;
+	/// @brief The Lightness/Brightness/Value component of the color
+	float v = 1.0f;
+};
+
+
+/// @brief A 24 bit RGBA color.
+///
+/// A struct that defines an RGBA Color. Each value is an int between 0 and 255.
+struct RGBAColor
 {
 	/// @brief constructor
-	Color() {
-		r = 1.0f;
-		g = 1.0f;
-		b = 1.0f;
-		a = 1.0f;
+	RGBAColor() {
+		r = 255;
+		g = 255;
+		b = 255;
+		a = 255;
 	}
 	/// @brief constructor
 	/// @param red The red component of the color
 	/// @param green The green component of the color
 	/// @param blue The blue component of the color
 	/// @param alpha The alpha component of the color
-	Color(float red, float green, float blue, float alpha) {
+	RGBAColor(int red, int green, int blue, int alpha) {
 		r = red;
 		g = green;
 		b = blue;
@@ -43,83 +69,135 @@ struct Color
 	/// @param red The red component of the color
 	/// @param green The green component of the color
 	/// @param blue The blue component of the color
-	Color(float red, float green, float blue) {
+	RGBAColor(int red, int green, int blue) {
 		r = red;
 		g = green;
 		b = blue;
-		a = 1.0f;
+		a = 255;
 	}
-	/**
-	 * @brief The red component of the color
-	 * 
-	 * min: 0.0f, max: 1.0f
-	 * 
-	 * @var r
-	 */
-	float r = 1.0f;
-	/**
-	 * @brief The green component of the color
-	 * 
-	 * min: 0.0f, max: 1.0f
-	 * 
-	 * @var g
-	 */
-	float g = 1.0f;
-	/**
-	 * @brief The blue component of the color
-	 * 
-	 * min: 0.0f, max: 1.0f
-	 * 
-	 * @var b
-	 */
-	float b = 1.0f;
-	/**
-	 * @brief The alpha component of the color
-	 * 
-	 * min: 0.0f, max: 1.0f
-	 * 
-	 * @var a
-	 */
-	float a = 1.0f;
+	/// @brief The red component of the color
+	int r = 255;
+	/// @brief The green component of the color
+	int g = 255;
+	/// @brief The blue component of the color
+	int b = 255;
+	/// @brief The alpha component of the color
+	int a = 255;
 	
 	/// @brief rotate this color with a step
 	/// @param step rotate step
-	/// @return Color (*this)
-	Color rotate(float step) {
+	/// @return RGBAColor (*this)
+	RGBAColor rotate(int step) {
 		// make sure we're not white (the default color)
-		if (this->r == 1.0f && this->g == 1.0f && this->b == 1.0f) { this->b = 0.0f; }
+		if (this->r == 255 && this->g == 255 && this->b == 255) { this->b = 0; }
 		
 		// rotate
-		if (this->b == 1.0f && this->r < 1.0f && this->g == 0.0f) { this->r += step; }
-		if (this->g == 1.0f && this->r > 0.0f && this->b == 0.0f) { this->r -= step; }
-		if (this->r == 1.0f && this->g < 1.0f && this->b == 0.0f) { this->g += step; }
-		if (this->b == 1.0f && this->g > 0.0f && this->r == 0.0f) { this->g -= step; }
-		if (this->g == 1.0f && this->b < 1.0f && this->r == 0.0f) { this->b += step; }
-		if (this->r == 1.0f && this->b > 0.0f && this->g == 0.0f) { this->b -= step; }
+		if (this->b == 255 && this->r < 255 && this->g == 0) { this->r += step; }
+		if (this->g == 255 && this->r > 0 && this->b == 0) { this->r -= step; }
+		if (this->r == 255 && this->g < 255 && this->b == 0) { this->g += step; }
+		if (this->b == 255 && this->g > 0 && this->r == 0) { this->g -= step; }
+		if (this->g == 255 && this->b < 255 && this->r == 0) { this->b += step; }
+		if (this->r == 255 && this->b > 0 && this->g == 0) { this->b -= step; }
 		
 		// limit
-		if (this->r > 1.0f) { this->r = 1.0f; }
-		if (this->r < 0.0f) { this->r = 0.0f; }
-		if (this->g > 1.0f) { this->g = 1.0f; }
-		if (this->g < 0.0f) { this->g = 0.0f; }
-		if (this->b > 1.0f) { this->b = 1.0f; }
-		if (this->b < 0.0f) { this->b = 0.0f; }
+		if (this->r > 255) { this->r = 255; }
+		if (this->r < 0) { this->r = 0; }
+		if (this->g > 255) { this->g = 255; }
+		if (this->g < 0) { this->g = 0; }
+		if (this->b > 255) { this->b = 255; }
+		if (this->b < 0) { this->b = 0; }
 		
 		return *this;
 	}
 };
 
-#define BLACK   Color(0.0f, 0.0f, 0.0f, 1.0f) ///< @brief Color black
-#define GRAY    Color(0.5f, 0.5f, 0.5f, 1.0f) ///< @brief Color gray
-#define RED     Color(1.0f, 0.0f, 0.0f, 1.0f) ///< @brief Color red
-#define ORANGE  Color(1.0f, 0.5f, 0.0f, 1.0f) ///< @brief Color orange
-#define YELLOW  Color(1.0f, 1.0f, 0.0f, 1.0f) ///< @brief Color yellow
-#define GREEN   Color(0.0f, 1.0f, 0.0f, 1.0f) ///< @brief Color green
-#define CYAN    Color(0.0f, 1.0f, 1.0f, 1.0f) ///< @brief Color cyan
-#define BLUE    Color(0.0f, 0.0f, 1.0f, 1.0f) ///< @brief Color blue
-#define MAGENTA Color(1.0f, 0.0f, 1.0f, 1.0f) ///< @brief Color magenta
-#define PINK    Color(1.0f, 0.5f, 1.0f, 1.0f) ///< @brief Color pink
-#define WHITE   Color(1.0f, 1.0f, 1.0f, 1.0f) ///< @brief Color white
+
+/// @brief HSV <-> RGBA conversion
+struct Color {
+	// http://www.easyrgb.com/index.php?X=MATH&H=20#text20
+	/// @brief RGBA to HSV conversion
+	static HSVColor RGBA2HSV(RGBAColor rgba)
+	{
+		float var_R = (float) rgba.r / 255; //RGB from 0 to 255
+		float var_G = (float) rgba.g / 255;
+		float var_B = (float) rgba.b / 255;
+
+		float var_Min = std::min( std::min( var_R, var_G), var_B ); // Min. value of RGB
+		float var_Max = std::max( std::max( var_R, var_G), var_B ); // Max. value of RGB
+		float del_Max = var_Max - var_Min; // Delta RGB value
+
+		float H = 0.0f;
+		float S = 0.0f;
+		float V = var_Max;
+
+		if ( del_Max == 0 ) {
+			//This is a gray, no chroma...
+			H = 0; // HSV results from 0 to 1
+			S = 0;
+		} else {
+			//Chromatic data...
+			S = del_Max / var_Max;
+			
+			float del_R = ( ( ( var_Max - var_R ) / 6.0f ) + ( del_Max / 2.0f ) ) / del_Max;
+			float del_G = ( ( ( var_Max - var_G ) / 6.0f ) + ( del_Max / 2.0f ) ) / del_Max;
+			float del_B = ( ( ( var_Max - var_B ) / 6.0f ) + ( del_Max / 2.0f ) ) / del_Max;
+			
+			if      ( var_R == var_Max ) H = del_B - del_G;
+			else if ( var_G == var_Max ) H = ( 1.0f / 3.0f ) + del_R - del_B;
+			else if ( var_B == var_Max ) H = ( 2.0f / 3.0f ) + del_G - del_R;
+			
+			if ( H < 0.0f ) H += 1.0f;
+			if ( H > 1.0f ) H -= 1.0f;
+		}
+		return HSVColor(H, S, V);
+	}
+	// http://www.easyrgb.com/index.php?X=MATH&H=21#text21
+	/// @brief HSV to RGBA conversion
+	static RGBAColor HSV2RGBA(HSVColor hsv)
+	{
+		int R = 0;
+		int G = 0;
+		int B = 0;
+		if ( hsv.s == 0 ) //HSV from 0 to 1
+		{
+			R = hsv.v * 255;
+			G = hsv.v * 255;
+			B = hsv.v * 255;
+		} else {
+			float var_h = hsv.h * 6;
+			if ( var_h >= 6.0f ) { var_h = 0; } //H must be < 1
+			int var_i = int( var_h ); //Or ... var_i = floor( var_h )
+			float var_1 = hsv.v * ( 1.0f - hsv.s );
+			float var_2 = hsv.v * ( 1.0f - hsv.s * ( var_h - var_i ) );
+			float var_3 = hsv.v * ( 1.0f - hsv.s * ( 1.0f - ( var_h - var_i ) ) );
+			float var_r;
+			float var_g;
+			float var_b;
+			if      ( var_i == 0 ) { var_r = hsv.v ; var_g = var_3 ; var_b = var_1 ; }
+			else if ( var_i == 1 ) { var_r = var_2 ; var_g = hsv.v ; var_b = var_1 ; }
+			else if ( var_i == 2 ) { var_r = var_1 ; var_g = hsv.v ; var_b = var_3 ; }
+			else if ( var_i == 3 ) { var_r = var_1 ; var_g = var_2 ; var_b = hsv.v ; }
+			else if ( var_i == 4 ) { var_r = var_3 ; var_g = var_1 ; var_b = hsv.v ; }
+			else                   { var_r = hsv.v ; var_g = var_1 ; var_b = var_2 ; }
+
+			R = var_r * 255; //RGB results from 0 to 255
+			G = var_g * 255;
+			B = var_b * 255;
+		}
+		return RGBAColor(R, G, B, 255);
+	}
+};
+
+#define BLACK   RGBAColor(0,   0,   0,   255) ///< @brief color black
+#define GRAY    RGBAColor(127, 127, 127, 255) ///< @brief color gray
+#define RED     RGBAColor(255, 0,   0,   255) ///< @brief color red
+#define ORANGE  RGBAColor(255, 127, 0,   255) ///< @brief color orange
+#define YELLOW  RGBAColor(255, 255, 0,   255) ///< @brief color yellow
+#define GREEN   RGBAColor(0,   255, 0,   255) ///< @brief color green
+#define CYAN    RGBAColor(0,   255, 255, 255) ///< @brief color cyan
+#define BLUE    RGBAColor(0,   0,   255, 255) ///< @brief color blue
+#define MAGENTA RGBAColor(255, 0,   255, 255) ///< @brief color magenta
+#define PINK    RGBAColor(255, 127, 255, 255) ///< @brief color pink
+#define WHITE   RGBAColor(255, 255, 255, 255) ///< @brief color white
 
 #endif /* COLOR_H_ */
-

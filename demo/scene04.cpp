@@ -63,7 +63,7 @@ void Scene04::update(float deltaTime)
 	
 	if (t.seconds() > 1.0f) {
 		state++;
-		if (state > 12) { state = 0; }
+		if (state > 13) { state = 0; }
 		t.start();
 	}
 	
@@ -74,62 +74,96 @@ void Scene04::update(float deltaTime)
 		PixelBuffer* buff = pixel_container->sprite()->texture()->pixels();
 		switch (state) {
 			case 0:
-				randomPixels(buff, 0);
-				text[3]->message("<SPACE> pause state (random unfiltered)");
+				spectrumPixels(buff, 0);
+				text[3]->message("<SPACE> pause state (spectrum unfiltered)");
 				break;
 			case 1:
+				spectrumPixels(buff, 1);
+				text[3]->message("<SPACE> pause state (spectrum filtered)");
+				break;
+			case 2:
 				checkerPixels(buff, 32, WHITE, BLACK);
 				text[3]->message("<SPACE> pause state (checker 32 px)");
 				break;
-			case 2:
+			case 3:
 				checkerPixels(buff, 16, RED, BLUE);
 				text[3]->message("<SPACE> pause state (checker 16 px)");
 				break;
-			case 3:
+			case 4:
 				checkerPixels(buff, 8, ORANGE, CYAN);
 				text[3]->message("<SPACE> pause state (checker 8 px)");
 				break;
-			case 4:
+			case 5:
 				checkerPixels(buff, 4, YELLOW, RED);
 				text[3]->message("<SPACE> pause state (checker 4 px)");
 				break;
-			case 5:
+			case 6:
 				checkerPixels(buff, 2, YELLOW, BLUE);
 				text[3]->message("<SPACE> pause state (checker 2 px)");
 				break;
-			case 6:
+			case 7:
 				checkerPixels(buff, 1, WHITE, BLACK);
 				text[3]->message("<SPACE> pause state (checker 1 px)");
 				break;
-			case 7:
+			case 8:
 				randomPixels(buff, 0);
 				text[3]->message("<SPACE> pause state (random unfiltered)");
 				break;
-			case 8:
-				rainbowPixels(buff, 0.2f, 0);
-				text[3]->message("<SPACE> pause state (rainbow 0.2 unfiltered)");
-				break;
 			case 9:
-				rainbowPixels(buff, 0.2f, 3);
-				text[3]->message("<SPACE> pause state (rainbow 0.2 filtered)");
-				break;
-			case 10:
 				randomPixels(buff, 1);
 				text[3]->message("<SPACE> pause state (random filtered)");
 				break;
+			case 10:
+				rainbowPixels(buff, 64, 0);
+				text[3]->message("<SPACE> pause state (rainbow 64 unfiltered)");
+				break;
 			case 11:
-				rainbowPixels(buff, 0.05f, 0);
-				text[3]->message("<SPACE> pause state (rainbow 0.05 unfiltered)");
+				rainbowPixels(buff, 64, 3);
+				text[3]->message("<SPACE> pause state (rainbow 64 filtered)");
 				break;
 			case 12:
-				rainbowPixels(buff, 0.05f, 3);
-				text[3]->message("<SPACE> pause state (rainbow 0.05 filtered)");
+				rainbowPixels(buff, 16, 0);
+				text[3]->message("<SPACE> pause state (rainbow 16 unfiltered)");
+				break;
+			case 13:
+				rainbowPixels(buff, 16, 3);
+				text[3]->message("<SPACE> pause state (rainbow 16 filtered)");
 				break;
 			default:
 				break;
 		}
 		rt.start();
 	}
+}
+
+void Scene04::spectrumPixels(PixelBuffer* pixels, int filter)
+{
+	// hue, saturation, brightness
+	HSVColor hsv = HSVColor(0.0f, 0.0f, 1.0f); // initially white
+	
+	long counter = 0;
+	for (long y=0; y<pixels->height; y++) {
+		if (y < pixels->height/2) {
+			hsv.s += 1.0f/pixels->height*2; if (hsv.s > 1.0f) { hsv.s -= 1.0f; } // Saturation
+		} else {
+			hsv.v -= 1.0f/pixels->height*2; if (hsv.v < 0.0f) { hsv.v += 1.0f; } // Brightness
+		}
+		
+		for (long x=0; x<pixels->width; x++) {
+			hsv.h += 1.0f/pixels->width; if (hsv.h > 1.0f) { hsv.h -= 1.0f; } // Hue
+			RGBAColor rgb = Color::HSV2RGBA(hsv);
+			
+			pixels->data[counter+0] = rgb.r;
+			pixels->data[counter+1] = rgb.g;
+			pixels->data[counter+2] = rgb.b;
+			if (pixels->bitdepth == 4) {
+				pixels->data[counter+3] = 1.0f;
+			}
+			
+			counter += pixels->bitdepth;
+		}
+	}
+	pixels->filter = filter;
 }
 
 void Scene04::randomPixels(PixelBuffer* pixels, int filter)
@@ -152,16 +186,16 @@ void Scene04::randomPixels(PixelBuffer* pixels, int filter)
 
 void Scene04::rainbowPixels(PixelBuffer* pixels, float step, int filter)
 {
-	Color c = RED;
+	RGBAColor c = RED;
 	long counter = 0;
 	for (long y=0; y<pixels->height; y++) {
 		c.rotate(step);
 		for (long x=0; x<pixels->width; x++) {
-			pixels->data[counter+0] = c.r * 255;
-			pixels->data[counter+1] = c.g * 255;
-			pixels->data[counter+2] = c.b * 255;
+			pixels->data[counter+0] = c.r;
+			pixels->data[counter+1] = c.g;
+			pixels->data[counter+2] = c.b;
 			if (pixels->bitdepth == 4) {
-				pixels->data[counter+3] = c.a * 255;
+				pixels->data[counter+3] = c.a;
 			}
 			
 			counter += pixels->bitdepth;
@@ -170,9 +204,9 @@ void Scene04::rainbowPixels(PixelBuffer* pixels, float step, int filter)
 	pixels->filter = filter;
 }
 
-void Scene04::checkerPixels(PixelBuffer* pixels, int cellwidth, Color a, Color b)
+void Scene04::checkerPixels(PixelBuffer* pixels, int cellwidth, RGBAColor a, RGBAColor b)
 {
-	Color color;
+	RGBAColor color;
 	int swapper = 1;
 	long counter = 0;
 	for (long y=0; y<pixels->height; y++) {
@@ -183,11 +217,11 @@ void Scene04::checkerPixels(PixelBuffer* pixels, int cellwidth, Color a, Color b
 			if (swapper == 1) { color = a; }
 			if (swapper == -1) { color = b; }
 			
-			pixels->data[counter+0] = color.r * 255;
-			pixels->data[counter+1] = color.g * 255;
-			pixels->data[counter+2] = color.b * 255;
+			pixels->data[counter+0] = color.r;
+			pixels->data[counter+1] = color.g;
+			pixels->data[counter+2] = color.b;
 			if (pixels->bitdepth == 4) {
-				pixels->data[counter+3] = color.a * 255;
+				pixels->data[counter+3] = color.a;
 			}
 			
 			counter += pixels->bitdepth;

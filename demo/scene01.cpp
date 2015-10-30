@@ -28,7 +28,7 @@ Scene01::Scene01() : SuperScene()
 	// Create an Entity that's going to be a Child of the Entity above.
 	child1_entity = new BasicEntity();
 	child1_entity->addSprite("assets/grayscale.tga");
-	child1_entity->sprite()->color = Color(1.0f, 0.0f, 0.0f, 1.0f); // red
+	child1_entity->sprite()->color = RED; // red
 	child1_entity->position = Point2(100, -100); // position relative to parent (default_entity)
 	
 	// A different approach: create Sprite first, then add it to an Entity later.
@@ -36,7 +36,7 @@ Scene01::Scene01() : SuperScene()
 	// You must delete it yourself after you've added it to all the Entities you want.
 	Sprite* f_spr = new Sprite();
 	f_spr->setupSprite("assets/grayscale.tga", 0.5f, 0.5f, 1.0f, 1.0f); // filename, pivot.x, pivot.y, uvdim.x, uvdim.y
-	f_spr->color = Color(0.0f, 1.0f, 0.0f, 1.0f); // green
+	f_spr->color = GREEN; // green
 	child2_entity = new BasicEntity();
 	child2_entity->position = Point2(64, 64); // position relative to parent (child1_entity)
 	child2_entity->addSprite(f_spr);
@@ -107,7 +107,13 @@ void Scene01::update(float deltaTime)
 	
 	animated_entity->sprite()->frame(f);
 	if (t.seconds() > 0.25f) {
-		animated_entity->sprite()->color.rotate(0.5f);
+		//animated_entity->sprite()->color.rotate(64);
+		static HSVColor hsv = HSVColor(0.0f, 1.0f, 1.0f); // initially red
+		RGBAColor rgb = Color::HSV2RGBA(hsv);
+		hsv.h += 0.025f;
+		if (hsv.h > 1.0f) { hsv.h -= 1.0f; }
+		animated_entity->sprite()->color = rgb;
+		
 		f++;
 		t.start();
 	}
