@@ -24,8 +24,8 @@ Scene04::Scene04() : SuperScene()
 	pixel_container->position = Point2(SWIDTH/2, SHEIGHT/2);
 	pixel_container->scale = Point2(5.0f, 5.0f);
 	
-	// width, height, bitdepth, filter
-	PixelBuffer* pixels = new PixelBuffer(128, 128, 3, 0);
+	// width, height, bitdepth, filter, wrap
+	PixelBuffer* pixels = new PixelBuffer(128, 128, 3, 0, 0);
 	pixel_container->addDynamicSprite(pixels);
 	delete pixels;
 
@@ -143,27 +143,28 @@ void Scene04::spectrumPixels(PixelBuffer* pixels, int filter)
 	
 	long counter = 0;
 	for (long y=0; y<pixels->height; y++) {
-		if (y < pixels->height/2) {
-			hsv.s += 1.0f/pixels->height*2; if (hsv.s > 1.0f) { hsv.s -= 1.0f; } // Saturation
-		} else {
-			hsv.v -= 1.0f/pixels->height*2; if (hsv.v < 0.0f) { hsv.v += 1.0f; } // Brightness
-		}
-		
 		for (long x=0; x<pixels->width; x++) {
-			hsv.h += 1.0f/pixels->width; if (hsv.h > 1.0f) { hsv.h -= 1.0f; } // Hue
 			RGBAColor rgb = Color::HSV2RGBA(hsv);
-			
+
 			pixels->data[counter+0] = rgb.r;
 			pixels->data[counter+1] = rgb.g;
 			pixels->data[counter+2] = rgb.b;
 			if (pixels->bitdepth == 4) {
 				pixels->data[counter+3] = 1.0f;
 			}
-			
+
 			counter += pixels->bitdepth;
+			hsv.h += 1.0f/pixels->width; if (hsv.h > 1.0f) { hsv.h -= 1.0f; } // Hue
+		}
+
+		if (y < pixels->height/2) {
+			hsv.s += 1.0f/pixels->height*2; if (hsv.s > 1.0f) { hsv.s -= 1.0f; } // Saturation
+		} else {
+			hsv.v -= 1.0f/pixels->height*2; if (hsv.v < 0.0f) { hsv.v += 1.0f; } // Brightness
 		}
 	}
 	pixels->filter = filter;
+	pixels->wrap = 2; // clamp
 }
 
 void Scene04::randomPixels(PixelBuffer* pixels, int filter)
@@ -177,7 +178,6 @@ void Scene04::randomPixels(PixelBuffer* pixels, int filter)
 			if (pixels->bitdepth == 4) {
 				pixels->data[counter+3] = rand()%255;
 			}
-			
 			counter += pixels->bitdepth;
 		}
 	}
@@ -189,8 +189,6 @@ void Scene04::rainbowPixels(PixelBuffer* pixels, float step, int filter)
 	RGBAColor c = RED;
 	long counter = 0;
 	for (long y=0; y<pixels->height; y++) {
-		c = Color::rotate(c, step/255);
-	
 		for (long x=0; x<pixels->width; x++) {
 			pixels->data[counter+0] = c.r;
 			pixels->data[counter+1] = c.g;
@@ -198,9 +196,9 @@ void Scene04::rainbowPixels(PixelBuffer* pixels, float step, int filter)
 			if (pixels->bitdepth == 4) {
 				pixels->data[counter+3] = c.a;
 			}
-			
 			counter += pixels->bitdepth;
 		}
+		c = Color::rotate(c, step/255);
 	}
 	pixels->filter = filter;
 }
@@ -229,4 +227,5 @@ void Scene04::checkerPixels(PixelBuffer* pixels, int cellwidth, RGBAColor a, RGB
 		}
 	}
 	pixels->filter = 0;
+	pixels->wrap = 2; // clamp
 }

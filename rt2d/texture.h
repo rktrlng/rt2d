@@ -32,11 +32,13 @@ struct PixelBuffer
 		bitdepth = 0;
 		/// @brief initialize the filtering of the pixels
 		filter = 0;
+		/// @brief initialize the wrapping of the pixels
+		wrap = 0;
 		/// @brief initialize the pixel data
 		data = (unsigned char*)0;
 	}
 	/// @brief overloaded constructor
-	PixelBuffer(int w, int h, unsigned char b, int f)
+	PixelBuffer(int w, int h, unsigned char b, int f, int wr)
 	{
 		/// @brief initialize the width of the buffer
 		width = w;
@@ -46,6 +48,8 @@ struct PixelBuffer
 		bitdepth = b;
 		/// @brief initialize the filtering of the pixels
 		filter = f;
+		/// @brief initialize the wrapping of the pixels
+		wrap = wr;
 		/// @brief initialize the pixel data
 		long size = w * h * b;
 		data = new unsigned char[size];
@@ -66,9 +70,24 @@ struct PixelBuffer
 	/// @brief the height of the file
 	int height;
 	/// @brief the size of the file
+	///
+	/// 1 = grayscale
+	/// 3 = 24 bit RGB
+	/// 4 = 32 bit RGBA
 	unsigned char bitdepth;
 	/// @brief the filtering level of the pixel data
+	///
+	/// 0 = none
+	/// 1 = linear
+	/// 2 = bilinear
+	/// 3 = trilinear
 	int filter;
+	/// @brief the wrapping of the pixel data
+	///
+	/// 0 = GL_REPEAT
+	/// 1 = GL_MIRRORED_REPEAT
+	/// 2 = GL_CLAMP_TO_EDGE
+	int wrap;
 	/// @brief the pixel data
 	unsigned char* data;
 };

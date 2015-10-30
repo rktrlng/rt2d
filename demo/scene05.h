@@ -29,6 +29,10 @@ class Scene05: public SuperScene
 		Timer t;
 		
 		void negativePixels(PixelBuffer* pixels);
+		
+		int filter;
+		int wrap;
+		int negative;
 };
 
 #endif /* SCENE05_H */ 

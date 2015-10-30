@@ -13,6 +13,10 @@ Scene05::Scene05() : SuperScene()
 {
 	t.start();
 	
+	filter = 0;
+	wrap = 0;
+	negative = 0;
+	
 	text[0]->message("Scene05: Dynamic PixelBuffer from file.tga");
 	//text[1]->message("");
 	text[2]->message("<ESC> quit demo");
@@ -25,6 +29,8 @@ Scene05::Scene05() : SuperScene()
 
 	dynamic_sprite = new Sprite();
 	dynamic_sprite->setupSpriteTGAPixelBuffer("assets/pencils.tga");
+	dynamic_sprite->texture()->pixels()->filter = 0;
+	dynamic_sprite->texture()->pixels()->wrap = 0;
 	sprite_container->addSprite(dynamic_sprite);
 
 	layers[0]->addChild(sprite_container);
@@ -47,6 +53,36 @@ void Scene05::update(float deltaTime)
 	SuperScene::update(deltaTime);
 	
 	// ###############################################################
+	// wrap and filter
+	// ###############################################################
+	if (input()->getKeyDown( GLFW_KEY_W )) {
+		wrap++; if (wrap > 2) { wrap = 0;}
+		dynamic_sprite->texture()->pixels()->filter = filter;
+		dynamic_sprite->texture()->pixels()->wrap = wrap;
+	}
+	if (input()->getKeyDown( GLFW_KEY_F )) {
+		filter++; if (filter > 3) { filter = 0;}
+		dynamic_sprite->texture()->pixels()->filter = filter;
+		dynamic_sprite->texture()->pixels()->wrap = wrap;
+	}
+	if (input()->getKeyDown( GLFW_KEY_N )) {
+		negative++; if (negative > 1) { negative = 0;}
+		PixelBuffer* buffer = dynamic_sprite->texture()->pixels();
+		buffer->filter = filter;
+		buffer->wrap = wrap;
+		negativePixels(buffer);
+	}
+	if (wrap == 0) { text[5]->message("<W> Toggle wrapping (repeat)"); }
+	if (wrap == 1) { text[5]->message("<W> Toggle wrapping (mirror repeat)"); }
+	if (wrap == 2) { text[5]->message("<W> Toggle wrapping (clamp)"); }
+	if (filter == 0) { text[6]->message("<F> Toggle filtering (none)"); }
+	if (filter == 1) { text[6]->message("<F> Toggle filtering (linear)"); }
+	if (filter == 2) { text[6]->message("<F> Toggle filtering (bilinear)"); }
+	if (filter == 3) { text[6]->message("<F> Toggle filtering (trilinear)"); }
+	if (negative == 0) { text[7]->message("<N> Toggle to negative"); }
+	if (negative == 1) { text[7]->message("<N> Toggle to positive"); }
+	
+	// ###############################################################
 	// sprite_container
 	// ###############################################################
 	// pause timer when SPACE is pressed
@@ -56,14 +92,13 @@ void Scene05::update(float deltaTime)
 	if (input()->getKeyUp( GLFW_KEY_SPACE )) {
 		t.unpause();
 	}
+	static float adder = 0.0f;
 	if (!t.paused()) {
-		sprite_container->sprite()->uvoffset += Point2(deltaTime/8, deltaTime/8);
+		float x = cos(adder) * 0.0005f;
+		float y = sin(adder) * 0.0005f;
+		sprite_container->sprite()->uvoffset += Point2(x, y);
 		sprite_container->rotation += PI / 16 * deltaTime;
-	}
-	if (t.seconds() > 0.5f) {
-		PixelBuffer* buffer = dynamic_sprite->texture()->pixels();
-		negativePixels(buffer);
-		t.start();
+		adder += deltaTime;
 	}
 }
 

@@ -44,7 +44,7 @@ GLuint Texture::createWhitePixels(int width, int height)
 {
 	std::cout << "Creating PixelBuffer: white " << width << "x" << height << std::endl;
 	
-	PixelBuffer* pixels = new PixelBuffer(width, height, 3, 0);
+	PixelBuffer* pixels = new PixelBuffer(width, height, 3, 0, 0);
 	
 	// Generate the OpenGL Texture
 	createFromBuffer(pixels);
@@ -156,7 +156,7 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 	
 	if (pixels->bitdepth == 1) {
 		// use 8-bit grayscale texture as 32-bit white + alpha
-		_pixelbuffer = new PixelBuffer(pixels->width, pixels->height, 4, pixels->filter);
+		_pixelbuffer = new PixelBuffer(pixels->width, pixels->height, 4, pixels->filter, pixels->wrap);
 		int size = pixels->width * pixels->height;
 		int counter = 0;
 		for (int i = 0; i < size; i++) {
@@ -168,7 +168,7 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 			counter += 4;
 		}
 	} else {
-		_pixelbuffer = new PixelBuffer(pixels->width, pixels->height, pixels->bitdepth, pixels->filter);
+		_pixelbuffer = new PixelBuffer(pixels->width, pixels->height, pixels->bitdepth, pixels->filter, pixels->wrap);
 		int size = pixels->width * pixels->height * pixels->bitdepth;
 		for (int i = 0; i < size; i++) {
 			_pixelbuffer->data[i] = pixels->data[i];
@@ -204,9 +204,19 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->_width, this->_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, _pixelbuffer->data);
 	}
 	
-	// GL_CLAMP_TO_EDGE, GL_MIRRORED_REPEAT, GL_REPEAT
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+	// 0 = GL_REPEAT
+	// 1 = GL_MIRRORED_REPEAT
+	// 2 = GL_CLAMP_TO_EDGE
+	if (pixels->wrap == 0) {
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	} else if (pixels->wrap == 1) {
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+	} else if (pixels->wrap == 2) {
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	}
 
 	// filter the Texture
 	if (pixels->filter == 0) {
