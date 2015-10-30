@@ -25,11 +25,13 @@ Scene03::Scene03() : SuperScene()
 	// This is the preferred method.
 	rt2d_line = new BasicEntity();
 	rt2d_line->addLine("assets/rt2d.line");
+	rt2d_line->line()->color = RED;
 	rt2d_line->position = Point2(SWIDTH/3, SHEIGHT/3);
 	
 	// and another one (default 128x128 square)
 	default_line = new BasicEntity();
 	default_line->addLine("assets/default.line");
+	default_line->line()->color = GREEN;
 	default_line->position = Point2((SWIDTH/3)*2, SHEIGHT/3);
 	
 	// Or create a new Line and add it to an Entity later.
@@ -144,11 +146,7 @@ void Scene03::update(float deltaTime)
 	if (rt2d_line->rotation > TWO_PI) { rt2d_line->rotation -= TWO_PI; }
 	rt2d_line->scale.x = sin(rt2d_line->rotation);
 	rt2d_line->scale.y = cos(rt2d_line->rotation);
-	//rt2d_line->line()->color.rotate(deltaTime*8*255);
-	
-	static RGBAColor rgb1 = RED;
-	rt2d_line->line()->color = rgb1;
-	rgb1 = Color::rotate(rgb1, deltaTime);
+	rt2d_line->line()->color = Color::rotate(rt2d_line->line()->color, deltaTime*2);
 	
 	// ###############################################################
 	// default_line
@@ -158,11 +156,7 @@ void Scene03::update(float deltaTime)
 	if (s > TWO_PI) { s -= TWO_PI; }
 	default_line->scale.x = sin(s);
 	default_line->scale.y = cos(s);
-	//default_line->line()->color.rotate(deltaTime*4*255);
-	
-	static RGBAColor rgb2 = RED;
-	default_line->line()->color = rgb2;
-	rgb2 = Color::rotate(rgb2, deltaTime/2);
+	default_line->line()->color = Color::rotate(default_line->line()->color, deltaTime);
 	
 	// ###############################################################
 	// spaceship
