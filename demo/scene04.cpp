@@ -114,20 +114,20 @@ void Scene04::update(float deltaTime)
 				text[3]->message("<SPACE> pause state (random filtered)");
 				break;
 			case 10:
-				rainbowPixels(buff, 64, 0);
-				text[3]->message("<SPACE> pause state (rainbow 64 unfiltered)");
+				rainbowPixels(buff, 2, 0);
+				text[3]->message("<SPACE> pause state (rainbow full unfiltered)");
 				break;
 			case 11:
-				rainbowPixels(buff, 64, 3);
-				text[3]->message("<SPACE> pause state (rainbow 64 filtered)");
+				rainbowPixels(buff, 2, 3);
+				text[3]->message("<SPACE> pause state (rainbow full filtered)");
 				break;
 			case 12:
-				rainbowPixels(buff, 16, 0);
-				text[3]->message("<SPACE> pause state (rainbow 16 unfiltered)");
+				rainbowPixels(buff, 4, 0);
+				text[3]->message("<SPACE> pause state (double rainbow unfiltered)");
 				break;
 			case 13:
-				rainbowPixels(buff, 16, 3);
-				text[3]->message("<SPACE> pause state (rainbow 16 filtered)");
+				rainbowPixels(buff, 4, 3);
+				text[3]->message("<SPACE> pause state (double rainbow filtered)");
 				break;
 			default:
 				break;
@@ -189,7 +189,8 @@ void Scene04::rainbowPixels(PixelBuffer* pixels, float step, int filter)
 	RGBAColor c = RED;
 	long counter = 0;
 	for (long y=0; y<pixels->height; y++) {
-		c.rotate(step);
+		c = Color::rotate(c, step/255);
+	
 		for (long x=0; x<pixels->width; x++) {
 			pixels->data[counter+0] = c.r;
 			pixels->data[counter+1] = c.g;

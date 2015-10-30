@@ -107,12 +107,9 @@ void Scene01::update(float deltaTime)
 	
 	animated_entity->sprite()->frame(f);
 	if (t.seconds() > 0.25f) {
-		//animated_entity->sprite()->color.rotate(64);
-		static HSVColor hsv = HSVColor(0.0f, 1.0f, 1.0f); // initially red
-		RGBAColor rgb = Color::HSV2RGBA(hsv);
-		hsv.h += 0.025f;
-		if (hsv.h > 1.0f) { hsv.h -= 1.0f; }
+		static RGBAColor rgb = RED;
 		animated_entity->sprite()->color = rgb;
+		rgb = Color::rotate(rgb, 0.025f);
 		
 		f++;
 		t.start();

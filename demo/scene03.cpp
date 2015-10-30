@@ -51,13 +51,11 @@ Scene03::Scene03() : SuperScene()
 	shape_container = new BasicEntity();
 	shape_container->position = Point2(SWIDTH/2, (SHEIGHT/3)*2);
 	int numshapes = 12;
-	//Color c = RED;
 	// fill shapes vector with variants of a circle
 	for (int i = 3; i <= numshapes; i++) {
 		Line* circle = new Line();
 		circle->createCircle(30, i);
 		circle->color = colors[(i-3)%10];
-		//circle->color = c.rotate(127);
 		
 		BasicEntity* b = new BasicEntity();
 		int spacing = 80;
@@ -146,7 +144,11 @@ void Scene03::update(float deltaTime)
 	if (rt2d_line->rotation > TWO_PI) { rt2d_line->rotation -= TWO_PI; }
 	rt2d_line->scale.x = sin(rt2d_line->rotation);
 	rt2d_line->scale.y = cos(rt2d_line->rotation);
-	rt2d_line->line()->color.rotate(deltaTime*8*255);
+	//rt2d_line->line()->color.rotate(deltaTime*8*255);
+	
+	static RGBAColor rgb1 = RED;
+	rt2d_line->line()->color = rgb1;
+	rgb1 = Color::rotate(rgb1, deltaTime);
 	
 	// ###############################################################
 	// default_line
@@ -156,7 +158,11 @@ void Scene03::update(float deltaTime)
 	if (s > TWO_PI) { s -= TWO_PI; }
 	default_line->scale.x = sin(s);
 	default_line->scale.y = cos(s);
-	default_line->line()->color.rotate(deltaTime*4*255);
+	//default_line->line()->color.rotate(deltaTime*4*255);
+	
+	static RGBAColor rgb2 = RED;
+	default_line->line()->color = rgb2;
+	rgb2 = Color::rotate(rgb2, deltaTime/2);
 	
 	// ###############################################################
 	// spaceship

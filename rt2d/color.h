@@ -19,7 +19,8 @@
 /// @brief A 24 bit HSV color.
 ///
 /// A struct that defines an HSV Color (Hue, Saturation, Brightness). Each value is a float between 0.0f and 1.0f.
-struct HSVColor {
+struct HSVColor
+{
 	/// @brief constructor
 	HSVColor() {
 		h = 0.0f;
@@ -44,9 +45,9 @@ struct HSVColor {
 };
 
 
-/// @brief A 24 bit RGBA color.
+/// @brief A 32 bit RGBA color.
 ///
-/// A struct that defines an RGBA Color. Each value is an int between 0 and 255.
+/// A struct that defines an RGBA Color. Each value is an unsigned char (0-255).
 struct RGBAColor
 {
 	/// @brief constructor
@@ -61,7 +62,7 @@ struct RGBAColor
 	/// @param green The green component of the color
 	/// @param blue The blue component of the color
 	/// @param alpha The alpha component of the color
-	RGBAColor(int red, int green, int blue, int alpha) {
+	RGBAColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha) {
 		r = red;
 		g = green;
 		b = blue;
@@ -71,55 +72,29 @@ struct RGBAColor
 	/// @param red The red component of the color
 	/// @param green The green component of the color
 	/// @param blue The blue component of the color
-	RGBAColor(int red, int green, int blue) {
+	RGBAColor(unsigned char red, unsigned char green, unsigned char blue) {
 		r = red;
 		g = green;
 		b = blue;
 		a = 255;
 	}
 	/// @brief The red component of the color
-	int r = 255;
+	unsigned char r = 255;
 	/// @brief The green component of the color
-	int g = 255;
+	unsigned char g = 255;
 	/// @brief The blue component of the color
-	int b = 255;
+	unsigned char b = 255;
 	/// @brief The alpha component of the color
-	int a = 255;
-	
-	/// @brief rotate this color with a step
-	/// @param step rotate step
-	/// @return RGBAColor (*this)
-	RGBAColor rotate(int step) {
-		// make sure we're not white (the default color)
-		if (this->r == 255 && this->g == 255 && this->b == 255) { this->b = 0; }
-		
-		// rotate
-		if (this->b == 255 && this->r < 255 && this->g == 0) { this->r += step; }
-		if (this->g == 255 && this->r > 0 && this->b == 0) { this->r -= step; }
-		if (this->r == 255 && this->g < 255 && this->b == 0) { this->g += step; }
-		if (this->b == 255 && this->g > 0 && this->r == 0) { this->g -= step; }
-		if (this->g == 255 && this->b < 255 && this->r == 0) { this->b += step; }
-		if (this->r == 255 && this->b > 0 && this->g == 0) { this->b -= step; }
-		
-		// limit
-		if (this->r > 255) { this->r = 255; }
-		if (this->r < 0) { this->r = 0; }
-		if (this->g > 255) { this->g = 255; }
-		if (this->g < 0) { this->g = 0; }
-		if (this->b > 255) { this->b = 255; }
-		if (this->b < 0) { this->b = 0; }
-		
-		return *this;
-	}
+	unsigned char a = 255;
 };
 
 
 /// @brief HSV <-> RGBA conversion
-struct Color {
+struct Color
+{
 	// http://www.easyrgb.com/index.php?X=MATH&H=20#text20
 	/// @brief RGBA to HSV conversion
-	static HSVColor RGBA2HSV(RGBAColor rgba)
-	{
+	static HSVColor RGBA2HSV(RGBAColor rgba) {
 		float var_R = (float) rgba.r / 255; //RGB from 0 to 255
 		float var_G = (float) rgba.g / 255;
 		float var_B = (float) rgba.b / 255;
@@ -132,12 +107,10 @@ struct Color {
 		float S = 0.0f;
 		float V = var_Max;
 
-		if ( del_Max == 0 ) {
-			//This is a gray, no chroma...
+		if ( del_Max == 0 ) { //This is a gray, no chroma...
 			H = 0; // HSV results from 0 to 1
 			S = 0;
-		} else {
-			//Chromatic data...
+		} else { //Chromatic data...
 			S = del_Max / var_Max;
 			
 			float del_R = ( ( ( var_Max - var_R ) / 6.0f ) + ( del_Max / 2.0f ) ) / del_Max;
@@ -153,15 +126,14 @@ struct Color {
 		}
 		return HSVColor(H, S, V);
 	}
+	
 	// http://www.easyrgb.com/index.php?X=MATH&H=21#text21
 	/// @brief HSV to RGBA conversion
-	static RGBAColor HSV2RGBA(HSVColor hsv)
-	{
-		int R = 0;
-		int G = 0;
-		int B = 0;
-		if ( hsv.s == 0 ) //HSV from 0 to 1
-		{
+	static RGBAColor HSV2RGBA(HSVColor hsv) {
+		unsigned char R = 0;
+		unsigned char G = 0;
+		unsigned char B = 0;
+		if ( hsv.s == 0 ) { //HSV from 0 to 1
 			R = hsv.v * 255;
 			G = hsv.v * 255;
 			B = hsv.v * 255;
@@ -187,6 +159,15 @@ struct Color {
 			B = var_b * 255;
 		}
 		return RGBAColor(R, G, B, 255);
+	}
+	
+	/// @brief Rotate RGBA color (use HSV)
+	static RGBAColor rotate(RGBAColor rgba, float step) {
+		HSVColor hsv = RGBA2HSV(rgba);
+		hsv.h += step;
+		if (hsv.h > 1.0f) { hsv.h -= 1.0f; }
+		if (hsv.h < 0.0f) { hsv.h += 1.0f; }
+		return HSV2RGBA(hsv);
 	}
 };
 

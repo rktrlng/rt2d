@@ -23,12 +23,16 @@ Scene02::Scene02() : SuperScene()
 	for (int i=0; i<amount; i++) {
 		BoidEntity* b = new BoidEntity();
 		b->addSprite("assets/boid.tga");
-		
+		/*
 		static HSVColor hsv = HSVColor(0.0f, 1.0f, 1.0f); // initially red
 		RGBAColor rgb = Color::HSV2RGBA(hsv);
 		b->sprite()->color = rgb;
 		hsv.h += 1.0f/amount;
 		if (hsv.h > 1.0f) { hsv.h -= 1.0f; }
+		*/
+		static RGBAColor rgb = RED;
+		b->sprite()->color = rgb;
+		rgb = Color::rotate(rgb, 1.0f/amount);
 		
 		boids.push_back(b);
 		layers[0]->addChild(b);
