@@ -30,6 +30,8 @@
 #define SPRITEFRAGMENTSHADER	"shaders/sprite.frag"	///< fragmentshader name
 #define AUTOGENWHITE			"#autogen-white-TGA#"	///< auto generated Texture
 
+#define VSYNC					0	///< VSYNC on (1) or off (0)
+
 #define CULLSCENE				0	///< cull Entities outside frame or not
 
 #define DEFAULTFILTER			3	///< texture filter

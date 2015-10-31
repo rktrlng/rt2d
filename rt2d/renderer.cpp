@@ -27,7 +27,6 @@ using namespace glm;
 Renderer::Renderer()
 {
 	_window = NULL;
-	
 	_uberShader = NULL;
 	
 	this->init();
@@ -43,8 +42,7 @@ Renderer::~Renderer()
 int Renderer::init()
 {
 	// Initialise GLFW
-	if( !glfwInit() )
-	{
+	if( !glfwInit() ) {
 		fprintf( stderr, "Failed to initialize GLFW\n" );
 		return -1;
 	}
@@ -55,7 +53,7 @@ int Renderer::init()
 
 	// Open a window and create its OpenGL context
 	_window = glfwCreateWindow( SWIDTH, SHEIGHT, WINDOWNAME, NULL, NULL);
-	if( _window == NULL ){
+	if( _window == NULL ) {
 		fprintf( stderr, "Failed to open GLFW window.\n" );
 		glfwTerminate();
 		return -1;
@@ -63,7 +61,7 @@ int Renderer::init()
 	glfwMakeContextCurrent(_window);
 	
 	// vsync (0=off, 1=on)
-	glfwSwapInterval(0);
+	glfwSwapInterval(VSYNC);
 
 	// Initialize GLEW
 	if (glewInit() != GLEW_OK) {
@@ -145,7 +143,6 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 			glm::mat4 MVP = _projectionMatrix * _viewMatrix * modelMatrix;
 			// ... and render the Sprite.
 			if (sprite->dynamic()) {
-				//std:: cout << "reached" << std::endl;
 				this->_renderSprite(MVP, sprite, true); // dynamic Sprite from PixelBuffer
 			} else {
 				this->_renderSprite(MVP, sprite, false); // static Sprite from ResourceManager
