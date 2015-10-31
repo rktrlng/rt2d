@@ -26,8 +26,8 @@ Sprite::Sprite()
 	
 	_frame = 0;
 	
-	_filter = 3;
-	_wrap = 0;
+	_filter = DEFAULTFILTER;
+	_wrap = DEFAULTWRAP;
 	
 	_dyntexture = NULL;
 	_dynamic = false;
@@ -47,7 +47,7 @@ Sprite::~Sprite()
 
 void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty, float uvwidth, float uvheight)
 {
-	this->setupSprite(filename, pivotx, pivoty, uvwidth, uvheight, DEFAULTFILTER, DEFAULTCLAMP);
+	this->setupSprite(filename, pivotx, pivoty, uvwidth, uvheight, DEFAULTFILTER, DEFAULTWRAP);
 }
 
 void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty, float uvwidth, float uvheight, int filter, int wrap)

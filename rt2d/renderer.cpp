@@ -126,6 +126,8 @@ void Renderer::renderScene(Scene* scene)
 
 void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 {
+	// multiply ModelMatrix for this child with the ModelMatrix of the parent (the caller of this method)
+	// the first time we do this (for the root-parent), modelMatrix is identity.
 	modelMatrix *= this->_getModelMatrix(entity);
 	
 	// #######################################################

@@ -33,7 +33,7 @@
 #define CULLSCENE				0	///< cull Entities outside frame or not
 
 #define DEFAULTFILTER			3	///< texture filter
-#define DEFAULTCLAMP			1	///< texture clamping (0=repeat, 1=mirror, 2=clamp)
+#define DEFAULTWRAP				1	///< texture clamping (0=repeat, 1=mirror, 2=clamp)
 
 #ifdef _WIN32
 	//static std::string _prefix = "C:/Users/[you]/path/to/rt2d/demo/";
