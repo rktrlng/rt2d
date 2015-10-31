@@ -77,7 +77,14 @@ void Entity::addSprite(const std::string& filename, float pivotx, float pivoty)
 {
 	deleteSprite();
 	_sprite = new Sprite();
-	_sprite->setupSprite(filename, pivotx, pivoty, 1.0f, 1.0f);
+	_sprite->setupSprite(filename, pivotx, pivoty, 1.0f, 1.0f, DEFAULTFILTER, DEFAULTCLAMP); // trilinear filter, mirror repeat
+}
+
+void Entity::addSprite(const std::string& filename, float pivotx, float pivoty, int filter, int wrap)
+{
+	deleteSprite();
+	_sprite = new Sprite();
+	_sprite->setupSprite(filename, pivotx, pivoty, 1.0f, 1.0f, filter, wrap);
 }
 
 void Entity::addSpriteSheet(const std::string& filename, int u, int v)
@@ -86,7 +93,7 @@ void Entity::addSpriteSheet(const std::string& filename, int u, int v)
 	_sprite = new Sprite();
 	float uvwidth = 1.0f / u;
 	float uvheight = 1.0f / v;
-	_sprite->setupSprite(filename, 0.5f, 0.5f, uvwidth, uvheight);
+	_sprite->setupSprite(filename, 0.5f, 0.5f, uvwidth, uvheight, DEFAULTFILTER, DEFAULTCLAMP); // trilinear filter, mirror repeat
 }
 
 void Entity::addChild(Entity* child)

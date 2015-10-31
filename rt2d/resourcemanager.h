@@ -38,8 +38,10 @@ class ResourceManager
 	
 		/// @brief get a Texture (from disk if need be)
 		/// @param filename the path to the TGA file
+		/// @param filter the filtering of the Texture
+		/// @param wrap the UV wrapping of the Texture
 		/// @return Texture* a pointer to a Texture, created from an image file (.tga only).
-		Texture* getTexture(const std::string& filename);
+		Texture* getTexture(const std::string& filename, int filter, int wrap);
 		/// @brief Generate a Sprite Mesh
 		/// @param width the width of the Sprite
 		/// @param height the height of the Sprite

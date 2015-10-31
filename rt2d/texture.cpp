@@ -54,7 +54,7 @@ GLuint Texture::createWhitePixels(int width, int height)
 	return _gltexture[0];
 }
 
-GLuint Texture::loadTGAImage(const std::string& filename)
+GLuint Texture::loadTGAImage(const std::string& filename, int filter, int wrap)
 {
 	std::cout << "Loading TGA: " << filename << std::endl;
 	
@@ -88,7 +88,8 @@ GLuint Texture::loadTGAImage(const std::string& filename)
 	pixels->width = info[0] + info[1] * 256;
 	pixels->height = info[2] + info[3] * 256;
 	pixels->bitdepth = info[4] / 8;
-	pixels->filter = 3;
+	pixels->filter = filter;
+	pixels->wrap = wrap;
 
 	if (pixels->bitdepth != 1 && pixels->bitdepth != 3 && pixels->bitdepth != 4) {
 		std::cout << "bytecount not 1, 3 or 4" << std::endl;

@@ -68,7 +68,7 @@ void ResourceManager::cleanup()
 }
 
 // Texture
-Texture* ResourceManager::getTexture(const std::string& filename)
+Texture* ResourceManager::getTexture(const std::string& filename, int filter, int wrap)
 {
 	if (_textures[filename] != NULL) {
 		//std::cout << "return existing resource: " << filename << " (texture)" << std::endl;
@@ -78,7 +78,7 @@ Texture* ResourceManager::getTexture(const std::string& filename)
 		if (filename == AUTOGENWHITE) {
 			t->createWhitePixels(32, 32);
 		} else {
-			t->loadTGAImage(_prefix+filename);
+			t->loadTGAImage(_prefix+filename, filter, wrap);
 		}
 		_textures[filename] = t;
 		std::cout << "return new resource: " << filename << " (texture)" << std::endl;

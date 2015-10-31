@@ -67,14 +67,26 @@ class Sprite
 		/// @param uvheight 1.0f=full texture, 0.5f=2x2 texture, 0.25f=4x4 texture etc.
 		/// @return void
 		void setupSprite(const std::string& filename, float pivotx, float pivoty, float uvwidth, float uvheight);
+		/// @brief prepare Sprite for creation by ResourceManager
+		/// @param filename path to the image.tga
+		/// @param pivotx X component of Pivot Point_t of the Sprite
+		/// @param pivoty Y component of Pivot Point_t of the Sprite
+		/// @param uvwidth 1.0f=full texture, 0.5f=2x2 texture, 0.25f=4x4 texture etc.
+		/// @param uvheight 1.0f=full texture, 0.5f=2x2 texture, 0.25f=4x4 texture etc.
+		/// @param filter filter of the Sprite Texture
+		/// @param wrap wrapping of the Sprite Texture
+		/// @return void
+		void setupSprite(const std::string& filename, float pivotx, float pivoty, float uvwidth, float uvheight, int filter, int wrap);
 		/// @brief Fill the PixelBuffer of this Sprite.
 		/// @param pixels a PixelBuffer pointer
 		/// @return void
 		void setupSpriteByPixelBuffer(PixelBuffer* pixels);
 		/// @brief Fill the PixelBuffer of this Sprite with pixels from a file.
 		/// @param filename path to the image.tga
+		/// @param filter filter of the Sprite Texture
+		/// @param wrap wrapping of the Sprite Texture
 		/// @return void
-		void setupSpriteTGAPixelBuffer(const std::string& filename);
+		void setupSpriteTGAPixelBuffer(const std::string& filename, int filter, int wrap);
 		
 		/// @brief get the dynamic texture
 		/// @return Texture* _dyntexture
@@ -85,6 +97,19 @@ class Sprite
 		/// @brief set this Line to be dynamic or not
 		/// @return void
 		void dynamic(bool d) { _dynamic = d; };
+		
+		/// @brief set filter for this Sprite
+		/// @return void
+		void filter(int f) { _filter = f; };
+		/// @brief get filter for this Sprite
+		/// @return int _filter
+		int filter() { return _filter; };
+		/// @brief set wrap for this Sprite
+		/// @return void
+		void wrap(int w) { _wrap = w; };
+		/// @brief get wrap for this Sprite
+		/// @return int _wrap
+		int wrap() { return _wrap; };
 	
 	protected:
 	
@@ -98,6 +123,9 @@ class Sprite
 		
 		Texture* _dyntexture; ///< @brief the dynamic texture
 		bool _dynamic; ///< @brief dynamic or not
+		
+		int _filter; ///< @brief dynamic or not
+		int _wrap; ///< @brief dynamic or not
 };
 
 #endif /* SPRITE_H */ 

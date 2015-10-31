@@ -26,6 +26,9 @@ Sprite::Sprite()
 	
 	_frame = 0;
 	
+	_filter = 3;
+	_wrap = 0;
+	
 	_dyntexture = NULL;
 	_dynamic = false;
 	
@@ -44,7 +47,15 @@ Sprite::~Sprite()
 
 void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty, float uvwidth, float uvheight)
 {
+	this->setupSprite(filename, pivotx, pivoty, uvwidth, uvheight, DEFAULTFILTER, DEFAULTCLAMP);
+}
+
+void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty, float uvwidth, float uvheight, int filter, int wrap)
+{
 	_texturename = filename;
+	
+	_filter = filter;
+	_wrap = wrap;
 
 	pivot.x = pivotx;
 	pivot.y = pivoty;
@@ -65,6 +76,9 @@ void Sprite::setupSpriteByPixelBuffer(PixelBuffer* pixels)
 	
 	_texturename = "PixelBuffer";
 	
+	_filter = pixels->filter;
+	_wrap = pixels->wrap;
+	
 	pivot.x = 0.5f;
 	pivot.y = 0.5f;
 	
@@ -79,7 +93,7 @@ void Sprite::setupSpriteByPixelBuffer(PixelBuffer* pixels)
 	_dynamic = true;
 }
 
-void Sprite::setupSpriteTGAPixelBuffer(const std::string& filename)
+void Sprite::setupSpriteTGAPixelBuffer(const std::string& filename, int filter, int wrap)
 {
 	std::cout << "Sprite::setupSpriteByPixelBuffer() " <<  std::endl;
 	
@@ -92,11 +106,14 @@ void Sprite::setupSpriteTGAPixelBuffer(const std::string& filename)
 	uvdim.y = 1.0f;
 	
 	_dyntexture = new Texture();
-	_dyntexture->loadTGAImage(filename);
+	_dyntexture->loadTGAImage(filename, filter, wrap);
 	_dynamic = true;
 	
 	size.x = (float) _dyntexture->width();
 	size.y = (float) _dyntexture->height();
+	
+	_filter = filter;
+	_wrap = wrap;
 }
 
 int Sprite::frame(int f)

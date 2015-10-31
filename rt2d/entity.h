@@ -89,6 +89,14 @@ class Entity
 		/// @param pivoty The y component of the pivotpoint.
 		/// @return void
 		void addSprite(const std::string& filename, float pivotx, float pivoty);
+		/// @brief add a Sprite to this Entity.
+		/// @param filename The filename of the image you want to add as a Sprite.
+		/// @param pivotx The x component of the pivotpoint.
+		/// @param pivoty The y component of the pivotpoint.
+		/// @param filter The filter.
+		/// @param wrap The wrapping.
+		/// @return void
+		void addSprite(const std::string& filename, float pivotx, float pivoty, int filter, int wrap);
 		/// @brief add a SpriteSheet to this Entity.
 		/// @param filename The filename of the image you want to add as a SpriteSheet.
 		/// @param u number of horizontal textures

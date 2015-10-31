@@ -115,11 +115,11 @@ void Scene04::update(float deltaTime)
 				break;
 			case 10:
 				rainbowPixels(buff, 2, 0);
-				text[3]->message("<SPACE> pause state (rainbow full unfiltered)");
+				text[3]->message("<SPACE> pause state (full rainbow unfiltered)");
 				break;
 			case 11:
 				rainbowPixels(buff, 2, 3);
-				text[3]->message("<SPACE> pause state (rainbow full filtered)");
+				text[3]->message("<SPACE> pause state (full rainbow filtered)");
 				break;
 			case 12:
 				rainbowPixels(buff, 4, 0);

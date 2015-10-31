@@ -202,7 +202,7 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic)
 			texture->createFromBuffer(sprite->texture()->pixels());
 		}
 	} else {
-		texture = _resman.getTexture(sprite->texturename());
+		texture = _resman.getTexture(sprite->texturename(), sprite->filter(), sprite->wrap());
 	}
 	
 	if (sprite->size.x == 0) { sprite->size.x = texture->width() * sprite->uvdim.x; }
@@ -232,7 +232,7 @@ void Renderer::_renderLine(const glm::mat4& MVP, Line* line)
 		// only uberShader for now TODO fix
 		//shader = _resman.getShader(sprite->vertexshader().c_str(), sprite->fragmentshader().c_str());
 	}
-	Texture* texture = _resman.getTexture(AUTOGENWHITE);
+	Texture* texture = _resman.getTexture(AUTOGENWHITE, 0, 1);
 	Mesh* mesh = NULL;
 	RGBAColor blendcolor = line->color;
 	

@@ -119,8 +119,10 @@ class Texture
 		
 		/// @brief load an image from file (tga only)
 		/// @param filename the path to the image
+		/// @param filter the filter
+		/// @param wrap the wrap
 		/// @return GLuint _texture, 0 if failed
-		GLuint loadTGAImage(const std::string& filename);
+		GLuint loadTGAImage(const std::string& filename, int filter, int wrap);
 		/// @brief create a width x height white PixelBuffer & GLpixeldata
 		/// @param width the width of the white Texture
 		/// @param height the height of the white Texture

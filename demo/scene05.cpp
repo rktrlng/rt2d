@@ -28,9 +28,7 @@ Scene05::Scene05() : SuperScene()
 	sprite_container->scale = Point2(5.0f, 5.0f);
 
 	dynamic_sprite = new Sprite();
-	dynamic_sprite->setupSpriteTGAPixelBuffer("assets/pencils.tga");
-	dynamic_sprite->texture()->pixels()->filter = 0;
-	dynamic_sprite->texture()->pixels()->wrap = 0;
+	dynamic_sprite->setupSpriteTGAPixelBuffer("assets/pencils.tga", filter, wrap);
 	sprite_container->addSprite(dynamic_sprite);
 
 	layers[0]->addChild(sprite_container);

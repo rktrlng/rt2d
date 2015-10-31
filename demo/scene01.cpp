@@ -22,25 +22,26 @@ Scene01::Scene01() : SuperScene()
 
 	// Create an Entity with a custom pivot point.
 	default_entity = new BasicEntity();
-	default_entity->addSprite("assets/default.tga", 0.75f, 0.25f); // custom pivot point
+	default_entity->addSprite("assets/default.tga", 0.75f, 0.25f, 3, 0); // custom pivot point, filter, wrap (0=repeat, 1=mirror, 2=clamp)
 	default_entity->position = Point2(SWIDTH/3, SHEIGHT/2);
 	
-	// Create an Entity that's going to be a Child of the Entity above.
-	child1_entity = new BasicEntity();
-	child1_entity->addSprite("assets/grayscale.tga");
-	child1_entity->sprite()->color = RED; // red
-	child1_entity->position = Point2(100, -100); // position relative to parent (default_entity)
-	
-	// A different approach: create Sprite first, then add it to an Entity later.
-	// It will be unique once you added it to an Entity.
+	// To create a Sprite with specific properties, create it first, then add it to an Entity later.
+	// It will be unique once you added it to an Entity. Except for non-dynamic Texture wrapping/filtering if it's loaded from disk and handled by the ResourceManager.
 	// You must delete it yourself after you've added it to all the Entities you want.
 	Sprite* f_spr = new Sprite();
-	f_spr->setupSprite("assets/grayscale.tga", 0.5f, 0.5f, 1.0f, 1.0f); // filename, pivot.x, pivot.y, uvdim.x, uvdim.y
+	f_spr->setupSprite("assets/grayscale.tga", 0.5f, 0.5f, 1.0f, 1.0f, 1, 2); // filename, pivot.x, pivot.y, uvdim.x, uvdim.y, filter, wrap
 	f_spr->color = GREEN; // green
-	child2_entity = new BasicEntity();
-	child2_entity->position = Point2(64, 64); // position relative to parent (child1_entity)
-	child2_entity->addSprite(f_spr);
+	child1_entity = new BasicEntity();
+	child1_entity->position = Point2(100, -100); // position relative to parent (default_entity)
+	child1_entity->addSprite(f_spr);
 	delete f_spr;
+	
+	// Create an Entity that's going to be a Child of default_entity.
+	// Easiest way to create a Sprite with sensible defaults. @see Sprite::setupSprite()
+	child2_entity = new BasicEntity();
+	child2_entity->addSprite("assets/grayscale.tga");
+	child2_entity->sprite()->color = RED; // red
+	child2_entity->position = Point2(64, 64); // position relative to parent (child1_entity)
 	
 	// An example of using a SpriteSheet ("animated texture").
 	// Remember you can also animate UV's of any Sprite (uvoffset).
@@ -52,6 +53,7 @@ Scene01::Scene01() : SuperScene()
 	// Create a UI entity
 	ui_element = new BasicEntity();
 	//ui_element->position = Point2(SWIDTH-150, 20); // sticks to camera in update()
+	// filter + wrap inherited from default_entity above (is per texturename. "assets/default.tga" already loaded).
 	ui_element->addSprite("assets/default.tga", 0.5f, 0.0f); // Default texture. Pivot point top middle. Pivot(0,0) is top left.
 	ui_element->sprite()->size = Point2(256, 64); // texture is 512x512. Make Mesh half the width, 1 row of squares (512/8).
 	ui_element->sprite()->uvdim = Point2(0.5f, 0.125f); // UV 1/8 of the height.
