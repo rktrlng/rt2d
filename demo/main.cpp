@@ -14,6 +14,7 @@
 #include "scene03.h"
 #include "scene04.h"
 #include "scene05.h"
+#include "scene06.h"
 
 int main( void )
 {
@@ -66,6 +67,16 @@ int main( void )
 
 	// Scene05
 	scene = new Scene05();
+	while(scene->isRunning()) {
+		core.run(scene);
+		core.showFrameRate(5);
+	}
+	core.cleanup();
+	delete scene;
+
+
+	// Scene06
+	scene = new Scene06();
 	while(scene->isRunning()) {
 		core.run(scene);
 		core.showFrameRate(5);

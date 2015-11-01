@@ -32,6 +32,8 @@ Sprite::Sprite()
 	_dyntexture = NULL;
 	_dynamic = false;
 	
+	_circlemesh = 0; // false
+	
 	color = RGBAColor(255, 255, 255, 255);
 }
 
@@ -48,6 +50,18 @@ Sprite::~Sprite()
 void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty, float uvwidth, float uvheight)
 {
 	this->setupSprite(filename, pivotx, pivoty, uvwidth, uvheight, DEFAULTFILTER, DEFAULTWRAP);
+}
+
+void Sprite::setupCircleSprite(const std::string& filename, int radius, int segments)
+{
+	_texturename = filename;
+	_circlemesh = segments;
+	
+	_filter = 3;
+	_wrap = 1; // mirror repeat
+
+	size.x = radius * 2;
+	size.y = radius * 2;
 }
 
 void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty, float uvwidth, float uvheight, int filter, int wrap)

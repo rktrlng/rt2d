@@ -67,6 +67,7 @@ class Sprite
 		/// @param uvheight 1.0f=full texture, 0.5f=2x2 texture, 0.25f=4x4 texture etc.
 		/// @return void
 		void setupSprite(const std::string& filename, float pivotx, float pivoty, float uvwidth, float uvheight);
+		void setupCircleSprite(const std::string& filename, int radius, int segments);
 		/// @brief prepare Sprite for creation by ResourceManager
 		/// @param filename path to the image.tga
 		/// @param pivotx X component of Pivot Point_t of the Sprite
@@ -110,6 +111,8 @@ class Sprite
 		/// @brief get wrap for this Sprite
 		/// @return int _wrap
 		int wrap() { return _wrap; };
+		
+		int _circlemesh;
 	
 	protected:
 	

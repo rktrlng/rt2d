@@ -136,10 +136,10 @@ void ResourceManager::deleteShader(const std::string& shadername)
 
 
 // Meshes
-Mesh* ResourceManager::getSpriteMesh(int width, int height, float pivotx, float pivoty, float uvwidth, float uvheight)
+Mesh* ResourceManager::getSpriteMesh(int width, int height, float pivotx, float pivoty, float uvwidth, float uvheight, int circle)
 {
-	char buf[48]; // should be big enough: "1024x1024_0.50000x0.50000_1.00000x1.00000"
-	sprintf(buf, "%dx%d_%.5fx%.5f_%.5fx%.5f", width, height, pivotx, pivoty, uvwidth, uvheight);
+	char buf[48]; // should be big enough: "1024x1024_0.50000x0.50000_1.00000x1.00000_0"
+	sprintf(buf, "%dx%d_%.5fx%.5f_%.5fx%.5f_%d", width, height, pivotx, pivoty, uvwidth, uvheight, circle);
 	std::string meshname(buf);
 	
 	if (_meshes[meshname] != NULL) {
@@ -147,7 +147,11 @@ Mesh* ResourceManager::getSpriteMesh(int width, int height, float pivotx, float 
 		return _meshes[meshname];
 	} else {
 		Mesh* m = new Mesh();
-		m->generateSpriteMesh(width, height, pivotx, pivoty, uvwidth, uvheight);
+		if (circle != 0) {
+			m->generateCircleMesh(width, circle);
+		} else {
+			m->generateSpriteMesh(width, height, pivotx, pivoty, uvwidth, uvheight);
+		}
 		_meshes[meshname] = m;
 		
 		std::cout << "return new resource: " << meshname << " (mesh)" << std::endl;

@@ -206,8 +206,8 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic)
 	
 	if (sprite->size.x == 0) { sprite->size.x = texture->width() * sprite->uvdim.x; }
 	if (sprite->size.y == 0) { sprite->size.y = texture->height() * sprite->uvdim.y; }
-	
-	Mesh* mesh = _resman.getSpriteMesh(sprite->size.x, sprite->size.y, sprite->pivot.x, sprite->pivot.y, sprite->uvdim.x, sprite->uvdim.y);
+
+	Mesh* mesh = _resman.getSpriteMesh(sprite->size.x, sprite->size.y, sprite->pivot.x, sprite->pivot.y, sprite->uvdim.x, sprite->uvdim.y, sprite->_circlemesh);
 	
 	RGBAColor blendcolor = sprite->color;
 	
@@ -215,7 +215,7 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic)
 	glUniform2f(shader->uvOffsetID(), sprite->uvoffset.x, sprite->uvoffset.y);
 
 	if (texture != NULL) {
-		this->_renderMesh(MVP, shader, texture, mesh, 6, GL_TRIANGLES, blendcolor);
+		this->_renderMesh(MVP, shader, texture, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
 	}
 	
 	if (dynamic && texture != NULL) {

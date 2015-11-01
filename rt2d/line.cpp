@@ -8,6 +8,7 @@
  */
 
 #include <rt2d/line.h>
+#include <rt2d/vectorx.h>
 
 int Line::_nextGuid = 0;
 
@@ -61,8 +62,8 @@ void Line::createCircle(int radius, int segments)
 	int step = 360 / segments;
 	
 	for (int i = 0; i < 360; i += step) {
-		float x = cos(i*(3.14159265f/180))*radius;
-		float y = sin(i*(3.14159265f/180))*radius;
+		float x = cos(i*DEG_TO_RAD)*radius;
+		float y = sin(i*DEG_TO_RAD)*radius;
 		this->addPoint(x, y);
 	}
 	this->addPoint(_points[0].x, _points[0].y);

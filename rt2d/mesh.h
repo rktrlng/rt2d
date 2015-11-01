@@ -15,6 +15,7 @@
 #define MESH_H
 
 #include <rt2d/line.h>
+#include <rt2d/vectorx.h>
 
 // Include GLEW
 #include <GL/glew.h>
@@ -53,11 +54,21 @@ class Mesh
 		/// @param line a Line pointer
 		/// @return void
 		void generateLineMesh(Line* line);
+		
+		/// @brief Create a circle of triangles
+		/// @param radius the radius of the circle
+		/// @param segments the number of segments
+		/// @return void
+		void generateCircleMesh(int radius, int segments);
+		
+		unsigned int numverts() { return _numverts; };
 	
 	private:
 		GLuint _vertexbuffer;	///< @brief internal list of vertices
 		//GLuint _normalbuffer;	///< @brief internal list of normals
 		GLuint _uvbuffer;		///< @brief internal list of UV's
+		
+		unsigned int _numverts;
 };
 
 #endif /* MESH_H */ 
