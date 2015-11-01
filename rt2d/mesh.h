@@ -61,6 +61,8 @@ class Mesh
 		/// @return void
 		void generateCircleMesh(int radius, int segments);
 		
+		/// @brief Get the number of vertices in the Mesh
+		/// @return unsigned int _numverts
 		unsigned int numverts() { return _numverts; };
 	
 	private:
@@ -68,7 +70,7 @@ class Mesh
 		//GLuint _normalbuffer;	///< @brief internal list of normals
 		GLuint _uvbuffer;		///< @brief internal list of UV's
 		
-		unsigned int _numverts;
+		unsigned int _numverts; ///< @brief number of vertices in the Mesh
 };
 
 #endif /* MESH_H */ 

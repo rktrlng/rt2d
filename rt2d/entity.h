@@ -85,6 +85,8 @@ class Entity
 		void addSprite(const std::string& filename);
 		/// @brief add a Circular Sprite to this Entity by filename.
 		/// @param filename The filename of the image you want to add as a Sprite.
+		/// @param radius The radius of the circle.
+		/// @param segments The number of segments of the circle.
 		/// @return void
 		void addCircleSprite(const std::string& filename, int radius, int segments);
 		/// @brief add a Sprite to this Entity.

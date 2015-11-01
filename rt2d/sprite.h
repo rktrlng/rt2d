@@ -71,6 +71,11 @@ class Sprite
 		/// @param uvheight 1.0f=full texture, 0.5f=2x2 texture, 0.25f=4x4 texture etc.
 		/// @return void
 		void setupSprite(const std::string& filename, float pivotx, float pivoty, float uvwidth, float uvheight);
+		/// @brief prepare Circle Sprite for creation by ResourceManager
+		/// @param filename path to the image.tga
+		/// @param radius of the circle
+		/// @param segments of the circle
+		/// @return void
 		void setupCircleSprite(const std::string& filename, int radius, int segments);
 		/// @brief prepare Sprite for creation by ResourceManager
 		/// @param filename path to the image.tga
@@ -116,7 +121,7 @@ class Sprite
 		/// @return int _wrap
 		int wrap() { return _wrap; };
 		
-		int _circlemesh;
+		int _circlemesh; ///< @brief are we a sqaure Sprite (0), or a custom one (not 0)
 	
 	protected:
 	
@@ -131,8 +136,8 @@ class Sprite
 		Texture* _dyntexture; ///< @brief the dynamic texture
 		bool _dynamic; ///< @brief dynamic or not
 		
-		int _filter; ///< @brief dynamic or not
-		int _wrap; ///< @brief dynamic or not
+		int _filter; ///< @brief texture filtering
+		int _wrap; ///< @brief texture wrapping
 };
 
 #endif /* SPRITE_H */ 

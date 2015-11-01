@@ -116,7 +116,6 @@ void Mesh::generateLineMesh(Line* line)
 			counter += 3;
 		}
 		counter += 3;
-		//std::cout << points[i].x << ", " << points[i].y << ", " << points[i].z << std::endl;
 	}
 	// close the line by going back to the first point
 	g_vertex_buffer_data[counter+0] = points[0].x;
@@ -175,12 +174,12 @@ void Mesh::generateCircleMesh(int radius, int segments)
 		v = 0.5f;
 		
 		// fill buffers
-		g_vertex_buffer_data[vertcounter+0] = x;
-		g_vertex_buffer_data[vertcounter+1] = y;
-		g_vertex_buffer_data[vertcounter+2] = 0.0f;
+		g_vertex_buffer_data[vertcounter++] = x;
+		g_vertex_buffer_data[vertcounter++] = y;
+		g_vertex_buffer_data[vertcounter++] = 0.0f;
 		
-		g_uv_buffer_data[uvcounter+0] = u;
-		g_uv_buffer_data[uvcounter+1] = v;
+		g_uv_buffer_data[uvcounter++] = u;
+		g_uv_buffer_data[uvcounter++] = v;
 
 		// #############################
 		// create second vertex
@@ -196,17 +195,17 @@ void Mesh::generateCircleMesh(int radius, int segments)
 		v += 0.5f;
 		
 		// fill buffers
-		g_vertex_buffer_data[vertcounter+3] = x;
-		g_vertex_buffer_data[vertcounter+4] = y;
-		g_vertex_buffer_data[vertcounter+5] = 0.0f;
+		g_vertex_buffer_data[vertcounter++] = x;
+		g_vertex_buffer_data[vertcounter++] = y;
+		g_vertex_buffer_data[vertcounter++] = 0.0f;
 		
-		g_uv_buffer_data[uvcounter+2] = u;
-		g_uv_buffer_data[uvcounter+3] = v;
+		g_uv_buffer_data[uvcounter++] = u;
+		g_uv_buffer_data[uvcounter++] = v;
 		
+		// #############################
 		// rotate n degrees for the final vertex
 		deg -= 360/step;
 		
-		// #############################
 		// create third vertex
 		x = cos(deg*DEG_TO_RAD)*radius;
 		y = sin(deg*DEG_TO_RAD)*radius;
@@ -220,16 +219,12 @@ void Mesh::generateCircleMesh(int radius, int segments)
 		v += 0.5f;
 		
 		// fill buffers
-		g_vertex_buffer_data[vertcounter+6] = x;
-		g_vertex_buffer_data[vertcounter+7] = y;
-		g_vertex_buffer_data[vertcounter+8] = 0.0f;
+		g_vertex_buffer_data[vertcounter++] = x;
+		g_vertex_buffer_data[vertcounter++] = y;
+		g_vertex_buffer_data[vertcounter++] = 0.0f;
 		
-		g_uv_buffer_data[uvcounter+4] = u;
-		g_uv_buffer_data[uvcounter+5] = v;
-
-		// step counters for next triangle
-		vertcounter += 9; // 3 vertices * (x,y,z) per triangle
-		uvcounter += 6; // 3 vertices * (u,v) per triangle
+		g_uv_buffer_data[uvcounter++] = u;
+		g_uv_buffer_data[uvcounter++] = v;
 	}
 
 	//GLuint _vertexbuffer;

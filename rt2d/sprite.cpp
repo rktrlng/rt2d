@@ -57,8 +57,8 @@ void Sprite::setupCircleSprite(const std::string& filename, int radius, int segm
 	_texturename = filename;
 	_circlemesh = segments;
 	
-	_filter = 3;
-	_wrap = 1; // mirror repeat
+	_filter = DEFAULTFILTER;
+	_wrap = DEFAULTWRAP;
 
 	size.x = radius * 2;
 	size.y = radius * 2;
@@ -88,16 +88,8 @@ void Sprite::setupSpriteByPixelBuffer(PixelBuffer* pixels)
 {
 	std::cout << "Sprite::setupSpriteByPixelBuffer() " <<  std::endl;
 	
-	_texturename = "PixelBuffer";
-	
 	_filter = pixels->filter;
 	_wrap = pixels->wrap;
-	
-	pivot.x = 0.5f;
-	pivot.y = 0.5f;
-	
-	uvdim.x = 1.0f;
-	uvdim.y = 1.0f;
 	
 	size.x = pixels->width;
 	size.y = pixels->height;
@@ -110,14 +102,6 @@ void Sprite::setupSpriteByPixelBuffer(PixelBuffer* pixels)
 void Sprite::setupSpriteTGAPixelBuffer(const std::string& filename, int filter, int wrap)
 {
 	std::cout << "Sprite::setupSpriteByPixelBuffer() " <<  std::endl;
-	
-	_texturename = "dyn_" + filename;
-	
-	pivot.x = 0.5f;
-	pivot.y = 0.5f;
-	
-	uvdim.x = 1.0f;
-	uvdim.y = 1.0f;
 	
 	_dyntexture = new Texture();
 	_dyntexture->loadTGAImage(filename, filter, wrap);
