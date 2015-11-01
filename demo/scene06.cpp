@@ -16,7 +16,7 @@ Scene06::Scene06() : SuperScene()
 	text[0]->message("Scene06: Hexagons");
 	//text[1]->message("");
 	text[2]->message("<ESC> quit demo");
-	//text[3]->message("<SPACE> pause animation");
+	text[3]->message("<SPACE> pause texture swapping");
 	
 	// container for Sprite with custom Texture
 	hexa_container = new BasicEntity();
@@ -45,7 +45,35 @@ void Scene06::update(float deltaTime)
 	SuperScene::update(deltaTime);
 	
 	// ###############################################################
-	// ...
+	// texture swapping
 	// ###############################################################
-	
+	// pause timer when SPACE is pressed
+	if (input()->getKey( GLFW_KEY_SPACE )) {
+		t.pause();
+	}
+	if (input()->getKeyUp( GLFW_KEY_SPACE )) {
+		t.unpause();
+	}
+	static int count = 0;
+	if (t.seconds() > 1.0f) {
+		int max = 3;
+		int swap = count%max;
+		switch (swap) {
+			case 0:
+				hexa_container->sprite()->texturename("assets/pencils.tga");
+				break;
+			case 1:
+				hexa_container->sprite()->texturename("assets/spritesheet.tga");
+				break;
+			case 2:
+				hexa_container->sprite()->texturename("assets/default.tga");
+				break;
+			
+			default:
+				hexa_container->sprite()->texturename("assets/default.tga");
+				break;
+		}
+		count++; if (count == max) { count = 0; }
+		t.start();
+	}
 }

@@ -30,6 +30,10 @@ class Sprite
 		/// @brief get the texturename (path to the file)
 		/// @return std::string _texturename
 		std::string texturename() { return _texturename; };
+		/// @brief set the texturename (path to the file)
+		/// @param texturename path to fragmentshader
+		/// @return void
+		void texturename(std::string texturename) { _texturename = texturename; };
 
 		/// @brief get the fragmentshader (path to the file)
 		/// @return std::string _fragmentshader
