@@ -76,7 +76,7 @@ int Renderer::init()
 	//glfwSetCursorPos(_window, SWIDTH/2, SHEIGHT/2);
 
 	// Black background
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(CLEARCOLOR_RED, CLEARCOLOR_GREEN, CLEARCOLOR_BLUE, 1.0f);
 
 	// Orthographic camera. We don't need these.
 	// Enable depth test

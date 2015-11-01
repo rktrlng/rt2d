@@ -17,12 +17,18 @@
 #include <iostream>
 #include <string>
 
+#include <rt2d/color.h>
+
 
 // screenwidth, screenheight
 #define SWIDTH  1280		///< The screen width
 #define SHEIGHT 720		///< The screen height
 
 #define WINDOWNAME "RT2D"	///< The window name
+
+#define CLEARCOLOR_RED   0.1f ///< The red compnent of the color of the window
+#define CLEARCOLOR_GREEN 0.1f ///< The green compnent of the color of the window
+#define CLEARCOLOR_BLUE  0.1f ///< The blue compnent of the color of the window
 
 // renderer uses ubershader
 #define UBERSHADER				1	///< use UberShader or not (0/1)
