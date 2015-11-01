@@ -207,7 +207,7 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic)
 	if (sprite->size.x == 0) { sprite->size.x = texture->width() * sprite->uvdim.x; }
 	if (sprite->size.y == 0) { sprite->size.y = texture->height() * sprite->uvdim.y; }
 
-	Mesh* mesh = _resman.getSpriteMesh(sprite->size.x, sprite->size.y, sprite->pivot.x, sprite->pivot.y, sprite->uvdim.x, sprite->uvdim.y, sprite->_circlemesh);
+	Mesh* mesh = _resman.getSpriteMesh(sprite->size.x, sprite->size.y, sprite->pivot.x, sprite->pivot.y, sprite->uvdim.x, sprite->uvdim.y, sprite->_circlemesh, sprite->_which);
 	
 	RGBAColor blendcolor = sprite->color;
 	

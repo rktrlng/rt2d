@@ -136,10 +136,10 @@ void ResourceManager::deleteShader(const std::string& shadername)
 
 
 // Meshes
-Mesh* ResourceManager::getSpriteMesh(int width, int height, float pivotx, float pivoty, float uvwidth, float uvheight, int circle)
+Mesh* ResourceManager::getSpriteMesh(int width, int height, float pivotx, float pivoty, float uvwidth, float uvheight, int circle, int which)
 {
-	char buf[48]; // should be big enough: "1024x1024_0.50000x0.50000_1.00000x1.00000_0"
-	sprintf(buf, "%dx%d_%.5fx%.5f_%.5fx%.5f_%d", width, height, pivotx, pivoty, uvwidth, uvheight, circle);
+	char buf[64]; // should be big enough: "1024x1024_0.50000x0.50000_1.00000x1.00000_0_60"
+	sprintf(buf, "%dx%d_%.5fx%.5f_%.5fx%.5f_%d_%d", width, height, pivotx, pivoty, uvwidth, uvheight, circle, which);
 	std::string meshname(buf);
 	
 	if (_meshes[meshname] != NULL) {
@@ -148,7 +148,11 @@ Mesh* ResourceManager::getSpriteMesh(int width, int height, float pivotx, float 
 	} else {
 		Mesh* m = new Mesh();
 		if (circle != 0) {
-			m->generateCircleMesh(width, circle);
+			if (which >= 0) {
+				m->generateSegmentMesh(width, circle, which);
+			} else {
+				m->generateCircleMesh(width, circle);
+			}
 		} else {
 			m->generateSpriteMesh(width, height, pivotx, pivoty, uvwidth, uvheight);
 		}

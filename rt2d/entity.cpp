@@ -80,6 +80,13 @@ void Entity::addCircleSprite(const std::string& filename, int radius, int segmen
 	_sprite->setupCircleSprite(filename, radius, segments);
 }
 
+void Entity::addSegmentSprite(const std::string& filename, int radius, int segments, int which)
+{
+	deleteSprite();
+	_sprite = new Sprite();
+	_sprite->setupSegmentSprite(filename, radius, segments, which);
+}
+
 void Entity::addSprite(const std::string& filename, float pivotx, float pivoty)
 {
 	deleteSprite();

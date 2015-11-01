@@ -89,6 +89,13 @@ class Entity
 		/// @param segments The number of segments of the circle.
 		/// @return void
 		void addCircleSprite(const std::string& filename, int radius, int segments);
+		/// @brief add a Circular Sprite to this Entity by filename.
+		/// @param filename The filename of the image you want to add as a Sprite.
+		/// @param radius The radius of the circle.
+		/// @param segments The number of segments of the circle.
+		/// @param which which segment (0-5 if hexagon).
+		/// @return void
+		void addSegmentSprite(const std::string& filename, int radius, int segments, int which);
 		/// @brief add a Sprite to this Entity.
 		/// @param filename The filename of the image you want to add as a Sprite.
 		/// @param pivotx The x component of the pivotpoint.

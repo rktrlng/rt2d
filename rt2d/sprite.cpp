@@ -33,6 +33,7 @@ Sprite::Sprite()
 	_dynamic = false;
 	
 	_circlemesh = 0; // false
+	_which = -1; // disabled
 	
 	color = RGBAColor(255, 255, 255, 255);
 }
@@ -56,6 +57,20 @@ void Sprite::setupCircleSprite(const std::string& filename, int radius, int segm
 {
 	_texturename = filename;
 	_circlemesh = segments;
+	_which = -1;
+	
+	_filter = DEFAULTFILTER;
+	_wrap = DEFAULTWRAP;
+
+	size.x = radius * 2;
+	size.y = radius * 2;
+}
+
+void Sprite::setupSegmentSprite(const std::string& filename, int radius, int segments, int which)
+{
+	_texturename = filename;
+	_circlemesh = segments; // only a single segment (triangle)
+	_which = which; // which segment
 	
 	_filter = DEFAULTFILTER;
 	_wrap = DEFAULTWRAP;

@@ -54,12 +54,17 @@ class Mesh
 		/// @param line a Line pointer
 		/// @return void
 		void generateLineMesh(Line* line);
-		
 		/// @brief Create a circle of triangles
 		/// @param radius the radius of the circle
 		/// @param segments the number of segments
 		/// @return void
 		void generateCircleMesh(int radius, int segments);
+		/// @brief Create a circle of triangles
+		/// @param radius the radius of the circle
+		/// @param segments the number of segments (6 if hexagon)
+		/// @param which which segment (0-5 if hexagon)
+		/// @return void
+		void generateSegmentMesh(int radius, int segments, int which);
 		
 		/// @brief Get the number of vertices in the Mesh
 		/// @return unsigned int _numverts

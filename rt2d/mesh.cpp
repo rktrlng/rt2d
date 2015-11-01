@@ -237,3 +237,92 @@ void Mesh::generateCircleMesh(int radius, int segments)
 	glBindBuffer(GL_ARRAY_BUFFER, _uvbuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
 }
+
+void Mesh::generateSegmentMesh(int radius, int segments, int which)
+{
+	_numverts = 3;
+	
+	GLfloat g_vertex_buffer_data[3*3]; // 3 * (x,y,z)
+	GLfloat g_uv_buffer_data[3*2]; // 2 * (u,v)
+	
+	int vertcounter = 0;
+	int uvcounter = 0;
+	float x = 0.0f;
+	float y = 0.0f;
+	float u = 0.5f;
+	float v = 0.5f;
+	int deg = 360;
+	int step = deg/segments;
+
+	// ####################################################
+	// start at, and always go back to (0,0), UV (0.5,0.5)
+	x = 0.0f;
+	y = 0.0f;
+	u = 0.5f;
+	v = 0.5f;
+	
+	// fill buffers
+	g_vertex_buffer_data[vertcounter++] = x;
+	g_vertex_buffer_data[vertcounter++] = y;
+	g_vertex_buffer_data[vertcounter++] = 0.0f;
+	
+	g_uv_buffer_data[uvcounter++] = u;
+	g_uv_buffer_data[uvcounter++] = v;
+
+	// #############################
+	deg -= step*which;
+	// create second vertex
+	x = cos(deg*DEG_TO_RAD)*radius;
+	y = sin(deg*DEG_TO_RAD)*radius;
+	u = x/radius;
+	v = -y/radius;
+	
+	// translate UV's from (-1, +1) to (0, +1)
+	u /= 2;
+	v /= 2;
+	u += 0.5f;
+	v += 0.5f;
+	
+	// fill buffers
+	g_vertex_buffer_data[vertcounter++] = x;
+	g_vertex_buffer_data[vertcounter++] = y;
+	g_vertex_buffer_data[vertcounter++] = 0.0f;
+	
+	g_uv_buffer_data[uvcounter++] = u;
+	g_uv_buffer_data[uvcounter++] = v;
+	
+	// #############################
+	// rotate n degrees for the final vertex
+	deg -= step;
+	
+	// create third vertex
+	x = cos(deg*DEG_TO_RAD)*radius;
+	y = sin(deg*DEG_TO_RAD)*radius;
+	u = x/radius;
+	v = -y/radius;
+	
+	// translate UV's from (-1, +1) to (0, +1)
+	u /= 2;
+	v /= 2;
+	u += 0.5f;
+	v += 0.5f;
+	
+	// fill buffers
+	g_vertex_buffer_data[vertcounter++] = x;
+	g_vertex_buffer_data[vertcounter++] = y;
+	g_vertex_buffer_data[vertcounter++] = 0.0f;
+	
+	g_uv_buffer_data[uvcounter++] = u;
+	g_uv_buffer_data[uvcounter++] = v;
+	// ####################################################
+
+	//GLuint _vertexbuffer;
+	glGenBuffers(1, &_vertexbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, _vertexbuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+	
+	//GLuint _uvbuffer;
+	glGenBuffers(1, &_uvbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, _uvbuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
+}

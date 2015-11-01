@@ -77,6 +77,13 @@ class Sprite
 		/// @param segments of the circle
 		/// @return void
 		void setupCircleSprite(const std::string& filename, int radius, int segments);
+		/// @brief prepare Circle Sprite for creation by ResourceManager
+		/// @param filename path to the image.tga
+		/// @param radius of the circle
+		/// @param segments of the circle
+		/// @param which which part of the circle
+		/// @return void
+		void setupSegmentSprite(const std::string& filename, int radius, int segments, int which);
 		/// @brief prepare Sprite for creation by ResourceManager
 		/// @param filename path to the image.tga
 		/// @param pivotx X component of Pivot Point_t of the Sprite
@@ -121,7 +128,8 @@ class Sprite
 		/// @return int _wrap
 		int wrap() { return _wrap; };
 		
-		int _circlemesh; ///< @brief are we a sqaure Sprite (0), or a custom one (not 0)
+		int _circlemesh; ///< @brief are we a square Sprite (0), or a custom one (not 0)
+		int _which; ///< @brief which segment
 	
 	protected:
 	

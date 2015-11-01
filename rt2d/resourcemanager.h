@@ -51,7 +51,7 @@ class ResourceManager
 		/// @param uvheight the UV height of the SpriteSheet
 		/// @param circle generate custom Mesh or Circle (0=square Sprite, 6=hexagon)
 		/// @return Mesh* a pointer to the generated Mesh
-		Mesh* getSpriteMesh(int width, int height, float pivotx, float pivoty, float uvwidth, float uvheight, int circle);
+		Mesh* getSpriteMesh(int width, int height, float pivotx, float pivoty, float uvwidth, float uvheight, int circle, int deg);
 		/// @brief Generate a Line Mesh
 		/// @param line pointer to a Line
 		/// @return Mesh* a pointer to the generated Mesh
