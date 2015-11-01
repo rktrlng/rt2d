@@ -63,7 +63,7 @@ Scene06::Scene06() : SuperScene()
 	for (int i=0; i<amount; i++) {
 		BasicEntity* b = new BasicEntity();
 		//b->addSprite("assets/default.tga");
-		b->addSegmentSprite(AUTOGENWHITE, 64, amount, i);
+		b->addSegmentSprite("assets/pencils.tga", 64, amount, i);
 
 		static RGBAColor rgb = RED;
 		b->sprite()->color = rgb;

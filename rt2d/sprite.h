@@ -128,9 +128,16 @@ class Sprite
 		/// @return int _wrap
 		int wrap() { return _wrap; };
 		
-		int _circlemesh; ///< @brief are we a square Sprite (0), or a custom one (not 0)
-		int _which; ///< @brief which segment
-	
+		/// @brief get which segment of circle this sprite has.
+		/// @return int _which
+		int which() { return _which; };
+		/// @brief get if this is a circlemesh or not.
+		///
+		/// 0 = no circlemesh
+		/// n = amounts of total segments in the circle (6 for hexagon)
+		/// @return int _circlemesh
+		int circlemesh() { return _circlemesh; };
+		
 	protected:
 	
 	private:
@@ -146,6 +153,9 @@ class Sprite
 		
 		int _filter; ///< @brief texture filtering
 		int _wrap; ///< @brief texture wrapping
+		
+		int _circlemesh; ///< @brief are we a square Sprite (0), or a custom one (not 0)
+		int _which; ///< @brief which segment
 };
 
 #endif /* SPRITE_H */ 
