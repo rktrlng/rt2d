@@ -147,9 +147,14 @@ void Mesh::generateCircleMesh(int radius, int segments)
 {
 	unsigned int step = segments;
 	_numverts = step*3; // n triangles with 3 vertices each
-	
+
+#ifdef _WIN32
+	GLfloat g_vertex_buffer_data[6*3*3]; // 3 * (x,y,z)
+	GLfloat g_uv_buffer_data[6*3*2]; // 2 * (u,v)
+#else
 	GLfloat g_vertex_buffer_data[step*3*3]; // 3 * (x,y,z)
 	GLfloat g_uv_buffer_data[step*3*2]; // 2 * (u,v)
+#endif
 
 	int vertcounter = 0;
 	int uvcounter = 0;
