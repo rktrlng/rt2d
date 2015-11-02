@@ -37,15 +37,12 @@ Line::Line(const std::string& filename)
 Line::~Line()
 {
 	_points.clear();
-	_uvs.clear();
 }
 
 void Line::addPoint(float x, float y)
 {
 	glm::vec3 pnt(x, y, 0.0f);
-	glm::vec2 uv(0.5f, 0.5f);
 	_points.push_back(pnt);
-	_uvs.push_back(uv);
 }
 
 
@@ -113,13 +110,6 @@ bool Line::loadLineFile(const std::string& filename)
 
 	// close the line
 	_points.push_back(_points[0]);
-	
-	// fill uv's
-	std::vector<glm::vec3>::iterator v;
-	for (v = _points.begin(); v != _points.end(); v++) {
-		glm::vec2 uv(0.5f, 0.5f);
-		_uvs.push_back(uv);
-	}
 	
 	return true;
 }

@@ -59,9 +59,6 @@ class Line
 		/// @brief Get the Points of this Line
 		/// @return std::vector<glm::vec3> _points
 		const std::vector<glm::vec3>& points() { return _points; };
-		/// @brief Get the UV's of this Line
-		/// @return std::vector<glm::vec2> _uvs
-		const std::vector<glm::vec2>& uvs() { return _uvs; };
 		
 		/// @brief is this Line dynamic or not?
 		/// @return bool _dynamic
@@ -80,9 +77,8 @@ class Line
 	private:
 		std::string _filename;	///< @brief _filename filename of the Line
 		std::vector<glm::vec3> _points;	///< @brief _points points of the Line
-		std::vector<glm::vec2> _uvs;	///< @brief _uvs UV's of the Line
 		
-		// identity
+		// identity for unique filename
 		int _guid;	///< @brief The _guid property of this Line
 		static int _nextGuid;	///< @brief The _nextGuid property of this Line
 		
