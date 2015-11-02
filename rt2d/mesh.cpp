@@ -77,8 +77,6 @@ void Mesh::generateLineMesh(Line* line)
 		}
 	}
 	// close the line by going back to the first point
-	//glm::vec3 v =glm::vec3(line->points()[0].x, line->points()[0].y, line->points()[0].z);
-	//vertices.push_back(v);
 	vertices.push_back(line->points()[0]);
 	
 	// Copy the UV's
