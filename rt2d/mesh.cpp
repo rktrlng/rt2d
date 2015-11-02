@@ -31,121 +31,75 @@ Mesh::~Mesh()
 
 void Mesh::generateSpriteMesh(int width, int height, float pivotx, float pivoty, float uvwidth, float uvheight)
 {
-	_numverts = 6;
-	
 	// Our vertices. Tree consecutive floats give a 3D vertex; Three consecutive vertices give a triangle.
 	// A sprite has 1 face (quad) with 2 triangles each, so this makes 1*2=2 triangles, and 2*3 vertices
+	_numverts = 6;
 	std::vector<glm::vec3> vertices;
+	std::vector<glm::vec2> uvs;
 	
+	// first triangle
 	vertices.push_back(glm::vec3(-width * pivotx, -height * pivoty, 0.0f));
 	vertices.push_back(glm::vec3(-width * pivotx, height - (height * pivoty), 0.0f));
 	vertices.push_back(glm::vec3(width - (width * pivotx), height - (height * pivoty), 0.0f));
+	// second triangle
 	vertices.push_back(glm::vec3(width - (width * pivotx), height - (height * pivoty), 0.0f));
 	vertices.push_back(glm::vec3(width - (width * pivotx), -height * pivoty, 0.0f));
 	vertices.push_back(glm::vec3(-width * pivotx, -height * pivoty, 0.0f));
 
 	// UV coordinates for each vertex.
-	std::vector<glm::vec2> uvs;
-	
+	// uvs for first triangle
 	uvs.push_back(glm::vec2(0.0f, uvheight));
 	uvs.push_back(glm::vec2(0.0f, 0.0f));
 	uvs.push_back(glm::vec2(uvwidth, 0.0f));
+	// uvs for second triangle
 	uvs.push_back(glm::vec2(uvwidth, 0.0f));
 	uvs.push_back(glm::vec2(uvwidth, uvheight));
 	uvs.push_back(glm::vec2(0.0f, uvheight));
 	
-	//GLuint _vertexbuffer;
-	glGenBuffers(1, &_vertexbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, _vertexbuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
-/*
-	//GLuint _normalbuffer;
-	glGenBuffers(1, &_normalbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, _normalbuffer);
-	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
-*/
-	//GLuint _uvbuffer;
-	glGenBuffers(1, &_uvbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, _uvbuffer);
-	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
+	this->generateBuffers(vertices, uvs);
 }
 
 void Mesh::generateLineMesh(Line* line)
 {
-	std::vector<glm::vec3> points = line->points();
-	std::vector<glm::vec2> uvs = line->uvs();
+	std::vector<glm::vec3> vertices;
+	std::vector<glm::vec2> uvs;
 	
-	unsigned int s = points.size();
-	const unsigned int maxsize = 100;
-	if (s > maxsize) {
-		s = maxsize;
-	}
+	unsigned int s = line->points().size();
 	_numverts = s; // doesn't matter, Renderer will recalculate.
 	
-	GLfloat g_vertex_buffer_data[maxsize*3*2]; // (x,y,z)/point * begin/end.
-	GLfloat g_uv_buffer_data[maxsize*3*2];
-	//GLfloat g_vertex_buffer_data[s*3*2];
-	//GLfloat g_uv_buffer_data[s*3*2];
-	
-	// Copy the vertices
-	int counter = 0;
+	// Create the vertices
 	for (unsigned int i = 0; i < s; i++) {
-		g_vertex_buffer_data[counter+0] = points[i].x;
-		g_vertex_buffer_data[counter+1] = points[i].y;
-		g_vertex_buffer_data[counter+2] = points[i].z;
+		glm::vec3 v =glm::vec3(line->points()[i].x, line->points()[i].y, line->points()[i].z);
+		vertices.push_back(v);
 		
 		// 'double up' every vertex but the first.
 		// the endpoint of the previous segment is the startpoint of the next.
 		if (i != 0) {
-			g_vertex_buffer_data[counter+3] = points[i].x;
-			g_vertex_buffer_data[counter+4] = points[i].y;
-			g_vertex_buffer_data[counter+5] = points[i].z;
-			counter += 3;
+			glm::vec3 v =glm::vec3(line->points()[i].x, line->points()[i].y, line->points()[i].z);
+			vertices.push_back(v);
 		}
-		counter += 3;
 	}
 	// close the line by going back to the first point
-	g_vertex_buffer_data[counter+0] = points[0].x;
-	g_vertex_buffer_data[counter+1] = points[0].y;
-	g_vertex_buffer_data[counter+2] = points[0].z;
+	glm::vec3 v =glm::vec3(line->points()[0].x, line->points()[0].y, line->points()[0].z);
+	vertices.push_back(v);
 	
 	// Copy the UV's
-	counter = 0;
-	for (unsigned int i = 0; i < s*2; i++) {
-		g_uv_buffer_data[counter+0] = 0.5f;
-		g_uv_buffer_data[counter+1] = 0.5f;
-		
-		counter += 2;
+	unsigned int s2 = vertices.size();
+	for (unsigned int i = 0; i < s2; i++) {
+		uvs.push_back(glm::vec2(0.5f, 0.5f));
 	}
 
-	//GLuint _vertexbuffer;
-	glGenBuffers(1, &_vertexbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, _vertexbuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-	
-	//GLuint _uvbuffer;
-	glGenBuffers(1, &_uvbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, _uvbuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
+	this->generateBuffers(vertices, uvs);
 }
 
 void Mesh::generateCircleMesh(int radius, int segments)
 {
 	unsigned int step = segments;
 	_numverts = step*3; // n triangles with 3 vertices each
+	
+	std::vector<glm::vec3> vertices;
+	std::vector<glm::vec2> uvs;
 
-#ifdef _WIN32
-	step = 6;
-	GLfloat g_vertex_buffer_data[6*3*3]; // 3 * (x,y,z)
-	GLfloat g_uv_buffer_data[6*3*2]; // 2 * (u,v)
-	_numverts = step*3;
-#else
-	GLfloat g_vertex_buffer_data[step*3*3]; // 3 * (x,y,z)
-	GLfloat g_uv_buffer_data[step*3*2]; // 2 * (u,v)
-#endif
-
-	int vertcounter = 0;
-	int uvcounter = 0;
 	float x = 0.0f;
 	float y = 0.0f;
 	float u = 0.5f;
@@ -153,20 +107,10 @@ void Mesh::generateCircleMesh(int radius, int segments)
 	int deg = 360;
 	// for each triangle, do ...
 	for (unsigned int i = 0; i < step; i++) {
-		// #############################
+		// ####################################################
 		// start at, and always go back to (0,0), UV (0.5,0.5)
-		x = 0.0f;
-		y = 0.0f;
-		u = 0.5f;
-		v = 0.5f;
-		
-		// fill buffers
-		g_vertex_buffer_data[vertcounter++] = x;
-		g_vertex_buffer_data[vertcounter++] = y;
-		g_vertex_buffer_data[vertcounter++] = 0.0f;
-		
-		g_uv_buffer_data[uvcounter++] = u;
-		g_uv_buffer_data[uvcounter++] = v;
+		vertices.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+		uvs.push_back(glm::vec2(0.5f, 0.5f));
 
 		// #############################
 		// create second vertex
@@ -174,66 +118,32 @@ void Mesh::generateCircleMesh(int radius, int segments)
 		y = sin(deg*DEG_TO_RAD)*radius;
 		u = x/radius;
 		v = -y/radius;
-		
-		// translate UV's from (-1, +1) to (0, +1)
-		u /= 2;
-		v /= 2;
-		u += 0.5f;
-		v += 0.5f;
-		
-		// fill buffers
-		g_vertex_buffer_data[vertcounter++] = x;
-		g_vertex_buffer_data[vertcounter++] = y;
-		g_vertex_buffer_data[vertcounter++] = 0.0f;
-		
-		g_uv_buffer_data[uvcounter++] = u;
-		g_uv_buffer_data[uvcounter++] = v;
+		vertices.push_back(glm::vec3(x, y, 0.0f));
+		uvs.push_back(glm::vec2(u/2+0.5f, v/2+0.5f)); // translate UV's from (-1, +1) to (0, +1)
 		
 		// #############################
 		// rotate n degrees for the final vertex
 		deg -= 360/step;
-		
 		// create third vertex
 		x = cos(deg*DEG_TO_RAD)*radius;
 		y = sin(deg*DEG_TO_RAD)*radius;
 		u = x/radius;
 		v = -y/radius;
-		
-		// translate UV's from (-1, +1) to (0, +1)
-		u /= 2;
-		v /= 2;
-		u += 0.5f;
-		v += 0.5f;
-		
-		// fill buffers
-		g_vertex_buffer_data[vertcounter++] = x;
-		g_vertex_buffer_data[vertcounter++] = y;
-		g_vertex_buffer_data[vertcounter++] = 0.0f;
-		
-		g_uv_buffer_data[uvcounter++] = u;
-		g_uv_buffer_data[uvcounter++] = v;
+		vertices.push_back(glm::vec3(x, y, 0.0f));
+		uvs.push_back(glm::vec2(u/2+0.5f, v/2+0.5f)); // translate UV's from (-1, +1) to (0, +1)
+		// ####################################################
 	}
 
-	//GLuint _vertexbuffer;
-	glGenBuffers(1, &_vertexbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, _vertexbuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-	
-	//GLuint _uvbuffer;
-	glGenBuffers(1, &_uvbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, _uvbuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
+	this->generateBuffers(vertices, uvs);
 }
 
 void Mesh::generateSegmentMesh(int radius, int segments, int which)
 {
 	_numverts = 3;
 	
-	GLfloat g_vertex_buffer_data[3*3]; // 3 * (x,y,z)
-	GLfloat g_uv_buffer_data[3*2]; // 2 * (u,v)
+	std::vector<glm::vec3> vertices;
+	std::vector<glm::vec2> uvs;
 	
-	int vertcounter = 0;
-	int uvcounter = 0;
 	float x = 0.0f;
 	float y = 0.0f;
 	float u = 0.5f;
@@ -243,18 +153,8 @@ void Mesh::generateSegmentMesh(int radius, int segments, int which)
 
 	// ####################################################
 	// start at, and always go back to (0,0), UV (0.5,0.5)
-	x = 0.0f;
-	y = 0.0f;
-	u = 0.5f;
-	v = 0.5f;
-	
-	// fill buffers
-	g_vertex_buffer_data[vertcounter++] = x;
-	g_vertex_buffer_data[vertcounter++] = y;
-	g_vertex_buffer_data[vertcounter++] = 0.0f;
-	
-	g_uv_buffer_data[uvcounter++] = u;
-	g_uv_buffer_data[uvcounter++] = v;
+	vertices.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+	uvs.push_back(glm::vec2(0.5f, 0.5f));
 
 	// #############################
 	deg -= step*which;
@@ -263,53 +163,38 @@ void Mesh::generateSegmentMesh(int radius, int segments, int which)
 	y = sin(deg*DEG_TO_RAD)*radius;
 	u = x/radius;
 	v = -y/radius;
-	
-	// translate UV's from (-1, +1) to (0, +1)
-	u /= 2;
-	v /= 2;
-	u += 0.5f;
-	v += 0.5f;
-	
-	// fill buffers
-	g_vertex_buffer_data[vertcounter++] = x;
-	g_vertex_buffer_data[vertcounter++] = y;
-	g_vertex_buffer_data[vertcounter++] = 0.0f;
-	
-	g_uv_buffer_data[uvcounter++] = u;
-	g_uv_buffer_data[uvcounter++] = v;
+	vertices.push_back(glm::vec3(x, y, 0.0f));
+	uvs.push_back(glm::vec2(u/2+0.5f, v/2+0.5f)); // translate UV's from (-1, +1) to (0, +1)
 	
 	// #############################
 	// rotate n degrees for the final vertex
 	deg -= step;
-	
 	// create third vertex
 	x = cos(deg*DEG_TO_RAD)*radius;
 	y = sin(deg*DEG_TO_RAD)*radius;
 	u = x/radius;
 	v = -y/radius;
-	
-	// translate UV's from (-1, +1) to (0, +1)
-	u /= 2;
-	v /= 2;
-	u += 0.5f;
-	v += 0.5f;
-	
-	// fill buffers
-	g_vertex_buffer_data[vertcounter++] = x;
-	g_vertex_buffer_data[vertcounter++] = y;
-	g_vertex_buffer_data[vertcounter++] = 0.0f;
-	
-	g_uv_buffer_data[uvcounter++] = u;
-	g_uv_buffer_data[uvcounter++] = v;
+	vertices.push_back(glm::vec3(x, y, 0.0f));
+	uvs.push_back(glm::vec2(u/2+0.5f, v/2+0.5f)); // translate UV's from (-1, +1) to (0, +1)
 	// ####################################################
 
-	//GLuint _vertexbuffer;
+	this->generateBuffers(vertices, uvs);
+}
+
+void Mesh::generateBuffers(std::vector<glm::vec3>& vertex, std::vector<glm::vec2>& uv)
+{
+	//create GLuint _vertexbuffer;
 	glGenBuffers(1, &_vertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, _vertexbuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertex.size() * sizeof(glm::vec3), &vertex[0], GL_STATIC_DRAW);
 	
-	//GLuint _uvbuffer;
+	//create GLuint _normalbuffer;
+	//glGenBuffers(1, &_normalbuffer);
+	//glBindBuffer(GL_ARRAY_BUFFER, _normalbuffer);
+	//glBufferData(GL_ARRAY_BUFFER, normal.size() * sizeof(glm::vec3), &normal[0], GL_STATIC_DRAW);
+	
+	//create GLuint _uvbuffer;
 	glGenBuffers(1, &_uvbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, _uvbuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, uv.size() * sizeof(glm::vec2), &uv[0], GL_STATIC_DRAW);
 }

@@ -76,6 +76,8 @@ class Mesh
 		GLuint _uvbuffer;		///< @brief internal list of UV's
 		
 		unsigned int _numverts; ///< @brief number of vertices in the Mesh
+		
+		void generateBuffers(std::vector<glm::vec3>& vertex, std::vector<glm::vec2>& uv);
 };
 
 #endif /* MESH_H */ 
