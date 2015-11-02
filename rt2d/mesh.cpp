@@ -65,7 +65,6 @@ void Mesh::generateLineMesh(Line* line)
 	std::vector<glm::vec2> uvs;
 	
 	unsigned int s = line->points().size();
-	_numverts = s; // doesn't matter, Renderer will recalculate.
 	
 	// Create the vertices
 	for (unsigned int i = 0; i < s; i++) {
@@ -88,6 +87,8 @@ void Mesh::generateLineMesh(Line* line)
 	for (unsigned int i = 0; i < s2; i++) {
 		uvs.push_back(glm::vec2(0.5f, 0.5f));
 	}
+
+	_numverts = s2; // doesn't matter, Renderer will recalculate.
 
 	this->generateBuffers(vertices, uvs);
 }
