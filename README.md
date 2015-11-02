@@ -97,6 +97,7 @@ Links
 - <http://www.opengl-tutorial.org/>
 - <http://learnopengl.com/>
 - <http://simonschreibt.de/gat/renderhell/>
+- <https://github.com/ellisonleao/magictools>
 
 The `CMakeLists.txt` file and `rt2d/shader.cpp` are based on the ones found here: <http://www.opengl-tutorial.org/>.
 
