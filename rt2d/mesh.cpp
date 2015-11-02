@@ -68,19 +68,18 @@ void Mesh::generateLineMesh(Line* line)
 	
 	// Create the vertices
 	for (unsigned int i = 0; i < s; i++) {
-		glm::vec3 v =glm::vec3(line->points()[i].x, line->points()[i].y, line->points()[i].z);
-		vertices.push_back(v);
+		vertices.push_back(line->points()[i]);
 		
 		// 'double up' every vertex but the first.
 		// the endpoint of the previous segment is the startpoint of the next.
 		if (i != 0) {
-			glm::vec3 v =glm::vec3(line->points()[i].x, line->points()[i].y, line->points()[i].z);
-			vertices.push_back(v);
+			vertices.push_back(line->points()[i]);
 		}
 	}
 	// close the line by going back to the first point
-	glm::vec3 v =glm::vec3(line->points()[0].x, line->points()[0].y, line->points()[0].z);
-	vertices.push_back(v);
+	//glm::vec3 v =glm::vec3(line->points()[0].x, line->points()[0].y, line->points()[0].z);
+	//vertices.push_back(v);
+	vertices.push_back(line->points()[0]);
 	
 	// Copy the UV's
 	unsigned int s2 = vertices.size();
