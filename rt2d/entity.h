@@ -75,27 +75,10 @@ class Entity
 		/// @param spr A pointer to a Sprite.
 		/// @return void
 		void addSprite(Sprite* spr);
-		/// @brief add Dynamic Sprite to this Entity by PixelBuffer*.
-		/// @param pixels A pointer to a PixelBuffer.
-		/// @return void
-		void addDynamicSprite(PixelBuffer* pixels);
 		/// @brief add a Sprite to this Entity by filename.
 		/// @param filename The filename of the image you want to add as a Sprite.
 		/// @return void
 		void addSprite(const std::string& filename);
-		/// @brief add a Circular Sprite to this Entity by filename.
-		/// @param filename The filename of the image you want to add as a Sprite.
-		/// @param radius The radius of the circle.
-		/// @param segments The number of segments of the circle.
-		/// @return void
-		void addCircleSprite(const std::string& filename, int radius, int segments);
-		/// @brief add a Circular Sprite to this Entity by filename.
-		/// @param filename The filename of the image you want to add as a Sprite.
-		/// @param radius The radius of the circle.
-		/// @param segments The number of segments of the circle.
-		/// @param which which segment (0-5 if hexagon).
-		/// @return void
-		void addSegmentSprite(const std::string& filename, int radius, int segments, int which);
 		/// @brief add a Sprite to this Entity.
 		/// @param filename The filename of the image you want to add as a Sprite.
 		/// @param pivotx The x component of the pivotpoint.
@@ -116,6 +99,23 @@ class Entity
 		/// @param v number of vertical textures
 		/// @return void
 		void addSpriteSheet(const std::string& filename, int u, int v);
+		/// @brief add a Circular Sprite to this Entity by filename.
+		/// @param filename The filename of the image you want to add as a Sprite.
+		/// @param radius The radius of the circle.
+		/// @param segments The number of segments of the circle.
+		/// @return void
+		void addCircleSprite(const std::string& filename, int radius, int segments);
+		/// @brief add a Circular Sprite to this Entity by filename.
+		/// @param filename The filename of the image you want to add as a Sprite.
+		/// @param radius The radius of the circle.
+		/// @param segments The number of segments of the circle.
+		/// @param which which segment (0-5 if hexagon).
+		/// @return void
+		void addSegmentSprite(const std::string& filename, int radius, int segments, int which);
+		/// @brief add Dynamic Sprite to this Entity by PixelBuffer*.
+		/// @param pixels A pointer to a PixelBuffer.
+		/// @return void
+		void addDynamicSprite(PixelBuffer* pixels);
 		
 		// line
 		/// @brief get the Line from this Entity.
