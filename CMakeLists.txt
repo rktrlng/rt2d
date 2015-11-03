@@ -93,6 +93,8 @@ add_library(rt2d
 	rt2d/line.h
 	rt2d/mesh.cpp
 	rt2d/mesh.h
+	rt2d/noise.cpp
+	rt2d/noise.h
 	rt2d/pointx.h
 	rt2d/renderer.cpp
 	rt2d/renderer.h

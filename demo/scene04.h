@@ -32,6 +32,7 @@ class Scene04: public SuperScene
 		void randomPixels(PixelBuffer* pixels, int filter);
 		void rainbowPixels(PixelBuffer* pixels, float step, int filter);
 		void checkerPixels(PixelBuffer* pixels, int cellwidth, RGBAColor a, RGBAColor b);
+		void perlinNoisePixels(PixelBuffer* pixels, int octaveCount);
 };
 
 #endif /* SCENE04_H */ 

@@ -7,6 +7,8 @@
  *     - What you did
  */
 
+#include <vector>
+#include <rt2d/noise.h>
 #include "scene04.h"
 
 Scene04::Scene04() : SuperScene()
@@ -63,7 +65,7 @@ void Scene04::update(float deltaTime)
 	
 	if (t.seconds() > 1.0f) {
 		state++;
-		if (state > 13) { state = 0; }
+		if (state > 14) { state = 0; }
 		t.start();
 	}
 	
@@ -128,6 +130,10 @@ void Scene04::update(float deltaTime)
 			case 13:
 				rainbowPixels(buff, 4, 3);
 				text[3]->message("<SPACE> pause state (double rainbow filtered)");
+				break;
+			case 14:
+				perlinNoisePixels(buff, 3);
+				text[3]->message("<SPACE> pause state (Perlin Noise)");
 				break;
 			default:
 				break;
@@ -228,4 +234,31 @@ void Scene04::checkerPixels(PixelBuffer* pixels, int cellwidth, RGBAColor a, RGB
 	}
 	pixels->filter = 0;
 	pixels->wrap = 2; // clamp
+}
+
+void Scene04::perlinNoisePixels(PixelBuffer* pixels, int octaveCount)
+{
+	int width = pixels->width;
+	int height = pixels->height;
+	std::vector<float> whitenoise = Noise::whiteNoise(width, height);
+
+	std::vector<float> perlin = Noise::perlinNoise(whitenoise, octaveCount, width, height);
+	//std::vector<float> smooth = Noise::smoothNoise(whitenoise, octaveCount, width, height);
+
+	long counter = 0;
+	int px = 0;
+	for (long y=0; y<pixels->height; y++) {
+		for (long x=0; x<pixels->width; x++) {
+			float r = perlin[px]; px++;
+			//float r = smooth[px]; px++;
+			pixels->data[counter+0] = r*255;
+			pixels->data[counter+1] = r*255;
+			pixels->data[counter+2] = r*255;
+			if (pixels->bitdepth == 4) {
+				pixels->data[counter+3] = 255; // opaque
+			}
+			counter += pixels->bitdepth;
+		}
+	}
+	pixels->filter = 0;
 }
