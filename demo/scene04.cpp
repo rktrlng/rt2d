@@ -242,15 +242,15 @@ void Scene04::perlinNoisePixels(PixelBuffer* pixels, int octaveCount)
 	int height = pixels->height;
 	std::vector<float> whitenoise = Noise::whiteNoise(width, height);
 
-	std::vector<float> perlin = Noise::perlinNoise(whitenoise, octaveCount, width, height);
-	//std::vector<float> smooth = Noise::smoothNoise(whitenoise, octaveCount, width, height);
+	//std::vector<float> perlin = Noise::perlinNoise(whitenoise, octaveCount, width, height);
+	std::vector<float> smooth = Noise::smoothNoise(whitenoise, octaveCount, width, height);
 
 	long counter = 0;
 	int px = 0;
 	for (long y=0; y<pixels->height; y++) {
 		for (long x=0; x<pixels->width; x++) {
-			float r = perlin[px]; px++;
-			//float r = smooth[px]; px++;
+			//float r = perlin[px]; px++;
+			float r = smooth[px]; px++;
 			pixels->data[counter+0] = r*255;
 			pixels->data[counter+1] = r*255;
 			pixels->data[counter+2] = r*255;
