@@ -77,6 +77,10 @@ class Mesh
 		
 		unsigned int _numverts; ///< @brief number of vertices in the Mesh
 		
+		/// @brief Generate _vertexbuffer + _uvbuffer
+		/// @param vertex a vector of vertices
+		/// @param uv a vector of uv coordinates
+		/// @return void
 		void generateBuffers(std::vector<glm::vec3>& vertex, std::vector<glm::vec2>& uv);
 };
 
