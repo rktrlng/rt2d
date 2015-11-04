@@ -16,7 +16,7 @@ Scene06::Scene06() : SuperScene()
 	
 	text[0]->message("Scene06: Hexagons / N-Gons / Circles");
 	//text[1]->message("");
-	text[2]->message("<ESC> quit demo");
+	text[2]->message("<ESC> next scene");
 	text[3]->message("<SPACE> pause texture swapping");
 	
 	// container for Sprite with custom Texture

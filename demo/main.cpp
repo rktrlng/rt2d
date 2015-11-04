@@ -15,6 +15,7 @@
 #include "scene04.h"
 #include "scene05.h"
 #include "scene06.h"
+#include "scene07.h"
 
 int main( void )
 {
@@ -81,6 +82,17 @@ int main( void )
 		core.run(scene);
 		core.showFrameRate(5);
 	}
+	core.cleanup();
+	delete scene;
+
+
+	// Scene07
+	scene = new Scene07();
+	while(scene->isRunning()) {
+		core.run(scene);
+		core.showFrameRate(5);
+	}
+	//core.cleanup();
 	delete scene;
 
 	// No need to explicitly clean up the core.
