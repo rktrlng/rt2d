@@ -107,6 +107,7 @@ int main( void )
 	// ResourceManager destructor also deletes Shaders.
 
 	std::cout << "Player clicks: " << player->mouseclicks << std::endl;
+	delete player;
 
 	return 0;
 }
