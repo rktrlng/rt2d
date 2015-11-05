@@ -91,6 +91,20 @@ void Scene01::update(float deltaTime)
 	// Make SuperScene do what it needs to do (Escape key stops Scene)
 	// ###############################################################
 	SuperScene::update(deltaTime);
+
+	// ###############################################################
+	// - link mouse to camera
+	// - account for camera offset (center of the screen)
+	// - update mouse cursor text
+	// ###############################################################
+	std::string mouse = "Mouse cursor: (";
+	int mousex = input()->getMouseX() + camera()->position.x - SWIDTH/2;
+	int mousey = input()->getMouseY() + camera()->position.y - SHEIGHT/2;
+	mouse.append(std::to_string(mousex));
+	mouse.append(", ");
+	mouse.append(std::to_string(mousey));
+	mouse.append(")");
+	text[6]->message(mouse);
 	
 	// ###############################################################
 	// Rotate default_entity
