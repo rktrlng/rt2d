@@ -108,11 +108,11 @@ void Scene07::update(float deltaTime)
 		text[5]->message(msg);
 		
 		if (fpstimer.seconds() > 1.0f - deltaTime) {
-			std::string fps = "FPS: ";
-			fps.append(std::to_string(framecounter));
-			fps.append(" (capped)");
+			std::string fpstxt = "FPS: ";
+			fpstxt.append(std::to_string(framecounter));
+			fpstxt.append(" (capped)");
 			framecounter = 0;
-			text[6]->message(fps);
+			text[6]->message(fpstxt);
 			fpstimer.start();
 		}
 

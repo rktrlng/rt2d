@@ -19,10 +19,8 @@ SuperScene::SuperScene() : Scene()
 		this->addChild(layer);
 	}
 
-	for (unsigned int i = 0; i < 8; i++) {
+	for (unsigned int i = 0; i < 12; i++) {
 		Text* line = new Text();
-		//line->message("");
-		//line->position = Point2(50, 30*(i+2));
 		line->scale = Point2(0.5f, 0.5f);
 		
 		text.push_back(line);
@@ -75,12 +73,16 @@ void SuperScene::update(float deltaTime)
 	// ###############################################################
 	for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST; i++) {
 		if (input()->getMouseUp( i )) {
-			std::cout << "mouse up: " << i << std::endl;
+			//std::cout << "mouse up: " << i << std::endl;
 		}
 		if (input()->getMouseDown( i )) {
-			std::cout << "mouse down: " << i << std::endl;
+			//std::cout << "mouse down: " << i << std::endl;
+			player->mouseclicks++;
 		}
 	}
+	std::string clicktxt = "click ";
+	clicktxt.append(std::to_string(player->mouseclicks));
+	text[10]->message(clicktxt);
 
 	// ###############################################################
 	// logo and text follow camera

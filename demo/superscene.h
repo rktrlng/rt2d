@@ -15,6 +15,11 @@
 #include <rt2d/text.h>
 #include "basicentity.h"
 
+struct Player
+{
+	int mouseclicks = 0;
+};
+
 class SuperScene: public Scene
 {
 	public:
@@ -23,11 +28,13 @@ class SuperScene: public Scene
 
 		// must be explicitly called from subclass
 		virtual void update(float deltaTime);
+		void addPlayer(Player* p) { player = p; };
 
 	protected:
 		unsigned int top_layer;
 		std::vector<BasicEntity*> layers;
 		std::vector<Text*> text;
+		Player* player;
 
 	private:
 		BasicEntity* logo;

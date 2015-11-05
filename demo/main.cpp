@@ -22,82 +22,91 @@ int main( void )
 	// Core instance
 	Core core;
 
-	// scene handle
-	Scene* scene = NULL;
-
+	// SuperScene::Player in superscene.h
+	Player* player = new Player();
 
 	// Scene01
-	scene = new Scene01();		// create Scene on the heap
-	while(scene->isRunning()) {	// check status of Scene every frame
-		core.run(scene);		// update and render the current scene
-		core.showFrameRate(5);	// show framerate in output every n seconds
+	Scene01* scene01 = new Scene01(); // create Scene on the heap
+	scene01->addPlayer(player); // add our Player through the SuperScene to keep track of it
+	while(scene01->isRunning()) { // check status of Scene every frame
+		core.run(scene01); // update and render the current scene
+		core.showFrameRate(5); // show framerate in output every n seconds
 	}
-	core.cleanup();				// cleanup ResourceManager (Textures + Meshes, but not Shaders)
-	delete scene;				// delete Scene and everything in it from the heap to make space for next Scene
+	core.cleanup(); // cleanup ResourceManager (Textures + Meshes, but not Shaders)
+	delete scene01; // delete Scene and everything in it from the heap to make space for next Scene
 
 
 	// Scene02
-	scene = new Scene02();
-	while(scene->isRunning()) {
-		core.run(scene);
+	Scene02* scene02 = new Scene02();
+	scene02->addPlayer(player);
+	while(scene02->isRunning()) {
+		core.run(scene02);
 		core.showFrameRate(5);
 	}
 	core.cleanup();
-	delete scene;
+	delete scene02;
 
 
 	// Scene03
-	scene = new Scene03();
-	while(scene->isRunning()) {
-		core.run(scene);
+	Scene03* scene03 = new Scene03();
+	scene03->addPlayer(player);
+	while(scene03->isRunning()) {
+		core.run(scene03);
 		core.showFrameRate(5);
 	}
 	core.cleanup();
-	delete scene;
+	delete scene03;
 
 
 	// Scene04
-	scene = new Scene04();
-	while(scene->isRunning()) {
-		core.run(scene);
+	Scene04* scene04 = new Scene04();
+	scene04->addPlayer(player);
+	while(scene04->isRunning()) {
+		core.run(scene04);
 		core.showFrameRate(5);
 	}
 	core.cleanup();
-	delete scene;
+	delete scene04;
 
 
 	// Scene05
-	scene = new Scene05();
-	while(scene->isRunning()) {
-		core.run(scene);
+	Scene05* scene05 = new Scene05();
+	scene05->addPlayer(player);
+	while(scene05->isRunning()) {
+		core.run(scene05);
 		core.showFrameRate(5);
 	}
 	core.cleanup();
-	delete scene;
+	delete scene05;
 
 
 	// Scene06
-	scene = new Scene06();
-	while(scene->isRunning()) {
-		core.run(scene);
+	Scene06* scene06 = new Scene06();
+	scene06->addPlayer(player);
+	while(scene06->isRunning()) {
+		core.run(scene06);
 		core.showFrameRate(5);
 	}
 	core.cleanup();
-	delete scene;
+	delete scene06;
 
 
 	// Scene07
-	scene = new Scene07();
-	while(scene->isRunning()) {
-		core.run(scene);
+	Scene07* scene07 = new Scene07();
+	scene07->addPlayer(player);
+	while(scene07->isRunning()) {
+		core.run(scene07);
 		core.showFrameRate(5);
 	}
 	//core.cleanup();
-	delete scene;
+	delete scene07;
+
 
 	// No need to explicitly clean up the core.
 	// As a local var, core will go out of scope and destroy Renderer->ResourceManager.
 	// ResourceManager destructor also deletes Shaders.
+
+	std::cout << "Player clicks: " << player->mouseclicks << std::endl;
 
 	return 0;
 }

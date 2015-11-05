@@ -97,14 +97,14 @@ void Scene01::update(float deltaTime)
 	// - account for camera offset (center of the screen)
 	// - update mouse cursor text
 	// ###############################################################
-	std::string mouse = "Mouse cursor: (";
+	std::string cursortxt = "cursor (";
 	int mousex = input()->getMouseX() + camera()->position.x - SWIDTH/2;
 	int mousey = input()->getMouseY() + camera()->position.y - SHEIGHT/2;
-	mouse.append(std::to_string(mousex));
-	mouse.append(", ");
-	mouse.append(std::to_string(mousey));
-	mouse.append(")");
-	text[6]->message(mouse);
+	cursortxt.append(std::to_string(mousex));
+	cursortxt.append(",");
+	cursortxt.append(std::to_string(mousey));
+	cursortxt.append(")");
+	text[9]->message(cursortxt);
 	
 	// ###############################################################
 	// Rotate default_entity
