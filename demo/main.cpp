@@ -22,84 +22,87 @@ int main( void )
 	// Core instance
 	Core core;
 
+	// Scene handle
+	SuperScene* scene = NULL;
+
 	// SuperScene::Player in superscene.h
 	Player* player = new Player();
 
 	// Scene01
-	Scene01* scene01 = new Scene01(); // create Scene on the heap
-	scene01->addPlayer(player); // add our Player through the SuperScene to keep track of it
-	while(scene01->isRunning()) { // check status of Scene every frame
-		core.run(scene01); // update and render the current scene
+	scene = new Scene01(); // create Scene on the heap
+	scene->addPlayer(player); // add our Player through the SuperScene to keep track of it
+	while(scene->isRunning()) { // check status of Scene every frame
+		core.run(scene); // update and render the current scene
 		core.showFrameRate(5); // show framerate in output every n seconds
 	}
 	core.cleanup(); // cleanup ResourceManager (Textures + Meshes, but not Shaders)
-	delete scene01; // delete Scene and everything in it from the heap to make space for next Scene
+	delete scene; // delete Scene and everything in it from the heap to make space for next Scene
 
 
 	// Scene02
-	Scene02* scene02 = new Scene02();
-	scene02->addPlayer(player);
-	while(scene02->isRunning()) {
-		core.run(scene02);
+	scene = new Scene02();
+	scene->addPlayer(player);
+	while(scene->isRunning()) {
+		core.run(scene);
 		core.showFrameRate(5);
 	}
 	core.cleanup();
-	delete scene02;
+	delete scene;
 
 
 	// Scene03
-	Scene03* scene03 = new Scene03();
-	scene03->addPlayer(player);
-	while(scene03->isRunning()) {
-		core.run(scene03);
+	scene = new Scene03();
+	scene->addPlayer(player);
+	while(scene->isRunning()) {
+		core.run(scene);
 		core.showFrameRate(5);
 	}
 	core.cleanup();
-	delete scene03;
+	delete scene;
 
 
 	// Scene04
-	Scene04* scene04 = new Scene04();
-	scene04->addPlayer(player);
-	while(scene04->isRunning()) {
-		core.run(scene04);
+	scene = new Scene04();
+	scene->addPlayer(player);
+	while(scene->isRunning()) {
+		core.run(scene);
 		core.showFrameRate(5);
 	}
 	core.cleanup();
-	delete scene04;
+	delete scene;
 
 
 	// Scene05
-	Scene05* scene05 = new Scene05();
-	scene05->addPlayer(player);
-	while(scene05->isRunning()) {
-		core.run(scene05);
+	scene = new Scene05();
+	scene->addPlayer(player);
+	while(scene->isRunning()) {
+		core.run(scene);
 		core.showFrameRate(5);
 	}
 	core.cleanup();
-	delete scene05;
+	delete scene;
 
 
 	// Scene06
-	Scene06* scene06 = new Scene06();
-	scene06->addPlayer(player);
-	while(scene06->isRunning()) {
-		core.run(scene06);
+	scene = new Scene06();
+	scene->addPlayer(player);
+	while(scene->isRunning()) {
+		core.run(scene);
 		core.showFrameRate(5);
 	}
 	core.cleanup();
-	delete scene06;
+	delete scene;
 
 
 	// Scene07
-	Scene07* scene07 = new Scene07();
-	scene07->addPlayer(player);
-	while(scene07->isRunning()) {
-		core.run(scene07);
+	scene = new Scene07();
+	scene->addPlayer(player);
+	while(scene->isRunning()) {
+		core.run(scene);
 		core.showFrameRate(5);
 	}
 	//core.cleanup();
-	delete scene07;
+	delete scene;
 
 
 	// No need to explicitly clean up the core.
