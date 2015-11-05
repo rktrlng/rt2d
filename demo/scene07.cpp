@@ -19,6 +19,7 @@ Scene07::Scene07() : SuperScene()
 	//text[2]->message("<ESC> next scene");
 	text[2]->message("<ESC> quit demo");
 	text[3]->message("<SPACE> reset particles");
+	text[6]->message("FPS: ---");
 
 	timer.start();
 	fpstimer.start();
@@ -38,10 +39,9 @@ Scene07::Scene07() : SuperScene()
 
 	// get the pixels from the texture and call it the global framebuffer
 	framebuffer = canvas->sprite()->texture()->pixels();
-	//framebuffer->filter = 0;
 
 	// fill framebuffer with background color
-	RGBAColor backgroundcolor = RGBAColor(32, 32, 32, 255);
+	backgroundcolor = RGBAColor(32, 32, 32, 255);
 	long counter = 0;
 	for (long y=0; y<framebuffer->height; y++) {
 		for (long x=0; x<framebuffer->width; x++) {
@@ -75,22 +75,13 @@ void Scene07::update(float deltaTime)
 	// ###############################################################
 	// Draw particles
 	// ###############################################################
-	int max = 5555;
+	unsigned int maxparticles = 2500;
 	static int framecounter = 0;
 	float tsec = timer.seconds();
-	if (tsec > 0.0333f - deltaTime) { // 0.0167 is 60 fps
-		RGBAColor backgroundcolor = RGBAColor(32, 32, 32, 255);
-
-		int s = particles.size();
-
+	if (tsec > 0.016667f - deltaTime) { // 0.0167 is 60 fps
 		// generate a number of particles with a random velocity
-		for (int i = 0; i < 5; i++) {
-			// too many particles
-			if ( s > max-1 ) {
-				// remove oldest (first) particle and clean up to background color
-				setPixel( particles[0].position.x, particles[0].position.y, backgroundcolor );
-				particles.pop_front();
-			}
+		unsigned int amount = rand()%5;
+		for (unsigned int i = 0; i < amount; i++) {
 			Particle p;
 			p.position = Point2(framebuffer->width/2, framebuffer->height/8*7);
 			int range = 60;
@@ -101,23 +92,32 @@ void Scene07::update(float deltaTime)
 			p.color = RED;
 			// add it to the list of particles
 			particles.push_back(p);
+			// too many particles
+			if ( particles.size() > maxparticles ) {
+				// remove oldest (first) particle and clean up to background color
+				setPixel( particles[0].position.x, particles[0].position.y, backgroundcolor );
+				particles.pop_front();
+			}
 		}
+		// count the particles
+		unsigned int s = particles.size();
 
 		// update message
-		std::string msg = "particles: ";
+		std::string msg = "Particles: ";
 		msg.append(std::to_string(s));
 		text[5]->message(msg);
 		
-		if (fpstimer.seconds() > 1.0f) {
-			std::string fps = "fps: ";
+		if (fpstimer.seconds() > 1.0f - deltaTime) {
+			std::string fps = "FPS: ";
 			fps.append(std::to_string(framecounter));
+			fps.append(" (capped)");
 			framecounter = 0;
 			text[6]->message(fps);
 			fpstimer.start();
 		}
 
 		// update and draw each particle
-		for (int i = 0; i < s; i++) {
+		for (unsigned int i = 0; i < s; i++) {
 			// clear the background
 			setPixel(particles[i].position.x, particles[i].position.y, backgroundcolor );
 
@@ -164,13 +164,12 @@ void Scene07::setPixel(int x, int y, RGBAColor color)
 
 void Scene07::clearParticles()
 {
-	RGBAColor backgroundcolor = RGBAColor(32, 32, 32, 255);
 	int s = particles.size();
 
 	// clear each particle from the framebuffer
 	for (int i = 0; i < s; i++) {
 		// clear the background
-		setPixel(particles[i].position.x, particles[i].position.y, backgroundcolor );
+		setPixel(particles[i].position.x, particles[i].position.y, backgroundcolor);
 	}
 	particles.clear();
 }

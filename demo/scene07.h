@@ -14,7 +14,6 @@
 #include <rt2d/timer.h>
 #include "superscene.h"
 #include "basicentity.h"
-#include "boidentity.h"
 
 struct Particle {
 	Point2 position;
@@ -31,6 +30,7 @@ class Scene07: public SuperScene
 		virtual void update(float deltaTime);
 	
 	private:
+		RGBAColor backgroundcolor;
 		BasicEntity* canvas;
 		PixelBuffer* framebuffer;
 		std::deque<Particle> particles;
