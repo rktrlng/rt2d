@@ -69,12 +69,24 @@ void SuperScene::update(float deltaTime)
 	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
 		this->stop();
 	}
-	
+
+	// ###############################################################
+	// Mouse buttons (GLFW_MOUSE_BUTTON_LAST = 8 buttons: 0-7)
+	// ###############################################################
+	for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST; i++) {
+		if (input()->getMouseUp( i )) {
+			std::cout << "mouse up: " << i << std::endl;
+		}
+		if (input()->getMouseDown( i )) {
+			std::cout << "mouse down: " << i << std::endl;
+		}
+	}
+
 	// ###############################################################
 	// logo and text follow camera
 	// ###############################################################
 	Point2 cam_pos = Point2(camera()->position.x, camera()->position.y);
-	
+
 	Point2 logo_pos = Point2(cam_pos.x, cam_pos.y - 50 + SHEIGHT/2);
 	logo->position = logo_pos;
 

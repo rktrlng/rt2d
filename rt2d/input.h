@@ -85,6 +85,21 @@
 #define 	GLFW_KEY_LAST   GLFW_KEY_MENU
 */
 
+/*
+#define 	GLFW_MOUSE_BUTTON_1   0
+#define 	GLFW_MOUSE_BUTTON_2   1
+#define 	GLFW_MOUSE_BUTTON_3   2
+#define 	GLFW_MOUSE_BUTTON_4   3
+#define 	GLFW_MOUSE_BUTTON_5   4
+#define 	GLFW_MOUSE_BUTTON_6   5
+#define 	GLFW_MOUSE_BUTTON_7   6
+#define 	GLFW_MOUSE_BUTTON_8   7
+#define 	GLFW_MOUSE_BUTTON_LAST   GLFW_MOUSE_BUTTON_8
+#define 	GLFW_MOUSE_BUTTON_LEFT   GLFW_MOUSE_BUTTON_1
+#define 	GLFW_MOUSE_BUTTON_RIGHT   GLFW_MOUSE_BUTTON_2
+#define 	GLFW_MOUSE_BUTTON_MIDDLE   GLFW_MOUSE_BUTTON_3
+*/
+
 /// @brief The Input class handles Keyboard and Mouse.
 class Input
 {
@@ -105,6 +120,10 @@ class Input
 		/// @param key as char (ie 'a')
 		/// @return bool key is pressed or not
 		bool getKey(char key) { return getKey((int) key); }
+		/// @brief Is this mouse button pressed?
+		/// @param button num
+		/// @return bool button is pressed or not
+		bool getMouse(int button) { return _mouse[button]; }
 		
 		// down
 		/// @brief Is this key pressed? Only check first press down
@@ -115,6 +134,10 @@ class Input
 		/// @param key as char (ie 'a')
 		/// @return bool key is pressed first time or not
 		bool getKeyDown(char key) { return getKeyDown((int) key); }
+		/// @brief Is this mouse button pressed? Only check first press down
+		/// @param button num
+		/// @return bool button is pressed or not
+		bool getMouseDown(int button) { return _mouseDown[button]; }
 		
 		// up
 		/// @brief Is this key released?
@@ -125,6 +148,10 @@ class Input
 		/// @param key as char (ie 'a')
 		/// @return bool key is released or not
 		bool getKeyUp(char key) { return getKeyUp((int) key); }
+		/// @brief Is this mouse button released?
+		/// @param button num
+		/// @return bool button is released or not
+		bool getMouseUp(int button) { return _mouseUp[button]; }
 
 		// mouse
 		/// @brief get X position of the Mouse
@@ -140,15 +167,20 @@ class Input
 		void setMouse(double x, double y) { glfwSetCursorPos(_window, x, y); };
 
 	private:
-		GLFWwindow* _window;		///< @brief GLFWwindow* _window
-		void _handleKey(int key);	///< @brief update internal array of keys
+		GLFWwindow* _window; ///< @brief GLFWwindow* _window
+		void _handleKey(int key); ///< @brief update internal array of keys
+		void _handleMouse(int key); ///< @brief update internal array of keys
 
-		bool _keys[GLFW_KEY_LAST];		///< @brief internal array of pressed keys
-		bool _keysUp[GLFW_KEY_LAST];	///< @brief internal array of released keys
-		bool _keysDown[GLFW_KEY_LAST];	///< @brief internal array of keys pressed the first time
+		bool _keys[GLFW_KEY_LAST]; ///< @brief internal array of pressed keys
+		bool _keysUp[GLFW_KEY_LAST]; ///< @brief internal array of released keys
+		bool _keysDown[GLFW_KEY_LAST]; ///< @brief internal array of keys pressed the first time
 
-		double _mouseX;		///< @brief X position of the Mouse
-		double _mouseY;		///< @brief Y position of the Mouse
+		bool _mouse[GLFW_MOUSE_BUTTON_LAST]; ///< @brief internal array of pressed mouse buttons
+		bool _mouseUp[GLFW_MOUSE_BUTTON_LAST]; ///< @brief internal array of released mouse buttons
+		bool _mouseDown[GLFW_MOUSE_BUTTON_LAST]; ///< @brief internal array of mouse buttons pressed the first time
+
+		double _mouseX; ///< @brief X position of the Mouse
+		double _mouseY; ///< @brief Y position of the Mouse
 };
 
 #endif /* INPUT_H */ 
