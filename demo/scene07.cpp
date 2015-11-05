@@ -39,8 +39,6 @@ Scene07::Scene07() : SuperScene()
 	// get the pixels from the texture and call it the global framebuffer
 	framebuffer = canvas->sprite()->texture()->pixels();
 	//framebuffer->filter = 0;
-	xres = framebuffer->width;
-	yres = framebuffer->height;
 
 	// fill framebuffer with background color
 	RGBAColor backgroundcolor = RGBAColor(32, 32, 32, 255);
@@ -77,7 +75,7 @@ void Scene07::update(float deltaTime)
 	// ###############################################################
 	// Draw particles
 	// ###############################################################
-	int max = 5554;
+	int max = 5555;
 	static int framecounter = 0;
 	float tsec = timer.seconds();
 	if (tsec > 0.0333f - deltaTime) { // 0.0167 is 60 fps
@@ -88,13 +86,13 @@ void Scene07::update(float deltaTime)
 		// generate a number of particles with a random velocity
 		for (int i = 0; i < 5; i++) {
 			// too many particles
-			if ( s > max ) {
+			if ( s > max-1 ) {
 				// remove oldest (first) particle and clean up to background color
 				setPixel( particles[0].position.x, particles[0].position.y, backgroundcolor );
 				particles.pop_front();
 			}
 			Particle p;
-			p.position = Point2(xres/2, yres/8*7);
+			p.position = Point2(framebuffer->width/2, framebuffer->height/8*7);
 			int range = 60;
 			float vy = rand()%range;
 			float vx = 0;
@@ -129,7 +127,7 @@ void Scene07::update(float deltaTime)
 				particles[i].position.y = 0;
 				particles[i].velocity.y *= -1;
 			}
-			particles[i].velocity.y *= 0.995f; // 'friction from air drag'
+			particles[i].velocity.y *= 0.995f;
 			particles[i].position += particles[i].velocity;
 
 			// rotate color
@@ -153,8 +151,8 @@ void Scene07::update(float deltaTime)
 
 void Scene07::setPixel(int x, int y, RGBAColor color)
 {
-	int start = ((y*xres) + x) * framebuffer->bitdepth;
-	if (start > xres * yres * framebuffer->bitdepth || start < 0) { return; }
+	int start = ((y*framebuffer->width) + x) * framebuffer->bitdepth;
+	if (start > framebuffer->width * framebuffer->height * framebuffer->bitdepth || start < 0) { return; }
 
 	framebuffer->data[start+0] = color.r;
 	framebuffer->data[start+1] = color.g;

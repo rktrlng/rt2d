@@ -39,8 +39,6 @@ class Scene07: public SuperScene
 		
 		void setPixel(int x, int y, RGBAColor color);
 		void clearParticles();
-		int xres;
-		int yres;
 };
 
 #endif /* SCENE07_H */ 
