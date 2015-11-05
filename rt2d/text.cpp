@@ -42,7 +42,7 @@ void Text::message(std::string str)
 	unsigned int s = _message.size();
 	for (unsigned int i = 0; i < s; i++) {
 		Character* character = new Character();
-		character->addSpriteSheet("assets/font.tga", 16, 8);
+		character->addSpriteSheet("fonts/font.tga", 16, 8);
 		char c = _message[i];
 		character->position.x = i*32; // half spacing between 64px wide characters
 		int index = (int) c-32;

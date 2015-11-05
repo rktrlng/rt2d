@@ -120,6 +120,10 @@ file(
 	COPY ${CMAKE_SOURCE_DIR}/rt2d/shaders
 	DESTINATION ${CMAKE_BINARY_DIR}
 )
+file(
+	COPY ${CMAKE_SOURCE_DIR}/rt2d/fonts
+	DESTINATION ${CMAKE_BINARY_DIR}
+)
 
 ####################################################################
 # demo                                                             #
