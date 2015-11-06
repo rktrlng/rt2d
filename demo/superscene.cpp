@@ -9,6 +9,8 @@
 
 #include "superscene.h"
 
+int SuperScene::activescene = 0;
+
 SuperScene::SuperScene() : Scene()
 {
 	player = NULL;
@@ -33,6 +35,10 @@ SuperScene::SuperScene() : Scene()
 	logo->position = Point2(SWIDTH/2, SHEIGHT - 50);
 	logo->addLine("assets/rt2d.line");
 	layers[top_layer]->addChild(logo);
+
+	text[1]->message("");
+	text[2]->message("<[> <]> previous/next scene");
+	text[3]->message("<ESC> quit demo");
 }
 
 
@@ -67,6 +73,16 @@ void SuperScene::update(float deltaTime)
 	// ###############################################################
 	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
 		this->stop();
+	}
+
+	// ###############################################################
+	// '[' and ']' switch scenes
+	// ###############################################################
+	if (input()->getKeyUp( GLFW_KEY_LEFT_BRACKET )) {
+		activescene--;
+	}
+	if (input()->getKeyUp( GLFW_KEY_RIGHT_BRACKET )) {
+		activescene++;
 	}
 
 	// ###############################################################

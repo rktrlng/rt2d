@@ -18,9 +18,8 @@ Scene05::Scene05() : SuperScene()
 	negative = 0;
 	
 	text[0]->message("Scene05: Dynamic PixelBuffer from file.tga");
-	//text[1]->message("");
-	text[2]->message("<ESC> next scene");
-	text[3]->message("<SPACE> pause animation");
+
+	text[4]->message("<SPACE> pause animation");
 	
 	// container for Sprite with custom Texture
 	sprite_container = new BasicEntity();

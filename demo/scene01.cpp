@@ -15,10 +15,9 @@ Scene01::Scene01() : SuperScene()
 	t.start();
 	
 	text[0]->message("Scene01: Parent/child, Sprite, Spritesheet, blendcolor");
-	//text[1]->message("");
-	text[2]->message("<ESC> next scene");
-	text[3]->message("<Arrow keys> move camera");
+
 	text[4]->message("<SPACE> reset UV animation");
+	text[5]->message("<Arrow keys> move camera");
 
 	// Create an Entity with a custom pivot point.
 	default_entity = new BasicEntity();

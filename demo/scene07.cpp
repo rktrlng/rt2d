@@ -15,11 +15,9 @@ Scene07::Scene07() : SuperScene()
 	srand((unsigned)time(NULL));
 
 	text[0]->message("Scene07: Pixel Particles");
-	//text[1]->message("");
-	//text[2]->message("<ESC> next scene");
-	text[2]->message("<ESC> quit demo");
-	text[3]->message("<SPACE> reset particles");
-	text[6]->message("FPS: ---");
+
+	text[4]->message("<SPACE> reset particles");
+	text[7]->message("FPS: ---");
 
 	timer.start();
 	fpstimer.start();
@@ -105,14 +103,14 @@ void Scene07::update(float deltaTime)
 		// update message
 		std::string msg = "Particles: ";
 		msg.append(std::to_string(s));
-		text[5]->message(msg);
+		text[6]->message(msg);
 		
 		if (fpstimer.seconds() > 1.0f - deltaTime) {
 			std::string fpstxt = "FPS: ";
 			fpstxt.append(std::to_string(framecounter));
 			fpstxt.append(" (capped)");
 			framecounter = 0;
-			text[6]->message(fpstxt);
+			text[7]->message(fpstxt);
 			fpstimer.start();
 		}
 

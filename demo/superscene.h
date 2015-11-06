@@ -30,6 +30,8 @@ class SuperScene: public Scene
 		virtual void update(float deltaTime);
 		void addPlayer(Player* p) { player = p; };
 
+		static int activescene;
+
 	protected:
 		unsigned int top_layer;
 		std::vector<BasicEntity*> layers;

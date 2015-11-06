@@ -15,9 +15,8 @@ Scene06::Scene06() : SuperScene()
 	ct.start();
 	
 	text[0]->message("Scene06: Hexagons / N-Gons / Circles");
-	//text[1]->message("");
-	text[2]->message("<ESC> next scene");
-	text[3]->message("<SPACE> pause texture swapping");
+
+	text[4]->message("<SPACE> pause texture swapping");
 	
 	// container for Sprite with custom Texture
 	// This is a single, full circle created in 1 piece.
