@@ -9,6 +9,7 @@
 
 #include <rt2d/core.h>
 
+#include "scene00.h"
 #include "scene01.h"
 #include "scene02.h"
 #include "scene03.h"
@@ -24,6 +25,7 @@ int main( void )
 
 	// Create all scenes on the heap and keep a list
 	std::vector<SuperScene*> scenes;
+	scenes.push_back(new Scene00());
 	scenes.push_back(new Scene01());
 	scenes.push_back(new Scene02());
 	scenes.push_back(new Scene03());
@@ -51,6 +53,7 @@ int main( void )
 		if (scenecounter < 0) { scenecounter = s-1; scene->activescene = s-1; }
 		scene = scenes[scenecounter];
 		core.run(scene); // update and render the current scene
+		core.showFrameRate(5); // show framerate in output every n seconds
 		if (!scene->isRunning()) { running = 0; } // check status of Scene every frame
 	}
 

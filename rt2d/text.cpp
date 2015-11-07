@@ -36,6 +36,11 @@ void Text::clearMessage()
 
 void Text::message(std::string str)
 {
+	this->message(str, WHITE);
+}
+
+void Text::message(std::string str, RGBAColor color)
+{
 	clearMessage();
 	_message = str;
 	
@@ -43,6 +48,7 @@ void Text::message(std::string str)
 	for (unsigned int i = 0; i < s; i++) {
 		Character* character = new Character();
 		character->addSpriteSheet("fonts/font.tga", 16, 8);
+		character->sprite()->color = color;
 		char c = _message[i];
 		character->position.x = i*32; // half spacing between 64px wide characters
 		int index = (int) c-32;

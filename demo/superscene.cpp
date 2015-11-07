@@ -37,7 +37,7 @@ SuperScene::SuperScene() : Scene()
 	layers[top_layer]->addChild(logo);
 
 	text[1]->message("");
-	text[2]->message("<[> <]> previous/next scene");
+	text[2]->message("<[/]> previous/next scene");
 	text[3]->message("<ESC> quit demo");
 }
 

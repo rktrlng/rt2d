@@ -51,10 +51,16 @@ class Text: public Entity
 		/// @param m the message to be created
 		/// @return void
 		void message( std::string m );
-	
+		/// @brief message setter also creates Characters
+		/// @param m the message to be created
+		/// @param c the color of the message to be created
+		/// @return void
+		void message( std::string m, RGBAColor c );
+
+		std::vector<Character*> characters; ///< @brief collection of characters created from _message
+
 	private:
 		std::string _message; ///< @brief the message string
-		std::vector<Character*> characters; ///< @brief collection of characters created from _message
 };
 
 #endif /* TEXT_H */ 
