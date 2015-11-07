@@ -22,7 +22,7 @@ SuperScene::SuperScene() : Scene()
 		this->addChild(layer);
 	}
 
-	for (unsigned int i = 0; i < 12; i++) {
+	for (unsigned int i = 0; i < 16; i++) {
 		Text* line = new Text();
 		line->scale = Point2(0.5f, 0.5f);
 		

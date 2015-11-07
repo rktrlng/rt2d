@@ -92,13 +92,11 @@ void Scene01::update(float deltaTime)
 	SuperScene::update(deltaTime);
 
 	// ###############################################################
-	// - link mouse to camera
-	// - account for camera offset (center of the screen)
-	// - update mouse cursor text
+	// Mouse cursor in screen coordinates
 	// ###############################################################
+	int mousex = input()->getMouseX();
+	int mousey = input()->getMouseY();
 	std::string cursortxt = "cursor (";
-	int mousex = input()->getMouseX() + camera()->position.x - SWIDTH/2;
-	int mousey = input()->getMouseY() + camera()->position.y - SHEIGHT/2;
 	cursortxt.append(std::to_string(mousex));
 	cursortxt.append(",");
 	cursortxt.append(std::to_string(mousey));
