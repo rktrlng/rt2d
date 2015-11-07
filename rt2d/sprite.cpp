@@ -1,6 +1,6 @@
 /**
  * This file is part of RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
  * - Copyright [year] [your name] <you@yourhost.com>
@@ -15,26 +15,26 @@
 Sprite::Sprite()
 {
 	_texturename = AUTOGENWHITE;
-	
+
 	_fragmentshader = SPRITEFRAGMENTSHADER;
 	_vertexshader = SPRITEVERTEXSHADER;
-	
+
 	pivot = Point2(0.5f, 0.5f);
 	uvdim = Point2(1.0f, 1.0f);
 	uvoffset = Point2(0.0f, 0.0f);
 	size = Point2(0, 0);
-	
+
 	_frame = 0;
-	
+
 	_filter = DEFAULTFILTER;
 	_wrap = DEFAULTWRAP;
-	
+
 	_dyntexture = NULL;
 	_dynamic = false;
-	
+
 	_circlemesh = 0; // false
 	_which = -1; // disabled
-	
+
 	color = RGBAColor(255, 255, 255, 255);
 }
 
@@ -58,7 +58,7 @@ void Sprite::setupCircleSprite(const std::string& filename, int radius, int segm
 	_texturename = filename;
 	_circlemesh = segments;
 	_which = -1;
-	
+
 	_filter = DEFAULTFILTER;
 	_wrap = DEFAULTWRAP;
 
@@ -71,7 +71,7 @@ void Sprite::setupSegmentSprite(const std::string& filename, int radius, int seg
 	_texturename = filename;
 	_circlemesh = segments; // only a single segment (triangle)
 	_which = which; // which segment
-	
+
 	_filter = DEFAULTFILTER;
 	_wrap = DEFAULTWRAP;
 
@@ -82,7 +82,7 @@ void Sprite::setupSegmentSprite(const std::string& filename, int radius, int seg
 void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty, float uvwidth, float uvheight, int filter, int wrap)
 {
 	_texturename = filename;
-	
+
 	_filter = filter;
 	_wrap = wrap;
 
@@ -102,13 +102,13 @@ void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty
 void Sprite::setupSpriteByPixelBuffer(PixelBuffer* pixels)
 {
 	std::cout << "Sprite::setupSpriteByPixelBuffer() " <<  std::endl;
-	
+
 	_filter = pixels->filter;
 	_wrap = pixels->wrap;
-	
+
 	size.x = pixels->width;
 	size.y = pixels->height;
-	
+
 	_dyntexture = new Texture();
 	_dyntexture->createFromBuffer(pixels);
 	_dynamic = true;
@@ -117,14 +117,14 @@ void Sprite::setupSpriteByPixelBuffer(PixelBuffer* pixels)
 void Sprite::setupSpriteTGAPixelBuffer(const std::string& filename, int filter, int wrap)
 {
 	std::cout << "Sprite::setupSpriteByPixelBuffer() " <<  std::endl;
-	
+
 	_dyntexture = new Texture();
 	_dyntexture->loadTGAImage(filename, filter, wrap);
 	_dynamic = true;
-	
+
 	size.x = (float) _dyntexture->width();
 	size.y = (float) _dyntexture->height();
-	
+
 	_filter = filter;
 	_wrap = wrap;
 }

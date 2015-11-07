@@ -1,6 +1,6 @@
 /**
  * This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *     - Initial commit
  * - Copyright 2015 Your Name <you@yourhost.com>
@@ -21,15 +21,15 @@ class Scene01: public SuperScene
 		virtual ~Scene01();
 
 		virtual void update(float deltaTime);
-	
+
 	private:
 		BasicEntity* default_entity;
 		BasicEntity* child1_entity;
 		BasicEntity* child2_entity;
 		BasicEntity* animated_entity;
 		BasicEntity* ui_element;
-		
+
 		Timer t;
 };
 
-#endif /* SCENE01_H */ 
+#endif /* SCENE01_H */

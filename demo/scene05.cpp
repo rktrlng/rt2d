@@ -1,6 +1,6 @@
 /**
  * This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *     - Initial commit
  * - Copyright 2015 Your Name <you@yourhost.com>
@@ -12,15 +12,15 @@
 Scene05::Scene05() : SuperScene()
 {
 	t.start();
-	
+
 	filter = 0;
 	wrap = 0;
 	negative = 0;
-	
+
 	text[0]->message("Scene05: Dynamic PixelBuffer from file.tga");
 
 	text[4]->message("<SPACE> pause animation");
-	
+
 	// container for Sprite with custom Texture
 	sprite_container = new BasicEntity();
 	sprite_container->position = Point2(SWIDTH/2, SHEIGHT/2);
@@ -37,7 +37,7 @@ Scene05::Scene05() : SuperScene()
 Scene05::~Scene05()
 {
 	layers[0]->removeChild(sprite_container);
-	
+
 	delete sprite_container;
 	delete dynamic_sprite;
 }
@@ -48,7 +48,7 @@ void Scene05::update(float deltaTime)
 	// Make SuperScene do what it needs to do (Escape key stops Scene)
 	// ###############################################################
 	SuperScene::update(deltaTime);
-	
+
 	// ###############################################################
 	// wrap and filter
 	// ###############################################################
@@ -78,7 +78,7 @@ void Scene05::update(float deltaTime)
 	if (filter == 3) { text[6]->message("<F> Toggle filtering (trilinear)"); }
 	if (negative == 0) { text[7]->message("<N> Toggle to negative"); }
 	if (negative == 1) { text[7]->message("<N> Toggle to positive"); }
-	
+
 	// ###############################################################
 	// sprite_container
 	// ###############################################################
@@ -107,11 +107,11 @@ void Scene05::negativePixels(PixelBuffer* pixels)
 			int r = pixels->data[counter+0];
 			int g = pixels->data[counter+1];
 			int b = pixels->data[counter+2];
-			
+
 			pixels->data[counter+0] = 255 - r;
 			pixels->data[counter+1] = 255 - g;
 			pixels->data[counter+2] = 255 - b;
-			
+
 			counter += pixels->bitdepth;
 		}
 	}

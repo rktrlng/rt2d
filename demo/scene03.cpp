@@ -1,6 +1,6 @@
 /**
  * This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *     - Initial commit
  * - Copyright 2015 Your Name <you@yourhost.com>
@@ -15,24 +15,24 @@ RGBAColor colors[10] = { WHITE, GRAY, RED, ORANGE, YELLOW, GREEN, CYAN, BLUE, PI
 Scene03::Scene03() : SuperScene()
 {
 	t.start();
-	
+
 	text[0]->message("Scene03: Static or dynamic lines");
 
 	text[4]->message("<Arrow keys> fly spaceship");
-	
+
 	// Load Line from file (rt2d logo)
 	// This is the preferred method.
 	rt2d_line = new BasicEntity();
 	rt2d_line->addLine("assets/rt2d.line");
 	rt2d_line->line()->color = RED;
 	rt2d_line->position = Point2(SWIDTH/3, SHEIGHT/3);
-	
+
 	// and another one (default 128x128 square)
 	default_line = new BasicEntity();
 	default_line->addLine("assets/default.line");
 	default_line->line()->color = GREEN;
 	default_line->position = Point2((SWIDTH/3)*2, SHEIGHT/3);
-	
+
 	// Or create a new Line and add it to an Entity later.
 	// It will be unique once you added it to an Entity.
 	// You must delete it yourself after you've added it to all the Entities you want.
@@ -41,13 +41,13 @@ Scene03::Scene03() : SuperScene()
 	tmp->addPoint(20.0f, 0.0f);
 	tmp->addPoint(-10.0f, 10.0f);
 	tmp->addPoint(-10.0f, -10.0f);
-	
+
 	//Create a BasicEntity as our spaceship.
 	spaceship = new BasicEntity();
 	spaceship->addLine(tmp);
 	spaceship->position = Point2(SWIDTH/2, SHEIGHT/2);
 	delete tmp; // delete when you're done with it.
-	
+
 	// Shapes!!
 	shape_container = new BasicEntity();
 	shape_container->position = Point2(SWIDTH/2, (SHEIGHT/3)*2);
@@ -57,7 +57,7 @@ Scene03::Scene03() : SuperScene()
 		Line* circle = new Line();
 		circle->createCircle(30, i);
 		circle->color = colors[(i-3)%10];
-		
+
 		BasicEntity* b = new BasicEntity();
 		int spacing = 80;
 		// shape_container acts as pivot point (center of the shapes).
@@ -67,7 +67,7 @@ Scene03::Scene03() : SuperScene()
 		shape_container->addChild(b);
 		delete circle;
 	}
-	
+
 	// Dynamic Line
 	Line* dynamic = new Line();
 	dynamic->dynamic(true);
@@ -79,12 +79,12 @@ Scene03::Scene03() : SuperScene()
 	for (i = 1; i < amount; i++) {
 		dynamic->addPoint(i*spacing, 0);
 	}
-	
+
 	dynamic_line = new BasicEntity();
 	dynamic_line->position.y = SHEIGHT-60;
 	dynamic_line->addLine(dynamic);
 	delete dynamic;
-	
+
 	// Create Tree
 	layers[0]->addChild(dynamic_line);
 	layers[0]->addChild(rt2d_line);
@@ -101,12 +101,12 @@ Scene03::~Scene03()
 	layers[0]->removeChild(default_line);
 	layers[0]->removeChild(rt2d_line);
 	layers[0]->removeChild(dynamic_line);
-	
+
 	delete dynamic_line;
 	delete rt2d_line;
 	delete default_line;
 	delete spaceship;
-	
+
 	int s = shapes.size();
 	for (int i=0; i<s; i++) {
 		shape_container->removeChild(shapes[i]);
@@ -114,7 +114,7 @@ Scene03::~Scene03()
 		shapes[i] = NULL;
 	}
 	shapes.clear();
-	
+
 	delete shape_container;
 }
 
@@ -124,7 +124,7 @@ void Scene03::update(float deltaTime)
 	// Make SuperScene do what it needs to do (Escape key stops Scene)
 	// ###############################################################
 	SuperScene::update(deltaTime);
-	
+
 	// ###############################################################
 	// dynamic_line
 	// ###############################################################
@@ -137,7 +137,7 @@ void Scene03::update(float deltaTime)
 		}
 		t.start();
 	}
-	
+
 	// ###############################################################
 	// rt2d_line
 	// ###############################################################
@@ -146,7 +146,7 @@ void Scene03::update(float deltaTime)
 	rt2d_line->scale.x = sin(rt2d_line->rotation);
 	rt2d_line->scale.y = cos(rt2d_line->rotation);
 	rt2d_line->line()->color = Color::rotate(rt2d_line->line()->color, deltaTime*2);
-	
+
 	// ###############################################################
 	// default_line
 	// ###############################################################
@@ -156,7 +156,7 @@ void Scene03::update(float deltaTime)
 	default_line->scale.x = sin(s);
 	default_line->scale.y = cos(s);
 	default_line->line()->color = Color::rotate(default_line->line()->color, deltaTime);
-	
+
 	// ###############################################################
 	// spaceship
 	// ###############################################################
@@ -166,12 +166,12 @@ void Scene03::update(float deltaTime)
 void Scene03::updateSpaceShip(float deltaTime)
 {
 	spaceship->line()->color = WHITE;
-	
+
 	float rotspeed = 3.14f;
-	
+
 	static Vector2 velocity = Vector2((rand()%100)-50, (rand()%100)-50);
 	static Polar polar = Polar((rand()%360) * DEG_TO_RAD, 400.0f);
-	
+
 	if (input()->getKey( GLFW_KEY_UP )) {
 		spaceship->line()->color = RED;
 		velocity += polar.cartesian() * deltaTime; // thrust
@@ -182,10 +182,10 @@ void Scene03::updateSpaceShip(float deltaTime)
 	if (input()->getKey( GLFW_KEY_LEFT )) {
 		polar.angle -= rotspeed * deltaTime; // rotate left
 	}
-	
+
 	spaceship->rotation = polar.angle;
 	spaceship->position += velocity * deltaTime;
-	
+
 	if (spaceship->position.x < 0) { spaceship->position.x = SWIDTH; }
 	if (spaceship->position.x > SWIDTH) { spaceship->position.x = 0; }
 	if (spaceship->position.y < 0) { spaceship->position.y = SHEIGHT; }

@@ -1,16 +1,16 @@
 /**
  * @file util.h
- * 
+ *
  * @brief The util header file.
- * 
+ *
  * This file is part of RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
  * - Copyright [year] [your name] <you@yourhost.com>
  *   - [description]
  */
- 
+
 #ifndef UTIL_H_
 #define UTIL_H_
 

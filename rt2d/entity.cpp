@@ -1,6 +1,6 @@
 /**
  * This file is part of RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
  * - Copyright [year] [your name] <you@yourhost.com>
@@ -17,22 +17,21 @@ Entity::Entity()
 {
 	_guid = _nextGuid;
 	_nextGuid++;
-	
+
 	//printf("Entity ctor %d\n", _guid);
-	
+
 	_parent = NULL;
-	
+
 	position = Vector2(0.0f, 0.0f);
 	rotation = 0.0f;
 	scale = Vector2(1.0f, 1.0f);
-	
+
 	_worldpos = Vector2(0.0f, 0.0f);
 	_culled = false;
 
 	_sprite = NULL;
 	_line = NULL;
 }
-
 
 Entity::~Entity()
 {

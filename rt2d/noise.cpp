@@ -1,11 +1,11 @@
 /**
  * This file is part of RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
  * - Copyright [year] [your name] <you@yourhost.com>
  *   - [description]
- * 
+ *
  * Algorithm from: http://devmag.org.za/2009/04/25/perlin-noise/
  */
 
@@ -17,12 +17,12 @@
 
 Noise::Noise()
 {
-	
+
 }
 
 Noise::~Noise()
 {
-	
+
 }
 
 std::vector<float> Noise::whiteNoise(int width, int height)
@@ -64,26 +64,26 @@ std::vector<float> Noise::smoothNoise(std::vector<float>& baseNoise, int octave,
 		int sample_i0 = (i / samplePeriod) * samplePeriod;
 		int sample_i1 = (sample_i0 + samplePeriod) % width; //wrap around
 		float horizontal_blend = (i - sample_i0) * sampleFrequency;
- 
+
 		for (int j = 0; j < height; j++) {
 			//calculate the vertical sampling indices
 			int sample_j0 = (j / samplePeriod) * samplePeriod;
 			int sample_j1 = (sample_j0 + samplePeriod) % height; //wrap around
 			float vertical_blend = (j - sample_j0) * sampleFrequency;
- 
+
 			//blend the top two corners
 			float top = interpolate(newBaseNoise[sample_i0][sample_j0], newBaseNoise[sample_i1][sample_j0], horizontal_blend);
- 
+
 			//blend the bottom two corners
 			float bottom = interpolate(newBaseNoise[sample_i0][sample_j1], newBaseNoise[sample_i1][sample_j1], horizontal_blend);
- 
+
 			//final blend
 			smoothNoise.push_back(interpolate(top, bottom, vertical_blend));
 			counter++;
 		}
 		counter++;
 	}
- 
+
 	return smoothNoise;
 }
 
@@ -100,7 +100,7 @@ std::vector<float> Noise::perlinNoise(std::vector<float>& baseNoise, int octaveC
 	std::vector<float> perlinNoise;
 	float amplitude = 1.0f;
 	float totalAmplitude = 0.0f;
- 
+
 	//blend noise together
 	int counter = 0;
 	for (int octave = octaveCount - 1; octave >= 0; octave--) {

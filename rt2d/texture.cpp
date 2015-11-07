@@ -1,6 +1,6 @@
 /**
  * This file is part of RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
  * - Copyright [year] [your name] <you@yourhost.com>
@@ -24,40 +24,40 @@ Texture::Texture()
 	_width = 0;
 	_height = 0;
 	_depth = 3;
-	
+
 	this->_gltexture[0] = 0;
 	_pixelbuffer = NULL;
-	
+
 	//std::cout << "texture created" << std::endl;
 }
 
 Texture::~Texture()
 {
 	glDeleteTextures(1, &_gltexture[0]);
-	
+
 	deletePixelBuffer();
-	
+
 	//std::cout << "========> Texture deleted" << std::endl;
 }
 
 GLuint Texture::createWhitePixels(int width, int height)
 {
 	std::cout << "Creating PixelBuffer: white " << width << "x" << height << std::endl;
-	
+
 	PixelBuffer* pixels = new PixelBuffer(width, height, 3, 0, 0);
-	
+
 	// Generate the OpenGL Texture
 	createFromBuffer(pixels);
-	
+
 	delete pixels;
-	
+
 	return _gltexture[0];
 }
 
 GLuint Texture::loadTGAImage(const std::string& filename, int filter, int wrap)
 {
 	std::cout << "Loading TGA: " << filename << std::endl;
-	
+
 	// Load .tga file
 	FILE *file;
 	unsigned char type[4];
@@ -82,9 +82,9 @@ GLuint Texture::loadTGAImage(const std::string& filename, int filter, int wrap)
 		fclose(file);
 		return false;
 	}
-	
+
 	PixelBuffer* pixels = new PixelBuffer();
-	
+
 	pixels->width = info[0] + info[1] * 256;
 	pixels->height = info[2] + info[3] * 256;
 	pixels->bitdepth = info[4] / 8;
@@ -96,7 +96,7 @@ GLuint Texture::loadTGAImage(const std::string& filename, int filter, int wrap)
 		fclose(file);
 		return false;
 	}
-	
+
 	long file_size = pixels->width * pixels->height * pixels->bitdepth;
 
 	//allocate memory for image data
@@ -108,12 +108,12 @@ GLuint Texture::loadTGAImage(const std::string& filename, int filter, int wrap)
 
 	//close file
 	fclose(file);
-	
+
 	// BGR(A) to RGB(A)
 	if (pixels->bitdepth == 3 || pixels->bitdepth == 4) {
 		BGR2RGB(pixels);
 	}
-	
+
 	// =================================================================
 	// Check if the image's width and height is a power of 2. No biggie, we can handle it.
 	if ((pixels->width & (pixels->width - 1)) != 0) {
@@ -126,12 +126,12 @@ GLuint Texture::loadTGAImage(const std::string& filename, int filter, int wrap)
 		//std::cout << "warning: " << filename << " is not square" << std::endl;
 	}
 	// =================================================================
-	
+
 	// Generate the OpenGL Texture
 	createFromBuffer(pixels);
-	
+
 	delete pixels;
-	
+
 	return _gltexture[0];
 }
 
@@ -145,7 +145,7 @@ void Texture::BGR2RGB(PixelBuffer* pixels)
 		unsigned char temp = pixels->data[counter];
 		pixels->data[counter] = pixels->data[counter+2];
 		pixels->data[counter+2] = temp;
-		
+
 		counter += pixels->bitdepth;
 	}
 }
@@ -154,7 +154,7 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 {
 	//allocate memory and copy image data to pixelBuffer
 	deletePixelBuffer();
-	
+
 	if (pixels->bitdepth == 1) {
 		// use 8-bit grayscale texture as 32-bit white + alpha
 		_pixelbuffer = new PixelBuffer(pixels->width, pixels->height, 4, pixels->filter, pixels->wrap);
@@ -165,7 +165,7 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 			_pixelbuffer->data[counter+1] = 255;
 			_pixelbuffer->data[counter+2] = 255;
 			_pixelbuffer->data[counter+3] = pixels->data[(counter+3)/4];
-			
+
 			counter += 4;
 		}
 	} else {
@@ -175,13 +175,13 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 			_pixelbuffer->data[i] = pixels->data[i];
 		}
 	}
-	
+
 	// set Entity properties
 	this->_width = pixels->width;
 	this->_height = pixels->height;
 	this->_depth = pixels->bitdepth;
 	// =================================================================
-	
+
 	// generate a number of texturenames (just 1 for now)
 	// if you want to create more, fine. Leave &this->_gltexture[0] on 0 here. Only change the first argument.
 	glGenTextures(1, &this->_gltexture[0]);
@@ -189,7 +189,7 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 	// setup first texture (the only one in this case)
 	// if you create more, use this->_gltexture[x], where x is the id of the texturename.
 	glBindTexture(GL_TEXTURE_2D, this->_gltexture[0]);
-	
+
 	// handle transparency
 	if (this->_depth == 4) {
 		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
@@ -204,7 +204,7 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 		glEnable(GL_BLEND);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->_width, this->_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, _pixelbuffer->data);
 	}
-	
+
 	// 0 = GL_REPEAT
 	// 1 = GL_MIRRORED_REPEAT
 	// 2 = GL_CLAMP_TO_EDGE

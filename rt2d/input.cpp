@@ -1,6 +1,6 @@
 /**
  * This file is part of RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
  * - Copyright [year] [your name] <you@yourhost.com>
@@ -13,7 +13,7 @@
 Input::Input()
 {
 	_window = NULL;
-	
+
 	int i;
 	for(i=0; i<GLFW_KEY_LAST; i++) {
 		_keys[i] = false;
@@ -29,7 +29,7 @@ Input::Input()
 
 Input::~Input()
 {
-	
+
 }
 
 void Input::updateInput(GLFWwindow* w)
@@ -81,7 +81,7 @@ void Input::_handleMouse(int button)
 }
 
 void Input::_handleKey(int key)
-{ 
+{
 	if (glfwGetKey( _window, key ) == GLFW_PRESS) {
 		if (_keys[key] == false) { // if first time pressed down
 			_keys[key] = true;

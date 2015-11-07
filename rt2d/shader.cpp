@@ -1,11 +1,11 @@
 /**
  * This file is part of RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
  * - Copyright [year] [your name] <you@yourhost.com>
  *   - [description]
- * 
+ *
  * loadShaders() code originally from: http://www.opengl-tutorial.org
  */
 
@@ -22,7 +22,6 @@ using namespace std;
 #include <GL/glew.h>
 
 #include <rt2d/shader.h>
-
 
 Shader::Shader()
 {
@@ -136,6 +135,6 @@ GLuint Shader::loadShaders(const char * vertex_file_path, const char * fragment_
 	glDeleteShader(FragmentShaderID);
 
 	this->_attachID();
-	
+
 	return _programID;
 }

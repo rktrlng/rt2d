@@ -17,9 +17,9 @@ endif()
 if(UNIX)
 	#set(CMAKE_CXX_FLAGS "-Wall -std=c++0x -pedantic -O2 -g -pg")
 	#set(CMAKE_CXX_FLAGS "-Wall -Wstrict-aliasing -std=c++0x -O2")
-	
+
 	set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
-	
+
 	# valgrind --leak-check=yes ./demo
 	# ./demo # creates cmon.out
 	# gprof demo gmon.out > analysis.txt
@@ -32,7 +32,7 @@ if(WIN32)
 	list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/external/rpavlik-cmake-modules-1c73e35")
 	include(CreateLaunchers)
 	include(MSVCMultipleProcessCompile) # /MP
-	
+
 	add_definitions( "/W3 /D_CRT_SECURE_NO_WARNINGS /wd4514 /nologo" ) # suppress pedantic warnings
 endif(WIN32)
 
@@ -171,7 +171,7 @@ if(WIN32)
 	# Xcode and Visual working directories
 	set_target_properties(demo PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/demo/")
 	create_target_launcher(demo WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/demo/")
-	
+
 	# create file tabs in visual studio
 	SOURCE_GROUP(rt2d REGULAR_EXPRESSION ".*/rt2d/.*" )
 	SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*shaders$" )

@@ -1,6 +1,6 @@
 /**
  * This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *     - Initial commit
  * - Copyright 2015 Your Name <you@yourhost.com>
@@ -15,7 +15,7 @@ Scene00::Scene00() : SuperScene()
 {
 	// Start Timer t
 	t.start();
-	
+
 	text[0]->message("Scene00: License Text");
 	//text[1]->message("");
 	//text[2]->message("");
@@ -27,13 +27,13 @@ Scene00::Scene00() : SuperScene()
 
 	// Create an Entity with a custom pivot point.
 	consolecontainer = new BasicEntity();
-	
+
 	for (unsigned int i = 0; i < numlines; i++) {
 		Text* line = new Text();
 		line->scale = Point2(0.35f, 0.35f);
 		line->position = Point2(200, 225+i*25);
 		line->message("", GREEN);
-		
+
 		consoletext.push_back(line);
 		consolecontainer->addChild(line);
 	}
@@ -51,7 +51,7 @@ Scene00::~Scene00()
 		consoletext[i] = NULL;
 	}
 	consoletext.clear();
-	
+
 	// deconstruct and delete the Tree
 	layers[1]->removeChild(consolecontainer);
 
@@ -74,12 +74,12 @@ void Scene00::update(float deltaTime)
 	if (input()->getKeyDown( GLFW_KEY_SPACE )) {
 		filltext();
 	}
-	
+
 	// ###############################################################
 	// Fill consoletext with fulltext
 	// ###############################################################
 	unsigned int s = consoletext.size();
-	
+
 	if (t.seconds() > 0.1f - deltaTime) { // 10 FPS
 		for (unsigned int i = 0; i < s; i++) {
 			consoletext[i]->message(fulltext[i], GREEN);

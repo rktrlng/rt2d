@@ -1,6 +1,6 @@
 /**
  * This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *     - Initial commit
  * - Copyright 2015 Your Name <you@yourhost.com>
@@ -15,16 +15,16 @@ Scene04::Scene04() : SuperScene()
 {
 	t.start();
 	rt.start();
-	
+
 	text[0]->message("Scene04: Dynamic PixelBuffer as Texture");
 
 	text[4]->message("<SPACE> pause state");
-	
+
 	// container for Sprite with custom Texture
 	pixel_container = new BasicEntity();
 	pixel_container->position = Point2(SWIDTH/2, SHEIGHT/2);
 	pixel_container->scale = Point2(5.0f, 5.0f);
-	
+
 	// width, height, bitdepth, filter, wrap
 	PixelBuffer* pixels = new PixelBuffer(128, 128, 3, 0, 0);
 	pixel_container->addDynamicSprite(pixels);
@@ -46,13 +46,13 @@ void Scene04::update(float deltaTime)
 	// Make SuperScene do what it needs to do (Escape key stops Scene)
 	// ###############################################################
 	SuperScene::update(deltaTime);
-	
+
 	// ###############################################################
 	// pixel_container
 	// ###############################################################
 	pixel_container->rotation += PI / 16 * deltaTime;
 	//pixel_container->sprite()->uvoffset += Point2(deltaTime/8, deltaTime/8);
-	
+
 	// change state every n seconds, pause timer when SPACE is pressed
 	static int state = 0;
 	if (input()->getKey( GLFW_KEY_SPACE )) {
@@ -61,13 +61,13 @@ void Scene04::update(float deltaTime)
 	if (input()->getKeyUp( GLFW_KEY_SPACE )) {
 		t.unpause();
 	}
-	
+
 	if (t.seconds() > 1.0f) {
 		state++;
 		if (state > 13) { state = 0; }
 		t.start();
 	}
-	
+
 	// change pixels according to state
 	float statetime = 0.02f; // 0.0167 is 60 fps
 	if (rt.seconds() > statetime) {
@@ -145,7 +145,7 @@ void Scene04::spectrumPixels(PixelBuffer* pixels, int filter)
 {
 	// hue, saturation, brightness
 	HSVColor hsv = HSVColor(0.0f, 0.0f, 1.0f); // initially white
-	
+
 	long counter = 0;
 	for (long y=0; y<pixels->height; y++) {
 		for (long x=0; x<pixels->width; x++) {
@@ -217,17 +217,17 @@ void Scene04::checkerPixels(PixelBuffer* pixels, int cellwidth, RGBAColor a, RGB
 		if (y%cellwidth == 0) { swapper *= -1; }
 		for (long x=0; x<pixels->width; x++) {
 			if (x%cellwidth == 0) { swapper *= -1; }
-			
+
 			if (swapper == 1) { color = a; }
 			if (swapper == -1) { color = b; }
-			
+
 			pixels->data[counter+0] = color.r;
 			pixels->data[counter+1] = color.g;
 			pixels->data[counter+2] = color.b;
 			if (pixels->bitdepth == 4) {
 				pixels->data[counter+3] = color.a;
 			}
-			
+
 			counter += pixels->bitdepth;
 		}
 	}

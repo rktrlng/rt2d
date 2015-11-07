@@ -1,6 +1,6 @@
 /**
  * This file is part of RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
  * - Copyright [year] [your name] <you@yourhost.com>
@@ -15,17 +15,15 @@ Scene::Scene()
 	std::cout << "################ new Scene ################" << std::endl;
 	_camera = new Camera();
 	_input = new Input();
-	
+
 	_isRunning = true;
 }
-
 
 Scene::~Scene()
 {
 	delete _camera;
 	delete _input;
 }
-
 
 void Scene::updateScene(float deltaTime)
 {
@@ -37,7 +35,7 @@ void Scene::_updateEntity(Entity* entity, float deltaTime)
 {
 	// call update() for this entity
 	entity->update(deltaTime);
-	
+
 	// update() all Children (recursively)
 	std::vector<Entity*> children = entity->children();
 	std::vector<Entity*>::iterator child;

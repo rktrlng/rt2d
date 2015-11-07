@@ -1,6 +1,6 @@
 /**
  * This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *     - Initial commit
  * - Copyright 2015 Your Name <you@yourhost.com>
@@ -13,11 +13,11 @@ Scene06::Scene06() : SuperScene()
 {
 	t.start();
 	ct.start();
-	
+
 	text[0]->message("Scene06: Hexagons / N-Gons / Circles");
 
 	text[4]->message("<SPACE> pause texture swapping");
-	
+
 	// container for Sprite with custom Texture
 	// This is a single, full circle created in 1 piece.
 	circle_container = new BasicEntity();
@@ -26,8 +26,8 @@ Scene06::Scene06() : SuperScene()
 	circle_container->addCircleSprite("assets/default.tga", radius, segments); // radius, segments
 	circle_container->position = Point2(SWIDTH/4, SHEIGHT/2);
 	layers[0]->addChild(circle_container);
-	
-	
+
+
 	// container for Entity with single segment Sprites
 	hexagon = new BasicEntity();
 	hexagon->position = Point2(SWIDTH/2, SHEIGHT/2);
@@ -52,8 +52,8 @@ Scene06::Scene06() : SuperScene()
 	hexagon->addChild(southeast);
 	// add hexagon to Scene
 	layers[0]->addChild(hexagon);
-	
-	
+
+
 	// container for Entity with single segment Sprites
 	segments_container = new BasicEntity();
 	segments_container->position = Point2(SWIDTH/4*3, SHEIGHT/2);
@@ -67,7 +67,7 @@ Scene06::Scene06() : SuperScene()
 		static RGBAColor rgb = RED;
 		b->sprite()->color = rgb;
 		rgb = Color::rotate(rgb, 1.0f/amount);
-		
+
 		elements.push_back(b);
 		segments_container->addChild(b);
 	}
@@ -80,10 +80,10 @@ Scene06::~Scene06()
 {
 	layers[0]->removeChild(circle_container);
 	delete circle_container;
-	
+
 	hexagon->removeChild(northeast);
 	layers[0]->removeChild(hexagon);
-	
+
 	delete northeast;
 	delete north;
 	delete northwest;
@@ -91,8 +91,8 @@ Scene06::~Scene06()
 	delete south;
 	delete southeast;
 	delete hexagon;
-	
-	
+
+
 	layers[0]->removeChild(segments_container);
 	int s = elements.size();
 	for (int i=0; i<s; i++) {
@@ -110,7 +110,7 @@ void Scene06::update(float deltaTime)
 	// Make SuperScene do what it needs to do (Escape key stops Scene)
 	// ###############################################################
 	SuperScene::update(deltaTime);
-	
+
 	// ###############################################################
 	// texture swapping
 	// ###############################################################
@@ -150,7 +150,7 @@ void Scene06::update(float deltaTime)
 					}
 				}
 				break;
-			
+
 			default:
 				circle_container->sprite()->texturename("assets/default.tga");
 				for (int i=0; i<s; i++) {
@@ -162,7 +162,7 @@ void Scene06::update(float deltaTime)
 		count++; if (count == max) { count = 0; }
 		t.start();
 	}
-	
+
 	// ###############################################################
 	// color cycling
 	// ###############################################################

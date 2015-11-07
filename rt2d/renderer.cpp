@@ -1,6 +1,6 @@
 /**
  * This file is part of RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
  * - Copyright [year] [your name] <you@yourhost.com>
@@ -28,10 +28,9 @@ Renderer::Renderer()
 {
 	_window = NULL;
 	_uberShader = NULL;
-	
+
 	this->init();
 }
-
 
 Renderer::~Renderer()
 {
@@ -59,7 +58,7 @@ int Renderer::init()
 		return -1;
 	}
 	glfwMakeContextCurrent(_window);
-	
+
 	// vsync (0=off, 1=on)
 	glfwSwapInterval(VSYNC);
 
@@ -71,7 +70,7 @@ int Renderer::init()
 
 	// Ensure we can capture keys being pressed
 	glfwSetInputMode(_window, GLFW_STICKY_KEYS, GL_TRUE);
-	
+
 	// MS Windows only
 	//glfwSetCursorPos(_window, SWIDTH/2, SHEIGHT/2);
 
@@ -82,18 +81,18 @@ int Renderer::init()
 	// Enable depth test
 	//glEnable(GL_DEPTH_TEST);
 	// Accept fragment if it closer to the camera than the former one
-	//glDepthFunc(GL_LESS); 
+	//glDepthFunc(GL_LESS);
 
 	// Cull triangles which normal is not towards the camera
 	glEnable(GL_CULL_FACE);
-	
+
 	if (UBERSHADER) { // from config.h
 		_uberShader =_resman.getShader(SPRITEVERTEXSHADER, SPRITEFRAGMENTSHADER);
 		printf("Renderer using uberShader\n");
 	}
 
 	printf("Renderer::init() done\n");
-	
+
 	return 0;
 }
 
@@ -114,10 +113,10 @@ void Renderer::renderScene(Scene* scene)
 	if (CULLSCENE) {
 		_cullScene(scene);
 	}
-	
+
 	// start rendering everything, starting from the scene 'rootnode'
 	this->_renderEntity(modelMatrix, scene);
-	
+
 	// Swap buffers
 	glfwSwapBuffers(_window);
 }
@@ -127,7 +126,7 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 	// multiply ModelMatrix for this child with the ModelMatrix of the parent (the caller of this method)
 	// the first time we do this (for the root-parent), modelMatrix is identity.
 	modelMatrix *= this->_getModelMatrix(entity);
-	
+
 	// #######################################################
 	// fill _worldpos in Entity
 	glm::vec4 realpos = modelMatrix * glm::vec4(0,0,0,1);
@@ -158,7 +157,7 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 		// ... and render the Line.
 		this->_renderLine(MVP, line);
 	}
-	
+
 	// Render all Children (recursively)
 	std::vector<Entity*> children = entity->children();
 	std::vector<Entity*>::iterator child;
@@ -176,14 +175,14 @@ glm::mat4 Renderer::_getModelMatrix(Entity* entity)
 	glm::vec3 position = glm::vec3(entity->position.x, entity->position.y, 0.0f);
 	glm::vec3 rotation = glm::vec3(0.0f, 0.0f, entity->rotation);
 	glm::vec3 scale = glm::vec3(entity->scale.x, entity->scale.y, 1.0f);
-	
+
 	// Build the Model matrix
 	glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), position);
 	glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, rotation.z);
 	glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), scale);
-	
+
 	glm::mat4 mm = translationMatrix * rotationMatrix * scalingMatrix;
-	
+
 	return mm;
 }
 
@@ -203,21 +202,21 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic)
 	} else {
 		texture = _resman.getTexture(sprite->texturename(), sprite->filter(), sprite->wrap());
 	}
-	
+
 	if (sprite->size.x == 0) { sprite->size.x = texture->width() * sprite->uvdim.x; }
 	if (sprite->size.y == 0) { sprite->size.y = texture->height() * sprite->uvdim.y; }
 
 	Mesh* mesh = _resman.getSpriteMesh(sprite->size.x, sprite->size.y, sprite->pivot.x, sprite->pivot.y, sprite->uvdim.x, sprite->uvdim.y, sprite->circlemesh(), sprite->which());
-	
+
 	RGBAColor blendcolor = sprite->color;
-	
+
 	// _uvOffsetID
 	glUniform2f(shader->uvOffsetID(), sprite->uvoffset.x, sprite->uvoffset.y);
 
 	if (texture != NULL) {
 		this->_renderMesh(MVP, shader, texture, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
 	}
-	
+
 	if (dynamic && texture != NULL) {
 		delete texture;
 	}
@@ -234,21 +233,21 @@ void Renderer::_renderLine(const glm::mat4& MVP, Line* line)
 	Texture* texture = _resman.getTexture(AUTOGENWHITE, 0, 1);
 	Mesh* mesh = NULL;
 	RGBAColor blendcolor = line->color;
-	
+
 	int numpoints = (line->points().size()*2) - 1;
 	if (line->closed()) {
 		numpoints += 1;
 	}
-	
+
 	if (line->dynamic()) {
 		mesh = new Mesh();
 		mesh->generateLineMesh(line);
 	} else {
 		mesh = _resman.getLineMesh(line);
 	}
-	
+
 	this->_renderMesh(MVP, shader, texture, mesh, numpoints, GL_LINES, blendcolor);
-	
+
 	if (line->dynamic()) {
 		delete mesh;
 	}
@@ -260,11 +259,11 @@ void Renderer::_renderMesh(const glm::mat4& MVP, Shader* shader,
 {
 	// use our shader program
 	glUseProgram(shader->programID());
-	
+
 	// Bind our texture in Texture Unit 0
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
-	
+
 	// ... and send our transformation to the currently bound shader, in the "MVP" uniform
 	glUniformMatrix4fv(shader->matrixID(), 1, GL_FALSE, &MVP[0][0]);
 
@@ -274,7 +273,7 @@ void Renderer::_renderMesh(const glm::mat4& MVP, Shader* shader,
 
 	// Set our "textureSampler" sampler to user Texture Unit 0
 	glUniform1i(shader->textureID(), 0);
-	
+
 	// Note: We generated vertices in the correct order, with normals facing the camera.
 	// We can also get the normalbuffer from the Mesh, but that's ignored here.
 	// Use the normalbuffer (with links to the Shader) if you want to use lighting on your Sprites.
@@ -331,7 +330,7 @@ void Renderer::_cullEntity(Vector2 campos, Entity* entity)
 
 	int half_width = SWIDTH/2;
 	int half_height = SHEIGHT/2;
-	
+
 	int left_edge = campos.x - half_width;
 	int right_edge = campos.x + half_width;
 	int top_edge = campos.y - half_height;
@@ -359,9 +358,9 @@ void Renderer::_cullEntity(Vector2 campos, Entity* entity)
 				c = true;
 			}
 		}
-		
+
 		children[i]->_culled = c;
-		
+
 		this->_cullEntity(campos, children[i]);
 	}
 }

@@ -1,6 +1,6 @@
 /**
  * This file is part of RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
  * - Copyright [year] [your name] <you@yourhost.com>
@@ -19,14 +19,14 @@ Timer::Timer()
 
 Timer::~Timer()
 {
-	
+
 }
 
 void Timer::start()
 {
 	_started = true;
 	_paused = false;
-	
+
 	_startTicks = _tsec();
 }
 

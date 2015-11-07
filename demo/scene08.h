@@ -1,6 +1,6 @@
 /**
  * This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *     - Initial commit
  * - Copyright 2015 Your Name <you@yourhost.com>
@@ -31,7 +31,7 @@ class Scene08: public SuperScene
 		virtual ~Scene08();
 
 		virtual void update(float deltaTime);
-	
+
 	private:
 		BasicEntity* grid;
 		std::vector<Cell*> cells;
@@ -43,4 +43,4 @@ class Scene08: public SuperScene
 		int border;
 };
 
-#endif /* SCENE02_H */ 
+#endif /* SCENE02_H */

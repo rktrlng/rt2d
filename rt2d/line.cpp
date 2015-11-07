@@ -1,6 +1,6 @@
 /**
  * This file is part of RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
  * - Copyright [year] [your name] <you@yourhost.com>
@@ -16,14 +16,14 @@ Line::Line()
 {
 	_guid = _nextGuid;
 	_nextGuid++;
-	
+
 	_dynamic = false;
 	_closed = false;
-	
+
 	char buf[12]; // should be big enough: "Line99999"
 	sprintf(buf, "line%d", _guid);
 	std::string linename(buf);
-	
+
 	_filename = linename;
 }
 
@@ -57,18 +57,18 @@ void Line::editPoint(unsigned int id, float x, float y)
 void Line::createCircle(int radius, int segments)
 {
 	int step = 360 / segments;
-	
+
 	for (int i = 0; i < 360; i += step) {
 		float x = cos(i*DEG_TO_RAD)*radius;
 		float y = sin(i*DEG_TO_RAD)*radius;
 		this->addPoint(x, y);
 	}
 	this->addPoint(_points[0].x, _points[0].y);
-	
+
 	char buf[24]; // should be big enough: "circle_r999_s999"
 	sprintf(buf, "circle_r%d_s%d", radius, segments);
 	std::string linename(buf);
-	
+
 	_filename = linename;
 }
 
@@ -84,9 +84,9 @@ bool Line::loadLineFile(const std::string& filename)
 		char lineHeader[128];
 		// read the first word of the line
 		int res = fscanf(file, "%s", lineHeader);
-		if (res == EOF)
+		if (res == EOF) {
 			break; // EOF = End Of File. Quit the loop.
-
+		}
 		// else : parse lineHeader
 		if (strcmp( lineHeader, "v") == 0) {
 			glm::vec3 vertex;
@@ -105,11 +105,11 @@ bool Line::loadLineFile(const std::string& filename)
 			}
 		}
 	}
-	
+
 	fclose (file);
 
 	// close the line
 	_points.push_back(_points[0]);
-	
+
 	return true;
 }

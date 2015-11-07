@@ -1,6 +1,6 @@
 /**
  * This file is part of RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
  * - Copyright [year] [your name] <you@yourhost.com>
@@ -16,7 +16,7 @@ Core::Core()
 
 Core::~Core()
 {
-	
+
 }
 
 void Core::run(Scene* scene)
@@ -26,20 +26,19 @@ void Core::run(Scene* scene)
 
 	// Update input instance in Scene
 	scene->input()->updateInput(_renderer.window());
-	
+
 	// Update camera instance in Scene
 	scene->camera()->updateCamera((float)_deltaTime);
-	
+
 	// Update Scene (and recursively all children)
 	scene->updateScene((float)_deltaTime);
-	
+
 	// Render Scene
 	_renderer.renderScene(scene);
-	
+
 	// user clicked the 'close' button in the window
 	if (glfwWindowShouldClose(_renderer.window()) == 1) { scene->stop(); }
 }
-
 
 void Core::showFrameRate(float numsecs)
 {
@@ -61,7 +60,7 @@ double Core::_calculateDeltaTime()
 	double startTime = glfwGetTime();
 	_deltaTime = startTime - lastTime;
 	lastTime = startTime;
-	
+
 	return _deltaTime;
 }
 

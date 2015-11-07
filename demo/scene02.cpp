@@ -1,6 +1,6 @@
 /**
  * This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *     - Initial commit
  * - Copyright 2015 Your Name <you@yourhost.com>
@@ -13,7 +13,7 @@
 Scene02::Scene02() : SuperScene()
 {
 	srand((unsigned)time(NULL));
-	
+
 	text[0]->message("Scene02: Lists of n Things");
 
 	// create Boids
@@ -31,7 +31,7 @@ Scene02::Scene02() : SuperScene()
 		static RGBAColor rgb = RED;
 		b->sprite()->color = rgb;
 		rgb = Color::rotate(rgb, 1.0f/amount);
-		
+
 		boids.push_back(b);
 		layers[0]->addChild(b);
 	}

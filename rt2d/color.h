@@ -1,10 +1,10 @@
 /**
  * @file color.h
- * 
+ *
  * @brief The Color header file.
- * 
+ *
  * This file is part of RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
  * - Copyright [year] [your name] <you@yourhost.com>
@@ -21,6 +21,13 @@
 /// A struct that defines an HSV Color (Hue, Saturation, Brightness). Each value is a float between 0.0f and 1.0f.
 struct HSVColor
 {
+	/// @brief The Hue component of the color
+	float h = 0.0f;
+	/// @brief The Saturation component of the color
+	float s = 0.0f;
+	/// @brief The Lightness/Brightness/Value component of the color
+	float v = 1.0f;
+
 	/// @brief constructor
 	HSVColor() {
 		h = 0.0f;
@@ -36,12 +43,6 @@ struct HSVColor
 		s = sat;
 		v = val;
 	}
-	/// @brief The Hue component of the color
-	float h = 0.0f;
-	/// @brief The Saturation component of the color
-	float s = 0.0f;
-	/// @brief The Lightness/Brightness/Value component of the color
-	float v = 1.0f;
 };
 
 
@@ -50,6 +51,15 @@ struct HSVColor
 /// A struct that defines an RGBA Color. Each value is an unsigned char (0-255).
 struct RGBAColor
 {
+	/// @brief The red component of the color
+	unsigned char r = 255;
+	/// @brief The green component of the color
+	unsigned char g = 255;
+	/// @brief The blue component of the color
+	unsigned char b = 255;
+	/// @brief The alpha component of the color
+	unsigned char a = 255;
+
 	/// @brief constructor
 	RGBAColor() {
 		r = 255;
@@ -92,14 +102,6 @@ struct RGBAColor
 		uint32_t color = (r << 24) + (g << 16) + (b << 8) + (a);
 		return color;
 	}
-	/// @brief The red component of the color
-	unsigned char r = 255;
-	/// @brief The green component of the color
-	unsigned char g = 255;
-	/// @brief The blue component of the color
-	unsigned char b = 255;
-	/// @brief The alpha component of the color
-	unsigned char a = 255;
 };
 
 
@@ -126,21 +128,21 @@ struct Color
 			S = 0;
 		} else { //Chromatic data...
 			S = del_Max / var_Max;
-			
+
 			float del_R = ( ( ( var_Max - var_R ) / 6.0f ) + ( del_Max / 2.0f ) ) / del_Max;
 			float del_G = ( ( ( var_Max - var_G ) / 6.0f ) + ( del_Max / 2.0f ) ) / del_Max;
 			float del_B = ( ( ( var_Max - var_B ) / 6.0f ) + ( del_Max / 2.0f ) ) / del_Max;
-			
+
 			if      ( var_R == var_Max ) H = del_B - del_G;
 			else if ( var_G == var_Max ) H = ( 1.0f / 3.0f ) + del_R - del_B;
 			else if ( var_B == var_Max ) H = ( 2.0f / 3.0f ) + del_G - del_R;
-			
+
 			if ( H < 0.0f ) H += 1.0f;
 			if ( H > 1.0f ) H -= 1.0f;
 		}
 		return HSVColor(H, S, V);
 	}
-	
+
 	// http://www.easyrgb.com/index.php?X=MATH&H=21#text21
 	/// @brief HSV to RGBA conversion
 	static RGBAColor HSV2RGBA(HSVColor hsv) {
@@ -174,7 +176,7 @@ struct Color
 		}
 		return RGBAColor(R, G, B, 255);
 	}
-	
+
 	/// @brief Rotate RGBA color (use HSV)
 	static RGBAColor rotate(RGBAColor rgba, float step) {
 		HSVColor hsv = RGBA2HSV(rgba);

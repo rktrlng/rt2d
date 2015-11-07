@@ -1,6 +1,6 @@
 /**
  * This file is part of RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
  * - Copyright [year] [your name] <you@yourhost.com>
@@ -29,4 +29,3 @@ long map(long x, long in_min, long in_max, long out_min, long out_max)
 {
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
-

@@ -1,6 +1,6 @@
 /**
  * This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
- * 
+ *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *     - Initial commit
  * - Copyright 2015 Your Name <you@yourhost.com>
@@ -13,7 +13,7 @@ Scene01::Scene01() : SuperScene()
 {
 	// Start Timer t
 	t.start();
-	
+
 	text[0]->message("Scene01: Parent/child, Sprite, Spritesheet, blendcolor");
 
 	text[4]->message("<SPACE> reset UV animation");
@@ -23,7 +23,7 @@ Scene01::Scene01() : SuperScene()
 	default_entity = new BasicEntity();
 	default_entity->addSprite("assets/default.tga", 0.75f, 0.25f, 3, 0); // custom pivot point, filter, wrap (0=repeat, 1=mirror, 2=clamp)
 	default_entity->position = Point2(SWIDTH/3, SHEIGHT/2);
-	
+
 	// To create a Sprite with specific properties, create it first, then add it to an Entity later.
 	// It will be unique once you added it to an Entity. Except for non-dynamic Texture wrapping/filtering if it's loaded from disk and handled by the ResourceManager.
 	// You must delete it yourself after you've added it to all the Entities you want.
@@ -34,21 +34,21 @@ Scene01::Scene01() : SuperScene()
 	child1_entity->position = Point2(100, -100); // position relative to parent (default_entity)
 	child1_entity->addSprite(f_spr);
 	delete f_spr;
-	
+
 	// Create an Entity that's going to be a Child of default_entity.
 	// Easiest way to create a Sprite with sensible defaults. @see Sprite::setupSprite()
 	child2_entity = new BasicEntity();
 	child2_entity->addSprite("assets/grayscale.tga");
 	child2_entity->sprite()->color = RED; // red
 	child2_entity->position = Point2(64, 64); // position relative to parent (child1_entity)
-	
+
 	// An example of using a SpriteSheet ("animated texture").
 	// Remember you can also animate UV's of any Sprite (uvoffset).
 	animated_entity = new BasicEntity();
 	animated_entity->addLine("assets/default.line"); // Add a line (default line fits nicely)
 	animated_entity->addSpriteSheet("assets/spritesheet.tga", 4, 4); // divide Texture in 4x4 slices
 	animated_entity->position = Point2(SWIDTH/3*2, SHEIGHT/2);
-	
+
 	// Create a UI entity
 	ui_element = new BasicEntity();
 	//ui_element->position = Point2(SWIDTH-150, 20); // sticks to camera in update()
@@ -57,7 +57,7 @@ Scene01::Scene01() : SuperScene()
 	ui_element->sprite()->size = Point2(256, 64); // texture is 512x512. Make Mesh half the width, 1 row of squares (512/8).
 	ui_element->sprite()->uvdim = Point2(0.5f, 0.125f); // UV 1/8 of the height.
 	ui_element->sprite()->uvoffset = Point2(0.0f, 0.125f * 7); // Show top row. UV(0,0) is bottom left.
-	
+
 	// create a tree-structure to send to the Renderer
 	// by adding them to each other and/or the scene ('this', or one of the layers[])
 	child1_entity->addChild(child2_entity);
@@ -76,7 +76,7 @@ Scene01::~Scene01()
 	layers[1]->removeChild(default_entity);
 	layers[1]->removeChild(animated_entity);
 	layers[top_layer]->removeChild(ui_element);
-	
+
 	delete animated_entity;
 	delete child2_entity;
 	delete child1_entity;
@@ -102,13 +102,13 @@ void Scene01::update(float deltaTime)
 	cursortxt.append(std::to_string(mousey));
 	cursortxt.append(")");
 	text[9]->message(cursortxt);
-	
+
 	// ###############################################################
 	// Rotate default_entity
 	// ###############################################################
 	default_entity->rotation -= 90 * DEG_TO_RAD * deltaTime; // 90 deg. per sec.
 	if (default_entity->rotation < TWO_PI) { default_entity->rotation += TWO_PI; }
-	
+
 	// ###############################################################
 	// alpha child1_entity + child2_entity
 	// ###############################################################
@@ -122,20 +122,20 @@ void Scene01::update(float deltaTime)
 	// ###############################################################
 	animated_entity->rotation += 22.5 * DEG_TO_RAD * deltaTime;
 	if (animated_entity->rotation > -TWO_PI) { animated_entity->rotation -= TWO_PI; }
-	
+
 	static int f = 0;
 	if (f > 15) { f = 0; }
-	
+
 	animated_entity->sprite()->frame(f);
 	if (t.seconds() > 0.25f) {
 		static RGBAColor rgb = RED;
 		animated_entity->sprite()->color = rgb;
 		rgb = Color::rotate(rgb, 0.025f);
-		
+
 		f++;
 		t.start();
 	}
-	
+
 	// ###############################################################
 	// ui_element uvoffset
 	// ###############################################################
@@ -146,16 +146,16 @@ void Scene01::update(float deltaTime)
 	}
 	ui_element->sprite()->uvoffset.x = xoffset;
 	ui_element->position = Point2(camera()->position.x + SWIDTH/2 - 150, camera()->position.y - SHEIGHT/2 + 20);
-	
+
 	// ###############################################################
 	// Move Camera (Arrow up, down, left, right)
 	// ###############################################################
 	float speed = 300.0f; // 300 units / second
-	
+
 	// Right and Down vector
 	glm::vec3 right = glm::vec3(1, 0, 0);
 	glm::vec3 up = glm::vec3(0, 1, 0);
-	
+
 	// Move up
 	if (input()->getKey( GLFW_KEY_UP )) {
 		camera()->position -= up * deltaTime * speed;
