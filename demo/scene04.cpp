@@ -64,7 +64,7 @@ void Scene04::update(float deltaTime)
 	
 	if (t.seconds() > 1.0f) {
 		state++;
-		if (state > 14) { state = 0; }
+		if (state > 13) { state = 0; }
 		t.start();
 	}
 	
@@ -130,10 +130,10 @@ void Scene04::update(float deltaTime)
 				rainbowPixels(buff, 4, 3);
 				text[4]->message("<SPACE> pause state (double rainbow filtered)");
 				break;
-			case 14:
-				perlinNoisePixels(buff, 3);
-				text[4]->message("<SPACE> pause state (Perlin Noise)");
-				break;
+			//case 14:
+			//	perlinNoisePixels(buff, 3);
+			//	text[4]->message("<SPACE> pause state (Smooth Noise)");
+			//	break;
 			default:
 				break;
 		}
