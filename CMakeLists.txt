@@ -174,6 +174,7 @@ if(WIN32)
 
 	# create file tabs in visual studio
 	SOURCE_GROUP(rt2d REGULAR_EXPRESSION ".*/rt2d/.*" )
+	SOURCE_GROUP(demo REGULAR_EXPRESSION ".*/demo/.*" )
 	SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*shaders$" )
 endif(WIN32)
 
