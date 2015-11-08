@@ -8,6 +8,8 @@
 
 MyEntity::MyEntity() : Entity()
 {
+	t.start();
+
 	this->addSprite("assets/square.tga");
 	this->sprite()->color = RED;
 	this->position = Point2(SWIDTH/2, SHEIGHT/2);
@@ -23,8 +25,11 @@ void MyEntity::update(float deltaTime)
 	// ###############################################################
 	// Color
 	// ###############################################################
-	RGBAColor color = this->sprite()->color;
-	this->sprite()->color = Color::rotate(color, 0.5f*deltaTime);
+	if (t.seconds() > 0.0333f) {
+		RGBAColor color = this->sprite()->color;
+		this->sprite()->color = Color::rotate(color, 0.01f);
+		t.start();
+	}
 
 	// ###############################################################
 	// Rotate
