@@ -54,6 +54,7 @@ GLuint Texture::createWhitePixels(int width, int height)
 	return _gltexture[0];
 }
 
+// http://paulbourke.net/dataformats/tga/
 GLuint Texture::loadTGAImage(const std::string& filename, int filter, int wrap)
 {
 	std::cout << "Loading TGA: " << filename << std::endl;
@@ -133,6 +134,59 @@ GLuint Texture::loadTGAImage(const std::string& filename, int filter, int wrap)
 	delete pixels;
 
 	return _gltexture[0];
+}
+
+// http://paulbourke.net/dataformats/tga/
+int Texture::writeTGAImage(PixelBuffer* pixels)
+{
+	static int id = 0;
+
+	std::string filename = "out";
+	filename.append(std::to_string(id)); id++;
+	filename.append(".tga");
+
+	FILE *fp = fopen(filename.c_str(), "w");
+	if (fp == NULL) {
+		return 0;
+	}
+
+	// The image header
+	unsigned char header[ 18 ] = { 0 };
+	header[ 2 ] = 2; // true color
+	header[ 12 ] = pixels->width & 0xFF;
+	header[ 13 ] = (pixels->width >> 8) & 0xFF;
+	header[ 14 ] = pixels->height & 0xFF;
+	header[ 15 ] = (pixels->height >> 8) & 0xFF;
+	header[ 16 ] = pixels->bitdepth * 8;
+
+	fwrite((const char*)&header, 1, sizeof(header), fp);
+
+	// The image data is stored bottom-to-top, left-to-right
+	unsigned int counter = 0;
+	for (int y = pixels->height-1; y >= 0; y--) {
+		for (int x = 0; x < pixels->width; x++) {
+			putc((int)(pixels->data[counter+2] & 0xFF), fp); // b
+			putc((int)(pixels->data[counter+1] & 0xFF), fp); // g
+			putc((int)(pixels->data[counter+0] & 0xFF), fp); // r
+			if (pixels->bitdepth == 4) {
+				putc((int)(pixels->data[counter+3] & 0xFF), fp);
+			}
+			counter += pixels->bitdepth;
+		}
+	}
+
+	// The file footer
+	static const char footer[ 26 ] =
+	"\0\0\0\0" // no extension area
+	"\0\0\0\0" // no developer directory
+	"TRUEVISION-XFILE" // https://en.wikipedia.org/wiki/Truevision_TGA
+	".";
+	fwrite((const char*)&footer, 1, sizeof(footer), fp);
+
+	std::cout << "WRITING " << filename << std::endl;
+
+	fclose(fp);
+	return 1;
 }
 
 void Texture::BGR2RGB(PixelBuffer* pixels)

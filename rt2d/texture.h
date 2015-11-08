@@ -123,6 +123,10 @@ public:
 	/// @param wrap the wrap
 	/// @return GLuint _texture, 0 if failed
 	GLuint loadTGAImage(const std::string& filename, int filter, int wrap);
+	/// @brief write an image to file (tga only)
+	/// @param pixels the PixelBuffer to write
+	/// @return int 0 if failed
+	int writeTGAImage(PixelBuffer* pixels);
 	/// @brief create a width x height white PixelBuffer & GLpixeldata
 	/// @param width the width of the white Texture
 	/// @param height the height of the white Texture

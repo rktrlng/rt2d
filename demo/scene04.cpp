@@ -19,6 +19,7 @@ Scene04::Scene04() : SuperScene()
 	text[0]->message("Scene04: Dynamic PixelBuffer as Texture");
 
 	text[4]->message("<SPACE> pause state");
+	text[5]->message("<S> save buffer (out###.tga)");
 
 	// container for Sprite with custom Texture
 	pixel_container = new BasicEntity();
@@ -60,6 +61,10 @@ void Scene04::update(float deltaTime)
 	}
 	if (input()->getKeyUp( GLFW_KEY_SPACE )) {
 		t.unpause();
+	}
+	if (input()->getKeyDown( GLFW_KEY_S )) {
+		PixelBuffer* buff = pixel_container->sprite()->texture()->pixels();
+		pixel_container->sprite()->texture()->writeTGAImage(buff);
 	}
 
 	if (t.seconds() > 1.0f) {
