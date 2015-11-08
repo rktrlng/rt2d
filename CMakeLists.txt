@@ -158,27 +158,47 @@ add_executable(demo
 target_link_libraries(demo
 	${ALL_LIBS}
 )
-
 # Copy assets to the build directory
 file(
 	COPY demo/assets
+	DESTINATION ${CMAKE_BINARY_DIR}
+)
+
+####################################################################
+# start                                                            #
+####################################################################
+add_executable(start
+	start/main.cpp
+	start/myentity.cpp
+	start/myentity.h
+	start/myscene.cpp
+	start/myscene.h
+)
+target_link_libraries(start
+	${ALL_LIBS}
+)
+# Copy assets to the build directory
+file(
+	COPY start/assets
 	DESTINATION ${CMAKE_BINARY_DIR}
 )
 ####################################################################
 
 
 if(WIN32)
-	# Xcode and Visual working directories
+	# Xcode and Visual working directories for demo
 	set_target_properties(demo PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/demo/")
 	create_target_launcher(demo WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/demo/")
+	# Xcode and Visual working directories for start
+	set_target_properties(start PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/start/")
+	create_target_launcher(start WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/start/")
 
 	# create file tabs in visual studio
 	SOURCE_GROUP(rt2d REGULAR_EXPRESSION ".*/rt2d/.*" )
 	SOURCE_GROUP(demo REGULAR_EXPRESSION ".*/demo/.*" )
+	SOURCE_GROUP(demo REGULAR_EXPRESSION ".*/start/.*" )
 	SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*shaders$" )
 endif(WIN32)
-
-
 
 
 if (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
