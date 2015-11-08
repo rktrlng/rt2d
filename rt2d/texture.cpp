@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include <GL/glew.h>
 
@@ -140,8 +141,11 @@ GLuint Texture::loadTGAImage(const std::string& filename, int filter, int wrap)
 int Texture::writeTGAImage(PixelBuffer* pixels)
 {
 	static int id = 0;
+	time_t t = time(NULL);
 
-	std::string filename = "out";
+	std::string filename = "rt2d_";
+	filename.append(std::to_string(t));
+	filename.append("_");
 	filename.append(std::to_string(id)); id++;
 	filename.append(".tga");
 
@@ -174,7 +178,7 @@ int Texture::writeTGAImage(PixelBuffer* pixels)
 			counter += pixels->bitdepth;
 		}
 	}
-
+/*
 	// The file footer
 	static const char footer[ 26 ] =
 	"\0\0\0\0" // no extension area
@@ -182,10 +186,10 @@ int Texture::writeTGAImage(PixelBuffer* pixels)
 	"TRUEVISION-XFILE" // https://en.wikipedia.org/wiki/Truevision_TGA
 	".";
 	fwrite((const char*)&footer, 1, sizeof(footer), fp);
-
-	std::cout << "WRITING " << filename << std::endl;
-
+*/
 	fclose(fp);
+	//std::cout << "WROTE " << filename << std::endl;
+
 	return 1;
 }
 

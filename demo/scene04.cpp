@@ -19,7 +19,7 @@ Scene04::Scene04() : SuperScene()
 	text[0]->message("Scene04: Dynamic PixelBuffer as Texture");
 
 	text[4]->message("<SPACE> pause state");
-	text[5]->message("<S> save buffer (out###.tga)");
+	text[5]->message("<S> save buffer (rt2d_###.tga)");
 
 	// container for Sprite with custom Texture
 	pixel_container = new BasicEntity();
