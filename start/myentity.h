@@ -26,8 +26,7 @@ public:
 	virtual void update(float deltaTime);
 
 private:
-	/// @brief a Timer to rotate the color every n seconds
-	Timer t;
+	/* add your private declarations */
 };
 
 #endif /* MYENTITY_H */
