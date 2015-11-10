@@ -194,10 +194,10 @@ if(WIN32)
 	create_target_launcher(start WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/start/")
 
 	# create file tabs in visual studio
-	SOURCE_GROUP(rt2d REGULAR_EXPRESSION ".*/rt2d/.*" )
-	SOURCE_GROUP(demo REGULAR_EXPRESSION ".*/demo/.*" )
-	SOURCE_GROUP(demo REGULAR_EXPRESSION ".*/start/.*" )
-	SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*shaders$" )
+	#SOURCE_GROUP(rt2d REGULAR_EXPRESSION ".*/rt2d/.*" )
+	#SOURCE_GROUP(demo REGULAR_EXPRESSION ".*/demo/.*" )
+	#SOURCE_GROUP(demo REGULAR_EXPRESSION ".*/start/.*" )
+	#SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*shaders$" )
 endif(WIN32)
 
 
