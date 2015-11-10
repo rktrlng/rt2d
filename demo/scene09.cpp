@@ -7,68 +7,52 @@
  *     - What you did
  */
 
-#include "scene08.h"
+#include "scene09.h"
 
-Scene08::Scene08() : SuperScene()
+Scene09::Scene09() : SuperScene()
 {
-	text[0]->message("Scene08: MouseOver in world coordinates");
+	t.start();
+
+	text[0]->message("Scene09: Spritebatch");
 	text[5]->message("<Arrow keys> move camera");
-	text[12]->message("<leftclick> light");
-	text[13]->message("<rightclick> dark");
-	text[14]->message("<middleclick> gray");
+	text[6]->message("<leftclick> random sprite");
+	//text[13]->message("<rightclick> dark");
+	//text[14]->message("<middleclick> gray");
 
 	gridwidth = 24;
 	gridheight = 16;
 	cellwidth = 64;
 	cellheight = 64;
-	border = 1;
 
-	// create grid in the middle of the screen
+	// create grid
 	grid = new BasicEntity();
-	int xgridpos = (SWIDTH/2) - (gridwidth*(cellwidth+border) / 2);
-	int ygridpos = (SHEIGHT/2) - (gridheight*(cellheight+border) / 2 );
-	grid->position = Point2(xgridpos, ygridpos);
+	grid->addGrid("assets/default.tga", 8, 8, gridwidth, gridheight, cellwidth, cellheight);
 
-	// create cells
+	layers[0]->addChild(grid);
+
+	//int xgridpos = (SWIDTH/2) - ((gridwidth*cellwidth) / 2);
+	//int ygridpos = (SHEIGHT/2) - ((gridheight*cellheight) / 2 );
+	//grid->position = Point2(xgridpos, ygridpos);
+
+	// fill Sprites with random number
+	int counter = 0;
 	for (int x=0; x<gridwidth; x++) {
 		for (int y=0; y<gridheight ; y++) {
-			Cell* cell = new Cell();
-			cell->position.x = x;
-			cell->position.y = y;
-
-			cell->entity = new BasicEntity();
-			cell->entity->addSprite(AUTOGENWHITE);
-			cell->entity->sprite()->size.x = cellwidth;
-			cell->entity->sprite()->size.y = cellheight;
-			cell->entity->sprite()->color = GRAY;
-
-			// initial position
-			cell->entity->position.x = x*(cellwidth+border);
-			cell->entity->position.y = y*(cellheight+border);
-
-			cells.push_back(cell);
-			grid->addChild(cell->entity);
-			layers[0]->addChild(grid);
+			grid->sprites()[counter]->frame(rand()%16);
+			counter++;
 		}
 	}
+
 }
 
 
-Scene08::~Scene08()
+Scene09::~Scene09()
 {
-	int s = cells.size();
-	for (int i=0; i<s; i++) {
-		layers[0]->removeChild(cells[i]->entity);
-		delete cells[i]->entity;
-		delete cells[i];
-		cells[i] = NULL;
-	}
-	cells.clear();
-
+	layers[0]->removeChild(grid);
 	delete grid;
 }
 
-void Scene08::update(float deltaTime)
+void Scene09::update(float deltaTime)
 {
 	// ###############################################################
 	// Make SuperScene do what it needs to do (Escape key stops Scene)
@@ -88,7 +72,43 @@ void Scene08::update(float deltaTime)
 	cursortxt.append(std::to_string(mousey));
 	cursortxt.append(")");
 	text[9]->message(cursortxt);
+/*
+	if (t.seconds() > 0.25f) {
+		std::vector<Sprite*> sprites = grid->sprites();
+		int s = sprites.size();
+		for (int i = 0; i < s; i++) {
+			sprites[i]->frame(rand()%16);
+		}
+		t.start();
+	}
+*/
+	// loop over grid
+	std::vector<Sprite*> sprites = grid->sprites();
+	int counter = 0;
+	for (int x=0; x<gridwidth; x++) {
+		for (int y=0; y<gridheight ; y++) {
+			Point2 pos = sprites[counter]->spritepos;
 
+			int halfwidth = cellwidth/2;
+			int halfheight = cellheight/2;
+			int left = pos.x - halfwidth;
+			int right = pos.x + halfwidth;
+			int top = pos.y - halfheight;
+			int bottom = pos.y + halfheight;
+
+			if ( mousex > left && mousex < right && mousey > top && mousey < bottom ) {
+				sprites[counter]->color.a = 192;
+				if (input()->getMouseDown( 0 )) {
+					sprites[counter]->frame(rand()%16);
+				}
+			} else {
+				sprites[counter]->color.a = 255;
+			}
+			counter++;
+		}
+	}
+
+/*
 	// ###############################################################
 	// Check mouseover for each cell
 	// ###############################################################
@@ -119,7 +139,7 @@ void Scene08::update(float deltaTime)
 			c->entity->sprite()->color.a = 255;
 		}
 	}
-
+*/
 	// ###############################################################
 	// Move Camera (Arrow up, down, left, right)
 	// ###############################################################
@@ -145,15 +165,4 @@ void Scene08::update(float deltaTime)
 	if (input()->getKey( GLFW_KEY_LEFT )) {
 		camera()->position -= right * deltaTime * speed;
 	}
-/*
-	// ###############################################################
-	// Update Entity position if we change cell position in grid
-	// ###############################################################
-	for (int i=0; i<s; i++) {
-		int x = cells[i]->position.x;
-		int y = cells[i]->position.y;
-		cells[i]->entity->position.x = x*(cellwidth+border);
-		cells[i]->entity->position.y = y*(cellheight+border);
-	}
-*/
 }

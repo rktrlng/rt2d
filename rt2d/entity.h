@@ -99,6 +99,7 @@ public:
 	/// @param v number of vertical textures
 	/// @return void
 	void addSpriteSheet(const std::string& filename, int u, int v);
+	void addGrid(const std::string& filename, int u, int v, int cols, int rows, int sizex, int sizey);
 	/// @brief add a Circular Sprite to this Entity by filename.
 	/// @param filename The filename of the image you want to add as a Sprite.
 	/// @param radius The radius of the circle.
@@ -130,6 +131,9 @@ public:
 	/// @return void
 	void addLine(const std::string& filename);
 
+	// sprites (spritebatch, grid)
+	std::vector<Sprite*>& sprites() { return _sprites; };
+
 	/// @brief get the guid of this Entity.
 	/// @return int _guid
 	int guid() { return _guid; };
@@ -146,6 +150,7 @@ protected:
 	// updated world position after all transforms
 	Point2 _worldpos; /**< @brief The position of the Entity in the real world */
 	bool _culled; /**< @brief This Entity should be culled or not */
+	std::vector<Sprite*> _sprites; ///< @brief The _sprites of this Entity
 
 private:
 	// identity
@@ -159,6 +164,7 @@ private:
 	// sprite
 	Sprite* _sprite; ///< @brief The _sprite of this Entity
 	Line* _line; ///< @brief The _line of this Entity
+
 
 	/// @brief delete the Sprite of this Entity.
 	/// @return void
@@ -175,6 +181,15 @@ private:
 			delete _line;
 			_line = NULL;
 		}
+	};
+	/// @brief delete the Sprites of this Entity.
+	/// @return void
+	void deleteSprites() {
+		int s = _sprites.size();
+		for (int i = 0; i < s; i++) {
+			delete _sprites[i];
+		}
+		_sprites.clear();
 	};
 };
 

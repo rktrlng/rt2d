@@ -79,6 +79,12 @@ private:
 	/// @return void
 	void _renderLine(const glm::mat4& MVP, Line* line);
 
+	/// @brief Renders the Spritebatch 'component' of an Entity.
+	/// @param MVP The ModelViewProjection Matrix of the Entity
+	/// @param line The Line 'component' of the Entity
+	/// @return void
+	void _renderSpriteBatch(glm::mat4& modelMatrix, std::vector<Sprite*>& sprites);
+
 	/// @brief Renders the Mesh 'component' of a Sprite or Line.
 	/// @param MVP The ModelViewProjection Matrix of the Mesh
 	/// @param shader The Shader

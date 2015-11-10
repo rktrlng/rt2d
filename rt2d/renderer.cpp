@@ -167,6 +167,12 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 		this->_renderLine(MVP, line);
 	}
 
+	// Check for Spritebatch to see if we need to render anything
+	if (entity->_sprites.size() > 0) {
+		// render the Spritebatch (MVP calculated there).
+		this->_renderSpriteBatch(modelMatrix, entity->_sprites);
+	}
+
 	// Render all Children (recursively)
 	std::vector<Entity*> children = entity->children();
 	std::vector<Entity*>::iterator child;
@@ -193,6 +199,53 @@ glm::mat4 Renderer::_getModelMatrix(Entity* entity)
 	glm::mat4 mm = translationMatrix * rotationMatrix * scalingMatrix;
 
 	return mm;
+}
+
+void Renderer::_renderSpriteBatch(glm::mat4& modelMatrix, std::vector<Sprite*>& sprites)
+{
+	Sprite* spr = sprites[0];
+	Shader* shader = _uberShader;
+	// ask resourcemanager
+	if (shader == NULL) {
+		shader = _resman.getShader(spr->vertexshader().c_str(), spr->fragmentshader().c_str());
+	}
+	std::string texturename = spr->texturename();
+	int filter = spr->filter();
+	int wrap = spr->wrap();
+	Texture* texture = _resman.getTexture(texturename, filter, wrap);
+
+	if (spr->size.x == 0) { spr->size.x = texture->width() * spr->uvdim.x; }
+	if (spr->size.y == 0) { spr->size.y = texture->height() * spr->uvdim.y; }
+
+	Mesh* mesh = _resman.getSpriteMesh(spr->size.x, spr->size.y, spr->pivot.x, spr->pivot.y, spr->uvdim.x, spr->uvdim.y, spr->circlemesh(), spr->which());
+
+	if (texture != NULL) {
+		// Bind our texture in Texture Unit 0
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
+
+		int s = sprites.size();
+		for (int i = 0; i < s; i++) {
+			RGBAColor blendcolor = sprites[i]->color;
+			// _uvOffsetID
+			glUniform2f(shader->uvOffsetID(), sprites[i]->uvoffset.x, sprites[i]->uvoffset.y);
+
+			// use spritepos for position
+			glm::vec3 position = glm::vec3(sprites[i]->spritepos.x, sprites[i]->spritepos.y, 0.0f);
+
+			// Build the Model matrix TODO do this in the shader
+			glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), position);
+			glm::mat4 rotationMatrix	= glm::mat4(1.0f);
+			glm::mat4 scalingMatrix		= glm::mat4(1.0f);
+			glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
+
+			// Finally, generate our MVP...
+			glm::mat4 MVP = _projectionMatrix * _viewMatrix * modelMatrix;
+
+			this->_renderMesh(MVP, shader, texture, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
+		}
+	}
+
 }
 
 void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic)
@@ -223,6 +276,10 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic)
 	glUniform2f(shader->uvOffsetID(), sprite->uvoffset.x, sprite->uvoffset.y);
 
 	if (texture != NULL) {
+		// Bind our texture in Texture Unit 0
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
+
 		this->_renderMesh(MVP, shader, texture, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
 	}
 
@@ -255,6 +312,10 @@ void Renderer::_renderLine(const glm::mat4& MVP, Line* line)
 		mesh = _resman.getLineMesh(line);
 	}
 
+	// Bind our texture in Texture Unit 0
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
+
 	this->_renderMesh(MVP, shader, texture, mesh, numpoints, GL_LINES, blendcolor);
 
 	if (line->dynamic()) {
@@ -268,10 +329,6 @@ void Renderer::_renderMesh(const glm::mat4& MVP, Shader* shader,
 {
 	// use our shader program
 	glUseProgram(shader->programID());
-
-	// Bind our texture in Texture Unit 0
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
 
 	// ... and send our transformation to the currently bound shader, in the "MVP" uniform
 	glUniformMatrix4fv(shader->matrixID(), 1, GL_FALSE, &MVP[0][0]);

@@ -38,6 +38,7 @@ Entity::~Entity()
 	//printf("Entity dtor %d\n", _guid);
 	deleteSprite();
 	deleteLine();
+	deleteSprites();
 }
 
 void Entity::addLine(const std::string& filename)
@@ -107,6 +108,31 @@ void Entity::addSpriteSheet(const std::string& filename, int u, int v)
 	float uvwidth = 1.0f / u;
 	float uvheight = 1.0f / v;
 	_sprite->setupSprite(filename, 0.5f, 0.5f, uvwidth, uvheight, DEFAULTFILTER, DEFAULTWRAP); // trilinear filter, mirror repeat
+}
+
+void Entity::addGrid(const std::string& filename, int u, int v, int cols, int rows, int sizex, int sizey)
+{
+	for (int x = 0; x < cols; x++) {
+		for (int y = 0; y < rows; y++) {
+			Sprite* s = new Sprite();
+			s->spritepos.x = x * sizex;
+			s->spritepos.y = y * sizey;
+			float uvwidth = 1.0f / u;
+			float uvheight = 1.0f / v;
+			s->setupSprite(filename, 0.5f, 0.5f, uvwidth, uvheight, DEFAULTFILTER, DEFAULTWRAP); // trilinear filter, mirror repeat
+			_sprites.push_back(s);
+		}
+	}
+
+	std::cout << "grid added: " << _sprites.size() << " sprites." << std::endl;
+/*
+	deleteSprite();
+	_sprite = new Sprite();
+	float uvwidth = 1.0f / u;
+	float uvheight = 1.0f / v;
+	_sprite->setupSprite(filename, 0.5f, 0.5f, uvwidth, uvheight, DEFAULTFILTER, DEFAULTWRAP); // trilinear filter, mirror repeat
+*/
+
 }
 
 void Entity::addChild(Entity* child)
