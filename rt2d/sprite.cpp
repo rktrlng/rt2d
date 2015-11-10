@@ -55,15 +55,7 @@ void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty
 
 void Sprite::setupCircleSprite(const std::string& filename, int radius, int segments)
 {
-	_texturename = filename;
-	_circlemesh = segments;
-	_which = -1;
-
-	_filter = DEFAULTFILTER;
-	_wrap = DEFAULTWRAP;
-
-	size.x = radius * 2;
-	size.y = radius * 2;
+	this->setupSegmentSprite(filename, radius, segments, -1);
 }
 
 void Sprite::setupSegmentSprite(const std::string& filename, int radius, int segments, int which)
