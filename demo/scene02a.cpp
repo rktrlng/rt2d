@@ -8,52 +8,59 @@
  */
 
 #include <time.h>
-#include "scene02.h"
+#include "scene02a.h"
 
-Scene02::Scene02() : SuperScene()
+Scene02a::Scene02a() : SuperScene()
 {
 	srand((unsigned)time(NULL));
 
-	text[0]->message("Scene02: Lists of n Things (Entities)");
+	text[0]->message("Scene02a: Lists of n Things (SpriteBatch)");
 
 	// create Boids
 	int amount = 2500;
 	for (int i=0; i<amount; i++) {
-		BoidEntity* b = new BoidEntity();
-		b->addSprite("assets/boid.tga");
-		/*
-		static HSVColor hsv = HSVColor(0.0f, 1.0f, 1.0f); // initially red
-		RGBAColor rgb = Color::HSV2RGBA(hsv);
-		b->sprite()->color = rgb;
-		hsv.h += 1.0f/amount;
-		if (hsv.h > 1.0f) { hsv.h -= 1.0f; }
-		*/
+		Sprite* b = new Sprite();
+		b->setupSprite("assets/boid.tga", 0.5f, 0.5f, 1.0f, 1.0f, DEFAULTFILTER, DEFAULTWRAP);
+
 		static RGBAColor rgb = RED;
-		b->sprite()->color = rgb;
+		b->color = rgb;
 		//rgb = Color::rotate(rgb, 1.0f/amount);
 		rgb = Color::rotate(rgb, 0.004f);
 
-		boids.push_back(b);
-		layers[0]->addChild(b);
+		_sprites.push_back(b); // to the Entity vector<Sprite*> _sprites
+
+		//add a Boid object to update
+		Boid* boid = new Boid();
+		boids.push_back(boid);
 	}
 }
 
-
-Scene02::~Scene02()
+Scene02a::~Scene02a()
 {
-	int s = boids.size();
+	int s = _sprites.size();
 	for (int i=0; i<s; i++) {
-		layers[0]->removeChild(boids[i]);
+		delete _sprites[i];
+	}
+	_sprites.clear();
+
+	s = boids.size();
+	for (int i=0; i<s; i++) {
 		delete boids[i];
-		boids[i] = NULL;
 	}
 	boids.clear();
 }
 
-void Scene02::update(float deltaTime)
+void Scene02a::update(float deltaTime)
 {
 	// ###############################################################
 	// Make SuperScene do what it needs to do (Escape key stops Scene)
 	// ###############################################################
 	SuperScene::update(deltaTime);
+
+	int s = boids.size();
+	for (int i=0; i<s; i++) {
+		boids[i]->update(deltaTime);
+		_sprites[i]->spritepos = boids[i]->position;
+		_sprites[i]->spriterot = boids[i]->rotation;
+	}
 }

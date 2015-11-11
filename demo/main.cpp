@@ -12,6 +12,7 @@
 #include "scene00.h"
 #include "scene01.h"
 #include "scene02.h"
+#include "scene02a.h"
 #include "scene03.h"
 #include "scene04.h"
 #include "scene05.h"
@@ -30,6 +31,7 @@ int main( void )
 	scenes.push_back(new Scene00());
 	scenes.push_back(new Scene01());
 	scenes.push_back(new Scene02());
+	scenes.push_back(new Scene02a());
 	scenes.push_back(new Scene03());
 	scenes.push_back(new Scene04());
 	scenes.push_back(new Scene05());

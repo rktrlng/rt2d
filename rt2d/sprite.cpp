@@ -20,6 +20,7 @@ Sprite::Sprite()
 	_vertexshader = SPRITEVERTEXSHADER;
 
 	spritepos = Point2(0.0f, 0.0f); // spritebatch only
+	spriterot = 0.0f; // spritebatch only
 	pivot = Point2(0.5f, 0.5f);
 	uvdim = Point2(1.0f, 1.0f);
 	uvoffset = Point2(0.0f, 0.0f);
