@@ -3,7 +3,7 @@ RT2D
 
 RT2D is a RealTime 2D framework, based on somewhat 'modern' OpenGL (2.1+). It compiles and runs on Mac, Linux and Windows.
 
-Compatibility is chosen over features. Readability over efficiency. Simplicity over speed. There's no fancy OpenGL stuff here. No batching of sprites, no indexing of vertices. Just update and render scenes with entities that contain (colored) sprites, spritesheets, fonts and lines.
+Compatibility is chosen over features. Readability over efficiency. Simplicity over speed. There's no fancy OpenGL stuff here. Just update and render scenes with entities that contain (colored) sprites, spritesheets, spritebatches, pixelbuffers, fonts and lines.
 
 Compiling
 ---------
