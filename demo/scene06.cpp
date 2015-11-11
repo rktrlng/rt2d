@@ -21,7 +21,7 @@ Scene06::Scene06() : SuperScene()
 	// container for Sprite with custom Texture
 	// This is a single, full circle created in 1 piece.
 	circle_container = new BasicEntity();
-	int radius = 64;
+	int radius = 128;
 	int segments = 6; // 0 = standard square Sprite (Renderer treats this as boolean), 1-2 = non-visible. 3-n do as you would expect.
 	circle_container->addCircleSprite("assets/default.tga", radius, segments); // radius, segments
 	circle_container->position = Point2(SWIDTH/4, SHEIGHT/2);
@@ -33,22 +33,22 @@ Scene06::Scene06() : SuperScene()
 	hexagon->position = Point2(SWIDTH/2, SHEIGHT/2);
 	// individual segments
 	northeast = new BasicEntity();
-	northeast->addSegmentSprite("assets/default.tga", 64, 6, 0); // radius, segments, which segment
+	northeast->addSegmentSprite("assets/default.tga", radius, segments, 0); // radius, segments, which segment
 	hexagon->addChild(northeast);
 	north = new BasicEntity();
-	north->addSegmentSprite("assets/pencils.tga", 64, 6, 1);
+	north->addSegmentSprite("assets/pencils.tga", radius, segments, 1);
 	hexagon->addChild(north);
 	northwest = new BasicEntity();
-	northwest->addSegmentSprite("assets/spritesheet.tga", 64, 6, 2);
+	northwest->addSegmentSprite("assets/spritesheet.tga", radius, segments, 2);
 	hexagon->addChild(northwest);
 	southwest = new BasicEntity();
-	southwest->addSegmentSprite("assets/default.tga", 64, 6, 3);
+	southwest->addSegmentSprite("assets/default.tga", radius, segments, 3);
 	hexagon->addChild(southwest);
 	south = new BasicEntity();
-	south->addSegmentSprite("assets/pencils.tga", 64, 6, 4);
+	south->addSegmentSprite("assets/pencils.tga", radius, segments, 4);
 	hexagon->addChild(south);
 	southeast = new BasicEntity();
-	southeast->addSegmentSprite("assets/spritesheet.tga", 64, 6, 5);
+	southeast->addSegmentSprite("assets/spritesheet.tga", radius, segments, 5);
 	hexagon->addChild(southeast);
 	// add hexagon to Scene
 	layers[0]->addChild(hexagon);
@@ -62,7 +62,7 @@ Scene06::Scene06() : SuperScene()
 	for (int i=0; i<amount; i++) {
 		BasicEntity* b = new BasicEntity();
 		//b->addSprite("assets/default.tga");
-		b->addSegmentSprite("assets/pencils.tga", 64, amount, i);
+		b->addSegmentSprite("assets/pencils.tga", radius, amount, i);
 
 		static RGBAColor rgb = RED;
 		b->sprite()->color = rgb;

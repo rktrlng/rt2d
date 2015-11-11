@@ -148,9 +148,9 @@ Mesh* ResourceManager::getSpriteMesh(int width, int height, float pivotx, float 
 		Mesh* m = new Mesh();
 		if (circle != 0) {
 			if (which >= 0) {
-				m->generateSegmentMesh(width, circle, which);
+				m->generateSegmentMesh(width/2, circle, which);
 			} else {
-				m->generateCircleMesh(width, circle);
+				m->generateCircleMesh(width/2, circle);
 			}
 		} else {
 			m->generateSpriteMesh(width, height, pivotx, pivoty, uvwidth, uvheight);
