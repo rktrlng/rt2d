@@ -40,6 +40,7 @@ class SuperScene: public Scene
 
 	private:
 		BasicEntity* logo;
+		Timer fpstimer;
 };
 
 #endif /* SUPERSCENE_H */
