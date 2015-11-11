@@ -16,19 +16,6 @@
 
 #include <rt2d/entity.h>
 
-/// @brief The Character class is a default Enity container for a Characters' Sprite.
-class Character: public Entity
-{
-public:
-	/// @brief Constructor of the Character
-	Character() { };
-	/// @brief Destructor of the Character
-	virtual ~Character() { };
-
-	/// @brief empty update function
-	virtual void update(float deltaTime) { };
-};
-
 /// @brief The Text class is a collection of drawable Characters.
 class Text: public Entity
 {
@@ -56,8 +43,6 @@ public:
 	/// @param c the color of the message to be created
 	/// @return void
 	void message( std::string m, RGBAColor c );
-
-	std::vector<Character*> characters; ///< @brief collection of characters created from _message
 
 private:
 	std::string _message; ///< @brief the message string

@@ -21,13 +21,11 @@ Text::~Text()
 
 void Text::clearMessage()
 {
-	int s = characters.size();
+	int s = _sprites.size();
 	for (int i=0; i<s; i++) {
-		this->removeChild(characters[i]);
-		delete characters[i];
-		characters[i] = NULL;
+		delete _sprites[i];
 	}
-	characters.clear();
+	_sprites.clear();
 
 	_message = "";
 }
@@ -44,16 +42,17 @@ void Text::message(std::string str, RGBAColor color)
 
 	unsigned int s = _message.size();
 	for (unsigned int i = 0; i < s; i++) {
-		Character* character = new Character();
-		character->addSpriteSheet("fonts/font.tga", 16, 8);
-		character->sprite()->color = color;
+		Sprite* character = new Sprite();
+		float uvwidth = 1.0f / 16;
+		float uvheight = 1.0f / 8;
+		character->setupSprite("fonts/font.tga", 0.5f, 0.5f, uvwidth, uvheight, DEFAULTFILTER, DEFAULTWRAP);
+		character->color = color;
 		char c = _message[i];
-		character->position.x = i*32; // half spacing between 64px wide characters
+		character->spritepos.x = i*32; // half spacing between 64px wide characters
 		int index = (int) c-32;
 		if (index<0) { index = 0; }
-		character->sprite()->frame(index);
+		character->frame(index);
 
-		characters.push_back(character);
-		this->addChild(character);
+		_sprites.push_back(character);
 	}
 }
