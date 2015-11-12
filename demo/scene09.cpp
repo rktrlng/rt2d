@@ -32,7 +32,7 @@ Scene09::Scene09() : SuperScene()
 	int counter = 0;
 	for (int x=0; x<gridwidth; x++) {
 		for (int y=0; y<gridheight ; y++) {
-			grid->sprites()[counter]->frame(rand()%16);
+			grid->spritebatch()[counter]->frame(rand()%16);
 			counter++;
 		}
 	}
@@ -68,11 +68,11 @@ void Scene09::update(float deltaTime)
 	text[9]->message(cursortxt);
 
 	// loop over grid
-	std::vector<Sprite*> sprites = grid->sprites();
+	std::vector<Sprite*> spritebatch = grid->spritebatch();
 	int counter = 0;
 	for (int x=0; x<gridwidth; x++) {
 		for (int y=0; y<gridheight ; y++) {
-			Point2 pos = sprites[counter]->spritepos;
+			Point2 pos = spritebatch[counter]->spriteposition;
 
 			int halfwidth = cellwidth/2;
 			int halfheight = cellheight/2;
@@ -82,12 +82,12 @@ void Scene09::update(float deltaTime)
 			int bottom = pos.y + halfheight;
 
 			if ( mousex > left && mousex < right && mousey > top && mousey < bottom ) {
-				sprites[counter]->color.a = 192;
+				spritebatch[counter]->color.a = 192;
 				if (input()->getMouseDown( 0 )) {
-					sprites[counter]->frame(rand()%16);
+					spritebatch[counter]->frame(rand()%16);
 				}
 			} else {
-				sprites[counter]->color.a = 255;
+				spritebatch[counter]->color.a = 255;
 			}
 			counter++;
 		}

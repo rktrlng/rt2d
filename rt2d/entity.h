@@ -140,10 +140,10 @@ public:
 	/// @return void
 	void addLine(const std::string& filename);
 
-	// sprites (spritebatch, grid)
-	/// @brief get the sprites of this Entity.
-	/// @return std::vector<Sprite*>& _sprites
-	std::vector<Sprite*>& sprites() { return _sprites; };
+	// spritebatch, grid
+	/// @brief get the spritebatch of this Entity.
+	/// @return std::vector<Sprite*>& _spritebatch
+	std::vector<Sprite*>& spritebatch() { return _spritebatch; };
 
 	/// @brief get the guid of this Entity.
 	/// @return int _guid
@@ -161,7 +161,7 @@ protected:
 	// updated world position after all transforms
 	Point2 _worldpos; /**< @brief The position of the Entity in the real world */
 	bool _culled; /**< @brief This Entity should be culled or not */
-	std::vector<Sprite*> _sprites; ///< @brief The _sprites of this Entity
+	std::vector<Sprite*> _spritebatch; ///< @brief The _spritebatch of this Entity
 
 private:
 	// identity
@@ -175,7 +175,6 @@ private:
 	// sprite
 	Sprite* _sprite; ///< @brief The _sprite of this Entity
 	Line* _line; ///< @brief The _line of this Entity
-
 
 	/// @brief delete the Sprite of this Entity.
 	/// @return void
@@ -193,14 +192,14 @@ private:
 			_line = NULL;
 		}
 	};
-	/// @brief delete the Sprites of this Entity.
+	/// @brief delete the Spritebatch of this Entity.
 	/// @return void
-	void deleteSprites() {
-		int s = _sprites.size();
+	void deleteSpritebatch() {
+		int s = _spritebatch.size();
 		for (int i = 0; i < s; i++) {
-			delete _sprites[i];
+			delete _spritebatch[i];
 		}
-		_sprites.clear();
+		_spritebatch.clear();
 	};
 };
 

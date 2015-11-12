@@ -164,9 +164,9 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 	}
 
 	// Check for Spritebatch to see if we need to render anything
-	if (entity->_sprites.size() > 0) {
+	if (entity->_spritebatch.size() > 0) {
 		// render the Spritebatch
-		this->_renderSpriteBatch(modelMatrix, entity->_sprites);
+		this->_renderSpriteBatch(modelMatrix, entity->_spritebatch);
 	}
 
 	// Render all Children (recursively)
@@ -197,9 +197,9 @@ glm::mat4 Renderer::_getModelMatrix(Entity* entity)
 	return mm;
 }
 
-void Renderer::_renderSpriteBatch(glm::mat4& modelMatrix, std::vector<Sprite*>& sprites)
+void Renderer::_renderSpriteBatch(glm::mat4& modelMatrix, std::vector<Sprite*>& spritebatch)
 {
-	Sprite* spr = sprites[0];
+	Sprite* spr = spritebatch[0];
 	Shader* shader = _uberShader;
 	// ask resourcemanager
 	if (shader == NULL) {
@@ -220,21 +220,21 @@ void Renderer::_renderSpriteBatch(glm::mat4& modelMatrix, std::vector<Sprite*>& 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
 
-		int s = sprites.size();
+		int s = spritebatch.size();
 		for (int i = 0; i < s; i++) {
-			RGBAColor blendcolor = sprites[i]->color;
+			RGBAColor blendcolor = spritebatch[i]->color;
 			// _uvOffsetID
-			glUniform2f(shader->uvOffsetID(), sprites[i]->uvoffset.x, sprites[i]->uvoffset.y);
+			glUniform2f(shader->uvOffsetID(), spritebatch[i]->uvoffset.x, spritebatch[i]->uvoffset.y);
 
 			// use spritepos for position
-			glm::vec3 position = glm::vec3(sprites[i]->spritepos.x, sprites[i]->spritepos.y, 0.0f);
-			glm::vec3 rotation = glm::vec3(0.0f, 0.0f, sprites[i]->spriterot);
+			glm::vec3 position = glm::vec3(spritebatch[i]->spriteposition.x, spritebatch[i]->spriteposition.y, 0.0f);
+			glm::vec3 rotation = glm::vec3(0.0f, 0.0f, spritebatch[i]->spriterotation);
+			glm::vec3 scale = glm::vec3(spritebatch[i]->spritescale.x, spritebatch[i]->spritescale.y, 0.0f);
 
 			// Build the Model matrix
 			glm::mat4 translationMatrix	= glm::translate(modelMatrix, position);
 			glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, rotation.z);
-			//glm::mat4 rotationMatrix	= glm::mat4(1.0f);
-			glm::mat4 scalingMatrix		= glm::mat4(1.0f);
+			glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), scale);
 			glm::mat4 mm = translationMatrix * rotationMatrix * scalingMatrix;
 
 			this->_renderMesh(mm, shader, texture, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);

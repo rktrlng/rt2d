@@ -19,8 +19,9 @@ class Boid
 {
 public:
 	Boid() {
-		position = Point2(SWIDTH/2, SHEIGHT/2);
 		velocity = Vector2((rand()%500)-250, (rand()%500)-250);
+		position = Point2(SWIDTH/2, SHEIGHT/2);
+		scale = Point2(1.0f, 1.0f);
 		rotation = 0.0f;
 		waittime = 0.0f;
 		t.start();
@@ -55,6 +56,7 @@ public:
 	Vector2 velocity;
 	Point2 position;
 	float rotation;
+	Point2 scale;
 	float waittime;
 	Timer t;
 };

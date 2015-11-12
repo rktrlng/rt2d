@@ -57,8 +57,10 @@ public:
 	/// @return int _frame
 	int frame() { return _frame; };
 
-	Point2 spritepos; ///< @brief Sprite position Point_t of the Sprite (only for Spritebatches)
-	float spriterot; ///< @brief Sprite rotation of the Sprite (only for Spritebatches)
+	Point2 spriteposition; ///< @brief Sprite position Point_t of the Sprite (only for Spritebatches)
+	float spriterotation; ///< @brief Sprite rotation of the Sprite (only for Spritebatches)
+	Point2 spritescale; ///< @brief Sprite scale Point_t of the Sprite (only for Spritebatches)
+
 	Point2 pivot; ///< @brief Pivot Point_t of the Sprite
 	Point2 uvdim; ///< @brief UVdim Point_t of the Sprite (uvwidth, uvheight. The size of the part we need to render)
 	Point2 uvoffset; ///< @brief UVoffset Point_t of the Sprite (which part do we need to render)

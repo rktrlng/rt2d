@@ -27,7 +27,7 @@ Scene02a::Scene02a() : SuperScene()
 		//rgb = Color::rotate(rgb, 1.0f/amount);
 		rgb = Color::rotate(rgb, 0.004f);
 
-		_sprites.push_back(b); // to the Entity vector<Sprite*> _sprites
+		_spritebatch.push_back(b); // to the Entity vector<Sprite*> _spritebatch
 
 		//add a Boid object to update
 		Boid* boid = new Boid();
@@ -37,11 +37,11 @@ Scene02a::Scene02a() : SuperScene()
 
 Scene02a::~Scene02a()
 {
-	int s = _sprites.size();
+	int s = _spritebatch.size();
 	for (int i=0; i<s; i++) {
-		delete _sprites[i];
+		delete _spritebatch[i];
 	}
-	_sprites.clear();
+	_spritebatch.clear();
 
 	s = boids.size();
 	for (int i=0; i<s; i++) {
@@ -60,7 +60,8 @@ void Scene02a::update(float deltaTime)
 	int s = boids.size();
 	for (int i=0; i<s; i++) {
 		boids[i]->update(deltaTime);
-		_sprites[i]->spritepos = boids[i]->position;
-		_sprites[i]->spriterot = boids[i]->rotation;
+		_spritebatch[i]->spriteposition = boids[i]->position;
+		_spritebatch[i]->spriterotation = boids[i]->rotation;
+		_spritebatch[i]->spritescale = boids[i]->scale;
 	}
 }
