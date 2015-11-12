@@ -4,20 +4,15 @@
 attribute vec3 vertexPosition; // in modelspace
 attribute vec2 vertexUV;
 
-// Output data ; will be interpolated for each fragment.
+// Output data; will be interpolated for each fragment.
 varying vec2 UV;
 
 // Values that stay constant for the whole mesh.
-uniform mat4 M;
-uniform mat4 V;
-uniform mat4 P;
+uniform mat4 MVP;
 uniform vec2 UVoffset;
 
 void main()
 {
-	// Generate ModelViewProjection matrix
-	mat4 MVP = P * V * M;
-
 	// Output position of the vertex, in clip space: MVP * position
 	gl_Position = MVP * vec4(vertexPosition, 1);
 

@@ -325,10 +325,11 @@ void Renderer::_renderMesh(const glm::mat4& modelMatrix, Shader* shader,
 	// use our shader program
 	glUseProgram(shader->programID());
 
+	// generate the ModelMatrix
+	glm::mat4 MVP = _projectionMatrix * _viewMatrix * modelMatrix;
+
 	// ... and send our transformation to the currently bound shader, in the "MVP" uniform
-	glUniformMatrix4fv(shader->projectionMatrixID(), 1, GL_FALSE, &_projectionMatrix[0][0]);
-	glUniformMatrix4fv(shader->viewMatrixID(), 1, GL_FALSE, &_viewMatrix[0][0]);
-	glUniformMatrix4fv(shader->modelMatrixID(), 1, GL_FALSE, &modelMatrix[0][0]);
+	glUniformMatrix4fv(shader->matrixID(), 1, GL_FALSE, &MVP[0][0]);
 
 	// _blendColorID
 	glUniform4f(shader->blendColorID(), (float) blendcolor.r/255.0f, (float) blendcolor.g/255.0f, (float) blendcolor.b/255.0f, (float) blendcolor.a/255.0f);
