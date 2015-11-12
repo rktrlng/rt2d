@@ -8,14 +8,19 @@ attribute vec2 vertexUV;
 varying vec2 UV;
 
 // Values that stay constant for the whole mesh.
-uniform mat4 MVP;
+uniform mat4 M;
+uniform mat4 V;
+uniform mat4 P;
 uniform vec2 UVoffset;
 
 void main()
 {
-	// Output position of the vertex, in clip space : MVP * position
-	gl_Position =  MVP * vec4(vertexPosition,1);
+	// Generate ModelViewProjection matrix
+	mat4 MVP = P * V * M;
 
-	// UV of the vertex. No special space for this one.
+	// Output position of the vertex, in clip space: MVP * position
+	gl_Position = MVP * vec4(vertexPosition, 1);
+
+	// UV of the vertex
 	UV = vertexUV + UVoffset;
 }

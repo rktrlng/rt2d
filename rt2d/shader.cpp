@@ -27,7 +27,10 @@ Shader::Shader()
 {
 	_programID =     -1;
 
-	_matrixID =      -1;
+	_projectionMatrixID = -1;
+	_viewMatrixID =  -1;
+	_modelMatrixID = -1;
+
 	_textureID  =    -1;
 	_blendColorID =  -1;
 	_uvOffsetID =    -1;
@@ -42,7 +45,10 @@ Shader::~Shader()
 void Shader::_attachID()
 {
 	// Get handles for our uniforms and buffers and send them to the shader
-	_matrixID =      glGetUniformLocation(_programID, "MVP"); // MVP uniform in vertex shader
+	_projectionMatrixID = glGetUniformLocation(_programID, "P"); // P uniform in vertex shader
+	_viewMatrixID = glGetUniformLocation(_programID, "V"); // V uniform in vertex shader
+	_modelMatrixID = glGetUniformLocation(_programID, "M"); // M uniform in vertex shader
+
 	_textureID  =    glGetUniformLocation(_programID, "textureSampler"); // textureSampler uniform in fragment shader
 	_blendColorID =  glGetUniformLocation(_programID, "blendColor"); // blendColor uniform in fragment shader
 	_uvOffsetID = 	 glGetUniformLocation(_programID, "UVoffset"); // UVoffset uniform in fragment shader

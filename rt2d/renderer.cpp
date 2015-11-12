@@ -147,13 +147,11 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 	Sprite* sprite = entity->sprite();
 	if (sprite != NULL) {
 		if (!entity->_culled) {
-			// Finally, generate our MVP...
-			glm::mat4 MVP = _projectionMatrix * _viewMatrix * modelMatrix;
-			// ... and render the Sprite.
+			// render the Sprite
 			if (sprite->dynamic()) {
-				this->_renderSprite(MVP, sprite, true); // dynamic Sprite from PixelBuffer
+				this->_renderSprite(modelMatrix, sprite, true); // dynamic Sprite from PixelBuffer
 			} else {
-				this->_renderSprite(MVP, sprite, false); // static Sprite from ResourceManager
+				this->_renderSprite(modelMatrix, sprite, false); // static Sprite from ResourceManager
 			}
 		}
 	}
@@ -161,15 +159,13 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity)
 	// Check for Lines to see if we need to render anything
 	Line* line = entity->line();
 	if (line != NULL) {
-		// Finally, generate our MVP...
-		glm::mat4 MVP = _projectionMatrix * _viewMatrix * modelMatrix;
-		// ... and render the Line.
-		this->_renderLine(MVP, line);
+		// render the Line.
+		this->_renderLine(modelMatrix, line);
 	}
 
 	// Check for Spritebatch to see if we need to render anything
 	if (entity->_sprites.size() > 0) {
-		// render the Spritebatch (MVP calculated there).
+		// render the Spritebatch
 		this->_renderSpriteBatch(modelMatrix, entity->_sprites);
 	}
 
@@ -241,16 +237,13 @@ void Renderer::_renderSpriteBatch(glm::mat4& modelMatrix, std::vector<Sprite*>& 
 			glm::mat4 scalingMatrix		= glm::mat4(1.0f);
 			glm::mat4 mm = translationMatrix * rotationMatrix * scalingMatrix;
 
-			// Finally, generate our MVP... TODO do this in the shader
-			glm::mat4 MVP = _projectionMatrix * _viewMatrix * mm;
-
-			this->_renderMesh(MVP, shader, texture, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
+			this->_renderMesh(mm, shader, texture, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
 		}
 	}
 
 }
 
-void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic)
+void Renderer::_renderSprite(const glm::mat4& modelMatrix, Sprite* sprite, bool dynamic)
 {
 	Shader* shader = _uberShader;
 	// ask resourcemanager
@@ -282,7 +275,7 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic)
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
 
-		this->_renderMesh(MVP, shader, texture, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
+		this->_renderMesh(modelMatrix, shader, texture, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
 	}
 
 	if (dynamic && texture != NULL) {
@@ -290,7 +283,7 @@ void Renderer::_renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic)
 	}
 }
 
-void Renderer::_renderLine(const glm::mat4& MVP, Line* line)
+void Renderer::_renderLine(const glm::mat4& modelMatrix, Line* line)
 {
 	Shader* shader = _uberShader;
 	// ask resourcemanager
@@ -318,14 +311,14 @@ void Renderer::_renderLine(const glm::mat4& MVP, Line* line)
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
 
-	this->_renderMesh(MVP, shader, texture, mesh, numpoints, GL_LINES, blendcolor);
+	this->_renderMesh(modelMatrix, shader, texture, mesh, numpoints, GL_LINES, blendcolor);
 
 	if (line->dynamic()) {
 		delete mesh;
 	}
 }
 
-void Renderer::_renderMesh(const glm::mat4& MVP, Shader* shader,
+void Renderer::_renderMesh(const glm::mat4& modelMatrix, Shader* shader,
 	Texture* texture, Mesh* mesh, int numverts,
 	GLuint mode, RGBAColor blendcolor)
 {
@@ -333,10 +326,11 @@ void Renderer::_renderMesh(const glm::mat4& MVP, Shader* shader,
 	glUseProgram(shader->programID());
 
 	// ... and send our transformation to the currently bound shader, in the "MVP" uniform
-	glUniformMatrix4fv(shader->matrixID(), 1, GL_FALSE, &MVP[0][0]);
+	glUniformMatrix4fv(shader->projectionMatrixID(), 1, GL_FALSE, &_projectionMatrix[0][0]);
+	glUniformMatrix4fv(shader->viewMatrixID(), 1, GL_FALSE, &_viewMatrix[0][0]);
+	glUniformMatrix4fv(shader->modelMatrixID(), 1, GL_FALSE, &modelMatrix[0][0]);
 
 	// _blendColorID
-	//glUniform4f(shader->blendColorID(), blendcolor.r, blendcolor.g, blendcolor.b, blendcolor.a);
 	glUniform4f(shader->blendColorID(), (float) blendcolor.r/255.0f, (float) blendcolor.g/255.0f, (float) blendcolor.b/255.0f, (float) blendcolor.a/255.0f);
 
 	// Set our "textureSampler" sampler to user Texture Unit 0

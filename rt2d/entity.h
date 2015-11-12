@@ -99,6 +99,15 @@ public:
 	/// @param v number of vertical textures
 	/// @return void
 	void addSpriteSheet(const std::string& filename, int u, int v);
+	/// @brief add a Grid as a Spritebatch to this Entity.
+	/// @param filename The filename of the image.
+	/// @param u number of horizontal textures
+	/// @param v number of vertical textures
+	/// @param cols number of cells
+	/// @param rows number of vertical cells
+	/// @param sizex horizontal size of a cell
+	/// @param sizey vertical size of a cell
+	/// @return void
 	void addGrid(const std::string& filename, int u, int v, int cols, int rows, int sizex, int sizey);
 	/// @brief add a Circular Sprite to this Entity by filename.
 	/// @param filename The filename of the image you want to add as a Sprite.
@@ -132,6 +141,8 @@ public:
 	void addLine(const std::string& filename);
 
 	// sprites (spritebatch, grid)
+	/// @brief get the sprites of this Entity.
+	/// @return std::vector<Sprite*>& _sprites
 	std::vector<Sprite*>& sprites() { return _sprites; };
 
 	/// @brief get the guid of this Entity.

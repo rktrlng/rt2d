@@ -67,26 +67,26 @@ private:
 	inline glm::mat4 _getModelMatrix(Entity* entity);
 
 	/// @brief Renders the Sprite 'component' of an Entity.
-	/// @param MVP The ModelViewProjection Matrix of the Entity
+	/// @param modelMatrix The ModelMatrix of the Entity
 	/// @param sprite The Sprite 'component' of the Entity
 	/// @param dynamic Render what we get from ResourceManager or PixelBuffer
 	/// @return void
-	void _renderSprite(const glm::mat4& MVP, Sprite* sprite, bool dynamic);
+	void _renderSprite(const glm::mat4& modelMatrix, Sprite* sprite, bool dynamic);
 
 	/// @brief Renders the Line 'component' of an Entity.
-	/// @param MVP The ModelViewProjection Matrix of the Entity
+	/// @param modelMatrix The ModelMatrix of the Entity
 	/// @param line The Line 'component' of the Entity
 	/// @return void
-	void _renderLine(const glm::mat4& MVP, Line* line);
+	void _renderLine(const glm::mat4& modelMatrix, Line* line);
 
 	/// @brief Renders the Spritebatch 'component' of an Entity.
-	/// @param MVP The ModelViewProjection Matrix of the Entity
-	/// @param line The Line 'component' of the Entity
+	/// @param modelMatrix The ModelMatrix of the Entity
+	/// @param sprites all sprites of the Entity
 	/// @return void
 	void _renderSpriteBatch(glm::mat4& modelMatrix, std::vector<Sprite*>& sprites);
 
 	/// @brief Renders the Mesh 'component' of a Sprite or Line.
-	/// @param MVP The ModelViewProjection Matrix of the Mesh
+	/// @param modelMatrix The ModelMatrix of the Mesh
 	/// @param shader The Shader
 	/// @param texture The Texture
 	/// @param mesh The Mesh
@@ -94,7 +94,7 @@ private:
 	/// @param mode The mode: GL_LINES or GL_TRIANGLES
 	/// @param blendcolor The Color to use for blending
 	/// @return void
-	inline void _renderMesh(const glm::mat4& MVP, Shader* shader,
+	inline void _renderMesh(const glm::mat4& modelMatrix, Shader* shader,
 		Texture* texture, Mesh* mesh, int numverts,
 		GLuint mode, RGBAColor blendcolor);
 

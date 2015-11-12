@@ -24,9 +24,15 @@ public:
 	/// @brief get the programID
 	/// @return GLuint _programID
 	GLuint programID() { return _programID; };
-	/// @brief get the matrixID
-	/// @return GLuint _matrixID
-	GLuint matrixID() { return _matrixID; };
+	/// @brief get the modelMatrixID
+	/// @return GLuint _modelMatrixID
+	GLuint modelMatrixID() { return _modelMatrixID; };
+	/// @brief get the viewMatrixID
+	/// @return GLuint _viewMatrixID
+	GLuint viewMatrixID() { return _viewMatrixID; };
+	/// @brief get the projectionMatrixID
+	/// @return GLuint _projectionMatrixID
+	GLuint projectionMatrixID() { return _projectionMatrixID; };
 	/// @brief get the textureID
 	/// @return GLuint _textureID
 	GLuint textureID() { return _textureID; };
@@ -46,7 +52,10 @@ public:
 private:
 	GLuint _programID; ///< @brief programID (pointer to compiled shader)
 
-	GLuint _matrixID; ///< @brief attaches to MVP uniform in shader
+	GLuint _projectionMatrixID; ///< @brief attaches to P uniform in shader
+	GLuint _viewMatrixID; ///< @brief attaches to V uniform in shader
+	GLuint _modelMatrixID; ///< @brief attaches to M uniform in shader
+
 	GLuint _textureID; ///< @brief attaches to textureSampler uniform in shader
 	GLuint _blendColorID; ///< @brief attaches to vertexColor uniform in shader
 	GLuint _uvOffsetID; ///< @brief attaches to UVoffset uniform in shader
