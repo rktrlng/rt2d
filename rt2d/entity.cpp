@@ -41,6 +41,35 @@ Entity::~Entity()
 	deleteSpritebatch();
 }
 
+void Entity::addChild(Entity* child)
+{
+	if(child->_parent != NULL) {
+		child->_parent->removeChild(child);
+	}
+	child->_parent = this;
+	this->_children.push_back(child);
+}
+
+void Entity::removeChild(Entity* child)
+{
+	std::vector< Entity* >::iterator it = _children.begin();
+	while (it != _children.end()) {
+		if ((*it)->_guid == child->_guid) {
+			it = _children.erase(it);
+		} else {
+			++it;
+		}
+	}
+}
+
+Entity* Entity::getChild(unsigned int i)
+{
+	if (i < _children.size()) {
+		return _children[i];
+	}
+	return NULL;
+}
+
 void Entity::addLine(const std::string& filename)
 {
 	deleteLine();
@@ -112,6 +141,7 @@ void Entity::addSpriteSheet(const std::string& filename, int u, int v)
 
 void Entity::addGrid(const std::string& filename, int u, int v, int cols, int rows, int sizex, int sizey)
 {
+	deleteSpritebatch();
 	for (int x = 0; x < cols; x++) {
 		for (int y = 0; y < rows; y++) {
 			Sprite* s = new Sprite();
@@ -125,33 +155,4 @@ void Entity::addGrid(const std::string& filename, int u, int v, int cols, int ro
 	}
 
 	std::cout << "grid added: " << _spritebatch.size() << " sprites." << std::endl;
-}
-
-void Entity::addChild(Entity* child)
-{
-	if(child->_parent != NULL) {
-		child->_parent->removeChild(child);
-	}
-	child->_parent = this;
-	this->_children.push_back(child);
-}
-
-void Entity::removeChild(Entity* child)
-{
-	std::vector< Entity* >::iterator it = _children.begin();
-	while (it != _children.end()) {
-		if ((*it)->_guid == child->_guid) {
-			it = _children.erase(it);
-		} else {
-			++it;
-		}
-	}
-}
-
-Entity* Entity::getChild(unsigned int i)
-{
-	if (i < _children.size()) {
-		return _children[i];
-	}
-	return NULL;
 }
