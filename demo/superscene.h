@@ -37,6 +37,7 @@ class SuperScene: public Scene
 		std::vector<BasicEntity*> layers;
 		std::vector<Text*> text;
 		Player* player;
+		void moveCamera(float deltaTime);
 
 	private:
 		BasicEntity* logo;

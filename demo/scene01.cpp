@@ -87,9 +87,12 @@ Scene01::~Scene01()
 void Scene01::update(float deltaTime)
 {
 	// ###############################################################
-	// Make SuperScene do what it needs to do (Escape key stops Scene)
+	// Make SuperScene do what it needs to do
+	// - Escape key stops Scene
+	// - Move Camera
 	// ###############################################################
 	SuperScene::update(deltaTime);
+	SuperScene::moveCamera(deltaTime);
 
 	// ###############################################################
 	// Mouse cursor in screen coordinates
@@ -146,31 +149,4 @@ void Scene01::update(float deltaTime)
 	}
 	ui_element->sprite()->uvoffset.x = xoffset;
 	ui_element->position = Point2(camera()->position.x + SWIDTH/2 - 150, camera()->position.y - SHEIGHT/2 + 20);
-
-	// ###############################################################
-	// Move Camera (Arrow up, down, left, right)
-	// ###############################################################
-	float speed = 500.0f; // 500 units / second
-
-	// Right and Down vector
-	Point2 right = Point2(1, 0);
-	Point2 up = Point2(0, 1);
-	// Direction
-	Vector2 direction = Vector2(0,0);
-
-	if (input()->getKey( GLFW_KEY_UP )) {
-		direction -= up;
-	}
-	if (input()->getKey( GLFW_KEY_DOWN )) {
-		direction += up;
-	}
-	if (input()->getKey( GLFW_KEY_RIGHT )) {
-		direction += right;
-	}
-	if (input()->getKey( GLFW_KEY_LEFT )) {
-		direction -= right;
-	}
-	direction.normalize();
-	direction *= deltaTime * speed;
-	camera()->position += direction;
 }

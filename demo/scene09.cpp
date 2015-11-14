@@ -49,9 +49,12 @@ Scene09::~Scene09()
 void Scene09::update(float deltaTime)
 {
 	// ###############################################################
-	// Make SuperScene do what it needs to do (Escape key stops Scene)
+	// Make SuperScene do what it needs to do
+	// - Escape key stops Scene
+	// - Move Camera
 	// ###############################################################
 	SuperScene::update(deltaTime);
+	SuperScene::moveCamera(deltaTime);
 
 	// ###############################################################
 	// - link mouse to camera
@@ -92,31 +95,4 @@ void Scene09::update(float deltaTime)
 			counter++;
 		}
 	}
-
-	// ###############################################################
-	// Move Camera (Arrow up, down, left, right)
-	// ###############################################################
-	float speed = 500.0f; // 500 units / second
-
-	// Right and Down vector
-	Point2 right = Point2(1, 0);
-	Point2 up = Point2(0, 1);
-	// Direction
-	Vector2 direction = Vector2(0,0);
-
-	if (input()->getKey( GLFW_KEY_UP )) {
-		direction -= up;
-	}
-	if (input()->getKey( GLFW_KEY_DOWN )) {
-		direction += up;
-	}
-	if (input()->getKey( GLFW_KEY_RIGHT )) {
-		direction += right;
-	}
-	if (input()->getKey( GLFW_KEY_LEFT )) {
-		direction -= right;
-	}
-	direction.normalize();
-	direction *= deltaTime * speed;
-	camera()->position += direction;
 }
