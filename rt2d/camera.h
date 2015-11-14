@@ -21,6 +21,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <rt2d/pointx.h>
+
 /**
  * @brief The Camera class handles the concept of having a Camera in your Scene.
  */
@@ -30,7 +32,7 @@ public:
 	Camera(); ///< @brief Constructor of the Camera
 	virtual ~Camera(); ///< @brief Destructor of the Camera
 
-	glm::vec3 position; ///< @brief The position of the Camera
+	Point position; ///< @brief The position of the Camera
 
 	/// @brief updates the viewMatrix and projectionMatrix of the Camera.
 	/// @param deltaTime The time that's passed since the last update.
@@ -47,7 +49,7 @@ private:
 	glm::mat4 _viewMatrix; ///< @brief The viewMatrix of the Camera
 	glm::mat4 _projectionMatrix; ///< @brief The (orthographic) projectionMatrix of the Camera
 
-	glm::vec3 _offset; ///< @brief The internal offset of the Camera. When Camera is in the middle of the screen, its position is (0,0).
+	Point _offset; ///< @brief The internal offset of the Camera. When Camera is in the middle of the screen, its position is (0,0).
 };
 
 #endif

@@ -96,26 +96,27 @@ void Scene09::update(float deltaTime)
 	// ###############################################################
 	// Move Camera (Arrow up, down, left, right)
 	// ###############################################################
-	float speed = 300.0f; // 300 units / second
+	float speed = 500.0f; // 500 units / second
 
 	// Right and Down vector
-	glm::vec3 right = glm::vec3(1, 0, 0);
-	glm::vec3 up = glm::vec3(0, 1, 0);
+	Point2 right = Point2(1, 0);
+	Point2 up = Point2(0, 1);
+	// Direction
+	Vector2 direction = Vector2(0,0);
 
-	// Move up
 	if (input()->getKey( GLFW_KEY_UP )) {
-		camera()->position -= up * deltaTime * speed;
+		direction -= up;
 	}
-	// Move down
 	if (input()->getKey( GLFW_KEY_DOWN )) {
-		camera()->position += up * deltaTime * speed;
+		direction += up;
 	}
-	// Strafe right
 	if (input()->getKey( GLFW_KEY_RIGHT )) {
-		camera()->position += right * deltaTime * speed;
+		direction += right;
 	}
-	// Strafe left
 	if (input()->getKey( GLFW_KEY_LEFT )) {
-		camera()->position -= right * deltaTime * speed;
+		direction -= right;
 	}
+	direction.normalize();
+	direction *= deltaTime * speed;
+	camera()->position += direction;
 }
