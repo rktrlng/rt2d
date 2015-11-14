@@ -30,7 +30,7 @@ int main( void )
 	std::vector<SuperScene*> scenes;
 	scenes.push_back(new Scene00());
 	scenes.push_back(new Scene01());
-	scenes.push_back(new Scene02());
+	//scenes.push_back(new Scene02());
 	scenes.push_back(new Scene02a());
 	scenes.push_back(new Scene03());
 	scenes.push_back(new Scene04());
