@@ -142,6 +142,13 @@ public:
 	/// @return int _circlemesh
 	int circlemesh() { return _circlemesh; };
 
+	/// @brief check if this Sprite uses culling
+	/// @return int _useculling
+	int useCulling() { return _useculling; };
+	/// @brief use culling on this Sprite or not
+	/// @return void
+	void useCulling(int c) { _useculling = c; };
+
 protected:
 
 private:
@@ -160,6 +167,8 @@ private:
 
 	int _circlemesh; ///< @brief are we a square Sprite (0), or a custom one (not 0)
 	int _which; ///< @brief which segment
+
+	int _useculling; ///< @brief use culling or not
 };
 
 #endif /* SPRITE_H */

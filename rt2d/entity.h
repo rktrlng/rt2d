@@ -160,7 +160,6 @@ public:
 protected:
 	// updated world position after all transforms
 	Point2 _worldpos; /**< @brief The position of the Entity in the real world */
-	bool _culled; /**< @brief This Entity should be culled or not */
 	std::vector<Sprite*> _spritebatch; ///< @brief The _spritebatch of this Entity
 
 private:

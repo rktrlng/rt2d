@@ -40,8 +40,6 @@
 
 #define VSYNC 0 ///< VSYNC on (1) or off (0)
 
-#define CULLSCENE 0 ///< cull Entities outside frame or not
-
 #define DEFAULTFILTER 3 ///< texture filter
 #define DEFAULTWRAP 1 ///< texture clamping (0=repeat, 1=mirror, 2=clamp)
 

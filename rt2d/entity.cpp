@@ -27,7 +27,6 @@ Entity::Entity()
 	scale = Vector2(1.0f, 1.0f);
 
 	_worldpos = Vector2(0.0f, 0.0f);
-	_culled = false;
 
 	_sprite = NULL;
 	_line = NULL;
@@ -145,6 +144,7 @@ void Entity::addGrid(const std::string& filename, int u, int v, int cols, int ro
 	for (int x = 0; x < cols; x++) {
 		for (int y = 0; y < rows; y++) {
 			Sprite* s = new Sprite();
+			s->useCulling(1);
 			s->spriteposition.x = x * sizex;
 			s->spriteposition.y = y * sizey;
 			float uvwidth = 1.0f / u;

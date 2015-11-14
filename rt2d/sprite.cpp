@@ -38,6 +38,8 @@ Sprite::Sprite()
 	_circlemesh = 0; // false
 	_which = -1; // disabled
 
+	_useculling = 0;
+
 	color = RGBAColor(255, 255, 255, 255);
 }
 

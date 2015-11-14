@@ -13,12 +13,12 @@ Scene09::Scene09() : SuperScene()
 {
 	t.start();
 
-	text[0]->message("Scene09: Spritebatch");
+	text[0]->message("Scene09: Spritebatch (128x128=16384 sprites)");
 	text[5]->message("<Arrow keys> move camera");
 	text[6]->message("<leftclick> random sprite");
 
-	gridwidth = 24;
-	gridheight = 16;
+	gridwidth = 128;
+	gridheight = 128;
 	cellwidth = 64;
 	cellheight = 64;
 

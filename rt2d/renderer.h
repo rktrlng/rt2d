@@ -58,8 +58,9 @@ private:
 	/// @brief Recursive function that renders an Entity which is a child of the Scene or parent Entity.
 	/// @param modelMatrix The modelMatrix of the parent
 	/// @param entity The Entity that needs rendering
+	/// @param camera The camera in case we need to cull Sprites
 	/// @return void
-	void _renderEntity(glm::mat4& modelMatrix, Entity* entity);
+	void _renderEntity(glm::mat4& modelMatrix, Entity* entity, Camera* camera);
 
 	/// @brief get the modelMatrix from an Entity
 	/// @param entity The Entity we need the modelMatrix from.
@@ -82,8 +83,9 @@ private:
 	/// @brief Renders the Spritebatch 'component' of an Entity.
 	/// @param modelMatrix The ModelMatrix of the Entity
 	/// @param sprites all sprites of the Entity
+	/// @param camera The camera in case we need to cull Sprites
 	/// @return void
-	void _renderSpriteBatch(glm::mat4& modelMatrix, std::vector<Sprite*>& sprites);
+	void _renderSpriteBatch(glm::mat4& modelMatrix, std::vector<Sprite*>& sprites, Camera* camera);
 
 	/// @brief Renders the Mesh 'component' of a Sprite or Line.
 	/// @param modelMatrix The ModelMatrix of the Mesh
@@ -97,16 +99,6 @@ private:
 	inline void _renderMesh(const glm::mat4& modelMatrix, Shader* shader,
 		Texture* texture, Mesh* mesh, int numverts,
 		GLuint mode, RGBAColor blendcolor);
-
-	/// @brief Culls a Scene with all its children.
-	/// @param scene The Scene that needs to be culled
-	/// @return void
-	void _cullScene(Scene* scene);
-	/// @brief Culls an Entity with all its children.
-	/// @param campos The position of the Camera
-	/// @param entity The Entity that needs to be culled
-	/// @return void
-	void _cullEntity(Vector2 campos, Entity* entity);
 
 	// temp 'local' variables.
 	glm::mat4 _projectionMatrix; ///< @brief The _projectionMatrix we get from the Camera. We only get the ProjectionMatrix from the orthographic camera once

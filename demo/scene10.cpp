@@ -1,0 +1,172 @@
+/**
+ * This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
+ *
+ * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
+ *     - Initial commit
+ * - Copyright 2015 Your Name <you@yourhost.com>
+ *     - What you did
+ */
+
+#include "scene10.h"
+
+Scene10::Scene10() : SuperScene()
+{
+	text[0]->message("Scene10: Heightmap (256x256=65536 sprites)");
+	text[5]->message("<Arrow keys> move camera");
+
+	camera()->position.x = 4500;
+	camera()->position.y = 6000;
+
+	gridwidth = 256;
+	gridheight = 256;
+	cellwidth = 32;
+	cellheight = 32;
+
+	RGBAColor deepwater =		RGBAColor(5, 0, 130);
+	RGBAColor midwater =		RGBAColor(65, 60, 175);
+	RGBAColor shallowwater =	RGBAColor(127, 127, 215);
+	RGBAColor sand =			RGBAColor(215, 200, 115);
+	RGBAColor grass =			RGBAColor(100, 185, 90);
+	RGBAColor woods =			RGBAColor(64, 127, 64);
+	RGBAColor highland =		RGBAColor(85, 85, 50);
+	RGBAColor rock =			RGBAColor(100, 100, 100);
+	RGBAColor snow =			RGBAColor(224, 224, 224);
+
+	// fill field of tiles
+	field = new BasicEntity();
+	//field->addGrid(AUTOGENWHITE, 1, 1, gridwidth, gridheight, cellwidth, cellheight);
+	field->addGrid("assets/defaultgray.tga", 8, 8, gridwidth, gridheight, cellwidth, cellheight);
+
+	heightmapsprite = new Sprite();
+	heightmapsprite->setupSpriteTGAPixelBuffer("assets/heightmap256.tga", 0, 2);
+	PixelBuffer* heightmap = heightmapsprite->texture()->pixels();
+	int w = heightmap->width;
+	int h = heightmap->height;
+	int counter = 0;
+	int tcounter = 0;
+
+	Point2 offset = Point2(-100,-100);
+	for (int x = 0; x < w; x++) {
+		for (int y = 0; y < h; y++) {
+			Sprite* tile = field->spritebatch()[tcounter];
+			unsigned char tint = heightmap->data[counter+3]; // alpha pixel
+
+			if (tint == 255) { tile->color = deepwater; }
+			if (tint == 224) { tile->color = midwater; }
+			if (tint == 192) { tile->color = shallowwater; }
+			if (tint == 160) { tile->color = sand; }
+			if (tint == 128) { tile->color = grass; }
+			if (tint == 96) { tile->color = woods; }
+			if (tint == 64) { tile->color = highland; }
+			if (tint == 32) { tile->color = rock; }
+			if (tint == 0) { tile->color = snow; }
+
+			if (tint == 255) { tile->frame(0); }
+			if (tint == 224) { tile->frame(1); }
+			if (tint == 192) { tile->frame(2); }
+			if (tint == 160) { tile->frame(3); }
+			if (tint == 128) { tile->frame(4); }
+			if (tint == 96) { tile->frame(5); }
+			if (tint == 64) { tile->frame(6); }
+			if (tint == 32) { tile->frame(7); }
+			if (tint == 0) { tile->frame(8); }
+
+			counter += heightmap->bitdepth;
+			tcounter++;
+		}
+	}
+	// add field_container to Scene
+	layers[0]->addChild(field);
+}
+
+
+Scene10::~Scene10()
+{
+	layers[0]->removeChild(field);
+	delete field;
+	delete heightmapsprite;
+}
+
+void Scene10::update(float deltaTime)
+{
+	// ###############################################################
+	// Make SuperScene do what it needs to do (Escape key stops Scene)
+	// ###############################################################
+	SuperScene::update(deltaTime);
+
+	// ###############################################################
+	// - link mouse to camera
+	// - account for camera offset (center of the screen)
+	// - update mouse cursor text
+	// ###############################################################
+	int mousex = input()->getMouseX() + camera()->position.x - SWIDTH/2;
+	int mousey = input()->getMouseY() + camera()->position.y - SHEIGHT/2;
+	std::string cursortxt = "cursor (";
+	cursortxt.append(std::to_string(mousex));
+	cursortxt.append(",");
+	cursortxt.append(std::to_string(mousey));
+	cursortxt.append(")");
+	text[9]->message(cursortxt);
+
+	// loop over grid
+	std::vector<Sprite*> spritebatch = field->spritebatch();
+	int counter = 0;
+	for (int x=0; x<gridwidth; x++) {
+		for (int y=0; y<gridheight ; y++) {
+			Point2 pos = spritebatch[counter]->spriteposition;
+
+			int halfwidth = cellwidth/2;
+			int halfheight = cellheight/2;
+			int left = pos.x - halfwidth;
+			int right = pos.x + halfwidth;
+			int top = pos.y - halfheight;
+			int bottom = pos.y + halfheight;
+
+			if ( mousex >= left && mousex < right && mousey >= top && mousey < bottom ) {
+				spritebatch[counter]->color.a = 192;
+
+				std::string postxt = "pos (";
+				postxt.append(std::to_string(x));
+				postxt.append(",");
+				postxt.append(std::to_string(y));
+				postxt.append(") RGB: (");
+				postxt.append(std::to_string(spritebatch[counter]->color.r));
+				postxt.append(",");
+				postxt.append(std::to_string(spritebatch[counter]->color.g));
+				postxt.append(",");
+				postxt.append(std::to_string(spritebatch[counter]->color.b));
+				postxt.append(")");
+				text[8]->message(postxt);
+			} else {
+				spritebatch[counter]->color.a = 255;
+			}
+			counter++;
+		}
+	}
+
+	// ###############################################################
+	// Move Camera (Arrow up, down, left, right)
+	// ###############################################################
+	float speed = 500.0f; // 500 units / second
+
+	// Right and Down vector
+	glm::vec3 right = glm::vec3(1, 0, 0);
+	glm::vec3 up = glm::vec3(0, 1, 0);
+
+	// Move up
+	if (input()->getKey( GLFW_KEY_UP )) {
+		camera()->position -= up * deltaTime * speed;
+	}
+	// Move down
+	if (input()->getKey( GLFW_KEY_DOWN )) {
+		camera()->position += up * deltaTime * speed;
+	}
+	// Strafe right
+	if (input()->getKey( GLFW_KEY_RIGHT )) {
+		camera()->position += right * deltaTime * speed;
+	}
+	// Strafe left
+	if (input()->getKey( GLFW_KEY_LEFT )) {
+		camera()->position -= right * deltaTime * speed;
+	}
+}
