@@ -56,7 +56,7 @@ Scene01::Scene01() : SuperScene()
 	ui_element->addSprite("assets/default.tga", 0.5f, 0.0f); // Default texture. Pivot point top middle. Pivot(0,0) is top left.
 	ui_element->sprite()->size = Point2(256, 64); // texture is 512x512. Make Mesh half the width, 1 row of squares (512/8).
 	ui_element->sprite()->uvdim = Point2(0.5f, 0.125f); // UV 1/8 of the height.
-	ui_element->sprite()->uvoffset = Point2(0.0f, 0.125f * 7); // Show top row. UV(0,0) is bottom left.
+	ui_element->sprite()->uvoffset = Point2(0.0f, 0.0f); // Show bottom row. UV(0,0) is bottom left.
 
 	// create a tree-structure to send to the Renderer
 	// by adding them to each other and/or the scene ('this', or one of the layers[])
