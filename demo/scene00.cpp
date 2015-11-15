@@ -72,9 +72,14 @@ void Scene00::update(float deltaTime)
 	text[10]->message("");
 
 	// ###############################################################
-	// Clear text and start again
+	// Scroll text with arrow up/down
 	// ###############################################################
-	float scrolldelay = 0.1f; // 10 FPS
+	static int first = 1;
+	if (first) {
+		updateconsoletext();
+		first=0;
+	}
+	float scrolldelay = 0.025f; // 40 FPS
 	if (input()->getKey( GLFW_KEY_DOWN )) {
 		if (t.seconds() > scrolldelay) {
 			index++;
@@ -88,11 +93,6 @@ void Scene00::update(float deltaTime)
 			updateconsoletext();
 			t.start();
 		}
-	}
-	static int first = 1;
-	if (first) {
-		updateconsoletext();
-		first=0;
 	}
 }
 
@@ -116,8 +116,7 @@ void Scene00::filltext()
 	fulltext.clear();
 	std::ifstream infile("assets/alice.txt");
 	std::string line;
-	while (std::getline(infile, line))
-	{
+	while (std::getline(infile, line)) {
 		std::istringstream iss(line);
 		fulltext.push_back(line);
 	}
