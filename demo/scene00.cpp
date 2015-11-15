@@ -16,27 +16,30 @@ Scene00::Scene00() : SuperScene()
 	// Start Timer t
 	t.start();
 
-	text[0]->message("Scene00: License Text");
+	text[0]->message("Scene00: Alice's adventures in wonderland");
 	//text[1]->message("");
 	//text[2]->message("");
 	//text[3]->message("");
-	text[4]->message("<SPACE> show again from the start");
+	text[4]->message("<Arrow up/down> scroll text");
 
-	numlines = 16;
-	filltext();
+	numlines = 17;
+	index = 0;
 
 	// Create an Entity with a custom pivot point.
 	consolecontainer = new BasicEntity();
 
+	// txt is ~830px wide
+	int left = (SWIDTH-830)/2;
 	for (unsigned int i = 0; i < numlines; i++) {
 		Text* line = new Text();
 		line->scale = Point2(0.35f, 0.35f);
-		line->position = Point2(200, 225+i*25);
+		line->position = Point2(left, 210+i*25);
 		line->message("", GREEN);
 
 		consoletext.push_back(line);
 		consolecontainer->addChild(line);
 	}
+	filltext();
 
 	layers[1]->addChild(consolecontainer);
 }
@@ -71,30 +74,47 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Clear text and start again
 	// ###############################################################
-	if (input()->getKeyDown( GLFW_KEY_SPACE )) {
-		filltext();
+	float scrolldelay = 0.1f; // 10 FPS
+	if (input()->getKey( GLFW_KEY_DOWN )) {
+		if (t.seconds() > scrolldelay) {
+			index++;
+			updateconsoletext();
+			t.start();
+		}
 	}
+	if (input()->getKey( GLFW_KEY_UP )) {
+		if (t.seconds() > scrolldelay) {
+			index--; if (index<0) {index=0;}
+			updateconsoletext();
+			t.start();
+		}
+	}
+	static int first = 1;
+	if (first) {
+		updateconsoletext();
+		first=0;
+	}
+}
 
+void Scene00::updateconsoletext()
+{
 	// ###############################################################
 	// Fill consoletext with fulltext
 	// ###############################################################
-	unsigned int s = consoletext.size();
-
-	if (t.seconds() > 0.1f - deltaTime) { // 10 FPS
-		for (unsigned int i = 0; i < s; i++) {
-			consoletext[i]->message(fulltext[i], GREEN);
-		}
-		if (fulltext.size() > s) {
-			fulltext.pop_front();
-		}
-		t.start();
+	unsigned int s = fulltext.size();
+	int maxid = s - numlines;
+	if (index > maxid) {
+		index = maxid;
+	}
+	for (unsigned int i = 0; i < numlines; i++) {
+		consoletext[i]->message(fulltext[index+i], GREEN);
 	}
 }
 
 void Scene00::filltext()
 {
 	fulltext.clear();
-	std::ifstream infile("assets/LICENSE");
+	std::ifstream infile("assets/alice.txt");
 	std::string line;
 	while (std::getline(infile, line))
 	{

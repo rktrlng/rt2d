@@ -31,6 +31,8 @@ class Scene00: public SuperScene
 		Timer t;
 
 		void filltext();
+		void updateconsoletext();
+		int index;
 };
 
 #endif /* SCENE00_H */
