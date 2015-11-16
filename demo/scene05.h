@@ -17,22 +17,22 @@
 
 class Scene05: public SuperScene
 {
-	public:
-		Scene05();
-		virtual ~Scene05();
+public:
+	Scene05();
+	virtual ~Scene05();
 
-		virtual void update(float deltaTime);
+	virtual void update(float deltaTime);
 
-	private:
-		Sprite* dynamic_sprite;
-		BasicEntity* sprite_container;
-		Timer t;
+private:
+	Sprite* dynamic_sprite;
+	BasicEntity* sprite_container;
+	Timer t;
 
-		void negativePixels(PixelBuffer* pixels);
+	void negativePixels(PixelBuffer* pixels);
 
-		int filter;
-		int wrap;
-		int negative;
+	int filter;
+	int wrap;
+	int negative;
 };
 
 #endif /* SCENE05_H */

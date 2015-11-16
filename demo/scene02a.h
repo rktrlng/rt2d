@@ -63,14 +63,14 @@ public:
 
 class Scene02a : public SuperScene
 {
-	public:
-		Scene02a();
-		virtual ~Scene02a();
+public:
+	Scene02a();
+	virtual ~Scene02a();
 
-		virtual void update(float deltaTime);
+	virtual void update(float deltaTime);
 
-	private:
-		std::vector<Boid*> boids;
+private:
+	std::vector<Boid*> boids;
 };
 
 #endif /* SCENE02A_H */

@@ -17,21 +17,21 @@
 
 class Scene10: public SuperScene
 {
-	public:
-		Scene10();
-		virtual ~Scene10();
+public:
+	Scene10();
+	virtual ~Scene10();
 
-		virtual void update(float deltaTime);
+	virtual void update(float deltaTime);
 
-	private:
-		// a field of tiles
-		BasicEntity* field;
-		Sprite* heightmapsprite;
+private:
+	// a field of tiles
+	BasicEntity* field;
+	Sprite* heightmapsprite;
 
-		int gridwidth;
-		int gridheight;
-		int cellwidth;
-		int cellheight;
+	int gridwidth;
+	int gridheight;
+	int cellwidth;
+	int cellheight;
 };
 
 #endif /* SCENE10_H */

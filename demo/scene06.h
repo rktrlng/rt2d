@@ -17,30 +17,30 @@
 
 class Scene06: public SuperScene
 {
-	public:
-		Scene06();
-		virtual ~Scene06();
+public:
+	Scene06();
+	virtual ~Scene06();
 
-		virtual void update(float deltaTime);
+	virtual void update(float deltaTime);
 
-	private:
-		// full, single circle (hexagon)
-		BasicEntity* circle_container;
-		Timer t;
+private:
+	// full, single circle (hexagon)
+	BasicEntity* circle_container;
+	Timer t;
 
-		// a single hexagon with its elements
-		BasicEntity* hexagon; // container
-		BasicEntity* northeast;
-		BasicEntity* north;
-		BasicEntity* northwest;
-		BasicEntity* southwest;
-		BasicEntity* south;
-		BasicEntity* southeast;
+	// a single hexagon with its elements
+	BasicEntity* hexagon; // container
+	BasicEntity* northeast;
+	BasicEntity* north;
+	BasicEntity* northwest;
+	BasicEntity* southwest;
+	BasicEntity* south;
+	BasicEntity* southeast;
 
-		// a container with n elements
-		BasicEntity* segments_container;
-		std::vector<BasicEntity*> elements;
-		Timer ct;
+	// a container with n elements
+	BasicEntity* segments_container;
+	std::vector<BasicEntity*> elements;
+	Timer ct;
 };
 
 #endif /* SCENE06_H */

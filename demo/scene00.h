@@ -17,22 +17,22 @@
 
 class Scene00: public SuperScene
 {
-	public:
-		Scene00();
-		virtual ~Scene00();
+public:
+	Scene00();
+	virtual ~Scene00();
 
-		virtual void update(float deltaTime);
+	virtual void update(float deltaTime);
 
-	private:
-		BasicEntity* consolecontainer;
-		std::vector<Text*> consoletext;
-		std::deque<std::string> fulltext;
-		unsigned int numlines;
-		Timer t;
+private:
+	BasicEntity* consolecontainer;
+	std::vector<Text*> consoletext;
+	std::deque<std::string> fulltext;
+	unsigned int numlines;
+	Timer t;
 
-		void filltext();
-		void updateconsoletext();
-		int index;
+	void filltext();
+	void updateconsoletext();
+	int index;
 };
 
 #endif /* SCENE00_H */

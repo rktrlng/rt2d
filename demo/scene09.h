@@ -17,20 +17,20 @@
 
 class Scene09: public SuperScene
 {
-	public:
-		Scene09();
-		virtual ~Scene09();
+public:
+	Scene09();
+	virtual ~Scene09();
 
-		virtual void update(float deltaTime);
+	virtual void update(float deltaTime);
 
-	private:
-		BasicEntity* grid;
-		Timer t;
+private:
+	BasicEntity* grid;
+	Timer t;
 
-		int gridwidth;
-		int gridheight;
-		int cellwidth;
-		int cellheight;
+	int gridwidth;
+	int gridheight;
+	int cellwidth;
+	int cellheight;
 };
 
 #endif /* SCENE09_H */

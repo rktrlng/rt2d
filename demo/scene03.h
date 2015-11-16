@@ -18,25 +18,25 @@
 
 class Scene03: public SuperScene
 {
-	public:
-		Scene03();
-		virtual ~Scene03();
+public:
+	Scene03();
+	virtual ~Scene03();
 
-		virtual void update(float deltaTime);
+	virtual void update(float deltaTime);
 
-	private:
-		Timer t;
+private:
+	Timer t;
 
-		BasicEntity* rt2d_line;
-		BasicEntity* default_line;
-		BasicEntity* spaceship;
+	BasicEntity* rt2d_line;
+	BasicEntity* default_line;
+	BasicEntity* spaceship;
 
-		BasicEntity* shape_container;
-		std::vector<BasicEntity*> shapes;
+	BasicEntity* shape_container;
+	std::vector<BasicEntity*> shapes;
 
-		BasicEntity* dynamic_line;
+	BasicEntity* dynamic_line;
 
-		void updateSpaceShip(float deltaTime);
+	void updateSpaceShip(float deltaTime);
 };
 
 #endif /* SCENE03_H */

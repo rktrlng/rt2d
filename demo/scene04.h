@@ -17,22 +17,22 @@
 
 class Scene04: public SuperScene
 {
-	public:
-		Scene04();
-		virtual ~Scene04();
+public:
+	Scene04();
+	virtual ~Scene04();
 
-		virtual void update(float deltaTime);
+	virtual void update(float deltaTime);
 
-	private:
-		BasicEntity* pixel_container;
-		Timer t;
-		Timer rt;
+private:
+	BasicEntity* pixel_container;
+	Timer t;
+	Timer rt;
 
-		void spectrumPixels(PixelBuffer* pixels, int filter);
-		void randomPixels(PixelBuffer* pixels, int filter);
-		void rainbowPixels(PixelBuffer* pixels, float step, int filter);
-		void checkerPixels(PixelBuffer* pixels, int cellwidth, RGBAColor a, RGBAColor b);
-		void perlinNoisePixels(PixelBuffer* pixels, int octaveCount);
+	void spectrumPixels(PixelBuffer* pixels, int filter);
+	void randomPixels(PixelBuffer* pixels, int filter);
+	void rainbowPixels(PixelBuffer* pixels, float step, int filter);
+	void checkerPixels(PixelBuffer* pixels, int cellwidth, RGBAColor a, RGBAColor b);
+	void perlinNoisePixels(PixelBuffer* pixels, int octaveCount);
 };
 
 #endif /* SCENE04_H */

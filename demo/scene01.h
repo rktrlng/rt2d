@@ -16,20 +16,20 @@
 
 class Scene01: public SuperScene
 {
-	public:
-		Scene01();
-		virtual ~Scene01();
+public:
+	Scene01();
+	virtual ~Scene01();
 
-		virtual void update(float deltaTime);
+	virtual void update(float deltaTime);
 
-	private:
-		BasicEntity* default_entity;
-		BasicEntity* child1_entity;
-		BasicEntity* child2_entity;
-		BasicEntity* animated_entity;
-		BasicEntity* ui_element;
+private:
+	BasicEntity* default_entity;
+	BasicEntity* child1_entity;
+	BasicEntity* child2_entity;
+	BasicEntity* animated_entity;
+	BasicEntity* ui_element;
 
-		Timer t;
+	Timer t;
 };
 
 #endif /* SCENE01_H */

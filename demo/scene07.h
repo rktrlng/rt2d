@@ -23,22 +23,22 @@ struct Particle {
 
 class Scene07: public SuperScene
 {
-	public:
-		Scene07();
-		virtual ~Scene07();
+public:
+	Scene07();
+	virtual ~Scene07();
 
-		virtual void update(float deltaTime);
+	virtual void update(float deltaTime);
 
-	private:
-		RGBAColor backgroundcolor;
-		BasicEntity* canvas;
-		PixelBuffer* framebuffer;
-		std::deque<Particle> particles;
-		Timer timer;
-		Timer fpstimer;
+private:
+	RGBAColor backgroundcolor;
+	BasicEntity* canvas;
+	PixelBuffer* framebuffer;
+	std::deque<Particle> particles;
+	Timer timer;
+	Timer fpstimer;
 
-		void setPixel(int x, int y, RGBAColor color);
-		void clearParticles();
+	void setPixel(int x, int y, RGBAColor color);
+	void clearParticles();
 };
 
 #endif /* SCENE07_H */

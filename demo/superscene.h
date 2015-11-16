@@ -22,26 +22,26 @@ struct Player
 
 class SuperScene: public Scene
 {
-	public:
-		SuperScene();
-		virtual ~SuperScene();
+public:
+	SuperScene();
+	virtual ~SuperScene();
 
-		// must be explicitly called from subclass
-		virtual void update(float deltaTime);
-		void addPlayer(Player* p) { player = p; };
+	// must be explicitly called from subclass
+	virtual void update(float deltaTime);
+	void addPlayer(Player* p) { player = p; };
 
-		static int activescene;
+	static int activescene;
 
-	protected:
-		unsigned int top_layer;
-		std::vector<BasicEntity*> layers;
-		std::vector<Text*> text;
-		Player* player;
-		void moveCamera(float deltaTime);
+protected:
+	unsigned int top_layer;
+	std::vector<BasicEntity*> layers;
+	std::vector<Text*> text;
+	Player* player;
+	void moveCamera(float deltaTime);
 
-	private:
-		BasicEntity* logo;
-		Timer fpstimer;
+private:
+	BasicEntity* logo;
+	Timer fpstimer;
 };
 
 #endif /* SUPERSCENE_H */

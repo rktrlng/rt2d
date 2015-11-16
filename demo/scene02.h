@@ -18,14 +18,14 @@
 
 class Scene02: public SuperScene
 {
-	public:
-		Scene02();
-		virtual ~Scene02();
+public:
+	Scene02();
+	virtual ~Scene02();
 
-		virtual void update(float deltaTime);
+	virtual void update(float deltaTime);
 
-	private:
-		std::vector<BoidEntity*> boids;
+private:
+	std::vector<BoidEntity*> boids;
 };
 
 #endif /* SCENE02_H */

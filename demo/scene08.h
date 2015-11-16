@@ -26,21 +26,21 @@ struct Cell
 
 class Scene08: public SuperScene
 {
-	public:
-		Scene08();
-		virtual ~Scene08();
+public:
+	Scene08();
+	virtual ~Scene08();
 
-		virtual void update(float deltaTime);
+	virtual void update(float deltaTime);
 
-	private:
-		BasicEntity* grid;
-		std::vector<Cell*> cells;
+private:
+	BasicEntity* grid;
+	std::vector<Cell*> cells;
 
-		int gridwidth;
-		int gridheight;
-		int cellwidth;
-		int cellheight;
-		int border;
+	int gridwidth;
+	int gridheight;
+	int cellwidth;
+	int cellheight;
+	int border;
 };
 
 #endif /* SCENE08_H */
