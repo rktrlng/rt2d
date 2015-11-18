@@ -58,7 +58,7 @@ public:
 	/// @param radius the radius of the circle
 	/// @param segments the number of segments
 	/// @return void
-	void generateCircleMesh(int radius, int segments);
+	void generateCircleMesh(int radius, int segments, float uvwidth, float uvheight);
 	/// @brief Create a circle of triangles
 	/// @param radius the radius of the circle
 	/// @param segments the number of segments (6 if hexagon)

@@ -24,6 +24,7 @@ Scene06::Scene06() : SuperScene()
 	int radius = 128;
 	int segments = 6; // 0 = standard square Sprite (Renderer treats this as boolean), 1-2 = non-visible. 3-n do as you would expect.
 	circle_container->addCircleSprite("assets/default.tga", radius, segments); // radius, segments
+	//circle_container->sprite()->uvdim = Point(0.5f, 0.5f); // uvwidth, uvheight
 	circle_container->position = Point2(SWIDTH/4, SHEIGHT/2);
 	layers[0]->addChild(circle_container);
 

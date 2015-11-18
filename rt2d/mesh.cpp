@@ -89,7 +89,7 @@ void Mesh::generateLineMesh(Line* line)
 	this->generateBuffers(vertices, uvs);
 }
 
-void Mesh::generateCircleMesh(int radius, int segments)
+void Mesh::generateCircleMesh(int radius, int segments, float uvwidth, float uvheight)
 {
 	unsigned int step = segments;
 	_numverts = step*3; // n triangles with 3 vertices each
@@ -113,8 +113,8 @@ void Mesh::generateCircleMesh(int radius, int segments)
 		// create second vertex
 		x = cos(deg*DEG_TO_RAD)*radius;
 		y = sin(deg*DEG_TO_RAD)*radius;
-		u = x/radius;
-		v = -y/radius;
+		u = (x/radius) * uvwidth;
+		v = (-y/radius) * uvheight;
 		vertices.push_back(glm::vec3(x, y, 0.0f));
 		uvs.push_back(glm::vec2(u/2+0.5f, v/2+0.5f)); // translate UV's from (-1, +1) to (0, +1)
 
@@ -124,8 +124,8 @@ void Mesh::generateCircleMesh(int radius, int segments)
 		// create third vertex
 		x = cos(deg*DEG_TO_RAD)*radius;
 		y = sin(deg*DEG_TO_RAD)*radius;
-		u = x/radius;
-		v = -y/radius;
+		u = (x/radius) * uvwidth;
+		v = (-y/radius) * uvheight;
 		vertices.push_back(glm::vec3(x, y, 0.0f));
 		uvs.push_back(glm::vec2(u/2+0.5f, v/2+0.5f)); // translate UV's from (-1, +1) to (0, +1)
 		// ####################################################

@@ -150,7 +150,7 @@ Mesh* ResourceManager::getSpriteMesh(int width, int height, float pivotx, float 
 			if (which >= 0) {
 				m->generateSegmentMesh(width/2, circle, which);
 			} else {
-				m->generateCircleMesh(width/2, circle);
+				m->generateCircleMesh(width/2, circle, uvwidth, uvheight);
 			}
 		} else {
 			m->generateSpriteMesh(width, height, pivotx, pivoty, uvwidth, uvheight);
