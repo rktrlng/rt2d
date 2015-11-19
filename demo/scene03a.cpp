@@ -135,40 +135,4 @@ void Scene03a::update(float deltaTime)
 	if (input()->getKey( GLFW_KEY_W )) { amplitude += 50 * deltaTime; }
 	if (input()->getKey( GLFW_KEY_Q )) { radius -= 100 * deltaTime; }
 	if (input()->getKey( GLFW_KEY_E )) { radius += 100 * deltaTime; }
-/*
-	if (input()->getKeyDown( GLFW_KEY_A )) { frequency -= 1; }
-	if (input()->getKeyDown( GLFW_KEY_D )) { frequency += 1; }
-	if (input()->getKeyDown( GLFW_KEY_S )) { amplitude -= 5; }
-	if (input()->getKeyDown( GLFW_KEY_W )) { amplitude += 5; }
-	if (input()->getKeyDown( GLFW_KEY_Q )) { radius -= 10; }
-	if (input()->getKeyDown( GLFW_KEY_E )) { radius += 10; }
-*/
-/*
-	// ###############################################################
-	// Move Camera (Arrow up, down, left, right)
-	// ###############################################################
-	float speed = 600.0f; // 600 units / second
-
-	// Right and Down vector
-	Point2 right = Point2(1, 0);
-	Point2 up = Point2(0, 1);
-	// Direction
-	Vector2 direction = Vector2(0,0);
-
-	if (input()->getKey( GLFW_KEY_UP )) {
-		direction -= up;
-	}
-	if (input()->getKey( GLFW_KEY_DOWN )) {
-		direction += up;
-	}
-	if (input()->getKey( GLFW_KEY_RIGHT )) {
-		direction += right;
-	}
-	if (input()->getKey( GLFW_KEY_LEFT )) {
-		direction -= right;
-	}
-	direction.normalize();
-	direction *= deltaTime * speed;
-	camera()->position += direction;
-*/
 }
