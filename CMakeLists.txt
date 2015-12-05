@@ -146,6 +146,8 @@ add_executable(demo
 	demo/scene03.h
 	demo/scene03a.cpp
 	demo/scene03a.h
+	demo/scene03b.cpp
+	demo/scene03b.h
 	demo/scene04.cpp
 	demo/scene04.h
 	demo/scene05.cpp
