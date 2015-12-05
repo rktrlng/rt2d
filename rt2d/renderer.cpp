@@ -49,6 +49,7 @@ int Renderer::init()
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // MacOS X
 
 	GLFWmonitor* primary = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(primary);

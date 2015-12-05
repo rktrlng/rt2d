@@ -20,7 +20,7 @@ if(UNIX)
 
 	set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
 
-	# valgrind --leak-check=yes ./demo
+	# valgrind --leak-check=full ./demo
 	# ./demo # creates cmon.out
 	# gprof demo gmon.out > analysis.txt
 	#set(CMAKE_CXX_FLAGS "-Wall -pg -std=c++11")

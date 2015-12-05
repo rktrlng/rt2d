@@ -28,8 +28,6 @@
 #include <rt2d/timer.h>
 #include <rt2d/sprite.h>
 #include <rt2d/line.h>
-#include <rt2d/input.h>
-#include <rt2d/camera.h>
 #include <rt2d/vectorx.h>
 
 /// @brief The Entity class is the Base class for the elements in your Scene.
