@@ -141,8 +141,8 @@ void Entity::addSpriteSheet(const std::string& filename, int u, int v)
 void Entity::addGrid(const std::string& filename, int u, int v, int cols, int rows, int sizex, int sizey)
 {
 	deleteSpritebatch();
-	for (int x = 0; x < cols; x++) {
-		for (int y = 0; y < rows; y++) {
+	for (int y = 0; y < cols; y++) {
+		for (int x = 0; x < rows; x++) {
 			Sprite* s = new Sprite();
 			s->useCulling(1);
 			s->spriteposition.x = x * sizex;
