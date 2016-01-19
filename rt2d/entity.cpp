@@ -22,11 +22,11 @@ Entity::Entity()
 
 	_parent = NULL;
 
-	position = Vector2(0.0f, 0.0f);
+	position = Point2(0.0f, 0.0f);
 	rotation = 0.0f;
-	scale = Vector2(1.0f, 1.0f);
+	scale = Point2(1.0f, 1.0f);
 
-	_worldpos = Vector2(0.0f, 0.0f);
+	_worldpos = Point2(0.0f, 0.0f);
 
 	_sprite = NULL;
 	_line = NULL;
