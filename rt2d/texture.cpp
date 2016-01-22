@@ -26,8 +26,10 @@ Texture::Texture()
 	_height = 0;
 	_depth = 3;
 
-	this->_gltexture[0] = 0;
+	_gltexture[0] = 0;
 	_pixelbuffer = NULL;
+
+	_warrantybit = 1;
 
 	//std::cout << "texture created" << std::endl;
 }
@@ -119,12 +121,15 @@ GLuint Texture::loadTGAImage(const std::string& filename, int filter, int wrap)
 	// =================================================================
 	// Check if the image's width and height is a power of 2. No biggie, we can handle it.
 	if ((pixels->width & (pixels->width - 1)) != 0) {
+		_warrantybit = 0;
 		//std::cout << "warning: " << filename << "’s width is not a power of 2" << std::endl;
 	}
 	if ((pixels->height & (pixels->height - 1)) != 0) {
+		_warrantybit = 0;
 		//std::cout << "warning: " << filename << "’s height is not a power of 2" << std::endl;
 	}
 	if (pixels->width != pixels->height) {
+		//_warrantybit = 0;
 		//std::cout << "warning: " << filename << " is not square" << std::endl;
 	}
 	// =================================================================

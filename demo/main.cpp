@@ -37,7 +37,7 @@ int main( void )
 	scenes.push_back(new Scene02a());
 	scenes.push_back(new Scene03());
 	scenes.push_back(new Scene03a());
-	scenes.push_back(new Scene03b());
+	//scenes.push_back(new Scene03b());
 	scenes.push_back(new Scene04());
 	scenes.push_back(new Scene05());
 	scenes.push_back(new Scene06());
