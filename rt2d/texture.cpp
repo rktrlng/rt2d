@@ -246,11 +246,10 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 	// =================================================================
 
 	// generate a number of texturenames (just 1 for now)
-	// if you want to create more, fine. Leave &this->_gltexture[0] on 0 here. Only change the first argument.
-	glGenTextures(1, &this->_gltexture[0]);
+	glGenTextures(1, this->_gltexture);
 
 	// setup first texture (the only one in this case)
-	// if you create more, use this->_gltexture[x], where x is the id of the texturename.
+	// if you created more, use this->_gltexture[x], where x is the id of the texturename.
 	glBindTexture(GL_TEXTURE_2D, this->_gltexture[0]);
 
 	// handle transparency
