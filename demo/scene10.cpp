@@ -131,24 +131,24 @@ void Scene10::update(float deltaTime)
 			int top = pos.y - halfheight;
 			int bottom = pos.y + halfheight;
 
-			/*if ( mousex >= left && mousex < right && mousey >= top && mousey < bottom ) {
+			if ( mousex >= left && mousex < right && mousey >= top && mousey < bottom ) {
 				spritebatch[counter]->color.a = 192;
 
 				std::string postxt = "pos (";
-				postxt.append(std::to_string(x));
+				postxt.append(rt2d::to_string<float>(x));
 				postxt.append(",");
-				postxt.append(std::to_string(y));
+				postxt.append(rt2d::to_string<float>(y));
 				postxt.append(") RGB: (");
-				postxt.append(std::to_string(spritebatch[counter]->color.r));
+				postxt.append(rt2d::to_string<int>(spritebatch[counter]->color.r));
 				postxt.append(",");
-				postxt.append(std::to_string(spritebatch[counter]->color.g));
+				postxt.append(rt2d::to_string<int>(spritebatch[counter]->color.g));
 				postxt.append(",");
-				postxt.append(std::to_string(spritebatch[counter]->color.b));
+				postxt.append(rt2d::to_string<int>(spritebatch[counter]->color.b));
 				postxt.append(")");
 				text[8]->message(postxt);
 			} else {
 				spritebatch[counter]->color.a = 255;
-			}*/
+			}
 			counter++;
 		}
 	}

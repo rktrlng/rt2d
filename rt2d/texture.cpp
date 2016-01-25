@@ -149,18 +149,10 @@ int Texture::writeTGAImage(PixelBuffer* pixels)
 	time_t t = time(NULL);
 
 	std::string filename = "rt2d_";
-	char buffer[80];
-	struct tm * timeinfo;
-	timeinfo = localtime(&t);
-	strftime(buffer,80,"%d-%m-%Y %I:%M:%S",timeinfo);
-	std::string tstr(buffer);
-	filename.append(tstr);
+	filename.append(rt2d::to_string(t));
 	filename.append("_");
-    
-	std::stringstream temp_str;
-	temp_str<<(id);
-	std::string str = temp_str.str();
-	filename.append(str); 
+
+	filename.append(rt2d::to_string(id));
 	id++;
 	filename.append(".tga");
 

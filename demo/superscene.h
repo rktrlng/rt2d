@@ -13,7 +13,6 @@
 #include <vector>
 #include <rt2d/scene.h>
 #include <rt2d/text.h>
-#include <sstream>
 #include "basicentity.h"
 
 struct Player

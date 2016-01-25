@@ -10,8 +10,8 @@
 #ifndef SCENE01_H
 #define SCENE01_H
 
+#include <rt2d/stringutil.h>
 #include <rt2d/timer.h>
-#include <sstream>
 #include "superscene.h"
 #include "basicentity.h"
 
