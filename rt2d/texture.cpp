@@ -149,9 +149,11 @@ int Texture::writeTGAImage(PixelBuffer* pixels)
 	time_t t = time(NULL);
 
 	std::string filename = "rt2d_";
-	filename.append(std::to_string(t));
+	filename.append(rt2d::to_string(t));
 	filename.append("_");
-	filename.append(std::to_string(id)); id++;
+
+	filename.append(rt2d::to_string(id));
+	id++;
 	filename.append(".tga");
 
 	FILE *fp = fopen(filename.c_str(), "w");

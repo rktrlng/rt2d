@@ -46,20 +46,20 @@ void Scene03b::update(float deltaTime)
 	// text
 	// ###############################################################
 	std::string radiustxt = "<Q/E> radius: ";
-	radiustxt.append(std::to_string(radius));
+	radiustxt.append(rt2d::to_string<int>(radius));
 	text[5]->message(radiustxt);
 
 	std::string factortxt = "<W/S> factor: ";
-	factortxt.append(std::to_string(factor));
+	factortxt.append(rt2d::to_string<int>(factor));
 	text[6]->message(factortxt);
 
 	std::string scaletxt = "<W/S> scale: ";
-	scaletxt.append(std::to_string(size));
+	scaletxt.append(rt2d::to_string<float>(size));
 	text[7]->message(scaletxt);
 
 	text[8]->message("<R> reset");
 
-	// ###############################################################
+	// ######################################################c#########
 	// frequency amplitude
 	// ###############################################################
 	if (input()->getKeyDown( GLFW_KEY_R )) { factor = 7; size = 1.0f; radius = 225; makeLines(); }

@@ -100,9 +100,9 @@ void Scene01::update(float deltaTime)
 	int mousex = input()->getMouseX();
 	int mousey = input()->getMouseY();
 	std::string cursortxt = "cursor (";
-	cursortxt.append(std::to_string(mousex));
+	cursortxt.append(rt2d::to_string<int>(mousex));
 	cursortxt.append(",");
-	cursortxt.append(std::to_string(mousey));
+	cursortxt.append(rt2d::to_string<int>(mousey));
 	cursortxt.append(")");
 	text[9]->message(cursortxt);
 

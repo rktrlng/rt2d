@@ -6,6 +6,7 @@
 #ifndef SCENE03B_H
 #define SCENE03B_H
 
+#include <rt2d/stringutil.h>
 #include "superscene.h"
 #include "basicentity.h"
 

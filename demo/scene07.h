@@ -11,6 +11,7 @@
 #define SCENE07_H
 
 #include <deque>
+#include <rt2d/stringutil.h>
 #include <rt2d/timer.h>
 #include "superscene.h"
 #include "basicentity.h"

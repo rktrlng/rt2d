@@ -11,6 +11,7 @@
 #define SCENE08_H
 
 #include <vector>
+#include <rt2d/stringutil.h>
 #include <rt2d/timer.h>
 #include "superscene.h"
 #include "basicentity.h"
