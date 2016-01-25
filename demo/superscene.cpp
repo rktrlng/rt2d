@@ -100,7 +100,7 @@ void SuperScene::update(float deltaTime)
 		}
 	}
 	std::string clicktxt = "click ";
-	clicktxt.append(std::to_string(player->mouseclicks));
+	clicktxt.append("fixed next commit");
 	text[10]->message(clicktxt);
 
 	// ###############################################################
@@ -122,7 +122,7 @@ void SuperScene::update(float deltaTime)
 	static int framecounter = 0;
 	if (fpstimer.seconds() > 1.0f) {
 		std::string fpstxt = "FPS: ";
-		fpstxt.append(std::to_string(framecounter));
+		fpstxt.append("fixed next commit");
 		text[1]->message(fpstxt);
 		framecounter = 0;
 		fpstimer.start();

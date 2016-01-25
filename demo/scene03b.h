@@ -6,6 +6,7 @@
 #ifndef SCENE03B_H
 #define SCENE03B_H
 
+#include <sstream>
 #include "superscene.h"
 #include "basicentity.h"
 

@@ -45,17 +45,26 @@ void Scene03b::update(float deltaTime)
 	// ###############################################################
 	// text
 	// ###############################################################
+	std::stringstream temp_str_radius;
+	temp_str_radius<<((int) radius);
+	std::string str_radius = temp_str_radius.str();
 	std::string radiustxt = "<Q/E> radius: ";
-	radiustxt.append(std::to_string(radius));
+	radiustxt.append(str_radius);
 	text[5]->message(radiustxt);
 
-	std::string factortxt = "<W/S> factor: ";
-	factortxt.append(std::to_string(factor));
-	text[6]->message(factortxt);
+	std::stringstream temp_str_amp;
+	temp_str_amp<<((int) radius);
+	std::string str_amp = temp_str_amp.str();
+	std::string amplitudetxt = "<W/S> amplitude: ";
+	amplitudetxt.append(str_amp);
+	text[6]->message(amplitudetxt);
 
-	std::string scaletxt = "<W/S> scale: ";
-	scaletxt.append(std::to_string(size));
-	text[7]->message(scaletxt);
+	std::stringstream temp_str_freq;
+	temp_str_freq<<((int) radius);
+	std::string str_freq = temp_str_freq.str();
+	std::string frequencytxt = "<A/D> frequency: ";
+	frequencytxt.append(str_freq);
+	text[7]->message(frequencytxt);
 
 	text[8]->message("<R> reset");
 

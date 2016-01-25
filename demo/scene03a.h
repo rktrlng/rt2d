@@ -8,6 +8,7 @@
 
 #include "superscene.h"
 #include "basicentity.h"
+#include "sstream"
 
 class Scene03a: public SuperScene
 {

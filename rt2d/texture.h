@@ -15,7 +15,9 @@
 #define TEXTURE_H
 
 #include <string>
-
+#include <time.h>   
+#include <ctime>
+#include <sstream>
 #include <glfw3.h>
 
 /// @brief defines a PixelBuffer
@@ -166,5 +168,6 @@ private:
 		}
 	};
 };
+
 
 #endif

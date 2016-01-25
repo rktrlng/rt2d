@@ -100,9 +100,15 @@ void Scene01::update(float deltaTime)
 	int mousex = input()->getMouseX();
 	int mousey = input()->getMouseY();
 	std::string cursortxt = "cursor (";
-	cursortxt.append(std::to_string(mousex));
+	std::stringstream temp_strx;
+	temp_strx<<(mousex);
+	std::string strx = temp_strx.str();
+	cursortxt.append(strx);
 	cursortxt.append(",");
-	cursortxt.append(std::to_string(mousey));
+	std::stringstream temp_stry;
+	temp_stry<<(mousey);
+	std::string stry = temp_stry.str();
+	cursortxt.append(stry);
 	cursortxt.append(")");
 	text[9]->message(cursortxt);
 

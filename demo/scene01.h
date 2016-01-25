@@ -11,6 +11,7 @@
 #define SCENE01_H
 
 #include <rt2d/timer.h>
+#include <sstream>
 #include "superscene.h"
 #include "basicentity.h"
 

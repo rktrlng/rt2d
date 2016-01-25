@@ -102,12 +102,18 @@ void Scene07::update(float deltaTime)
 
 		// update message
 		std::string msg = "Particles: ";
-		msg.append(std::to_string(s));
+		std::stringstream temp_str_s;
+		temp_str_s<<((int) s);
+		std::string str_s = temp_str_s.str();
+		msg.append(str_s);
 		text[6]->message(msg);
 
 		if (fpstimer.seconds() > 1.0f - deltaTime) {
 			std::string fpstxt = "FPS: ";
-			fpstxt.append(std::to_string(framecounter));
+			std::stringstream temp_str_fc;
+			temp_str_fc<<((int) framecounter);
+			std::string str_fc = temp_str_fc.str();
+			fpstxt.append(str_fc);
 			fpstxt.append(" (capped)");
 			framecounter = 0;
 			text[7]->message(fpstxt);
