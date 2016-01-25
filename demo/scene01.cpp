@@ -116,8 +116,8 @@ void Scene01::update(float deltaTime)
 	// alpha child1_entity + child2_entity
 	// ###############################################################
 	static float counter = 0;
-	child1_entity->sprite()->color.a = abs(sin(counter)*255);
-	child2_entity->sprite()->color.a = abs(cos(counter)*255);
+	child1_entity->sprite()->color.a = std::abs(sin(counter)*255);
+	child2_entity->sprite()->color.a = std::abs(cos(counter)*255);
 	counter+=deltaTime/2; if (counter > TWO_PI) { counter = 0; }
 
 	// ###############################################################
