@@ -133,6 +133,8 @@ int Sprite::frame(int f)
 
 	if (f >= w*h) {
 		_frame = 0;
+		uvoffset.x = 0;
+		uvoffset.y = 0;
 		return _frame;
 	}
 
