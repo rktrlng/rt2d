@@ -16,6 +16,7 @@
 
 // Include GLFW
 #include <glfw3.h>
+#include <rt2d/pointx.h>
 
 /*
 #define 	GLFW_KEY_UNKNOWN   -1
@@ -160,11 +161,21 @@ public:
 	/// @brief get Y position of the Mouse
 	/// @return _mouseY as double
 	double getMouseY() { return _mouseY; }
+
+	/// @brief get position of the Mouse
+	/// @return _mouseY as Point2()
+	Point2 getMousePos() { return Point2(getMouseX(), getMouseY()); }
+
 	/// @brief Set Mouse cursor to a certain position
 	/// @param[in] x The X position
 	/// @param[in] y The Y position
 	/// @return void
 	void setMouse(double x, double y) { glfwSetCursorPos(_window, x, y); };
+
+	/// @brief Set Mouse cursor to a certain position
+	/// @param[in] newPos The new position as Point2()
+	/// @return void
+	void setMouse(Point2 newPos) { glfwSetCursorPos(_window, newPos.x, newPos.y); };
 
 private:
 	GLFWwindow* _window; ///< @brief GLFWwindow* _window

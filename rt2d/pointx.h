@@ -15,6 +15,7 @@
 #define POINT_H_
 
 #include <iostream>
+#include <sstream>
 
 /**
  * @brief The Point_t class is a helper class that makes it easier to define points in space.
@@ -274,6 +275,9 @@ public:
 	 * boolean. true if Points are different
 	 */
 	bool operator!=(const Point_t<T>& other) const;
+
+	std::string to_string();
+	std::string to_string(bool point2);
 };
 
 // =================================================
@@ -568,6 +572,29 @@ template <class T>
 bool Point_t<T>::operator!=(const Point_t<T>& other) const {
 	return !(*this == other);
 }
+
+template <class T>
+std::string Point_t<T>::to_string(){
+	return to_string(false);
+}
+
+template <class T>
+std::string Point_t<T>::to_string(bool point2){
+	std::stringstream ss;
+	ss << "(";
+	ss << x;
+	ss << ", ";
+	ss << y;
+	if(!point2){
+		ss << ", ";
+		ss << x;
+	}
+	ss << ")";
+
+	return ss.str();
+}
+
+
 
 // iostream << and >> overloader
 /**

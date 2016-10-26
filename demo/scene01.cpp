@@ -97,13 +97,10 @@ void Scene01::update(float deltaTime)
 	// ###############################################################
 	// Mouse cursor in screen coordinates
 	// ###############################################################
-	int mousex = input()->getMouseX();
-	int mousey = input()->getMouseY();
-	std::string cursortxt = "cursor (";
-	cursortxt.append(rt2d::to_string<int>(mousex));
-	cursortxt.append(",");
-	cursortxt.append(rt2d::to_string<int>(mousey));
-	cursortxt.append(")");
+	Point2 mousePos = input()->getMousePos();
+
+	std::string cursortxt = "cursor ";
+	cursortxt.append(mousePos.to_string(true));
 	text[9]->message(cursortxt);
 
 	// ###############################################################

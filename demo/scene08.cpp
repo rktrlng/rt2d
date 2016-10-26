@@ -83,13 +83,10 @@ void Scene08::update(float deltaTime)
 	// - account for camera offset (center of the screen)
 	// - update mouse cursor text
 	// ###############################################################
-	int mousex = input()->getMouseX() + camera()->position.x - SWIDTH/2;
-	int mousey = input()->getMouseY() + camera()->position.y - SHEIGHT/2;
-	std::string cursortxt = "cursor (";
-	cursortxt.append(rt2d::to_string<int>(mousex));
-	cursortxt.append(",");
-	cursortxt.append(rt2d::to_string<int>(mousey));
-	cursortxt.append(")");
+	Point2 mousePos = input()->getMousePos() + Point2(camera()->position.x - SWIDTH/2, camera()->position.y - SHEIGHT/2);
+
+	std::string cursortxt = "cursor ";
+	cursortxt.append(mousePos.to_string(true));
 	text[9]->message(cursortxt);
 
 	// ###############################################################
@@ -107,7 +104,7 @@ void Scene08::update(float deltaTime)
 		int top = pos.y - halfheight;
 		int bottom = pos.y + halfheight;
 
-		if ( mousex > left && mousex < right && mousey > top && mousey < bottom ) {
+		if ( mousePos.x > left && mousePos.y < right && mousePos.y > top && mousePos.y < bottom ) {
 			c->entity->sprite()->color.a = 127;
 			if (input()->getMouseDown( 0 )) {
 				c->entity->sprite()->color = RGBAColor(192, 192, 192, 255);
