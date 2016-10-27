@@ -3,8 +3,6 @@
  *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
- * - Copyright [year] [your name] <you@yourhost.com>
- *   - [description]
  *
  * Algorithm from: http://devmag.org.za/2009/04/25/perlin-noise/
  */

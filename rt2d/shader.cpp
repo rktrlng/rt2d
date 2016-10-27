@@ -3,8 +3,6 @@
  *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
- * - Copyright [year] [your name] <you@yourhost.com>
- *   - [description]
  *
  * loadShaders() code originally from: http://www.opengl-tutorial.org
  */

@@ -7,8 +7,6 @@
  *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
- * - Copyright [year] [your name] <you@yourhost.com>
- *   - [description]
  */
 
 #ifndef UTIL_H_
@@ -56,5 +54,3 @@ long map(long x, long in_min, long in_max, long out_min, long out_max);
 #endif
 
 #endif // UTIL_H_
-
-
