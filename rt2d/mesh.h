@@ -57,6 +57,8 @@ public:
 	/// @brief Create a circle of triangles
 	/// @param radius the radius of the circle
 	/// @param segments the number of segments
+	/// @param uvwidth texture size
+	/// @param uvheight texture size
 	/// @return void
 	void generateCircleMesh(int radius, int segments, float uvwidth, float uvheight);
 	/// @brief Create a circle of triangles
