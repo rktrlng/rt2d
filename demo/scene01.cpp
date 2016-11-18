@@ -3,8 +3,6 @@
  *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *     - Initial commit
- * - Copyright 2015 Your Name <you@yourhost.com>
- *     - What you did
  */
 
 #include "scene01.h"

@@ -1,7 +1,8 @@
 /**
- * This file is part of RT2D, a 2D OpenGL framework.
+ * This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
  *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
+ *     - Initial commit
  */
 #ifndef SCENE03A_H
 #define SCENE03A_H
