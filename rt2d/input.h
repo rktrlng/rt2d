@@ -15,6 +15,8 @@
 // Include GLFW
 #include <glfw3.h>
 
+#include <config.h>
+
 /*
 #define 	GLFW_KEY_UNKNOWN   -1
 #define 	GLFW_KEY_SPACE   32
@@ -164,6 +166,14 @@ public:
 	/// @return void
 	void setMouse(double x, double y) { glfwSetCursorPos(_window, x, y); };
 
+	// window size
+	/// @brief get width of the window
+	/// @return _windowWidth as int
+	int getWindowWidth() { return _windowWidth; }
+	/// @brief get height of the window
+	/// @return _windowHeight as int
+	int getWindowHeight() { return _windowHeight; }
+
 private:
 	GLFWwindow* _window; ///< @brief GLFWwindow* _window
 	void _handleKey(int key); ///< @brief update internal array of keys
@@ -179,6 +189,9 @@ private:
 
 	double _mouseX; ///< @brief X position of the Mouse
 	double _mouseY; ///< @brief Y position of the Mouse
+
+	int _windowWidth; ///< @brief Width of the window
+	int _windowHeight; ///< @brief Height of the window
 };
 
 #endif /* INPUT_H */

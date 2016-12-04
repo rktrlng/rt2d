@@ -98,7 +98,7 @@ int Renderer::init()
 		_uberShader =_resman.getShader(SPRITEVERTEXSHADER, SPRITEFRAGMENTSHADER);
 		printf("Renderer using uberShader\n");
 	}
-
+	
 	printf("Renderer::init() done\n");
 
 	return 0;
@@ -106,6 +106,10 @@ int Renderer::init()
 
 void Renderer::renderScene(Scene* scene)
 {
+
+	// Set the glViewport to the width and height of the window.
+	glViewport(0, 0, scene->input()->getWindowWidth(), scene->input()->getWindowHeight());
+
 	// Clear the screen
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
