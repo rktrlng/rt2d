@@ -35,7 +35,7 @@ Input::~Input()
 
 void Input::updateInput(GLFWwindow* _window)
 {
-	_window = w;
+	this->_window = _window;
 
 	glfwPollEvents();
 
@@ -49,7 +49,7 @@ void Input::updateInput(GLFWwindow* _window)
 		_handleKey(i);
 	}
 	//  window size
-	glfwGetWindowSize(w, &_windowWidth, &_windowHeight);
+	glfwGetWindowSize(_window, &_windowWidth, &_windowHeight);
 
 	glfwGetCursorPos(_window, &_mouseX, &_mouseY);
 

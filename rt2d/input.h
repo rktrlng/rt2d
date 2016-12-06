@@ -108,7 +108,7 @@ public:
 	virtual ~Input(); ///< @brief Destructor of the Input
 
 	/// @brief updates the input from Keyboard and Mouse.
-	/// @param[in] w GLFWwindow*
+	/// @param[in] _window GLFWwindow*
 	void updateInput(GLFWwindow* _window);
 
 	// keys while down
