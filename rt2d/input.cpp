@@ -33,7 +33,7 @@ Input::~Input()
 
 }
 
-void Input::updateInput(GLFWwindow* w)
+void Input::updateInput(GLFWwindow* _window)
 {
 	_window = w;
 

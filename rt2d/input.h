@@ -109,7 +109,7 @@ public:
 
 	/// @brief updates the input from Keyboard and Mouse.
 	/// @param[in] w GLFWwindow*
-	void updateInput(GLFWwindow* w);
+	void updateInput(GLFWwindow* _window);
 
 	// keys while down
 	/// @brief Is this key pressed?
