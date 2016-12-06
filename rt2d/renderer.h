@@ -7,6 +7,7 @@
  *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
+ *   - <meruiden> scaling of window
  */
 
 #ifndef RENDERER_H

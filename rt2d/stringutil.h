@@ -7,9 +7,8 @@
  *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
- *
- * Work around MinGW bug. Thanks Viktor [VZout].
- * https://gcc.gnu.org/bugzilla/show_bug.cgi?id=52015
+ *   - <VZout> Work around MinGW bug.
+ *      - https://gcc.gnu.org/bugzilla/show_bug.cgi?id=52015
  */
 
 #ifndef STRINGUTIL_H_

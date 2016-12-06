@@ -3,6 +3,7 @@
  *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
+ *   - <meruiden> scaling of window
  */
 
 #include <iostream>
@@ -33,9 +34,9 @@ Input::~Input()
 
 }
 
-void Input::updateInput(GLFWwindow* _window)
+void Input::updateInput(GLFWwindow* w)
 {
-	this->_window = _window;
+	_window = w;
 
 	glfwPollEvents();
 
@@ -61,8 +62,6 @@ void Input::updateInput(GLFWwindow* _window)
 	for(i=0; i<GLFW_MOUSE_BUTTON_LAST;i++) {
 		_handleMouse(i);
 	}
-
-
 }
 
 void Input::_handleMouse(int button)

@@ -7,6 +7,7 @@
  *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
+ *   - <meruiden> scaling of window
  */
 
 #ifndef INPUT_H
@@ -108,8 +109,8 @@ public:
 	virtual ~Input(); ///< @brief Destructor of the Input
 
 	/// @brief updates the input from Keyboard and Mouse.
-	/// @param[in] _window GLFWwindow*
-	void updateInput(GLFWwindow* _window);
+	/// @param[in] w GLFWwindow*
+	void updateInput(GLFWwindow* w);
 
 	// keys while down
 	/// @brief Is this key pressed?
