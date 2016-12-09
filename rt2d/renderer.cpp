@@ -107,9 +107,13 @@ int Renderer::init()
 
 void Renderer::renderScene(Scene* scene)
 {
+
+	#ifndef __APPLE__
+	// Since apple does this automatically. This will cause some bugs where the viewport gets very small.
+
 	// Set the glViewport to the width and height of the window.
 	glViewport(0, 0, scene->input()->getWindowWidth(), scene->input()->getWindowHeight());
-
+	#endif
 	// Clear the screen
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
