@@ -17,6 +17,7 @@
 #include <ctime>
 #include <glfw3.h>
 #include "stringutil.h"
+#include "color.h"
 
 /// @brief defines a PixelBuffer
 struct PixelBuffer
@@ -87,6 +88,19 @@ struct PixelBuffer
 
 	/// @brief destructor
 	~PixelBuffer() { delete[] data; data = 0; /*std::cout << "delete PixelBuffer" << std::endl;*/ }
+
+	void setPixel(int x, int y, RGBAColor color)
+	{
+		int start = ((y*this->width) + x) * this->bitdepth;
+		if (start > this->width * this->height * this->bitdepth || start < 0) { return; }
+
+		this->data[start+0] = color.r;
+		this->data[start+1] = color.g;
+		this->data[start+2] = color.b;
+		if (this->bitdepth == 4) {
+			this->data[start+3] = color.a;
+		}
+	}
 
 	/// @brief destroy the pixel data
 	void destroy() { delete[] data; data = 0; /*std::cout << "destroy PixelBuffer" << std::endl;*/ }

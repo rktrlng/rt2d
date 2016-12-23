@@ -38,7 +38,7 @@ Scene12::Scene12() : SuperScene()
 	// clear to background color
 	for (long y=0; y<framebuffer->height; y++) {
 		for (long x=0; x<framebuffer->width; x++) {
-			setPixel(x, y, backgroundcolor);
+			framebuffer->setPixel(x, y, backgroundcolor);
 		}
 	}
 
@@ -172,31 +172,14 @@ void Scene12::update(float deltaTime)
 	text[10]->message(""); // clear player click count message
 
 	// ###############################################################
-	// move sprite head
-	// ###############################################################
-	if (input()->getKeyDown( GLFW_KEY_UP )) {
-		//sprite[0].velocity = UP;
-	}
-	if (input()->getKeyDown( GLFW_KEY_DOWN )) {
-		//sprite[0].velocity = DOWN;
-	}
-	if (input()->getKeyDown( GLFW_KEY_LEFT )) {
-		//sprite[0].velocity = LEFT;
-	}
-	if (input()->getKeyDown( GLFW_KEY_RIGHT )) {
-		//sprite[0].velocity = RIGHT;
-	}
-
-	// ###############################################################
 	// Update and draw only when it's time
 	// ###############################################################
 	float tsec = timer.seconds();
 	if (tsec > 0.1 - deltaTime) { // 0.1 is 100 fps
-
 		// clear to background color
 		for (long y=0; y<framebuffer->height; y++) {
 			for (long x=0; x<framebuffer->width; x++) {
-				setPixel(x, y, backgroundcolor);
+				framebuffer->setPixel(x, y, backgroundcolor);
 			}
 		}
 
@@ -229,32 +212,10 @@ void Scene12::update(float deltaTime)
 	}
 }
 
-
-void Scene12::setPixel(int x, int y, RGBAColor color)
-{
-	int start = ((y*framebuffer->width) + x) * framebuffer->bitdepth;
-	if (start > framebuffer->width * framebuffer->height * framebuffer->bitdepth || start < 0) { return; }
-
-	framebuffer->data[start+0] = color.r;
-	framebuffer->data[start+1] = color.g;
-	framebuffer->data[start+2] = color.b;
-	if (framebuffer->bitdepth == 4) {
-		framebuffer->data[start+3] = color.a;
-	}
-}
-
 void Scene12::drawSprite(const PixelSprite& spr)
 {
 	size_t s = spr.pixels.size();
 	for (size_t i = 0; i < s; i++) {
-		setPixel(spr.pixels[i].position.x + spr.position.x, spr.pixels[i].position.y + spr.position.y, spr.pixels[i].color);
-	}
-}
-
-void Scene12::clearSprite(const PixelSprite& spr)
-{
-	size_t s = spr.pixels.size();
-	for (size_t i = 0; i < s; i++) {
-		setPixel(spr.pixels[i].position.x + spr.position.x, spr.pixels[i].position.y + spr.position.y, backgroundcolor);
+		framebuffer->setPixel(spr.pixels[i].position.x + spr.position.x, spr.pixels[i].position.y + spr.position.y, spr.pixels[i].color);
 	}
 }

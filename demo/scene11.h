@@ -42,7 +42,6 @@ private:
 	PixelBuffer* framebuffer;
 	Timer timer;
 
-	void setPixel(int x, int y, RGBAColor color);
 	void clearSnake();
 	void addBlockToSnake();
 	void placeTarget();

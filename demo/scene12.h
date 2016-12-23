@@ -58,9 +58,7 @@ private:
 	PixelBuffer* framebuffer;
 	Timer timer;
 
-	void setPixel(int x, int y, RGBAColor color);
 	void drawSprite(const PixelSprite& spr);
-	void clearSprite(const PixelSprite& spr);
 };
 
 #endif /* SCENE12_H */

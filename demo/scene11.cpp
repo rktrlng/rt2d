@@ -38,7 +38,7 @@ Scene11::Scene11() : SuperScene()
 	// clear to background color
 	for (long y=0; y<framebuffer->height; y++) {
 		for (long x=0; x<framebuffer->width; x++) {
-			setPixel(x, y, backgroundcolor);
+			framebuffer->setPixel(x, y, backgroundcolor);
 		}
 	}
 
@@ -98,7 +98,7 @@ void Scene11::update(float deltaTime)
 
 		// clear snake to background
 		for (int i=0; i<s-1; i++) {
-			setPixel(snake[i].position.x, snake[i].position.y, backgroundcolor);
+			framebuffer->setPixel(snake[i].position.x, snake[i].position.y, backgroundcolor);
 		}
 
 		// update each block in snake
@@ -115,12 +115,12 @@ void Scene11::update(float deltaTime)
 		// draw each block in snake
 		for (int i=0; i<s-1; i++) {
 			// color pixels in framebuffer
-			setPixel(snake[i].position.x, snake[i].position.y, snake[i].color );
+			framebuffer->setPixel(snake[i].position.x, snake[i].position.y, snake[i].color );
 		}
 
 		// draw target
-		setPixel(target.position.x, target.position.y, backgroundcolor);
-		setPixel(target.position.x, target.position.y, target.color);
+		framebuffer->setPixel(target.position.x, target.position.y, backgroundcolor);
+		framebuffer->setPixel(target.position.x, target.position.y, target.color);
 
 		// head hits target!
 		if (target.position == snake[0].position) {
@@ -174,7 +174,7 @@ void Scene11::addBlockToSnake()
 void Scene11::placeTarget()
 {
 	// find a new spot for target (don't place it inside the snake)
-	setPixel(target.position.x, target.position.y, backgroundcolor);
+	framebuffer->setPixel(target.position.x, target.position.y, backgroundcolor);
 	Point_t<int> targetPos = snake[0].position; // force a better spot
 	while (!positionIsInSnake(targetPos)) {
 		targetPos = Point_t<int>(rand()%framebuffer->width, rand()%framebuffer->height);
@@ -194,19 +194,6 @@ bool Scene11::positionIsInSnake(Point_t<int> testPoint)
 	return true;
 }
 
-void Scene11::setPixel(int x, int y, RGBAColor color)
-{
-	int start = ((y*framebuffer->width) + x) * framebuffer->bitdepth;
-	if (start > framebuffer->width * framebuffer->height * framebuffer->bitdepth || start < 0) { return; }
-
-	framebuffer->data[start+0] = color.r;
-	framebuffer->data[start+1] = color.g;
-	framebuffer->data[start+2] = color.b;
-	if (framebuffer->bitdepth == 4) {
-		framebuffer->data[start+3] = color.a;
-	}
-}
-
 void Scene11::clearSnake()
 {
 	int s = snake.size();
@@ -214,7 +201,7 @@ void Scene11::clearSnake()
 	// clear each snake block from the framebuffer
 	for (int i = 0; i < s; i++) {
 		// clear to background
-		setPixel(snake[i].position.x, snake[i].position.y, backgroundcolor);
+		framebuffer->setPixel(snake[i].position.x, snake[i].position.y, backgroundcolor);
 	}
 	snake.clear();
 
