@@ -175,7 +175,7 @@ void Scene12::update(float deltaTime)
 	// Update and draw only when it's time
 	// ###############################################################
 	float tsec = timer.seconds();
-	if (tsec > 0.1 - deltaTime) { // 0.1 is 100 fps
+	if (tsec > 0.1 - deltaTime) { // 0.1 is 10 fps
 		// clear to background color
 		for (long y=0; y<framebuffer->height; y++) {
 			for (long x=0; x<framebuffer->width; x++) {
@@ -190,8 +190,7 @@ void Scene12::update(float deltaTime)
 
 		drawSprite(spr);
 
-		int range = 3;
-		Vector2 vel = Vector2((rand()%3)-range/2, (rand()%range)-range/2);
+		Vector2 vel = Vector2((rand()%3)-1, (rand()%3)-1);
 		if (bob.position.x < 0) {
 			bob.position.x = framebuffer->width / 2;
 		}
