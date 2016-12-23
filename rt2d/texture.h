@@ -89,6 +89,11 @@ struct PixelBuffer
 	/// @brief destructor
 	~PixelBuffer() { delete[] data; data = 0; /*std::cout << "delete PixelBuffer" << std::endl;*/ }
 
+	/// @brief set a pixel in the buffer to a certain color
+	/// @param x the x coordinate of the pixel
+	/// @param y the y coordinate of the pixel
+	/// @param color RGBAColor of the pixel
+	/// @return void
 	void setPixel(int x, int y, RGBAColor color)
 	{
 		int start = ((y*this->width) + x) * this->bitdepth;

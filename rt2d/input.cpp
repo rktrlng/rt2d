@@ -3,7 +3,7 @@
  *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
- *   - <meruiden> scaling of window
+ *   - [meruiden] scaling of window
  */
 
 #include <iostream>

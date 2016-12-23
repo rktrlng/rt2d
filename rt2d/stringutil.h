@@ -7,7 +7,7 @@
  *
  * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
  *   - Initial commit
- *   - <VZout> Work around MinGW bug.
+ *   - [VZout] Work around MinGW bug.
  *      - https://gcc.gnu.org/bugzilla/show_bug.cgi?id=52015
  */
 
