@@ -17,7 +17,7 @@ Scene12::Scene12() : SuperScene()
 	timer.start();
 
 	// create Canvas
-	int pixelsize = 16;
+	int pixelsize = 8;
 	int border = 0; // multiples of (at least) 4
 	canvas = new BasicEntity();
 	canvas->position = Point2(SWIDTH/2, SHEIGHT/2);
@@ -44,13 +44,13 @@ Scene12::Scene12() : SuperScene()
 
 	RGBAColor color = BLUE;
 	// left
-	sprite.pixels.push_back(Pixel(Point_t<int>(-3, -3), color));
+	sprite.pixels.push_back(Pixel(Point_t<int>(-3, -3), RED));
 	sprite.pixels.push_back(Pixel(Point_t<int>(-3, -2), color));
 	sprite.pixels.push_back(Pixel(Point_t<int>(-3, -1), color));
 	sprite.pixels.push_back(Pixel(Point_t<int>(-3,  0), color));
 	sprite.pixels.push_back(Pixel(Point_t<int>(-3,  1), color));
 	sprite.pixels.push_back(Pixel(Point_t<int>(-3,  2), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>(-3,  3), color));
+	sprite.pixels.push_back(Pixel(Point_t<int>(-3,  3), GREEN));
 
 	// top
 	sprite.pixels.push_back(Pixel(Point_t<int>(-2,  3), color));
@@ -58,10 +58,10 @@ Scene12::Scene12() : SuperScene()
 	sprite.pixels.push_back(Pixel(Point_t<int>( 0,  3), color));
 	sprite.pixels.push_back(Pixel(Point_t<int>( 1,  3), color));
 	sprite.pixels.push_back(Pixel(Point_t<int>( 2,  3), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 3,  3), color));
+	sprite.pixels.push_back(Pixel(Point_t<int>( 3,  3), MAGENTA));
 
 	// right
-	sprite.pixels.push_back(Pixel(Point_t<int>( 3, -3), color));
+	sprite.pixels.push_back(Pixel(Point_t<int>( 3, -3), YELLOW));
 	sprite.pixels.push_back(Pixel(Point_t<int>( 3, -2), color));
 	sprite.pixels.push_back(Pixel(Point_t<int>( 3, -1), color));
 	sprite.pixels.push_back(Pixel(Point_t<int>( 3,  0), color));
