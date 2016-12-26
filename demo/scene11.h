@@ -42,7 +42,7 @@ private:
 	PixelBuffer* framebuffer;
 	Timer timer;
 
-	void clearSnake();
+	void resetSnake();
 	void addBlockToSnake();
 	void placeTarget();
 	bool positionIsInSnake(Point_t<int> testPoint);

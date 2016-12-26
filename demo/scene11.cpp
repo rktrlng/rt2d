@@ -43,7 +43,7 @@ Scene11::Scene11() : SuperScene()
 	}
 
 	// clean up and reset
-	clearSnake();
+	resetSnake();
 }
 
 
@@ -92,12 +92,13 @@ void Scene11::update(float deltaTime)
 		// count the snake blocks
 		int s = snake.size();
 
-		std::string scoretxt = "score ";
-		scoretxt.append(rt2d::to_string<int>(s-2));
+		int score = s-1;
+		std::string scoretxt = "score: ";
+		scoretxt.append(rt2d::to_string<int>(score));
 		text[2]->message(scoretxt);
 
 		// clear snake to background
-		for (int i=0; i<s-1; i++) {
+		for (int i=0; i<s; i++) {
 			framebuffer->setPixel(snake[i].position.x, snake[i].position.y, backgroundcolor);
 		}
 
@@ -113,7 +114,7 @@ void Scene11::update(float deltaTime)
 		}
 
 		// draw each block in snake
-		for (int i=0; i<s-1; i++) {
+		for (int i=0; i<s; i++) {
 			// color pixels in framebuffer
 			framebuffer->setPixel(snake[i].position.x, snake[i].position.y, snake[i].color );
 		}
@@ -130,8 +131,8 @@ void Scene11::update(float deltaTime)
 		// check self collisions
 		for (int i = 0; i < s-1; i++) {
 			if ( snake[0].position == snake[i+1].position ) {
-				std::cout << "self collision!! score " << s-2 << std::endl;
-				clearSnake();
+				std::cout << "self collision!! score " << score << std::endl;
+				resetSnake();
 			}
 		}
 
@@ -141,8 +142,8 @@ void Scene11::update(float deltaTime)
 			snake[0].position.y < 0 ||
 			snake[0].position.y > framebuffer->height-1
 		) {
-			std::cout << "boundaries collision!! score " << s-2 << std::endl;
-			clearSnake();
+			std::cout << "boundaries collision!! score " << score << std::endl;
+			resetSnake();
 		}
 
 		timer.start();
@@ -152,18 +153,12 @@ void Scene11::update(float deltaTime)
 
 void Scene11::addBlockToSnake()
 {
+	// snake always has a head, so s is at least 1
 	int snakesize = snake.size();
 	Block b;
-	if (snakesize > 0) {
-		// get direction from 'front' neighbour
-		b.velocity = snake[snakesize-1].velocity;
-		b.position = snake[snakesize-1].position - b.velocity;
-	} else {
-		// the snake doesn't exist yet. Middle of the screen, move to the right.
-		b.position = Point_t<int>(framebuffer->width/2, framebuffer->height/2);
-		b.velocity = RIGHT;
-	}
-
+	// get direction from 'front' neighbour
+	b.velocity = snake[snakesize-1].velocity;
+	b.position = snake[snakesize-1].position - b.velocity;
 	b.color = BLUE;
 	// add it to the list of blocks
 	snake.push_back(b);
@@ -176,7 +171,7 @@ void Scene11::placeTarget()
 	// find a new spot for target (don't place it inside the snake)
 	framebuffer->setPixel(target.position.x, target.position.y, backgroundcolor);
 	Point_t<int> targetPos = snake[0].position; // force a better spot
-	while (!positionIsInSnake(targetPos)) {
+	while (positionIsInSnake(targetPos)) {
 		targetPos = Point_t<int>(rand()%framebuffer->width, rand()%framebuffer->height);
 	}
 	target.position = targetPos;
@@ -188,13 +183,13 @@ bool Scene11::positionIsInSnake(Point_t<int> testPoint)
 	int s = snake.size();
 	for (int i = 0; i < s; i++) {
 		if (snake[i].position == testPoint) {
-			return false;
+			return true;
 		}
 	}
-	return true;
+	return false;
 }
 
-void Scene11::clearSnake()
+void Scene11::resetSnake()
 {
 	int s = snake.size();
 
@@ -205,10 +200,12 @@ void Scene11::clearSnake()
 	}
 	snake.clear();
 
-	// reset the field
-	addBlockToSnake();
-	addBlockToSnake();
-	snake[0].color = RED;
+	// create 'head'
+	Block b;
+	b.position = Point_t<int>(framebuffer->width/2, framebuffer->height/2);
+	b.velocity = RIGHT;
+	b.color = RED;
+	snake.push_back(b);
 
 	placeTarget();
 }
