@@ -88,7 +88,7 @@ void Scene11::update(float deltaTime)
 	// Update and draw only when it's time
 	// ###############################################################
 	float tsec = timer.seconds();
-	if (tsec > 0.1 - deltaTime) { // 0.1 is 100 fps
+	if (tsec > 0.1 - deltaTime) { // 0.1 is 10 fps
 		// count the snake blocks
 		int s = snake.size();
 
@@ -102,7 +102,7 @@ void Scene11::update(float deltaTime)
 			framebuffer->setPixel(snake[i].position.x, snake[i].position.y, backgroundcolor);
 		}
 
-		// update each block in snake
+		// update each block in snake. Check from back to front!
 		for (int i=s-1; i>=0; i--) {
 			// update position
 			snake[i].position += snake[i].velocity;
