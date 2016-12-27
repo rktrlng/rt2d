@@ -176,19 +176,25 @@ void Scene12::update(float deltaTime)
 	// ###############################################################
 	float tsec = timer.seconds();
 	if (tsec > 0.1 - deltaTime) { // 0.1 is 10 fps
-		// clear to background color
+		// clear to background color (full frame)
+		/*
 		for (long y=0; y<framebuffer->height; y++) {
 			for (long x=0; x<framebuffer->width; x++) {
 				framebuffer->setPixel(x, y, backgroundcolor);
 			}
 		}
+		*/
 
 		static float d = 0.0f;
 		PixelSprite spr = sprite.rotation(d);
+		// expensive to do another rotation to clear, but cheaper than clearing full frame.
+		clearSprite(sprite.rotation(d-HALF_PI/8));
 		d += HALF_PI / 8;
 		if (d > TWO_PI) { d -= TWO_PI; }
 
 		drawSprite(spr);
+
+		clearSprite(bob);
 
 		Vector2 vel = Vector2((rand()%3)-1, (rand()%3)-1);
 		if (bob.position.x < 0) {
@@ -216,5 +222,13 @@ void Scene12::drawSprite(const PixelSprite& spr)
 	size_t s = spr.pixels.size();
 	for (size_t i = 0; i < s; i++) {
 		framebuffer->setPixel(spr.pixels[i].position.x + spr.position.x, spr.pixels[i].position.y + spr.position.y, spr.pixels[i].color);
+	}
+}
+
+void Scene12::clearSprite(const PixelSprite& spr)
+{
+	size_t s = spr.pixels.size();
+	for (size_t i = 0; i < s; i++) {
+		framebuffer->setPixel(spr.pixels[i].position.x + spr.position.x, spr.pixels[i].position.y + spr.position.y, backgroundcolor);
 	}
 }

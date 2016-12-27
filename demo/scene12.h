@@ -59,6 +59,7 @@ private:
 	Timer timer;
 
 	void drawSprite(const PixelSprite& spr);
+	void clearSprite(const PixelSprite& spr);
 };
 
 #endif /* SCENE12_H */
