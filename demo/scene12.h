@@ -33,8 +33,8 @@ struct PixelSprite {
 		for (size_t i = 0; i < s; i++) {
 			VectorX_t<float> v = VectorX_t<float>(pixels[i].position.x, pixels[i].position.y, 0);
 			v.rotate(a);
-			int x = nearbyint(v.x);
-			int y = nearbyint(v.y);
+			int x = nearbyint(v.x+0.1); // rounding up a bit works a little better
+			int y = nearbyint(v.y+0.1);
 			copy.pixels.push_back(Pixel(Point_t<int>(x, y), pixels[i].color));
 		}
 		return copy;

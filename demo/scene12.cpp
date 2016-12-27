@@ -145,7 +145,7 @@ Scene12::Scene12() : SuperScene()
 
 
 
-	bob.position = Point_t<int>(framebuffer->width / 2, framebuffer->height / 2);
+	bob.position = Point_t<int>(framebuffer->width / 4, framebuffer->height / 2);
 }
 
 
