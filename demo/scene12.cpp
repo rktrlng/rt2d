@@ -42,110 +42,69 @@ Scene12::Scene12() : SuperScene()
 		}
 	}
 
-	RGBAColor color = BLUE;
-	// left
-	sprite.pixels.push_back(Pixel(Point_t<int>(-3, -3), RED));
-	sprite.pixels.push_back(Pixel(Point_t<int>(-3, -2), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>(-3, -1), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>(-3,  0), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>(-3,  1), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>(-3,  2), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>(-3,  3), GREEN));
-
-	// top
-	sprite.pixels.push_back(Pixel(Point_t<int>(-2,  3), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>(-1,  3), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 0,  3), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 1,  3), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 2,  3), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 3,  3), MAGENTA));
-
-	// right
-	sprite.pixels.push_back(Pixel(Point_t<int>( 3, -3), YELLOW));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 3, -2), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 3, -1), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 3,  0), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 3,  1), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 3,  2), color));
-
-	// bottom
-	sprite.pixels.push_back(Pixel(Point_t<int>(-2, -3), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>(-1, -3), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 0, -3), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 1, -3), color));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 2, -3), color));
-
-	// outside
-	/*
-	sprite.pixels.push_back(Pixel(Point_t<int>(-4, -4), RED));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 4, -4), YELLOW));
-	sprite.pixels.push_back(Pixel(Point_t<int>(-4,  4), GREEN));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 4,  4), MAGENTA));
-
-	sprite.pixels.push_back(Pixel(Point_t<int>(-5, -5), RED));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 5, -5), YELLOW));
-	sprite.pixels.push_back(Pixel(Point_t<int>(-5,  5), GREEN));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 5,  5), MAGENTA));
-	*/
-	sprite.pixels.push_back(Pixel(Point_t<int>(-6, -6), RED));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 6, -6), YELLOW));
-	sprite.pixels.push_back(Pixel(Point_t<int>(-6,  6), GREEN));
-	sprite.pixels.push_back(Pixel(Point_t<int>( 6,  6), MAGENTA));
-
-	sprite.position = Point_t<int>(framebuffer->width / 2, framebuffer->height / 2);
-
 	// ###############################################################
-	RGBAColor bobcolor = WHITE;
+	int menneke[7][9] = {
+		0,1,1,1,1,1,1,1,0,
+		1,1,0,0,0,0,0,1,1,
+		1,1,0,1,0,1,0,1,1,
+		0,1,0,0,0,0,0,1,0,
+		0,1,1,1,1,1,1,1,0,
+		0,1,1,1,1,1,1,1,0,
+		0,0,1,1,0,1,1,0,0
+	};
 
-	// eyes
-	bob.pixels.push_back(Pixel(Point_t<int>(-1,  1), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 1,  1), bobcolor));
-	// scalp
-	bob.pixels.push_back(Pixel(Point_t<int>(-3,  3), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>(-2,  3), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>(-1,  3), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 0,  3), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 1,  3), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 2,  3), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 3,  3), bobcolor));
-	// ears left
-	bob.pixels.push_back(Pixel(Point_t<int>(-4,  2), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>(-3,  2), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 3,  2), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 4,  2), bobcolor));
-	// ears right
-	bob.pixels.push_back(Pixel(Point_t<int>(-4,  1), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>(-3,  1), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 3,  1), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 4,  1), bobcolor));
-	// space under eyes
-	bob.pixels.push_back(Pixel(Point_t<int>(-3,  0), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 3,  0), bobcolor));
-	// neck
-	bob.pixels.push_back(Pixel(Point_t<int>(-3, -1), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>(-2, -1), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>(-1, -1), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 0, -1), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 1, -1), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 2, -1), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 3, -1), bobcolor));
-	// second neck / belly
-	bob.pixels.push_back(Pixel(Point_t<int>(-3, -2), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>(-2, -2), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>(-1, -2), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 0, -2), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 1, -2), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 2, -2), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 3, -2), bobcolor));
-	// feet
-	bob.pixels.push_back(Pixel(Point_t<int>(-2, -3), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>(-1, -3), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 1, -3), bobcolor));
-	bob.pixels.push_back(Pixel(Point_t<int>( 2, -3), bobcolor));
-
-
+	for (int y = 0; y < 7; y++) {
+		for (int x = 0; x < 9; x++) {
+			if (menneke[y][x] == 1) {
+				bob.pixels.push_back(Pixel(Point_t<int>(x, y*-1), WHITE));
+			}
+		}
+	}
 
 	bob.position = Point_t<int>(framebuffer->width / 4, framebuffer->height / 2);
+
+	// ###############################################################
+	RGBAColor color = WHITE;
+	int pixelarray[16][16] = {
+		2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,2,0,0,0,0,0,0,0,0,3,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,5,0,0,0,0,0,0,0,0,4,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4
+	};
+
+	for (int y = 0; y < 16; y++) {
+		for (int x = 0; x < 16; x++) {
+			int value = pixelarray[y][x];
+			if (value == 1) {
+				color = BLUE;
+			} else if (value == 2) {
+				color = MAGENTA;
+			} else if (value == 3) {
+				color = RED;
+			} else if (value == 4) {
+				color = GREEN;
+			} else if (value == 5) {
+				color = YELLOW;
+			}
+
+			if (pixelarray[y][x] != 0) {
+				sprite.pixels.push_back(Pixel(Point_t<int>(x-8, (y*-1)+8), color));
+			}
+		}
+	}
+	sprite.position = Point_t<int>(framebuffer->width / 2, framebuffer->height / 2);
 }
 
 
@@ -176,26 +135,17 @@ void Scene12::update(float deltaTime)
 	// ###############################################################
 	float tsec = timer.seconds();
 	if (tsec > 0.1 - deltaTime) { // 0.1 is 10 fps
-		// clear to background color (full frame)
-		/*
-		for (long y=0; y<framebuffer->height; y++) {
-			for (long x=0; x<framebuffer->width; x++) {
-				framebuffer->setPixel(x, y, backgroundcolor);
-			}
-		}
-		*/
-
+		// draw rotating square
 		static float d = 0.0f;
 		PixelSprite spr = sprite.rotation(d);
 		// expensive to do another rotation to clear, but cheaper than clearing full frame.
 		clearSprite(sprite.rotation(d-HALF_PI/8));
 		d += HALF_PI / 8;
 		if (d > TWO_PI) { d -= TWO_PI; }
-
 		drawSprite(spr);
 
+		// draw bob
 		clearSprite(bob);
-
 		Vector2 vel = Vector2((rand()%3)-1, (rand()%3)-1);
 		if (bob.position.x < 0) {
 			bob.position.x = framebuffer->width / 2;
@@ -210,9 +160,9 @@ void Scene12::update(float deltaTime)
 			bob.position.y = framebuffer->height / 2;
 		}
 		bob.position += VectorX_t<int>(round(vel.x), round(vel.y));
-
 		drawSprite(bob);
 
+		// restart frametimer
 		timer.start();
 	}
 }
