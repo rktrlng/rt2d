@@ -46,6 +46,9 @@ void Canvas::init(int pixelsize)
 
 	this->_width = SWIDTH / pixelsize;
 	this->_height = SHEIGHT / pixelsize;
+
+	backgroundcolor = RGBAColor(32, 32, 32, 255);
+	this->fill(backgroundcolor);
 }
 
 void Canvas::setPixel(int x, int y, RGBAColor color)
@@ -53,12 +56,33 @@ void Canvas::setPixel(int x, int y, RGBAColor color)
 	this->_framebuffer->setPixel(x, y, color);
 }
 
-void Canvas::clear(RGBAColor color)
+void Canvas::clearPixel(int x, int y)
+{
+	this->_framebuffer->setPixel(x, y, backgroundcolor);
+}
+
+void Canvas::fill(RGBAColor color)
 {
 	// fill framebuffer with color
 	for (long y=0; y<_framebuffer->height; y++) {
 		for (long x=0; x<_framebuffer->width; x++) {
 			this->setPixel(x, y, color);
 		}
+	}
+}
+
+void Canvas::drawSprite(const PixelSprite& spr)
+{
+	size_t s = spr.pixels.size();
+	for (size_t i = 0; i < s; i++) {
+		this->setPixel(spr.pixels[i].position.x + spr.position.x, spr.pixels[i].position.y + spr.position.y, spr.pixels[i].color);
+	}
+}
+
+void Canvas::clearSprite(const PixelSprite& spr)
+{
+	size_t s = spr.pixels.size();
+	for (size_t i = 0; i < s; i++) {
+		this->clearPixel(spr.pixels[i].position.x + spr.position.x, spr.pixels[i].position.y + spr.position.y);
 	}
 }

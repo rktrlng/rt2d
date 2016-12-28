@@ -37,7 +37,6 @@ private:
 	std::vector<Block> snake;
 	Block target;
 
-	RGBAColor backgroundcolor;
 	Canvas* canvas;
 	Timer timer;
 

@@ -23,9 +23,6 @@ Scene07::Scene07() : SuperScene()
 	// create Canvas
 	canvas = new Canvas(4); // pixelsize
 	layers[0]->addChild(canvas);
-
-	backgroundcolor = RGBAColor(32, 32, 32, 255);
-	canvas->clear(backgroundcolor);
 }
 
 
@@ -67,7 +64,7 @@ void Scene07::update(float deltaTime)
 			// too many particles
 			if ( particles.size() > maxparticles ) {
 				// remove oldest (first) particle and clean up to background color
-				canvas->setPixel( particles[0].position.x, particles[0].position.y, backgroundcolor );
+				canvas->clearPixel( particles[0].position.x, particles[0].position.y );
 				particles.pop_front();
 			}
 		}
@@ -91,7 +88,7 @@ void Scene07::update(float deltaTime)
 		// update and draw each particle
 		for (unsigned int i = 0; i < s; i++) {
 			// clear the background
-			canvas->setPixel(particles[i].position.x, particles[i].position.y, backgroundcolor );
+			canvas->clearPixel(particles[i].position.x, particles[i].position.y);
 
 			// update particle position
 			particles[i].velocity.y -= 0.1f;
@@ -106,7 +103,7 @@ void Scene07::update(float deltaTime)
 			particles[i].color = Color::rotate(particles[i].color, 0.001f);
 
 			// color pixels in framebuffer
-			canvas->setPixel(particles[i].position.x, particles[i].position.y, particles[i].color );
+			canvas->setPixel(particles[i].position.x, particles[i].position.y, particles[i].color);
 		}
 
 		framecounter++;
@@ -127,8 +124,7 @@ void Scene07::clearParticles()
 
 	// clear each particle from the framebuffer
 	for (int i = 0; i < s; i++) {
-		// clear the background
-		canvas->setPixel(particles[i].position.x, particles[i].position.y, backgroundcolor);
+		canvas->clearPixel(particles[i].position.x, particles[i].position.y);
 	}
 	particles.clear();
 }

@@ -20,12 +20,6 @@ Scene12::Scene12() : SuperScene()
 	canvas = new Canvas(8); // pixelsize
 	layers[0]->addChild(canvas);
 
-	// fill canvas with background color
-	backgroundcolor = RGBAColor(32, 32, 32, 255);
-
-	// clear to background color
-	canvas->clear(backgroundcolor);
-
 	// ###############################################################
 	int menneke[7][9] = {
 		0,1,1,1,1,1,1,1,0,
@@ -121,21 +115,21 @@ void Scene12::update(float deltaTime)
 	float tsec = timer.seconds();
 	if (tsec > 0.1 - deltaTime) { // 0.1 is 10 fps
 		// clear bob first, we always want him 'transparent'
-		clearSprite(bob);
+		canvas->clearSprite(bob);
 
 		// draw original square
-		clearSprite(sprite);
-		drawSprite(sprite);
+		canvas->clearSprite(sprite);
+		canvas->drawSprite(sprite);
 
 		// rotate copied square and draw that
 		static float d = 0.0f;
 		static PixelSprite spr = sprite;
-		clearSprite(spr);
+		canvas->clearSprite(spr);
 		spr = sprite.rotation(d);
 		spr.position = Point_t<int>((canvas->width() / 4)*3, canvas->height() / 2);
 		d += HALF_PI / 16;
 		if (d > TWO_PI) { d -= TWO_PI; }
-		drawSprite(spr);
+		canvas->drawSprite(spr);
 
 		// draw bob
 		Vector2 vel = Vector2((rand()%3)-1, (rand()%3)-1);
@@ -152,25 +146,9 @@ void Scene12::update(float deltaTime)
 			bob.position.y = canvas->height() / 2;
 		}
 		bob.position += VectorX_t<int>(round(vel.x), round(vel.y));
-		drawSprite(bob);
+		canvas->drawSprite(bob);
 
 		// restart frametimer
 		timer.start();
-	}
-}
-
-void Scene12::drawSprite(const PixelSprite& spr)
-{
-	size_t s = spr.pixels.size();
-	for (size_t i = 0; i < s; i++) {
-		canvas->setPixel(spr.pixels[i].position.x + spr.position.x, spr.pixels[i].position.y + spr.position.y, spr.pixels[i].color);
-	}
-}
-
-void Scene12::clearSprite(const PixelSprite& spr)
-{
-	size_t s = spr.pixels.size();
-	for (size_t i = 0; i < s; i++) {
-		canvas->setPixel(spr.pixels[i].position.x + spr.position.x, spr.pixels[i].position.y + spr.position.y, backgroundcolor);
 	}
 }

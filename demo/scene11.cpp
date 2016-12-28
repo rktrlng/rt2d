@@ -20,12 +20,6 @@ Scene11::Scene11() : SuperScene()
 	canvas = new Canvas(32); // pixelsize
 	layers[0]->addChild(canvas);
 
-	// fill canvas with background color
-	backgroundcolor = RGBAColor(32, 32, 32, 255);
-
-	// clear to background color
-	canvas->clear(backgroundcolor);
-
 	// clean up and reset
 	resetSnake();
 }
@@ -83,7 +77,7 @@ void Scene11::update(float deltaTime)
 
 		// clear snake to background
 		for (int i=0; i<s; i++) {
-			canvas->setPixel(snake[i].position.x, snake[i].position.y, backgroundcolor);
+			canvas->clearPixel(snake[i].position.x, snake[i].position.y);
 		}
 
 		// update each block in snake. Check from back to front!
@@ -104,7 +98,7 @@ void Scene11::update(float deltaTime)
 		}
 
 		// draw target
-		canvas->setPixel(target.position.x, target.position.y, backgroundcolor);
+		canvas->clearPixel(target.position.x, target.position.y);
 		canvas->setPixel(target.position.x, target.position.y, target.color);
 
 		// head hits target!
@@ -153,7 +147,7 @@ void Scene11::addBlockToSnake()
 void Scene11::placeTarget()
 {
 	// find a new spot for target (don't place it inside the snake)
-	canvas->setPixel(target.position.x, target.position.y, backgroundcolor);
+	canvas->clearPixel(target.position.x, target.position.y);
 	Point_t<int> targetPos = snake[0].position; // force a better spot
 	while (positionIsInSnake(targetPos)) {
 		targetPos = Point_t<int>(rand()%canvas->width(), rand()%canvas->height());
@@ -179,8 +173,7 @@ void Scene11::resetSnake()
 
 	// clear each snake block from the canvas
 	for (int i = 0; i < s; i++) {
-		// clear to background
-		canvas->setPixel(snake[i].position.x, snake[i].position.y, backgroundcolor);
+		canvas->clearPixel(snake[i].position.x, snake[i].position.y);
 	}
 	snake.clear();
 
