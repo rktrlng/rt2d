@@ -137,8 +137,6 @@ add_executable(demo
 	demo/main.cpp
 	demo/basicentity.cpp
 	demo/basicentity.h
-	demo/boidentity.cpp
-	demo/boidentity.h
 	demo/canvas.cpp
 	demo/canvas.h
 	demo/scene00.cpp
@@ -147,8 +145,6 @@ add_executable(demo
 	demo/scene01.h
 	demo/scene02.cpp
 	demo/scene02.h
-	demo/scene02a.cpp
-	demo/scene02a.h
 	demo/scene03.cpp
 	demo/scene03.h
 	demo/scene03a.cpp

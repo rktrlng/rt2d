@@ -10,7 +10,6 @@
 #include "scene00.h"
 #include "scene01.h"
 #include "scene02.h"
-#include "scene02a.h"
 #include "scene03.h"
 #include "scene03a.h"
 #include "scene03b.h"
@@ -33,8 +32,7 @@ int main( void )
 	std::vector<SuperScene*> scenes;
 	scenes.push_back(new Scene00());
 	scenes.push_back(new Scene01());
-	//scenes.push_back(new Scene02());
-	scenes.push_back(new Scene02a());
+	scenes.push_back(new Scene02());
 	scenes.push_back(new Scene03());
 	scenes.push_back(new Scene03a());
 	//scenes.push_back(new Scene03b());

@@ -11,7 +11,6 @@
 #include <vector>
 #include <rt2d/timer.h>
 #include "superscene.h"
-#include "boidentity.h"
 #include "basicentity.h"
 
 class Scene03: public SuperScene
