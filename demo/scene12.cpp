@@ -61,7 +61,7 @@ Scene12::Scene12() : SuperScene()
 		}
 	}
 
-	bob.position = Point_t<int>(framebuffer->width / 4, framebuffer->height / 2);
+	bob.position = Point_t<int>(framebuffer->width / 2, framebuffer->height / 2);
 
 	// ###############################################################
 	RGBAColor color = WHITE;
@@ -104,7 +104,8 @@ Scene12::Scene12() : SuperScene()
 			}
 		}
 	}
-	sprite.position = Point_t<int>(framebuffer->width / 2, framebuffer->height / 2);
+
+	sprite.position = Point_t<int>(framebuffer->width / 4, framebuffer->height / 2);
 }
 
 
@@ -135,17 +136,24 @@ void Scene12::update(float deltaTime)
 	// ###############################################################
 	float tsec = timer.seconds();
 	if (tsec > 0.1 - deltaTime) { // 0.1 is 10 fps
-		// draw rotating square
+		// clear bob first, we always want him 'transparent'
+		clearSprite(bob);
+
+		// draw original square
+		clearSprite(sprite);
+		drawSprite(sprite);
+
+		// rotate copied square and draw that
 		static float d = 0.0f;
-		PixelSprite spr = sprite.rotation(d);
-		// expensive to do another rotation to clear, but cheaper than clearing full frame.
-		clearSprite(sprite.rotation(d-HALF_PI/8));
-		d += HALF_PI / 8;
+		static PixelSprite spr = sprite;
+		clearSprite(spr);
+		spr = sprite.rotation(d);
+		spr.position = Point_t<int>((framebuffer->width / 4)*3, framebuffer->height / 2);
+		d += HALF_PI / 16;
 		if (d > TWO_PI) { d -= TWO_PI; }
 		drawSprite(spr);
 
 		// draw bob
-		clearSprite(bob);
 		Vector2 vel = Vector2((rand()%3)-1, (rand()%3)-1);
 		if (bob.position.x < 0) {
 			bob.position.x = framebuffer->width / 2;
