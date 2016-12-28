@@ -55,7 +55,7 @@ void Scene07::update(float deltaTime)
 		unsigned int amount = rand()%5;
 		for (unsigned int i = 0; i < amount; i++) {
 			Particle p;
-			p.position = Point2(canvas->width/2, canvas->height/8*7);
+			p.position = Point2(canvas->width()/2, canvas->height()/8*7);
 			int range = 60;
 			float vy = rand()%range;
 			float vx = 0;

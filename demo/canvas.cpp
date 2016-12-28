@@ -42,22 +42,22 @@ void Canvas::init(int pixelsize)
 	delete tmp;
 
 	// get the pixels from the texture and call it the global framebuffer
-	this->framebuffer = this->sprite()->texture()->pixels();
+	this->_framebuffer = this->sprite()->texture()->pixels();
 
-	this->width = SWIDTH / pixelsize;
-	this->height = SHEIGHT / pixelsize;
+	this->_width = SWIDTH / pixelsize;
+	this->_height = SHEIGHT / pixelsize;
 }
 
 void Canvas::setPixel(int x, int y, RGBAColor color)
 {
-	this->framebuffer->setPixel(x, y, color);
+	this->_framebuffer->setPixel(x, y, color);
 }
 
 void Canvas::clear(RGBAColor color)
 {
 	// fill framebuffer with color
-	for (long y=0; y<framebuffer->height; y++) {
-		for (long x=0; x<framebuffer->width; x++) {
+	for (long y=0; y<_framebuffer->height; y++) {
+		for (long x=0; x<_framebuffer->width; x++) {
 			this->setPixel(x, y, color);
 		}
 	}

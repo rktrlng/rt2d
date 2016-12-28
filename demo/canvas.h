@@ -22,11 +22,14 @@ class Canvas: public Entity
 		void setPixel(int x, int y, RGBAColor color);
 		void clear(RGBAColor color);
 
-		int width;
-		int height;
+		int width() { return _width; };
+		int height() { return _height; };
 
 	private:
-		PixelBuffer* framebuffer;
+		PixelBuffer* _framebuffer;
+
+		int _width;
+		int _height;
 };
 
 #endif /* CANVAS_H */

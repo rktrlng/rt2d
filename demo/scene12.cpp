@@ -45,7 +45,7 @@ Scene12::Scene12() : SuperScene()
 		}
 	}
 
-	bob.position = Point_t<int>(canvas->width / 2, canvas->height / 2);
+	bob.position = Point_t<int>(canvas->width() / 2, canvas->height() / 2);
 
 	// ###############################################################
 	RGBAColor color = WHITE;
@@ -89,7 +89,7 @@ Scene12::Scene12() : SuperScene()
 		}
 	}
 
-	sprite.position = Point_t<int>(canvas->width / 4, canvas->height / 2);
+	sprite.position = Point_t<int>(canvas->width() / 4, canvas->height() / 2);
 }
 
 
@@ -132,7 +132,7 @@ void Scene12::update(float deltaTime)
 		static PixelSprite spr = sprite;
 		clearSprite(spr);
 		spr = sprite.rotation(d);
-		spr.position = Point_t<int>((canvas->width / 4)*3, canvas->height / 2);
+		spr.position = Point_t<int>((canvas->width() / 4)*3, canvas->height() / 2);
 		d += HALF_PI / 16;
 		if (d > TWO_PI) { d -= TWO_PI; }
 		drawSprite(spr);
@@ -140,16 +140,16 @@ void Scene12::update(float deltaTime)
 		// draw bob
 		Vector2 vel = Vector2((rand()%3)-1, (rand()%3)-1);
 		if (bob.position.x < 0) {
-			bob.position.x = canvas->width / 2;
+			bob.position.x = canvas->width() / 2;
 		}
-		if (bob.position.x > canvas->width) {
-			bob.position.x = canvas->width / 2;
+		if (bob.position.x > canvas->width()) {
+			bob.position.x = canvas->width() / 2;
 		}
 		if (bob.position.y < 0) {
-			bob.position.y = canvas->height / 2;
+			bob.position.y = canvas->height() / 2;
 		}
-		if (bob.position.y > canvas->height) {
-			bob.position.y = canvas->height / 2;
+		if (bob.position.y > canvas->height()) {
+			bob.position.y = canvas->height() / 2;
 		}
 		bob.position += VectorX_t<int>(round(vel.x), round(vel.y));
 		drawSprite(bob);

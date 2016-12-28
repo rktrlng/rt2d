@@ -122,9 +122,9 @@ void Scene11::update(float deltaTime)
 
 		// check boundaries
 		if (snake[0].position.x < 0 ||
-			snake[0].position.x > canvas->width-1 ||
+			snake[0].position.x > canvas->width()-1 ||
 			snake[0].position.y < 0 ||
-			snake[0].position.y > canvas->height-1
+			snake[0].position.y > canvas->height()-1
 		) {
 			std::cout << "boundaries collision!! score " << score << std::endl;
 			resetSnake();
@@ -156,7 +156,7 @@ void Scene11::placeTarget()
 	canvas->setPixel(target.position.x, target.position.y, backgroundcolor);
 	Point_t<int> targetPos = snake[0].position; // force a better spot
 	while (positionIsInSnake(targetPos)) {
-		targetPos = Point_t<int>(rand()%canvas->width, rand()%canvas->height);
+		targetPos = Point_t<int>(rand()%canvas->width(), rand()%canvas->height());
 	}
 	target.position = targetPos;
 	target.color = GREEN;
@@ -186,7 +186,7 @@ void Scene11::resetSnake()
 
 	// create 'head'
 	Block b;
-	b.position = Point_t<int>(canvas->width/2, canvas->height/2);
+	b.position = Point_t<int>(canvas->width()/2, canvas->height()/2);
 	b.velocity = RIGHT;
 	b.color = RED;
 	snake.push_back(b);
