@@ -38,16 +38,9 @@ Scene07::Scene07() : SuperScene()
 
 	// fill framebuffer with background color
 	backgroundcolor = RGBAColor(32, 32, 32, 255);
-	long counter = 0;
 	for (long y=0; y<framebuffer->height; y++) {
 		for (long x=0; x<framebuffer->width; x++) {
-			framebuffer->data[counter+0] = backgroundcolor.r;
-			framebuffer->data[counter+1] = backgroundcolor.g;
-			framebuffer->data[counter+2] = backgroundcolor.b;
-			if (framebuffer->bitdepth == 4) {
-				framebuffer->data[counter+3] = backgroundcolor.a;
-			}
-			counter += framebuffer->bitdepth;
+			framebuffer->setPixel(x, y, backgroundcolor);
 		}
 	}
 }
@@ -91,7 +84,7 @@ void Scene07::update(float deltaTime)
 			// too many particles
 			if ( particles.size() > maxparticles ) {
 				// remove oldest (first) particle and clean up to background color
-				setPixel( particles[0].position.x, particles[0].position.y, backgroundcolor );
+				framebuffer->setPixel( particles[0].position.x, particles[0].position.y, backgroundcolor );
 				particles.pop_front();
 			}
 		}
@@ -115,7 +108,7 @@ void Scene07::update(float deltaTime)
 		// update and draw each particle
 		for (unsigned int i = 0; i < s; i++) {
 			// clear the background
-			setPixel(particles[i].position.x, particles[i].position.y, backgroundcolor );
+			framebuffer->setPixel(particles[i].position.x, particles[i].position.y, backgroundcolor );
 
 			// update particle position
 			particles[i].velocity.y -= 0.1f;
@@ -130,7 +123,7 @@ void Scene07::update(float deltaTime)
 			particles[i].color = Color::rotate(particles[i].color, 0.001f);
 
 			// color pixels in framebuffer
-			setPixel(particles[i].position.x, particles[i].position.y, particles[i].color );
+			framebuffer->setPixel(particles[i].position.x, particles[i].position.y, particles[i].color );
 		}
 
 		framecounter++;
@@ -145,19 +138,6 @@ void Scene07::update(float deltaTime)
 	}
 }
 
-void Scene07::setPixel(int x, int y, RGBAColor color)
-{
-	int start = ((y*framebuffer->width) + x) * framebuffer->bitdepth;
-	if (start > framebuffer->width * framebuffer->height * framebuffer->bitdepth || start < 0) { return; }
-
-	framebuffer->data[start+0] = color.r;
-	framebuffer->data[start+1] = color.g;
-	framebuffer->data[start+2] = color.b;
-	if (framebuffer->bitdepth == 4) {
-		framebuffer->data[start+3] = color.a;
-	}
-}
-
 void Scene07::clearParticles()
 {
 	int s = particles.size();
@@ -165,7 +145,7 @@ void Scene07::clearParticles()
 	// clear each particle from the framebuffer
 	for (int i = 0; i < s; i++) {
 		// clear the background
-		setPixel(particles[i].position.x, particles[i].position.y, backgroundcolor);
+		framebuffer->setPixel(particles[i].position.x, particles[i].position.y, backgroundcolor);
 	}
 	particles.clear();
 }

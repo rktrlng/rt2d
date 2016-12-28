@@ -36,7 +36,6 @@ private:
 	Timer timer;
 	Timer fpstimer;
 
-	void setPixel(int x, int y, RGBAColor color);
 	void clearParticles();
 };
 
