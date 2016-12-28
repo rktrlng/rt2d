@@ -13,7 +13,7 @@
 #include <rt2d/timer.h>
 #include <rt2d/vectorx.h>
 #include "superscene.h"
-#include "basicentity.h"
+#include "canvas.h"
 
 struct Pixel {
 	Point_t<int> position;
@@ -54,8 +54,7 @@ private:
 	PixelSprite bob;
 
 	RGBAColor backgroundcolor;
-	BasicEntity* canvas;
-	PixelBuffer* framebuffer;
+	Canvas* canvas;
 	Timer timer;
 
 	void drawSprite(const PixelSprite& spr);

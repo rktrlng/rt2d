@@ -139,6 +139,8 @@ add_executable(demo
 	demo/basicentity.h
 	demo/boidentity.cpp
 	demo/boidentity.h
+	demo/canvas.cpp
+	demo/canvas.h
 	demo/scene00.cpp
 	demo/scene00.h
 	demo/scene01.cpp

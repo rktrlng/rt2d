@@ -12,7 +12,7 @@
 #include <rt2d/stringutil.h>
 #include <rt2d/timer.h>
 #include "superscene.h"
-#include "basicentity.h"
+#include "canvas.h"
 
 const Point_t<int> UP = Point_t<int>(0,1);
 const Point_t<int> DOWN = Point_t<int>(0,-1);
@@ -38,8 +38,7 @@ private:
 	Block target;
 
 	RGBAColor backgroundcolor;
-	BasicEntity* canvas;
-	PixelBuffer* framebuffer;
+	Canvas* canvas;
 	Timer timer;
 
 	void resetSnake();

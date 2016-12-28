@@ -17,30 +17,14 @@ Scene12::Scene12() : SuperScene()
 	timer.start();
 
 	// create Canvas
-	int pixelsize = 8;
-	int border = 0; // multiples of (at least) 4
-	canvas = new BasicEntity();
-	canvas->position = Point2(SWIDTH/2, SHEIGHT/2);
-	canvas->scale = Point2(pixelsize, pixelsize);
+	canvas = new Canvas(8); // pixelsize
 	layers[0]->addChild(canvas);
 
-	// our PixelBuffer(width, height, bitdepth, filter, wrap)
-	PixelBuffer* tmp = new PixelBuffer((SWIDTH/pixelsize)-border, (SHEIGHT/pixelsize)-border, 3, 0, 0);
-	canvas->addDynamicSprite(tmp);
-	delete tmp;
-
-	// get the pixels from the texture and call it the global framebuffer
-	framebuffer = canvas->sprite()->texture()->pixels();
-
-	// fill framebuffer with background color
+	// fill canvas with background color
 	backgroundcolor = RGBAColor(32, 32, 32, 255);
 
 	// clear to background color
-	for (long y=0; y<framebuffer->height; y++) {
-		for (long x=0; x<framebuffer->width; x++) {
-			framebuffer->setPixel(x, y, backgroundcolor);
-		}
-	}
+	canvas->clear(backgroundcolor);
 
 	// ###############################################################
 	int menneke[7][9] = {
@@ -61,7 +45,7 @@ Scene12::Scene12() : SuperScene()
 		}
 	}
 
-	bob.position = Point_t<int>(framebuffer->width / 2, framebuffer->height / 2);
+	bob.position = Point_t<int>(canvas->width / 2, canvas->height / 2);
 
 	// ###############################################################
 	RGBAColor color = WHITE;
@@ -105,7 +89,7 @@ Scene12::Scene12() : SuperScene()
 		}
 	}
 
-	sprite.position = Point_t<int>(framebuffer->width / 4, framebuffer->height / 2);
+	sprite.position = Point_t<int>(canvas->width / 4, canvas->height / 2);
 }
 
 
@@ -148,7 +132,7 @@ void Scene12::update(float deltaTime)
 		static PixelSprite spr = sprite;
 		clearSprite(spr);
 		spr = sprite.rotation(d);
-		spr.position = Point_t<int>((framebuffer->width / 4)*3, framebuffer->height / 2);
+		spr.position = Point_t<int>((canvas->width / 4)*3, canvas->height / 2);
 		d += HALF_PI / 16;
 		if (d > TWO_PI) { d -= TWO_PI; }
 		drawSprite(spr);
@@ -156,16 +140,16 @@ void Scene12::update(float deltaTime)
 		// draw bob
 		Vector2 vel = Vector2((rand()%3)-1, (rand()%3)-1);
 		if (bob.position.x < 0) {
-			bob.position.x = framebuffer->width / 2;
+			bob.position.x = canvas->width / 2;
 		}
-		if (bob.position.x > framebuffer->width) {
-			bob.position.x = framebuffer->width / 2;
+		if (bob.position.x > canvas->width) {
+			bob.position.x = canvas->width / 2;
 		}
 		if (bob.position.y < 0) {
-			bob.position.y = framebuffer->height / 2;
+			bob.position.y = canvas->height / 2;
 		}
-		if (bob.position.y > framebuffer->height) {
-			bob.position.y = framebuffer->height / 2;
+		if (bob.position.y > canvas->height) {
+			bob.position.y = canvas->height / 2;
 		}
 		bob.position += VectorX_t<int>(round(vel.x), round(vel.y));
 		drawSprite(bob);
@@ -179,7 +163,7 @@ void Scene12::drawSprite(const PixelSprite& spr)
 {
 	size_t s = spr.pixels.size();
 	for (size_t i = 0; i < s; i++) {
-		framebuffer->setPixel(spr.pixels[i].position.x + spr.position.x, spr.pixels[i].position.y + spr.position.y, spr.pixels[i].color);
+		canvas->setPixel(spr.pixels[i].position.x + spr.position.x, spr.pixels[i].position.y + spr.position.y, spr.pixels[i].color);
 	}
 }
 
@@ -187,6 +171,6 @@ void Scene12::clearSprite(const PixelSprite& spr)
 {
 	size_t s = spr.pixels.size();
 	for (size_t i = 0; i < s; i++) {
-		framebuffer->setPixel(spr.pixels[i].position.x + spr.position.x, spr.pixels[i].position.y + spr.position.y, backgroundcolor);
+		canvas->setPixel(spr.pixels[i].position.x + spr.position.x, spr.pixels[i].position.y + spr.position.y, backgroundcolor);
 	}
 }

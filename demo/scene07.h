@@ -12,7 +12,7 @@
 #include <rt2d/stringutil.h>
 #include <rt2d/timer.h>
 #include "superscene.h"
-#include "basicentity.h"
+#include "canvas.h"
 
 struct Particle {
 	Point2 position;
@@ -30,8 +30,7 @@ public:
 
 private:
 	RGBAColor backgroundcolor;
-	BasicEntity* canvas;
-	PixelBuffer* framebuffer;
+	Canvas* canvas;
 	std::deque<Particle> particles;
 	Timer timer;
 	Timer fpstimer;

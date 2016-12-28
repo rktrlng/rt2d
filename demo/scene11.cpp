@@ -17,30 +17,14 @@ Scene11::Scene11() : SuperScene()
 	timer.start();
 
 	// create Canvas
-	int pixelsize = 32;
-	int border = 0; // multiples of (at least) 4
-	canvas = new BasicEntity();
-	canvas->position = Point2(SWIDTH/2, SHEIGHT/2);
-	canvas->scale = Point2(pixelsize, pixelsize);
+	canvas = new Canvas(32); // pixelsize
 	layers[0]->addChild(canvas);
 
-	// our PixelBuffer(width, height, bitdepth, filter, wrap)
-	PixelBuffer* tmp = new PixelBuffer((SWIDTH/pixelsize)-border, (SHEIGHT/pixelsize)-border, 3, 0, 0);
-	canvas->addDynamicSprite(tmp);
-	delete tmp;
-
-	// get the pixels from the texture and call it the global framebuffer
-	framebuffer = canvas->sprite()->texture()->pixels();
-
-	// fill framebuffer with background color
+	// fill canvas with background color
 	backgroundcolor = RGBAColor(32, 32, 32, 255);
 
 	// clear to background color
-	for (long y=0; y<framebuffer->height; y++) {
-		for (long x=0; x<framebuffer->width; x++) {
-			framebuffer->setPixel(x, y, backgroundcolor);
-		}
-	}
+	canvas->clear(backgroundcolor);
 
 	// clean up and reset
 	resetSnake();
@@ -99,7 +83,7 @@ void Scene11::update(float deltaTime)
 
 		// clear snake to background
 		for (int i=0; i<s; i++) {
-			framebuffer->setPixel(snake[i].position.x, snake[i].position.y, backgroundcolor);
+			canvas->setPixel(snake[i].position.x, snake[i].position.y, backgroundcolor);
 		}
 
 		// update each block in snake. Check from back to front!
@@ -115,13 +99,13 @@ void Scene11::update(float deltaTime)
 
 		// draw each block in snake
 		for (int i=0; i<s; i++) {
-			// color pixels in framebuffer
-			framebuffer->setPixel(snake[i].position.x, snake[i].position.y, snake[i].color );
+			// color pixels in canvas
+			canvas->setPixel(snake[i].position.x, snake[i].position.y, snake[i].color );
 		}
 
 		// draw target
-		framebuffer->setPixel(target.position.x, target.position.y, backgroundcolor);
-		framebuffer->setPixel(target.position.x, target.position.y, target.color);
+		canvas->setPixel(target.position.x, target.position.y, backgroundcolor);
+		canvas->setPixel(target.position.x, target.position.y, target.color);
 
 		// head hits target!
 		if (target.position == snake[0].position) {
@@ -138,9 +122,9 @@ void Scene11::update(float deltaTime)
 
 		// check boundaries
 		if (snake[0].position.x < 0 ||
-			snake[0].position.x > framebuffer->width-1 ||
+			snake[0].position.x > canvas->width-1 ||
 			snake[0].position.y < 0 ||
-			snake[0].position.y > framebuffer->height-1
+			snake[0].position.y > canvas->height-1
 		) {
 			std::cout << "boundaries collision!! score " << score << std::endl;
 			resetSnake();
@@ -169,10 +153,10 @@ void Scene11::addBlockToSnake()
 void Scene11::placeTarget()
 {
 	// find a new spot for target (don't place it inside the snake)
-	framebuffer->setPixel(target.position.x, target.position.y, backgroundcolor);
+	canvas->setPixel(target.position.x, target.position.y, backgroundcolor);
 	Point_t<int> targetPos = snake[0].position; // force a better spot
 	while (positionIsInSnake(targetPos)) {
-		targetPos = Point_t<int>(rand()%framebuffer->width, rand()%framebuffer->height);
+		targetPos = Point_t<int>(rand()%canvas->width, rand()%canvas->height);
 	}
 	target.position = targetPos;
 	target.color = GREEN;
@@ -193,16 +177,16 @@ void Scene11::resetSnake()
 {
 	int s = snake.size();
 
-	// clear each snake block from the framebuffer
+	// clear each snake block from the canvas
 	for (int i = 0; i < s; i++) {
 		// clear to background
-		framebuffer->setPixel(snake[i].position.x, snake[i].position.y, backgroundcolor);
+		canvas->setPixel(snake[i].position.x, snake[i].position.y, backgroundcolor);
 	}
 	snake.clear();
 
 	// create 'head'
 	Block b;
-	b.position = Point_t<int>(framebuffer->width/2, framebuffer->height/2);
+	b.position = Point_t<int>(canvas->width/2, canvas->height/2);
 	b.velocity = RIGHT;
 	b.color = RED;
 	snake.push_back(b);
