@@ -21,7 +21,7 @@ Scene12::Scene12() : SuperScene()
 	layers[0]->addChild(canvas);
 
 	// ###############################################################
-	int menneke[7][9] = {
+	char menneke[63] = { // 9*7
 		0,1,1,1,1,1,1,1,0,
 		1,1,0,0,0,0,0,1,1,
 		1,1,0,1,0,1,0,1,1,
@@ -31,59 +31,31 @@ Scene12::Scene12() : SuperScene()
 		0,0,1,1,0,1,1,0,0
 	};
 
-	for (int y = 0; y < 7; y++) {
-		for (int x = 0; x < 9; x++) {
-			if (menneke[y][x] == 1) {
-				bob.pixels.push_back(Pixel(Point_t<int>(x, y*-1), WHITE));
-			}
-		}
-	}
-
-	bob.position = Point_t<int>(canvas->width() / 2, canvas->height() / 2);
+	bob.init(menneke, 9, 7);
+	bob.position = Pointi(canvas->width() / 2, canvas->height() / 2);
 
 	// ###############################################################
-	RGBAColor color = WHITE;
-	int pixelarray[16][16] = {
-		2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,2,0,0,0,0,0,0,0,0,3,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,5,0,0,0,0,0,0,0,0,4,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4
+	char pixelarray[256] = { // 16*16
+		3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,3,0,0,0,0,0,0,0,0,4,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,6,0,0,0,0,0,0,0,0,5,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,5
 	};
 
-	for (int y = 0; y < 16; y++) {
-		for (int x = 0; x < 16; x++) {
-			int value = pixelarray[y][x];
-			if (value == 1) {
-				color = BLUE;
-			} else if (value == 2) {
-				color = MAGENTA;
-			} else if (value == 3) {
-				color = RED;
-			} else if (value == 4) {
-				color = GREEN;
-			} else if (value == 5) {
-				color = YELLOW;
-			}
-
-			if (pixelarray[y][x] != 0) {
-				sprite.pixels.push_back(Pixel(Point_t<int>(x-8, (y*-1)+8), color));
-			}
-		}
-	}
-
-	sprite.position = Point_t<int>(canvas->width() / 4, canvas->height() / 2);
+	sprite.init(pixelarray, 16, 16);
+	sprite.position = Pointi(canvas->width() / 4, canvas->height() / 2);
 }
 
 
@@ -126,7 +98,7 @@ void Scene12::update(float deltaTime)
 		static PixelSprite spr = sprite;
 		canvas->clearSprite(spr);
 		spr = sprite.rotation(d);
-		spr.position = Point_t<int>((canvas->width() / 4)*3, canvas->height() / 2);
+		spr.position = Pointi((canvas->width() / 4)*3, canvas->height() / 2);
 		d += HALF_PI / 16;
 		if (d > TWO_PI) { d -= TWO_PI; }
 		canvas->drawSprite(spr);
@@ -145,7 +117,7 @@ void Scene12::update(float deltaTime)
 		if (bob.position.y > canvas->height()) {
 			bob.position.y = canvas->height() / 2;
 		}
-		bob.position += VectorX_t<int>(round(vel.x), round(vel.y));
+		bob.position += Vector2i(round(vel.x), round(vel.y));
 		canvas->drawSprite(bob);
 
 		// restart frametimer

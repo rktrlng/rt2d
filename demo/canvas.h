@@ -21,6 +21,35 @@ struct PixelSprite {
 	std::vector<Pixel> pixels;
 	Point_t<int> position;
 
+	RGBAColor pallete[10] = {
+		MAGENTA, // 0 shouldn't generate a pixel
+		WHITE,
+		BLUE,
+		MAGENTA,
+		RED,
+		GREEN,
+		YELLOW,
+		PINK,
+		ORANGE,
+		GRAY
+	};
+
+	void init(char* data, int w, int h) {
+		RGBAColor color;
+		size_t size = w*h;
+		for (size_t i = 0; i < size; i++) {
+			int y=i/w;
+			int x=i%w;
+
+			int value = (int) data[i];
+			if (value != 0) {
+				color = pallete[value];
+				//this->pixels.push_back(Pixel(Point_t<int>(x, y*-1), color)); // pivot at (0,0)
+				this->pixels.push_back(Pixel(Point_t<int>(x-(w/2), (y*-1)+(h/2)), color)); // pivot centered
+			}
+		}
+	};
+
 	PixelSprite rotation(float a) {
 		PixelSprite copy;
 		copy.position = this->position;
@@ -54,7 +83,7 @@ class Canvas: public Entity
 
 		void drawSprite(const PixelSprite& spr);
 		void clearSprite(const PixelSprite& spr);
-		
+
 		RGBAColor backgroundcolor;
 
 	private:
