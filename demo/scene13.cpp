@@ -21,6 +21,8 @@ Scene13::Scene13() : SuperScene()
 	layers[0]->addChild(canvas);
 
 	setupEnemyA();
+	setupEnemyB();
+	setupEnemyC();
 	setupEnemyBullet();
 
 	enemycenter = Pointi(canvas->width()/2, canvas->height()/2);
@@ -30,6 +32,7 @@ Scene13::Scene13() : SuperScene()
 	setupDefenseGrid();
 
 	setupPlayer();
+	setupPlayerBullet();
 }
 
 
@@ -52,6 +55,12 @@ void Scene13::update(float deltaTime)
 	text[3]->message(""); // clear <esc> to quit
 	text[10]->message(""); // clear player click count message
 
+	// player wants to shoot
+	if (input()->getKeyDown( GLFW_KEY_SPACE )) {
+		PixelSprite b = player_bullet; // copy sprites etc
+		b.position = player.position + Pointi(0,2);
+		player_bullets.push_back(b);
+	}
 	// ###############################################################
 	// Update and draw only when it's time
 	// ###############################################################
@@ -59,21 +68,23 @@ void Scene13::update(float deltaTime)
 	if (tsec > 0.01 - deltaTime) { // 0.01 is 100 fps
 		static int counter=0;
 
-		// enemies
-		if (counter%enemyupdate == 0) {
-			updateEnemies();
-			drawEnemies();
-		}
-
 		// enemy bullets
 		if (counter%bulletupdate == 0) {
 			updateEnemyBullets();
-			drawEnemyBullets();
 		}
 
-		drawDefenseGrid();
+		// player bullets
+		if (counter%bulletupdate/4 == 0) {
+			updatePlayerBullets();
+		}
 
-		updateAndDrawPlayer();
+		// enemies
+		if (counter%enemyupdate == 0) {
+			updateEnemies();
+		}
+
+		updateDefenseGrid();
+		updatePlayer();
 
 		// restart frametimer
 		counter++;
@@ -84,6 +95,7 @@ void Scene13::update(float deltaTime)
 void Scene13::updateEnemies()
 {
 	static Pointi velocity = Pointi(1,0);
+	static int counter = 0;
 	size_t s = enemies.size();
 	if (enemiesChangeDirection()) {
 		velocity.x *= -1;
@@ -96,17 +108,26 @@ void Scene13::updateEnemies()
 		enemies[i].frames[0].position = enemycenter + enemies[i].position;
 		enemies[i].frames[1].position = enemycenter + enemies[i].position;
 
-		// do we shoot?
+		// do enemies shoot?
 		if (random()%shootfrequency == 1) {
-			SI_EnemyBullet b = si_enemy_bullet; // copy sprites etc
+			SI_AnimatedSprite b = si_enemy_bullet; // copy sprites etc
 			b.position = enemies[i].frames[0].position + Pointi(0,-2);
 			b.velocity = Pointi(0,-1);
 			enemy_bullets.push_back(b);
 		}
+
+		// draw
+		if (counter%8 < 4) {
+		//if (counter%2 == 0) {
+			canvas->drawSprite(enemies[i].frames[0]);
+		} else {
+			canvas->drawSprite(enemies[i].frames[1]);
+		}
 	}
+	counter++;
 }
 
-void Scene13::updateAndDrawPlayer()
+void Scene13::updatePlayer()
 {
 	canvas->clearSprite(player);
 	if (input()->getKey( GLFW_KEY_LEFT )) {
@@ -153,38 +174,17 @@ bool Scene13::enemiesChangeDirection()
 	return false;
 }
 
-void Scene13::drawEnemies()
-{
-	size_t s = enemies.size();
-	static int counter = 0;
-	for (size_t i = 0; i < s; i++) {
-		if (counter%8 < 4) {
-		//if (counter%2 == 0) {
-			canvas->drawSprite(enemies[i].frames[0]);
-		} else {
-			canvas->drawSprite(enemies[i].frames[1]);
-		}
-	}
-	counter++;
-}
-
 void Scene13::updateEnemyBullets()
 {
 	size_t s = enemy_bullets.size();
+	static int counter = 0;
 	for (size_t i = 0; i < s; i++) {
 		canvas->clearSprite(enemy_bullets[i].frames[0]);
 		canvas->clearSprite(enemy_bullets[i].frames[1]);
 		enemy_bullets[i].position += enemy_bullets[i].velocity;
 		enemy_bullets[i].frames[0].position = enemy_bullets[i].position;
 		enemy_bullets[i].frames[1].position = enemy_bullets[i].position;
-	}
-}
 
-void Scene13::drawEnemyBullets()
-{
-	size_t s = enemy_bullets.size();
-	static int counter = 0;
-	for (size_t i = 0; i < s; i++) {
 		if (counter%2 == 0) {
 			canvas->drawSprite(enemy_bullets[i].frames[0]);
 		} else {
@@ -194,7 +194,17 @@ void Scene13::drawEnemyBullets()
 	counter++;
 }
 
-void Scene13::drawDefenseGrid()
+void Scene13::updatePlayerBullets()
+{
+	size_t s = player_bullets.size();
+	for (size_t i = 0; i < s; i++) {
+		canvas->clearSprite(player_bullets[i]);
+		player_bullets[i].position.y += 1;
+		canvas->drawSprite(player_bullets[i]);
+	}
+}
+
+void Scene13::updateDefenseGrid()
 {
 	size_t s = defense_blocks.size();
 	for (size_t i = 0; i < s; i++) {
@@ -204,20 +214,22 @@ void Scene13::drawDefenseGrid()
 
 void Scene13::setupEnemyGrid()
 {
-	for (size_t x = 0; x < 5; x++) {
-		SI_EnemyA e = si_enemy_a; // copy sprites etc
-		e.position = Pointi((x*16)-(6*16), 40);
-		e.velocity = Pointi(1,0);
-		enemies.push_back(e);
-	}
-	for (size_t x = 0; x < 5; x++) {
-		SI_EnemyA e = si_enemy_a; // copy sprites etc
-		e.position = Pointi((x*16)-(6*16)-32, 24);
-		e.velocity = Pointi(1,0);
-		enemies.push_back(e);
+	size_t width = 16;
+	for (size_t y = 0; y < 5; y++) {
+		for (size_t x = 0; x < width; x++) {
+			SI_AnimatedSprite e;
+			if (y == 0) { e = si_enemy_a; }
+			if (y == 1) { e = si_enemy_b; }
+			if (y == 2) { e = si_enemy_b; }
+			if (y == 3) { e = si_enemy_c; }
+			if (y == 4) { e = si_enemy_c; }
+
+			e.position = Pointi((x*16)-((width/2)*16), 60 - (y*16));
+			e.velocity = Pointi(1,0);
+			enemies.push_back(e);
+		}
 	}
 }
-
 
 void Scene13::setupDefenseGrid()
 {
@@ -273,6 +285,78 @@ void Scene13::setupEnemyA()
 	si_enemy_a.addPixelSprite(enemyA1);
 }
 
+void Scene13::setupEnemyB()
+{
+	char enemyB0Sprite[88] = { // 11*8
+		0,0,1,0,0,0,0,0,1,0,0,
+		1,0,0,1,0,0,0,1,0,0,1,
+		1,0,1,1,1,1,1,1,1,0,1,
+		1,1,1,0,1,1,1,0,1,1,1,
+		1,1,1,1,1,1,1,1,1,1,1,
+		0,1,1,1,1,1,1,1,1,1,0,
+		0,0,1,0,0,0,0,0,1,0,0,
+		0,1,0,0,0,0,0,0,0,1,0
+	};
+
+	PixelSprite enemyB0;
+	enemyB0.init(enemyB0Sprite, 11, 8);
+	enemyB0.position = Pointi(canvas->width() / 2, canvas->height() / 2);
+
+	char enemyB1Sprite[88] = { // 11*8
+		0,0,1,0,0,0,0,0,1,0,0,
+		0,0,0,1,0,0,0,1,0,0,0,
+		0,0,1,1,1,1,1,1,1,0,0,
+		0,1,1,0,1,1,1,0,1,1,0,
+		1,1,1,1,1,1,1,1,1,1,1,
+		1,1,1,1,1,1,1,1,1,1,1,
+		1,0,1,0,0,0,0,0,1,0,1,
+		0,0,0,1,1,0,1,1,0,0,0
+	};
+
+	PixelSprite enemyB1;
+	enemyB1.init(enemyB1Sprite, 11, 8);
+	enemyB1.position = Pointi(canvas->width() / 2, canvas->height() / 2);
+
+	si_enemy_b.addPixelSprite(enemyB0);
+	si_enemy_b.addPixelSprite(enemyB1);
+}
+
+void Scene13::setupEnemyC()
+{
+	char enemyC0Sprite[96] = { // 12*8
+		0,0,0,0,1,1,1,1,0,0,0,0,
+		0,1,1,1,1,1,1,1,1,1,1,0,
+		1,1,1,1,1,1,1,1,1,1,1,1,
+		1,1,1,0,0,1,1,0,0,1,1,1,
+		1,1,1,1,1,1,1,1,1,1,1,1,
+		0,0,0,1,1,0,0,1,1,0,0,0,
+		0,0,1,1,0,1,1,0,1,1,0,0,
+		1,1,0,0,0,0,0,0,0,0,1,1
+	};
+
+	PixelSprite enemyC0;
+	enemyC0.init(enemyC0Sprite, 12, 8);
+	enemyC0.position = Pointi(canvas->width() / 2, canvas->height() / 2);
+
+	char enemyC1Sprite[96] = { // 12*8
+		0,0,0,0,1,1,1,1,0,0,0,0,
+		0,1,1,1,1,1,1,1,1,1,1,0,
+		1,1,1,1,1,1,1,1,1,1,1,1,
+		1,1,1,0,0,1,1,0,0,1,1,1,
+		1,1,1,1,1,1,1,1,1,1,1,1,
+		0,0,1,1,0,0,0,0,1,1,0,0,
+		0,1,1,0,0,1,1,0,0,1,1,0,
+		0,0,1,1,0,0,0,0,1,1,0,0
+	};
+
+	PixelSprite enemyC1;
+	enemyC1.init(enemyC1Sprite, 12, 8);
+	enemyC1.position = Pointi(canvas->width() / 2, canvas->height() / 2);
+
+	si_enemy_c.addPixelSprite(enemyC0);
+	si_enemy_c.addPixelSprite(enemyC1);
+}
+
 void Scene13::setupEnemyBullet()
 {
 	char enemybullet0Sprite[10] = { // 2*5
@@ -303,6 +387,18 @@ void Scene13::setupEnemyBullet()
 	si_enemy_bullet.addPixelSprite(enemybullet1);
 }
 
+void Scene13::setupPlayerBullet()
+{
+	char playerbulletSprite[6] = { // 2*3
+		1,1,
+		1,1,
+		1,1
+	};
+
+	player_bullet.init(playerbulletSprite, 2, 3);
+	//player_bullet.position = player.position;
+}
+
 void Scene13::setupDefenseBlock()
 {
 	char defenseBlockSprite[512] = { // 32*16
@@ -319,9 +415,9 @@ void Scene13::setupDefenseBlock()
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+		1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,
+		1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,
+		1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1
 	};
 
 	defense_block.init(defenseBlockSprite, 32, 16);

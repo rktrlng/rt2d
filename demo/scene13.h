@@ -24,15 +24,6 @@ struct SI_AnimatedSprite {
 	}
 };
 
-struct SI_EnemyBullet : public SI_AnimatedSprite {
-
-};
-
-struct SI_EnemyA : public SI_AnimatedSprite {
-
-};
-
-
 class Scene13: public SuperScene
 {
 public:
@@ -43,33 +34,39 @@ public:
 
 private:
 	int enemyupdate = 15; // 100fps/enemyupdate(20) = 5fps
-	int bulletupdate = 10; // 100fps/bulletupdate(10) = 10fps
-	int shootfrequency = 25; //random()%shootfrequency every enemy, every updateEnemies()
+	int bulletupdate = 4; // 100fps/bulletupdate(10) = 10fps
+	int shootfrequency = 100; //random()%shootfrequency every enemy, every updateEnemies()
 
-	std::vector<SI_EnemyA> enemies;
-	std::vector<SI_EnemyBullet> enemy_bullets;
+	std::vector<SI_AnimatedSprite> enemies;
+	std::vector<SI_AnimatedSprite> enemy_bullets;
+	std::vector<PixelSprite> player_bullets;
 	std::vector<PixelSprite> defense_blocks;
 
 	void setupEnemyGrid();
 	bool enemiesChangeDirection();
 	void setupDefenseGrid();
-	void drawDefenseGrid();
+	void updateDefenseGrid();
 	void setupPlayer();
 
 	void updateEnemies();
-	void drawEnemies();
 	void updateEnemyBullets();
-	void drawEnemyBullets();
-	void updateAndDrawPlayer();
+	void updatePlayerBullets();
+	void updatePlayer();
 
 	void setupEnemyA();
+	void setupEnemyB();
+	void setupEnemyC();
 	void setupEnemyBullet();
+	void setupPlayerBullet();
 	void setupDefenseBlock();
 
-	SI_EnemyA si_enemy_a;
-	SI_EnemyBullet si_enemy_bullet;
+	SI_AnimatedSprite si_enemy_a;
+	SI_AnimatedSprite si_enemy_b;
+	SI_AnimatedSprite si_enemy_c;
+	SI_AnimatedSprite si_enemy_bullet;
 	PixelSprite defense_block;
 	PixelSprite player;
+	PixelSprite player_bullet;
 
 	int lowestX();
 	int highestX();
