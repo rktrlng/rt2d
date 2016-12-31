@@ -45,12 +45,10 @@ GLuint Texture::createWhitePixels(int width, int height)
 {
 	std::cout << "Creating PixelBuffer: white " << width << "x" << height << std::endl;
 
-	PixelBuffer* pixels = new PixelBuffer(width, height, 3, 0, 0);
+	PixelBuffer pixels = PixelBuffer(width, height, 3, 0, 0);
 
 	// Generate the OpenGL Texture
-	createFromBuffer(pixels);
-
-	delete pixels;
+	createFromBuffer(&pixels);
 
 	return _gltexture[0];
 }
@@ -85,57 +83,55 @@ GLuint Texture::loadTGAImage(const std::string& filename, int filter, int wrap)
 		return false;
 	}
 
-	PixelBuffer* pixels = new PixelBuffer();
+	PixelBuffer pixels = PixelBuffer();
 
-	pixels->width = info[0] + info[1] * 256;
-	pixels->height = info[2] + info[3] * 256;
-	pixels->bitdepth = info[4] / 8;
-	pixels->filter = filter;
-	pixels->wrap = wrap;
+	pixels.width = info[0] + info[1] * 256;
+	pixels.height = info[2] + info[3] * 256;
+	pixels.bitdepth = info[4] / 8;
+	pixels.filter = filter;
+	pixels.wrap = wrap;
 
-	if (pixels->bitdepth != 1 && pixels->bitdepth != 3 && pixels->bitdepth != 4) {
+	if (pixels.bitdepth != 1 && pixels.bitdepth != 3 && pixels.bitdepth != 4) {
 		std::cout << "bytecount not 1, 3 or 4" << std::endl;
 		fclose(file);
 		return false;
 	}
 
-	long file_size = pixels->width * pixels->height * pixels->bitdepth;
+	long file_size = pixels.width * pixels.height * pixels.bitdepth;
 
 	//allocate memory for image data
-	pixels->data = new unsigned char[file_size];
+	pixels.data = new unsigned char[file_size];
 
 	//read in image data
-	s = fread(pixels->data, sizeof(unsigned char), file_size, file);
+	s = fread(pixels.data, sizeof(unsigned char), file_size, file);
 	if (s == 0) return false;
 
 	//close file
 	fclose(file);
 
 	// BGR(A) to RGB(A)
-	if (pixels->bitdepth == 3 || pixels->bitdepth == 4) {
-		BGR2RGB(pixels);
+	if (pixels.bitdepth == 3 || pixels.bitdepth == 4) {
+		BGR2RGB(&pixels);
 	}
 
 	// =================================================================
 	// Check if the image's width and height is a power of 2. No biggie, we can handle it.
-	if ((pixels->width & (pixels->width - 1)) != 0) {
+	if ((pixels.width & (pixels.width - 1)) != 0) {
 		_warrantybit = 0;
 		//std::cout << "warning: " << filename << "’s width is not a power of 2" << std::endl;
 	}
-	if ((pixels->height & (pixels->height - 1)) != 0) {
+	if ((pixels.height & (pixels.height - 1)) != 0) {
 		_warrantybit = 0;
 		//std::cout << "warning: " << filename << "’s height is not a power of 2" << std::endl;
 	}
-	if (pixels->width != pixels->height) {
+	if (pixels.width != pixels.height) {
 		//_warrantybit = 0;
 		//std::cout << "warning: " << filename << " is not square" << std::endl;
 	}
 	// =================================================================
 
 	// Generate the OpenGL Texture
-	createFromBuffer(pixels);
-
-	delete pixels;
+	createFromBuffer(&pixels);
 
 	return _gltexture[0];
 }

@@ -97,6 +97,10 @@ void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty
 void Sprite::setupSpriteByPixelBuffer(PixelBuffer* pixels)
 {
 	std::cout << "Sprite::setupSpriteByPixelBuffer() " <<  std::endl;
+	if (_dyntexture != NULL) {
+		delete _dyntexture;
+		_dyntexture = NULL;
+	}
 
 	_filter = pixels->filter;
 	_wrap = pixels->wrap;
@@ -112,6 +116,10 @@ void Sprite::setupSpriteByPixelBuffer(PixelBuffer* pixels)
 void Sprite::setupSpriteTGAPixelBuffer(const std::string& filename, int filter, int wrap)
 {
 	std::cout << "Sprite::setupSpriteByPixelBuffer() " <<  std::endl;
+	if (_dyntexture != NULL) {
+		delete _dyntexture;
+		_dyntexture = NULL;
+	}
 
 	_dyntexture = new Texture();
 	_dyntexture->loadTGAImage(filename, filter, wrap);

@@ -37,9 +37,8 @@ void Canvas::init(int pixelsize)
 	int border = 0;
 
 	// width, height, bitdepth, filter, wrap
-	PixelBuffer* tmp = new PixelBuffer((SWIDTH/pixelsize)-border, (SHEIGHT/pixelsize)-border, 3, 0, 0);
-	this->addDynamicSprite(tmp);
-	delete tmp;
+	PixelBuffer tmp = PixelBuffer((SWIDTH/pixelsize)-border, (SHEIGHT/pixelsize)-border, 3, 0, 0);
+	this->addDynamicSprite(&tmp);
 
 	// get the pixels from the texture and call it the global framebuffer
 	this->_framebuffer = this->sprite()->texture()->pixels();
