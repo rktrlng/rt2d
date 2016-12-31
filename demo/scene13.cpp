@@ -78,7 +78,7 @@ void Scene13::update(float deltaTime)
 		}
 
 		// player bullets
-		if (counter%bulletupdate/2 == 0) {
+		if (counter%bulletupdate/4 == 0) {
 			updatePlayerBullets();
 		}
 
@@ -87,6 +87,8 @@ void Scene13::update(float deltaTime)
 			updateEnemies();
 		}
 
+		// every timer update
+		checkEnemiesForPlayerBullets();
 		updateDefenseGrid();
 		updatePlayer();
 
@@ -96,26 +98,74 @@ void Scene13::update(float deltaTime)
 	}
 }
 
+
+void Scene13::checkEnemiesForPlayerBullets()
+{
+	std::vector<SI_AnimatedSprite>::iterator it = enemies.begin();
+	while (it != enemies.end()) {
+		int todelete = 0;
+
+		// check if player_bullet hits this enemy
+		std::vector<PixelSprite>::iterator pb = player_bullets.begin();
+		while (pb != player_bullets.end()) {
+			int pbtodelete = 0;
+
+			Pointi epos = (*it).position + enemycenter;
+			Pointi bpos = (*pb).position;
+
+			int left = epos.x - 6; // 8 or 11 wide
+			int right = epos.x + 6;
+			int top = epos.y + 4;
+			int bottom = epos.y - 4;
+
+			if ( bpos.x > left && bpos.x < right && bpos.y < top && bpos.y > bottom ) {
+				pbtodelete = 1;
+			}
+
+			// actually delete the bullet
+			if (pbtodelete == 1) {
+				canvas->clearSprite((*pb));
+				pb = player_bullets.erase(pb); // delete the bullet
+				todelete = 1; // delete the enemy
+			} else {
+				++pb;
+			}
+		}
+
+		// actually delete the enemy
+		if (todelete == 1) {
+			canvas->clearSprite((*it).frames[0]);
+			canvas->clearSprite((*it).frames[1]);
+			it = enemies.erase(it);
+		} else {
+			++it;
+		}
+	}
+}
+
 void Scene13::updateEnemies()
 {
 	static Pointi velocity = Pointi(1,0);
 	static int counter = 0;
-	size_t s = enemies.size();
+
 	if (enemiesChangeDirection()) {
 		velocity.x *= -1;
 		enemycenter.y -= 1;
 	}
 	enemycenter += velocity;
-	for (size_t i = 0; i < s; i++) {
-		canvas->clearSprite(enemies[i].frames[0]);
-		canvas->clearSprite(enemies[i].frames[1]);
-		enemies[i].frames[0].position = enemycenter + enemies[i].position;
-		enemies[i].frames[1].position = enemycenter + enemies[i].position;
+
+	std::vector<SI_AnimatedSprite>::iterator it = enemies.begin();
+	while (it != enemies.end()) {
+		// clear, update, draw
+		canvas->clearSprite((*it).frames[0]);
+		canvas->clearSprite((*it).frames[1]);
+		(*it).frames[0].position = enemycenter + (*it).position;
+		(*it).frames[1].position = enemycenter + (*it).position;
 
 		// do enemies shoot?
-		if (random()%shootfrequency == 1) {
+		if (random()%shootfrequency == 0) {
 			SI_AnimatedSprite b = si_enemy_bullet; // copy sprites etc
-			b.position = enemies[i].frames[0].position + Pointi(0,-2);
+			b.position = (*it).frames[0].position + Pointi(0,-2);
 			b.velocity = Pointi(0,-1);
 			enemy_bullets.push_back(b);
 		}
@@ -123,10 +173,12 @@ void Scene13::updateEnemies()
 		// draw
 		if (counter%8 < 4) {
 		//if (counter%2 == 0) {
-			canvas->drawSprite(enemies[i].frames[0]);
+			canvas->drawSprite((*it).frames[0]);
 		} else {
-			canvas->drawSprite(enemies[i].frames[1]);
+			canvas->drawSprite((*it).frames[1]);
 		}
+
+		++it;
 	}
 	counter++;
 }

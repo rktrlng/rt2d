@@ -37,7 +37,7 @@ public:
 private:
 	int enemyupdate = 15; // 100fps/enemyupdate(20) = 5fps
 	int bulletupdate = 4; // 100fps/bulletupdate(10) = 10fps
-	int shootfrequency = 100; //random()%shootfrequency every enemy, every updateEnemies()
+	int shootfrequency = 400; //random()%shootfrequency every enemy, every updateEnemies()
 
 	std::vector<SI_AnimatedSprite> enemies;
 	std::vector<SI_AnimatedSprite> enemy_bullets;
@@ -57,6 +57,7 @@ private:
 	void updateEnemyBullets();
 	void updatePlayerBullets();
 	void updatePlayer();
+	void checkEnemiesForPlayerBullets();
 
 	void setupEnemyA();
 	void setupEnemyB();
