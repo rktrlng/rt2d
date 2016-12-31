@@ -15,6 +15,7 @@ Scene13::Scene13() : SuperScene()
 	text[0]->message("Scene13: Space Invaders");
 
 	timer.start();
+	shoottimer.start();
 
 	// create Canvas
 	canvas = new Canvas(4); // pixelsize
@@ -57,9 +58,12 @@ void Scene13::update(float deltaTime)
 
 	// player wants to shoot
 	if (input()->getKeyDown( GLFW_KEY_SPACE )) {
-		PixelSprite b = player_bullet; // copy sprites etc
-		b.position = player.position + Pointi(0,2);
-		player_bullets.push_back(b);
+		if (shoottimer.seconds() > 0.8f) {
+			PixelSprite b = player_bullet; // copy sprites etc
+			b.position = player.position + Pointi(0,2);
+			player_bullets.push_back(b);
+			shoottimer.start();
+		}
 	}
 	// ###############################################################
 	// Update and draw only when it's time
@@ -74,7 +78,7 @@ void Scene13::update(float deltaTime)
 		}
 
 		// player bullets
-		if (counter%bulletupdate/4 == 0) {
+		if (counter%bulletupdate/2 == 0) {
 			updatePlayerBullets();
 		}
 
@@ -176,31 +180,165 @@ bool Scene13::enemiesChangeDirection()
 
 void Scene13::updateEnemyBullets()
 {
-	size_t s = enemy_bullets.size();
 	static int counter = 0;
-	for (size_t i = 0; i < s; i++) {
-		canvas->clearSprite(enemy_bullets[i].frames[0]);
-		canvas->clearSprite(enemy_bullets[i].frames[1]);
-		enemy_bullets[i].position += enemy_bullets[i].velocity;
-		enemy_bullets[i].frames[0].position = enemy_bullets[i].position;
-		enemy_bullets[i].frames[1].position = enemy_bullets[i].position;
+
+	// defense blocks
+	int defensewidth = 32;
+	int defenseheight = 16;
+
+	std::vector<SI_AnimatedSprite>::iterator it = enemy_bullets.begin();
+	while (it != enemy_bullets.end()) {
+		int todelete = 0;
+
+		// clear, update, draw
+		canvas->clearSprite((*it).frames[0]);
+		canvas->clearSprite((*it).frames[1]);
+		(*it).position += (*it).velocity;
+		(*it).frames[0].position = (*it).position;
+		(*it).frames[1].position = (*it).position;
 
 		if (counter%2 == 0) {
-			canvas->drawSprite(enemy_bullets[i].frames[0]);
+			canvas->drawSprite((*it).frames[0]);
 		} else {
-			canvas->drawSprite(enemy_bullets[i].frames[1]);
+			canvas->drawSprite((*it).frames[1]);
+		}
+
+		// Y-pos below defenseblock area. need to start paying attention.
+		if((*it).position.y < defense_blocks[0].position.y + (defenseheight/2) + 1) {
+			// check against defense_blocks
+			size_t ds = defense_blocks.size();
+			for (size_t j = 0; j < ds; j++) {
+				int left = defense_blocks[j].position.x - defensewidth/2;
+				int right = defense_blocks[j].position.x + defensewidth/2;
+				// is this bullet inside block area?
+				if ((*it).position.x > left && (*it).position.x < right) {
+					// start pixel perfect collisions here
+					Pointi dp = damagePoint(defense_blocks[j], (*it).position);
+					if (dp != POINT_OF_NO_RETURN) {
+						todelete = 1;
+						// this means an impact position is found inside defenseblock
+						//std::cout << "damagepoint: ("<<dp.x<<","<<dp.y<<")"<<std::endl;
+						explosion(defense_blocks[j], dp);
+					}
+				}
+			}
+		}
+		// below the screen
+		if((*it).position.y < 4) {
+			todelete = 1;
+		}
+		// actually delete the bullet
+		if (todelete == 1) {
+			canvas->clearSprite((*it).frames[0]);
+			canvas->clearSprite((*it).frames[1]);
+			it = enemy_bullets.erase(it);
+		} else {
+			++it;
 		}
 	}
 	counter++;
 }
 
+Pointi Scene13::damagePoint(PixelSprite& victim, Pointi pos)
+{
+	Pointi damagepoint = POINT_OF_NO_RETURN;
+	std::vector<Pixel>::iterator it = victim.pixels.begin();
+	while (it != victim.pixels.end()) {
+		if ((*it).position == pos - victim.position) { // each pixel is in local coord system around center pivot
+			damagepoint = (*it).position;
+			//it = victim.pixels.erase(it); // delete pixel from victim
+			(*it).color = RED;
+			++it;
+		} else {
+			++it;
+		}
+	}
+
+	return damagepoint;
+}
+
+void Scene13::explosion(PixelSprite& victim, Pointi pos)
+{
+	//std::cout << "local damagepoint: ("<<pos.x<<","<<pos.y<<")"<<std::endl;
+	std::vector<Pointi> explosionpixels;
+	explosionpixels.push_back(Pointi(-1,1)); // leftabove
+	explosionpixels.push_back(Pointi(0,1)); // above
+	explosionpixels.push_back(Pointi(1,1)); // rightabove
+
+	explosionpixels.push_back(Pointi(-1,0)); // left
+	explosionpixels.push_back(Pointi(0,0)); // itself
+	explosionpixels.push_back(Pointi(1,0)); // right
+
+	explosionpixels.push_back(Pointi(2,0)); // right right
+	explosionpixels.push_back(Pointi(-2,0)); // left left
+
+	explosionpixels.push_back(Pointi(-1,-1)); // leftbelow
+	explosionpixels.push_back(Pointi(0,-1)); // below
+	explosionpixels.push_back(Pointi(1,-1)); // rightbelow
+
+	//std::cout << "finding " << pos.x << "," << pos.y << std::endl;
+	size_t s = explosionpixels.size();
+	for (size_t i = 0; i < s; i++) {
+		std::vector<Pixel>::iterator it = victim.pixels.begin();
+		while (it != victim.pixels.end()) {
+			if ((*it).position == pos + explosionpixels[i]) {
+				it = victim.pixels.erase(it);
+				//std::cout << i << ": " << (*it).position.x << "," << (*it).position.y << std::endl;
+				// TODO fix: can't delete pixels further to the left or right?
+				//(*it).color = RED;
+				//++it;
+			} else {
+				++it;
+			}
+		}
+	}
+}
+
 void Scene13::updatePlayerBullets()
 {
-	size_t s = player_bullets.size();
-	for (size_t i = 0; i < s; i++) {
-		canvas->clearSprite(player_bullets[i]);
-		player_bullets[i].position.y += 1;
-		canvas->drawSprite(player_bullets[i]);
+	// defense blocks
+	int defensewidth = 32;
+	int defenseheight = 16;
+
+	std::vector<PixelSprite>::iterator it = player_bullets.begin();
+	while (it != player_bullets.end()) {
+		int todelete = 0;
+
+		canvas->clearSprite((*it));
+		(*it).position.y += 1;
+		canvas->drawSprite((*it));
+
+		// Y-pos still below defenseblock area. need to start paying attention.
+		if((*it).position.y < defense_blocks[0].position.y + (defenseheight/2) + 1) {
+			// check against defense_blocks
+			size_t ds = defense_blocks.size();
+			for (size_t j = 0; j < ds; j++) {
+				int left = defense_blocks[j].position.x - defensewidth/2;
+				int right = defense_blocks[j].position.x + defensewidth/2;
+				// is this bullet inside block area?
+				if ((*it).position.x > left && (*it).position.x < right) {
+					// start pixel perfect collisions here
+					Pointi dp = damagePoint(defense_blocks[j], (*it).position);
+					if (dp != POINT_OF_NO_RETURN) {
+						todelete = 1;
+						// this means an impact position is found inside defenseblock
+						//std::cout << "damagepoint: ("<<dp.x<<","<<dp.y<<")"<<std::endl;
+						explosion(defense_blocks[j], dp);
+					}
+				}
+			}
+		}
+		// above the screen
+		if((*it).position.y > canvas->height()) {
+			todelete = 1;
+		}
+		// actually delete the bullet
+		if (todelete == 1) {
+			canvas->clearSprite((*it));
+			it = player_bullets.erase(it);
+		} else {
+			++it;
+		}
 	}
 }
 
@@ -233,9 +371,11 @@ void Scene13::setupEnemyGrid()
 
 void Scene13::setupDefenseGrid()
 {
-	for (size_t x = 0; x < 5; x++) {
+	size_t num = 5;
+	int spacing = 64;
+	for (size_t x = 0; x < num; x++) {
 		PixelSprite d = defense_block; // copy sprites etc
-		d.position = Pointi((x*64)+32, 32);
+		d.position = Pointi((x*spacing)+32, 32);
 		defense_blocks.push_back(d);
 	}
 }

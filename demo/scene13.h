@@ -15,6 +15,8 @@
 #include "superscene.h"
 #include "canvas.h"
 
+#define POINT_OF_NO_RETURN Pointi(-1000,-1000)
+
 struct SI_AnimatedSprite {
 	Pointi position;
 	Pointi velocity;
@@ -48,6 +50,9 @@ private:
 	void updateDefenseGrid();
 	void setupPlayer();
 
+	Pointi damagePoint(PixelSprite& victim, Pointi pos);
+	void explosion(PixelSprite& victim, Pointi pos);
+
 	void updateEnemies();
 	void updateEnemyBullets();
 	void updatePlayerBullets();
@@ -74,6 +79,7 @@ private:
 	Pointi enemycenter;
 	Canvas* canvas;
 	Timer timer;
+	Timer shoottimer;
 };
 
 #endif /* SCENE13_H */
