@@ -86,14 +86,17 @@ void Scene13::update(float deltaTime)
 		// enemies
 		if (counter%enemyupdate == 0) {
 			updateEnemies();
+			if (enemies.empty()) {
+				restart();
+			}
 		}
 
 		// every timer update
 		checkEnemiesForPlayerBullets();
 		checkPlayerBulletsForEnemyBullets();
+		checkPlayerForEnemyBullets();
 		updateDefenseGrid();
 		updatePlayer();
-		checkPlayerForEnemyBullets(); // do this last (might restart game)
 
 		// restart frametimer
 		counter++;
