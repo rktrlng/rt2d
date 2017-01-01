@@ -28,6 +28,7 @@ Scene13::Scene13() : SuperScene()
 	setupDefenseBlock();
 	setupPlayer();
 	setupPlayerBullet();
+	setupExplosion();
 
 	restart();
 }
@@ -85,13 +86,16 @@ void Scene13::update(float deltaTime)
 
 		// enemies
 		if (counter%enemyupdate == 0) {
+			canvas->clearSprite(explosion);
 			updateEnemies();
+			explosion.position.y = -6;
 			if (enemies.empty()) {
 				restart();
 			}
 		}
 
 		// every timer update
+		canvas->drawSprite(explosion);
 		checkEnemiesForPlayerBullets();
 		checkPlayerBulletsForEnemyBullets();
 		checkPlayerForEnemyBullets();
@@ -140,6 +144,7 @@ void Scene13::checkEnemiesForPlayerBullets()
 
 			if ( bpos.x > left && bpos.x < right && bpos.y < top && bpos.y > bottom ) {
 				pbtodelete = 1;
+				explosion.position = epos;
 			}
 
 			// actually delete the bullet
@@ -341,7 +346,7 @@ void Scene13::updateEnemyBullets()
 						todelete = 1;
 						// this means an impact position is found inside defenseblock
 						//std::cout << "damagepoint: ("<<dp.x<<","<<dp.y<<")"<<std::endl;
-						explosion(defense_blocks[j], dp);
+						applyDamage(defense_blocks[j], dp);
 					}
 				}
 			}
@@ -380,31 +385,31 @@ Pointi Scene13::damagePoint(PixelSprite& victim, Pointi pos)
 	return damagepoint;
 }
 
-void Scene13::explosion(PixelSprite& victim, Pointi pos)
+void Scene13::applyDamage(PixelSprite& victim, Pointi pos)
 {
 	//std::cout << "local damagepoint: ("<<pos.x<<","<<pos.y<<")"<<std::endl;
-	std::vector<Pointi> explosionpixels;
-	explosionpixels.push_back(Pointi(-1,1)); // leftabove
-	explosionpixels.push_back(Pointi(0,1)); // above
-	explosionpixels.push_back(Pointi(1,1)); // rightabove
+	std::vector<Pointi> damagepixels;
+	damagepixels.push_back(Pointi(-1,1)); // leftabove
+	damagepixels.push_back(Pointi(0,1)); // above
+	damagepixels.push_back(Pointi(1,1)); // rightabove
 
-	explosionpixels.push_back(Pointi(-1,0)); // left
-	explosionpixels.push_back(Pointi(0,0)); // itself
-	explosionpixels.push_back(Pointi(1,0)); // right
+	damagepixels.push_back(Pointi(-1,0)); // left
+	damagepixels.push_back(Pointi(0,0)); // itself
+	damagepixels.push_back(Pointi(1,0)); // right
 
-	explosionpixels.push_back(Pointi(2,0)); // right right
-	explosionpixels.push_back(Pointi(-2,0)); // left left
+	damagepixels.push_back(Pointi(2,0)); // right right
+	damagepixels.push_back(Pointi(-2,0)); // left left
 
-	explosionpixels.push_back(Pointi(-1,-1)); // leftbelow
-	explosionpixels.push_back(Pointi(0,-1)); // below
-	explosionpixels.push_back(Pointi(1,-1)); // rightbelow
+	damagepixels.push_back(Pointi(-1,-1)); // leftbelow
+	damagepixels.push_back(Pointi(0,-1)); // below
+	damagepixels.push_back(Pointi(1,-1)); // rightbelow
 
 	//std::cout << "finding " << pos.x << "," << pos.y << std::endl;
-	size_t s = explosionpixels.size();
+	size_t s = damagepixels.size();
 	for (size_t i = 0; i < s; i++) {
 		std::vector<Pixel>::iterator it = victim.pixels.begin();
 		while (it != victim.pixels.end()) {
-			if ((*it).position == pos + explosionpixels[i]) {
+			if ((*it).position == pos + damagepixels[i]) {
 				it = victim.pixels.erase(it);
 				//std::cout << i << ": " << (*it).position.x << "," << (*it).position.y << std::endl;
 				// TODO fix: can't delete pixels further to the left or right?
@@ -446,7 +451,7 @@ void Scene13::updatePlayerBullets()
 						todelete = 1;
 						// this means an impact position is found inside defenseblock
 						//std::cout << "damagepoint: ("<<dp.x<<","<<dp.y<<")"<<std::endl;
-						explosion(defense_blocks[j], dp);
+						applyDamage(defense_blocks[j], dp);
 					}
 				}
 			}
@@ -724,4 +729,22 @@ void Scene13::setupPlayer()
 
 	player.init(playerSprite, 16, 8);
 	player.position = Pointi(canvas->width() / 2, 8);
+}
+
+void Scene13::setupExplosion()
+{
+	char explosionSprite[108] = { // 12*9
+		0,0,1,0,0,0,0,0,0,1,0,0,
+		0,0,0,1,0,0,0,0,1,0,0,0,
+		1,1,0,0,0,0,0,0,0,0,1,1,
+		0,0,0,0,1,0,0,1,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,1,0,0,1,0,0,0,0,
+		1,1,0,0,0,0,0,0,0,0,1,1,
+		0,0,0,1,0,0,0,0,1,0,0,0,
+		0,0,1,0,0,0,0,0,0,1,0,0
+	};
+
+	explosion.init(explosionSprite, 12, 9);
+	explosion.position = Pointi(0, 0);
 }

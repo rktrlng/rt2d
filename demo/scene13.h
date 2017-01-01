@@ -52,7 +52,7 @@ private:
 	void restart();
 
 	Pointi damagePoint(PixelSprite& victim, Pointi pos);
-	void explosion(PixelSprite& victim, Pointi pos);
+	void applyDamage(PixelSprite& victim, Pointi pos);
 
 	void updateEnemies();
 	void updateEnemyBullets();
@@ -68,6 +68,7 @@ private:
 	void setupEnemyBullet();
 	void setupPlayerBullet();
 	void setupDefenseBlock();
+	void setupExplosion();
 
 	SI_AnimatedSprite si_enemy_a;
 	SI_AnimatedSprite si_enemy_b;
@@ -76,6 +77,7 @@ private:
 	PixelSprite defense_block;
 	PixelSprite player;
 	PixelSprite player_bullet;
+	PixelSprite explosion;
 
 	int lowestX();
 	int highestX();
