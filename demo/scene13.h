@@ -49,6 +49,7 @@ private:
 	void setupDefenseGrid();
 	void updateDefenseGrid();
 	void setupPlayer();
+	void restart();
 
 	Pointi damagePoint(PixelSprite& victim, Pointi pos);
 	void explosion(PixelSprite& victim, Pointi pos);
@@ -58,6 +59,8 @@ private:
 	void updatePlayerBullets();
 	void updatePlayer();
 	void checkEnemiesForPlayerBullets();
+	void checkPlayerBulletsForEnemyBullets();
+	void checkPlayerForEnemyBullets();
 
 	void setupEnemyA();
 	void setupEnemyB();
@@ -81,6 +84,9 @@ private:
 	Canvas* canvas;
 	Timer timer;
 	Timer shoottimer;
+
+	int lives = 3;
+	int maxlives = 3;
 };
 
 #endif /* SCENE13_H */

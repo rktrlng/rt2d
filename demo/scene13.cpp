@@ -25,15 +25,11 @@ Scene13::Scene13() : SuperScene()
 	setupEnemyB();
 	setupEnemyC();
 	setupEnemyBullet();
-
-	enemycenter = Pointi(canvas->width()/2, canvas->height()/2);
-	setupEnemyGrid();
-
 	setupDefenseBlock();
-	setupDefenseGrid();
-
 	setupPlayer();
 	setupPlayerBullet();
+
+	restart();
 }
 
 
@@ -49,6 +45,11 @@ void Scene13::update(float deltaTime)
 	// Make SuperScene do what it needs to do (Escape key stops Scene)
 	// ###############################################################
 	SuperScene::update(deltaTime);
+
+	std::string titletxt = "Scene13: Space Invaders (lives: ";
+	titletxt.append(rt2d::to_string<int>(lives));
+	titletxt.append(")");
+	text[0]->message(titletxt);
 
 	//text[0]->message(""); // clear title
 	//text[1]->message(""); // clear fps message
@@ -89,8 +90,10 @@ void Scene13::update(float deltaTime)
 
 		// every timer update
 		checkEnemiesForPlayerBullets();
+		checkPlayerBulletsForEnemyBullets();
 		updateDefenseGrid();
 		updatePlayer();
+		checkPlayerForEnemyBullets(); // do this last (might restart game)
 
 		// restart frametimer
 		counter++;
@@ -98,6 +101,20 @@ void Scene13::update(float deltaTime)
 	}
 }
 
+void Scene13::restart()
+{
+	canvas->fill(canvas->backgroundcolor);
+	lives = maxlives;
+	player.position.x = canvas->width()/2;
+
+	player_bullets.clear();
+	enemy_bullets.clear();
+
+	enemycenter = Pointi(canvas->width()/2, canvas->height()/2);
+	setupEnemyGrid();
+
+	setupDefenseGrid();
+}
 
 void Scene13::checkEnemiesForPlayerBullets()
 {
@@ -140,6 +157,81 @@ void Scene13::checkEnemiesForPlayerBullets()
 		} else {
 			++it;
 		}
+	}
+}
+
+void Scene13::checkPlayerBulletsForEnemyBullets()
+{
+	std::vector<SI_AnimatedSprite>::iterator it = enemy_bullets.begin();
+	while (it != enemy_bullets.end()) {
+		int todelete = 0;
+
+		// check if player_bullet hits this enemy bullet
+		std::vector<PixelSprite>::iterator pb = player_bullets.begin();
+		while (pb != player_bullets.end()) {
+			int pbtodelete = 0;
+
+			Pointi epos = (*it).position;
+			Pointi bpos = (*pb).position;
+
+			int left = epos.x - 2;
+			int right = epos.x + 2;
+			int top = epos.y + 2;
+			int bottom = epos.y - 2;
+
+			if ( bpos.x > left && bpos.x < right && bpos.y < top && bpos.y > bottom ) {
+				pbtodelete = 1;
+			}
+
+			// actually delete the bullet
+			if (pbtodelete == 1) {
+				canvas->clearSprite((*pb));
+				pb = player_bullets.erase(pb); // delete the bullet
+				todelete = 1; // delete the enemy_bullet
+			} else {
+				++pb;
+			}
+		}
+
+		// actually delete the enemy bullet
+		if (todelete == 1) {
+			canvas->clearSprite((*it).frames[0]);
+			canvas->clearSprite((*it).frames[1]);
+			it = enemy_bullets.erase(it);
+		} else {
+			++it;
+		}
+	}
+}
+
+void Scene13::checkPlayerForEnemyBullets()
+{
+	std::vector<SI_AnimatedSprite>::iterator it = enemy_bullets.begin();
+	while (it != enemy_bullets.end()) {
+		Pointi epos = (*it).position;
+		Pointi bpos = player.position;
+
+		int left = bpos.x - 8; // 16 wide
+		int right = bpos.x + 8;
+		int top = bpos.y + 3;
+		int bottom = bpos.y - 3;
+
+		if ( epos.x > left && epos.x < right && epos.y < top && epos.y > bottom ) {
+			lives--;
+			std::cout << "PLAYER HIT! lives: " << lives << std::endl;
+			canvas->clearSprite(player);
+
+			canvas->clearSprite((*it).frames[0]);
+			canvas->clearSprite((*it).frames[1]);
+
+			it = enemy_bullets.erase(it);
+		} else {
+			++it;
+		}
+	}
+
+	if (lives <=0) {
+		restart();
 	}
 }
 
@@ -193,30 +285,6 @@ void Scene13::updatePlayer()
 		player.position.x += 1;
 	}
 	canvas->drawSprite(player);
-}
-
-int Scene13::lowestX()
-{
-	int low = enemies[0].frames[0].position.x;
-	size_t s = enemies.size();
-	for (size_t i = 0; i < s; i++) {
-		if (enemies[i].frames[0].position.x < low) {
-			low = enemies[i].frames[0].position.x;
-		}
-	}
-	return low;
-}
-
-int Scene13::highestX()
-{
-	int high = enemies[0].frames[0].position.x;
-	size_t s = enemies.size();
-	for (size_t i = 0; i < s; i++) {
-		if (enemies[i].frames[0].position.x > high) {
-			high = enemies[i].frames[0].position.x;
-		}
-	}
-	return high;
 }
 
 bool Scene13::enemiesChangeDirection()
@@ -404,6 +472,7 @@ void Scene13::updateDefenseGrid()
 
 void Scene13::setupEnemyGrid()
 {
+	enemies.clear();
 	size_t width = 16;
 	for (size_t y = 0; y < 5; y++) {
 		for (size_t x = 0; x < width; x++) {
@@ -423,6 +492,7 @@ void Scene13::setupEnemyGrid()
 
 void Scene13::setupDefenseGrid()
 {
+	defense_blocks.clear();
 	size_t num = 5;
 	int spacing = 64;
 	for (size_t x = 0; x < num; x++) {
@@ -432,15 +502,35 @@ void Scene13::setupDefenseGrid()
 	}
 }
 
+// ###########################################################################
+// help functions
+int Scene13::lowestX()
+{
+	int low = enemies[0].frames[0].position.x;
+	size_t s = enemies.size();
+	for (size_t i = 0; i < s; i++) {
+		if (enemies[i].frames[0].position.x < low) {
+			low = enemies[i].frames[0].position.x;
+		}
+	}
+	return low;
+}
+
+int Scene13::highestX()
+{
+	int high = enemies[0].frames[0].position.x;
+	size_t s = enemies.size();
+	for (size_t i = 0; i < s; i++) {
+		if (enemies[i].frames[0].position.x > high) {
+			high = enemies[i].frames[0].position.x;
+		}
+	}
+	return high;
+}
 
 
-
-
-
-
-
-
-
+// ###########################################################################
+// setup all sprites
 void Scene13::setupEnemyA()
 {
 	char enemyA0Sprite[64] = { // 8*8
