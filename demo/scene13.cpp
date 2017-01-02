@@ -90,6 +90,8 @@ void Scene13::update(float deltaTime)
 			updateEnemies();
 			explosion.position.y = -6;
 			if (enemies.empty()) {
+				std::cout << "WELL DONE EARTHLING" << std::endl;
+				std::cout << "THIS TIME YOU WIN" << std::endl;
 				restart();
 			}
 		}
@@ -239,6 +241,7 @@ void Scene13::checkPlayerForEnemyBullets()
 	}
 
 	if (lives <=0) {
+		std::cout << "GAME OVER" << std::endl;
 		restart();
 	}
 }
@@ -345,7 +348,7 @@ void Scene13::updateEnemyBullets()
 					if (dp != POINT_OF_NO_RETURN) {
 						todelete = 1;
 						// this means an impact position is found inside defenseblock
-						//std::cout << "damagepoint: ("<<dp.x<<","<<dp.y<<")"<<std::endl;
+						//std::cout << "damagepoint: "<< dp <<std::endl;
 						applyDamage(defense_blocks[j], dp);
 					}
 				}
@@ -387,7 +390,7 @@ Pointi Scene13::damagePoint(PixelSprite& victim, Pointi pos)
 
 void Scene13::applyDamage(PixelSprite& victim, Pointi pos)
 {
-	//std::cout << "local damagepoint: ("<<pos.x<<","<<pos.y<<")"<<std::endl;
+	//std::cout << "local damagepoint: "<< pos <<std::endl;
 	std::vector<Pointi> damagepixels;
 	damagepixels.push_back(Pointi(-1,1)); // leftabove
 	damagepixels.push_back(Pointi(0,1)); // above
@@ -404,14 +407,14 @@ void Scene13::applyDamage(PixelSprite& victim, Pointi pos)
 	damagepixels.push_back(Pointi(0,-1)); // below
 	damagepixels.push_back(Pointi(1,-1)); // rightbelow
 
-	//std::cout << "finding " << pos.x << "," << pos.y << std::endl;
+	//std::cout << "finding " << pos << std::endl;
 	size_t s = damagepixels.size();
 	for (size_t i = 0; i < s; i++) {
 		std::vector<Pixel>::iterator it = victim.pixels.begin();
 		while (it != victim.pixels.end()) {
 			if ((*it).position == pos + damagepixels[i]) {
 				it = victim.pixels.erase(it);
-				//std::cout << i << ": " << (*it).position.x << "," << (*it).position.y << std::endl;
+				//std::cout << i << ": " << (*it).position << std::endl;
 				// TODO fix: can't delete pixels further to the left or right?
 				//(*it).color = RED;
 				//++it;
@@ -450,7 +453,7 @@ void Scene13::updatePlayerBullets()
 					if (dp != POINT_OF_NO_RETURN) {
 						todelete = 1;
 						// this means an impact position is found inside defenseblock
-						//std::cout << "damagepoint: ("<<dp.x<<","<<dp.y<<")"<<std::endl;
+						//std::cout << "damagepoint: "<< dp <<std::endl;
 						applyDamage(defense_blocks[j], dp);
 					}
 				}
