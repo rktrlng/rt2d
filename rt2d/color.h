@@ -100,6 +100,18 @@ struct RGBAColor
 		uint32_t color = (r << 24) + (g << 16) + (b << 8) + (a);
 		return color;
 	}
+	/// @brief == operator overloader
+	/// @param rhs the color to compare against
+	/// @return bool equal or not
+	inline bool operator==(const RGBAColor& rhs) {
+		return ( r == rhs.r && g == rhs.g && b == rhs.b && a == rhs.a );
+	}
+	/// @brief != operator overloader
+	/// @param rhs the color to compare against
+	/// @return bool equal or not
+	inline bool operator!=(const RGBAColor& rhs) {
+		return !(*this == rhs);
+	}
 };
 
 

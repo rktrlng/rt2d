@@ -142,11 +142,7 @@ int Scene14::findFullRow()
 		int gapfound = 0; // assume a full row
 		for (int x = left; x < right; x++) {
 			// find a gap in this row
-			if(
-				field.cells[counter].color.r == field.clearcolor.r &&
-				field.cells[counter].color.g == field.clearcolor.g &&
-				field.cells[counter].color.b == field.clearcolor.b
-			) {
+			if( field.cells[counter].color == field.clearcolor ) {
 				gapfound = 1; // nope, not a full row
 			}
 			counter++;
@@ -173,11 +169,7 @@ void Scene14::updateBlock()
 		int pixelindex = (posinfield.y * field.fieldwidth) + posinfield.x;
 		int rowbelow = pixelindex-field.fieldwidth;
 		if (rowbelow >= 0) {
-			if (
-				field.cells[rowbelow].color.r == field.clearcolor.r &&
-				field.cells[rowbelow].color.g == field.clearcolor.g &&
-				field.cells[rowbelow].color.b == field.clearcolor.b
-				) {
+			if ( field.cells[rowbelow].color == field.clearcolor ) {
 					//allow canmovedownpixel to stay 1 (do nothing)
 			} else {
 				canmovedownpixel = 0;
