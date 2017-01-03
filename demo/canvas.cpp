@@ -55,6 +55,11 @@ void Canvas::setPixel(int x, int y, RGBAColor color)
 	this->_framebuffer->setPixel(x, y, color);
 }
 
+RGBAColor Canvas::getPixel(int x, int y)
+{
+	return this->_framebuffer->getPixel(x, y);
+}
+
 void Canvas::clearPixel(int x, int y)
 {
 	this->_framebuffer->setPixel(x, y, backgroundcolor);

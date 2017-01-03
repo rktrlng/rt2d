@@ -46,17 +46,17 @@ struct HSVColor
 
 /// @brief A 32 bit RGBA color.
 ///
-/// A struct that defines an RGBA Color. Each value is an unsigned char (0-255).
+/// A struct that defines an RGBA Color. Each value is an uint8_t (0-255).
 struct RGBAColor
 {
 	/// @brief The red component of the color
-	unsigned char r = 255;
+	uint8_t r = 255;
 	/// @brief The green component of the color
-	unsigned char g = 255;
+	uint8_t g = 255;
 	/// @brief The blue component of the color
-	unsigned char b = 255;
+	uint8_t b = 255;
 	/// @brief The alpha component of the color
-	unsigned char a = 255;
+	uint8_t a = 255;
 
 	/// @brief constructor
 	RGBAColor() {
@@ -70,7 +70,7 @@ struct RGBAColor
 	/// @param green The green component of the color
 	/// @param blue The blue component of the color
 	/// @param alpha The alpha component of the color
-	RGBAColor(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha) {
+	RGBAColor(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) {
 		r = red;
 		g = green;
 		b = blue;
@@ -80,7 +80,7 @@ struct RGBAColor
 	/// @param red The red component of the color
 	/// @param green The green component of the color
 	/// @param blue The blue component of the color
-	RGBAColor(unsigned char red, unsigned char green, unsigned char blue) {
+	RGBAColor(uint8_t red, uint8_t green, uint8_t blue) {
 		r = red;
 		g = green;
 		b = blue;
@@ -156,9 +156,9 @@ struct Color
 	// http://www.easyrgb.com/index.php?X=MATH&H=21#text21
 	/// @brief HSV to RGBA conversion
 	static RGBAColor HSV2RGBA(HSVColor hsv) {
-		unsigned char R = 0;
-		unsigned char G = 0;
-		unsigned char B = 0;
+		uint8_t R = 0;
+		uint8_t G = 0;
+		uint8_t B = 0;
 		if ( hsv.s == 0 ) { //HSV from 0 to 1
 			R = hsv.v * 255;
 			G = hsv.v * 255;

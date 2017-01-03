@@ -75,6 +75,7 @@ class Canvas: public Entity
 		virtual void update(float deltaTime);
 		void init(int pixelsize);
 		void setPixel(int x, int y, RGBAColor color);
+		RGBAColor getPixel(int x, int y);
 		void clearPixel(int x, int y);
 		void fill(RGBAColor color);
 

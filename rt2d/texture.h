@@ -107,6 +107,25 @@ struct PixelBuffer
 		}
 	}
 
+	/// @brief get the color of a pixel in the buffer
+	/// @param x the x coordinate of the pixel
+	/// @param y the y coordinate of the pixel
+	/// @return color RGBAColor of the pixel
+	RGBAColor getPixel(int x, int y)
+	{
+		RGBAColor color = RGBAColor(0,0,0,255);
+		int start = ((y*this->width) + x) * this->bitdepth;
+		if (start > this->width * this->height * this->bitdepth || start < 0) { return color; }
+
+		color.r = this->data[start+0];
+		color.g = this->data[start+1];
+		color.b = this->data[start+2];
+		if (this->bitdepth == 4) {
+			color.a = this->data[start+3];
+		}
+		return color;
+	}
+
 	/// @brief destroy the pixel data
 	void destroy() { delete[] data; data = 0; /*std::cout << "destroy PixelBuffer" << std::endl;*/ }
 };
