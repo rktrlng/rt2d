@@ -31,9 +31,9 @@ Scene14::Scene14() : SuperScene()
 
 	active_block = rand()%pixelsprites.size();
 	block = pixelsprites[active_block];
-	block.position = Pointi(canvas->width()/2, 30);
+	block.position = Pointi(canvas->width()/2, field.fieldheight - 2); // near the top
 
-	rot = 0;
+	rot = 0; // the rotation of the block (0,1,2,3)
 }
 
 
@@ -113,6 +113,7 @@ void Scene14::clearRow(int row)
 	for (int y = 0; y < field.fieldheight-1; y++) {
 		for (int x = 0; x < field.fieldwidth; x++) {
 			if (y >= row) {
+				// row is the row to be cleared, copy pixels from row above
 				field.cells[counter].color = field.cells[counter+field.fieldwidth].color;
 			}
 			counter++;
@@ -134,10 +135,8 @@ void Scene14::drawField()
 
 int Scene14::findFullRow()
 {
-	// TODO:
 	// check each row of pixels in field
 	// if there are no gaps, it's a full line
-	//   if the line is full, copy pixels from lines above from that point on
 	int counter = 0;
 	for (int y = bottom; y < top-1; y++) {
 		int gapfound = 0; // assume a full row
@@ -154,7 +153,7 @@ int Scene14::findFullRow()
 		}
 		// what to do when there's a full row
 		if (gapfound == 0) {
-			return y-bottom;
+			return y-bottom; // the line that has no gaps
 		}
 
 	}
@@ -166,7 +165,6 @@ void Scene14::updateBlock()
 	int canmovedown = 0;
 	int canmovedownpixel = 1;
 	size_t s = block.pixels.size();
-	//std::cout << "--------------" << std::endl;
 	for (size_t i = 0; i < s; i++) {
 		// calculate position of pixel relative to field
 		Pointi p = block.pixels[i].position + block.position;
@@ -174,7 +172,6 @@ void Scene14::updateBlock()
 		//find out the index of this pixel in the field
 		int pixelindex = (posinfield.y * field.fieldwidth) + posinfield.x;
 		int rowbelow = pixelindex-field.fieldwidth;
-		//std::cout << p << " : " << posinfield << " index: " << pixelindex << std::endl;
 		if (rowbelow >= 0) {
 			if (
 				field.cells[rowbelow].color.r == field.clearcolor.r &&
@@ -201,7 +198,6 @@ void Scene14::updateBlock()
 		for (size_t i = 0; i < s; i++) {
 			Pointi p = block.pixels[i].position + block.position;
 			Pointi posinfield = p - Pointi(left, bottom);
-			//std::cout << p << " : " << posinfield << std::endl;
 			int pixelindex = (posinfield.y * field.fieldwidth) + posinfield.x;
 			if (pixelindex >= 0) {
 				int x = pixelindex%field.fieldwidth;
@@ -210,6 +206,8 @@ void Scene14::updateBlock()
 				field.cells[pixelindex].position = Pointi(x, y);
 			}
 		}
+
+		canvas->drawSprite(block);
 
 		// new block
 		active_block = rand()%pixelsprites.size();
