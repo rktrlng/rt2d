@@ -57,6 +57,7 @@ private:
 	int rot; // rotation of block (0,1,2,3)
 	int starty; // startposition of block
 	int timestep;
+	int rowscleared;
 
 	int left;
 	int right;
