@@ -23,6 +23,7 @@
 #include "scene11.h"
 #include "scene12.h"
 #include "scene13.h"
+#include "scene14.h"
 
 int main( void )
 {
@@ -47,6 +48,7 @@ int main( void )
 	scenes.push_back(new Scene11());
 	scenes.push_back(new Scene12());
 	scenes.push_back(new Scene13());
+	scenes.push_back(new Scene14());
 	int s = scenes.size();
 
 	// SuperScene::Player in superscene.h
