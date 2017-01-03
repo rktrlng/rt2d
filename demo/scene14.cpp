@@ -14,6 +14,10 @@ Scene14::Scene14() : SuperScene()
 
 	text[0]->message("Scene14: Tetris");
 
+	starty = 34;
+	rot = 0;
+	timestep = 25;
+
 	timer.start();
 
 	// create Canvas
@@ -29,11 +33,7 @@ Scene14::Scene14() : SuperScene()
 
 	preparePixelSprites();
 
-	active_block = rand()%pixelsprites.size();
-	block = pixelsprites[active_block];
-	block.position = Pointi(canvas->width()/2, field.fieldheight - 2); // near the top
-
-	rot = 0; // the rotation of the block (0,1,2,3)
+	createNewBlock();
 }
 
 
@@ -209,14 +209,18 @@ void Scene14::updateBlock()
 
 		canvas->drawSprite(block);
 
-		// new block
-		active_block = rand()%pixelsprites.size();
-		block = pixelsprites[active_block].rotation(0);
-		block.position = Pointi(canvas->width()/2, 34);
-		rot = 0;
+		createNewBlock();
 	}
 
 	canvas->drawSprite(block);
+}
+
+void Scene14::createNewBlock()
+{
+	active_block = rand()%pixelsprites.size();
+	block = pixelsprites[active_block];
+	block.position = Pointi(canvas->width()/2, starty);
+	rot = 0;
 }
 
 

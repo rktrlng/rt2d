@@ -41,11 +41,11 @@ public:
 private:
 	Field field;
 	PixelSprite block;
-	int rot; // rotation of block (0,1,2,3)
 	std::vector<PixelSprite> pixelsprites;
 	int active_block;
 
 	void preparePixelSprites();
+	void createNewBlock();
 	void drawField();
 	void updateBlock();
 	int findFullRow();
@@ -53,7 +53,10 @@ private:
 
 	Canvas* canvas;
 	Timer timer;
-	int timestep = 25;
+
+	int rot; // rotation of block (0,1,2,3)
+	int starty; // startposition of block
+	int timestep;
 
 	int left;
 	int right;
