@@ -28,6 +28,8 @@ Entity::Entity()
 
 	_sprite = NULL;
 	_line = NULL;
+
+	_modelMatrix = glm::mat4(1.0f);
 }
 
 Entity::~Entity()
@@ -153,4 +155,16 @@ void Entity::addGrid(const std::string& filename, int u, int v, int cols, int ro
 	}
 
 	std::cout << "grid added: " << _spritebatch.size() << " sprites." << std::endl;
+}
+
+void Entity::setModelMatrix(glm::mat4 mm) {
+	this->_modelMatrix = mm;
+}
+
+glm::mat4 Entity::getParentModelMatrix() {
+	if (this->_parent != NULL) {
+		return this->_parent->_modelMatrix;
+	} else {
+		return glm::mat4(1.0f);
+	}
 }
