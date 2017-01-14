@@ -22,7 +22,7 @@
 // Include GLFW
 #include <glfw3.h>
 
-#include <rt2d/config.h>
+#include <rt2d/rt2dconfig.h>
 #include <rt2d/shader.h>
 #include <rt2d/texture.h>
 #include <rt2d/mesh.h>

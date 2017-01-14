@@ -16,7 +16,7 @@
 // Include GLFW
 #include <glfw3.h>
 
-#include <config.h>
+#include <rt2dconfig.h>
 
 /*
 #define 	GLFW_KEY_UNKNOWN   -1

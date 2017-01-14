@@ -1,5 +1,5 @@
 /**
- * @file config.h
+ * @file rt2dconfig.h
  *
  * @brief This header file defines some global vars.
  *
