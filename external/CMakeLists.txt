@@ -54,14 +54,3 @@ target_link_libraries(GLEW_190
 	${OPENGL_LIBRARY}
 	${EXTRA_LIBS}
 )
-
-### RS-232 ###
-
-include_directories(
-	rs232/
-)
-
-add_library( rs232 STATIC
-	rs232/rs232.c
-	rs232/rs232.h
-)

@@ -22,7 +22,7 @@
 #include <rt2d/entity.h>
 #include <rt2d/scene.h>
 #include <rt2d/shader.h>
-#include <rt2d/config.h>
+#include <rt2d/rt2dconfig.h>
 
 /// @brief The Renderer class renders meshes (vertices, normals, UV coordinates) from Sprites.
 class Renderer

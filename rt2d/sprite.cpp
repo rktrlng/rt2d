@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-#include <rt2d/config.h>
+#include <rt2d/rt2dconfig.h>
 #include <rt2d/sprite.h>
 
 Sprite::Sprite()

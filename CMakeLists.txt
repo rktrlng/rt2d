@@ -2,6 +2,14 @@
 cmake_minimum_required (VERSION 2.6)
 project (rt2d)
 
+# delete CMakeCache.txt from the build directory when you edit these options
+OPTION(MAKE_START "Make RT2D start application" ON)
+OPTION(MAKE_DEMO "Make RT2D demo (tests) application" ON)
+OPTION(MAKE_RS232 "Make RS232 library" ON)
+OPTION(USE_OPENAL "Use OpenAL" ON)
+OPTION(MAKE_AUDIOSTART "Make OpenAL/RT2D audiostart" ON)
+OPTION(MAKE_OPENAL_TONEGEN "Make OpenAL Tone Generator" ON)
+
 
 if( CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR )
     message( FATAL_ERROR "Please select another Build Directory ! (and give it a clever name, like 'build')" )
@@ -50,7 +58,6 @@ include_directories(
 	${CMAKE_SOURCE_DIR}/external/glfw-3.0.3/include/GLFW/
 	${CMAKE_SOURCE_DIR}/external/glm-0.9.7.0/
 	${CMAKE_SOURCE_DIR}/external/glew-1.9.0/include/
-	${CMAKE_SOURCE_DIR}/external/rs232/
 	${CMAKE_SOURCE_DIR}/rt2d/
 	${CMAKE_SOURCE_DIR}/.
 )
@@ -58,14 +65,12 @@ include_directories(
 link_directories(
 	${CMAKE_SOURCE_DIR}/external/glfw-3.0.3/src/
 	${CMAKE_SOURCE_DIR}/external/glew-1.9.0/
-	${CMAKE_SOURCE_DIR}/external/rs232
 	${CMAKE_SOURCE_DIR}/external/
 	${CMAKE_SOURCE_DIR}/rt2d
 )
 
-set(ALL_LIBS
+set(ALL_GRAPHICS_LIBS
 	${OPENGL_LIBRARY}
-	rs232
 	rt2d
 	GLFW_303
 	GLEW_190
@@ -80,13 +85,28 @@ add_definitions(
 )
 
 ####################################################################
+# librs232.a                                                       #
+####################################################################
+IF(MAKE_RS232)
+	include_directories(
+		${CMAKE_SOURCE_DIR}/external/rs232/
+	)
+	link_directories(
+		${CMAKE_SOURCE_DIR}/external/rs232
+	)
+	add_library( rs232 STATIC
+		external/rs232/rs232.c
+		external/rs232/rs232.h
+	)
+ENDIF()
+
+####################################################################
 # librt2d.a                                                        #
 ####################################################################
 add_library(rt2d
 	rt2d/camera.cpp
 	rt2d/camera.h
 	rt2d/color.h
-	rt2d/config.h
 	rt2d/core.cpp
 	rt2d/core.h
 	rt2d/entity.cpp
@@ -104,6 +124,7 @@ add_library(rt2d
 	rt2d/renderer.h
 	rt2d/resourcemanager.cpp
 	rt2d/resourcemanager.h
+	rt2d/rt2dconfig.h
 	rt2d/scene.cpp
 	rt2d/scene.h
 	rt2d/shader.cpp
@@ -133,78 +154,144 @@ file(
 ####################################################################
 # demo                                                             #
 ####################################################################
-add_executable(demo
-	demo/main.cpp
-	demo/basicentity.cpp
-	demo/basicentity.h
-	demo/canvas.cpp
-	demo/canvas.h
-	demo/scene00.cpp
-	demo/scene00.h
-	demo/scene01.cpp
-	demo/scene01.h
-	demo/scene02.cpp
-	demo/scene02.h
-	demo/scene03.cpp
-	demo/scene03.h
-	demo/scene03a.cpp
-	demo/scene03a.h
-	demo/scene03b.cpp
-	demo/scene03b.h
-	demo/scene04.cpp
-	demo/scene04.h
-	demo/scene05.cpp
-	demo/scene05.h
-	demo/scene06.cpp
-	demo/scene06.h
-	demo/scene06a.cpp
-	demo/scene06a.h
-	demo/scene07.cpp
-	demo/scene07.h
-	demo/scene08.cpp
-	demo/scene08.h
-	demo/scene09.cpp
-	demo/scene09.h
-	demo/scene10.cpp
-	demo/scene10.h
-	demo/scene11.cpp
-	demo/scene11.h
-    demo/scene12.cpp
-    demo/scene12.h
-    demo/scene13.cpp
-    demo/scene13.h
-    demo/scene14.cpp
-    demo/scene14.h
-	demo/superscene.cpp
-	demo/superscene.h
-)
-target_link_libraries(demo
-	${ALL_LIBS}
-)
-# Copy assets to the build directory
-file(
-	COPY demo/assets
-	DESTINATION ${CMAKE_BINARY_DIR}
-)
+IF(MAKE_DEMO)
+	add_executable(demo
+		demo/main.cpp
+		demo/basicentity.cpp
+		demo/basicentity.h
+		demo/canvas.cpp
+		demo/canvas.h
+		demo/scene00.cpp
+		demo/scene00.h
+		demo/scene01.cpp
+		demo/scene01.h
+		demo/scene02.cpp
+		demo/scene02.h
+		demo/scene03.cpp
+		demo/scene03.h
+		demo/scene03a.cpp
+		demo/scene03a.h
+		demo/scene03b.cpp
+		demo/scene03b.h
+		demo/scene04.cpp
+		demo/scene04.h
+		demo/scene05.cpp
+		demo/scene05.h
+		demo/scene06.cpp
+		demo/scene06.h
+		demo/scene06a.cpp
+		demo/scene06a.h
+		demo/scene07.cpp
+		demo/scene07.h
+		demo/scene08.cpp
+		demo/scene08.h
+		demo/scene09.cpp
+		demo/scene09.h
+		demo/scene10.cpp
+		demo/scene10.h
+		demo/scene11.cpp
+		demo/scene11.h
+	    demo/scene12.cpp
+	    demo/scene12.h
+	    demo/scene13.cpp
+	    demo/scene13.h
+	    demo/scene14.cpp
+	    demo/scene14.h
+		demo/superscene.cpp
+		demo/superscene.h
+	)
+	target_link_libraries(demo
+		${ALL_GRAPHICS_LIBS}
+	)
+	# Copy assets to the build directory
+	file(
+		COPY demo/assets
+		DESTINATION ${CMAKE_BINARY_DIR}
+	)
+ENDIF()
 
 ####################################################################
 # start                                                            #
 ####################################################################
-add_executable(start
-	start/main.cpp
-	start/myentity.cpp
-	start/myentity.h
-	start/myscene.cpp
-	start/myscene.h
-)
-target_link_libraries(start
-	${ALL_LIBS}
-)
-# Copy assets to the build directory
-file(
-	COPY start/assets
-	DESTINATION ${CMAKE_BINARY_DIR}
-)
+IF(MAKE_START)
+	add_executable(start
+		start/main.cpp
+		start/myentity.cpp
+		start/myentity.h
+		start/myscene.cpp
+		start/myscene.h
+	)
+	target_link_libraries(start
+		${ALL_GRAPHICS_LIBS}
+	)
+	# Copy assets to the build directory
+	file(
+		COPY start/assets
+		DESTINATION ${CMAKE_BINARY_DIR}
+	)
+ENDIF()
+
+####################################################################
+# OpenAL                                                           #
+####################################################################
+IF(USE_OPENAL)
+	add_subdirectory (external/openal)
+	include_directories(
+		${CMAKE_SOURCE_DIR}/external/openal/include/
+	)
+
+	link_directories(
+		${CMAKE_SOURCE_DIR}/external/openal/
+	)
+
+	IF(WIN32)
+		SET(OPENAL OpenAL32)
+	ELSE()
+		SET(OPENAL openal)
+	ENDIF()
+ENDIF()
+
+####################################################################
+# RT2D/OpenAL audio start                                          #
+####################################################################
+IF(MAKE_AUDIOSTART AND USE_OPENAL)
+	add_executable(audiostart
+		audiostart/main.cpp
+		audiostart/myentity.cpp
+		audiostart/myentity.h
+		audiostart/myscene.cpp
+		audiostart/myscene.h
+		audiostart/audio/audio.cpp
+		audiostart/audio/audio.h
+		audiostart/audio/sound.cpp
+		audiostart/audio/sound.h
+		audiostart/audio/wav.cpp
+		audiostart/audio/wav.h
+	)
+	target_link_libraries(audiostart
+		${ALL_GRAPHICS_LIBS}
+		${OPENAL}
+	)
+	# Copy assets to the build directory
+	file(
+		COPY audiostart/assets
+		DESTINATION ${CMAKE_BINARY_DIR}
+	)
+ENDIF()
+
+
+####################################################################
+# OpenAL tone generator                                            #
+####################################################################
+IF(MAKE_OPENAL_TONEGEN AND USE_OPENAL)
+	add_executable(altonegenrt
+		external/openal/examples/altonegen.c
+		external/openal/examples/common/alhelpers.c
+	)
+	target_link_libraries(altonegenrt
+		${OPENAL}
+	)
+ENDIF()
 ####################################################################
 
 

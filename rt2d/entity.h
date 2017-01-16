@@ -22,7 +22,7 @@
 
 #include <glm/glm.hpp>
 
-#include <rt2d/config.h>
+#include <rt2d/rt2dconfig.h>
 #include <rt2d/timer.h>
 #include <rt2d/sprite.h>
 #include <rt2d/line.h>

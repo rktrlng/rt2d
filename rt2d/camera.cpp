@@ -5,7 +5,7 @@
  *   - Initial commit
  */
 
-#include <rt2d/config.h>
+#include <rt2d/rt2dconfig.h>
 #include <rt2d/camera.h>
 
 Camera::Camera()
