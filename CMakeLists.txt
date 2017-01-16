@@ -197,6 +197,8 @@ IF(MAKE_DEMO)
 	    demo/scene13.h
 	    demo/scene14.cpp
 	    demo/scene14.h
+		demo/scene15.cpp
+		demo/scene15.h
 		demo/superscene.cpp
 		demo/superscene.h
 	)
