@@ -6,9 +6,9 @@ project (rt2d)
 OPTION(MAKE_START "Make RT2D start application" ON)
 OPTION(MAKE_DEMO "Make RT2D demo (tests) application" ON)
 OPTION(MAKE_RS232 "Make RS232 library" ON)
-OPTION(USE_OPENAL "Use OpenAL" ON)
-OPTION(MAKE_AUDIOSTART "Make OpenAL/RT2D audiostart" ON)
-OPTION(MAKE_OPENAL_TONEGEN "Make OpenAL Tone Generator" ON)
+OPTION(USE_OPENAL "Use OpenAL" OFF)
+OPTION(MAKE_AUDIOSTART "Make OpenAL/RT2D audiostart" OFF)
+OPTION(MAKE_OPENAL_TONEGEN "Make OpenAL Tone Generator" OFF)
 
 
 if( CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR )
