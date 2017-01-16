@@ -266,7 +266,7 @@ void Scene13::updateEnemies()
 		(*it).frames[1].position = enemycenter + (*it).position;
 
 		// do enemies shoot?
-		if (random()%shootfrequency == 0) {
+		if (rand()%shootfrequency == 0) {
 			SI_AnimatedSprite b = si_enemy_bullet; // copy sprites etc
 			b.position = (*it).frames[0].position + Pointi(0,-2);
 			b.velocity = Pointi(0,-1);
