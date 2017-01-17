@@ -136,6 +136,8 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity, Camera* cam
 	// multiply ModelMatrix for this child with the ModelMatrix of the parent (the caller of this method)
 	// the first time we do this (for the root-parent), modelMatrix is identity.
 	modelMatrix *= this->_getModelMatrix(entity);
+	// give the modelMatrix to  the entity
+	entity->setModelMatrix(modelMatrix);
 
 	// #######################################################
 	// fill _worldpos in Entity
@@ -175,7 +177,7 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity, Camera* cam
 		// Transform child's children...
 		this->_renderEntity(modelMatrix, *child, camera);
 		// ...then reset modelMatrix for siblings to the modelMatrix of the parent.
-		modelMatrix = this->_getModelMatrix( (*child)->parent() );
+		modelMatrix = (*child)->parent()->getParentModelMatrix();
 	}
 }
 

@@ -150,6 +150,13 @@ public:
 	/// @brief get the world position of this Entity.
 	/// @return Point2 _worldpos
 	Point2 worldpos() { return _worldpos; };
+	/// @brief set modelMatrix of this Entity.
+	/// @param glm::mat4 the modelMatrix
+	/// @return void
+	void setModelMatrix(glm::mat4 mm);
+	/// @brief get the modelMatrix from Entity its parent.
+	/// @return glm::mat4 modelMatrix of the parent
+	glm::mat4 getParentModelMatrix();
 
 	friend class Renderer;
 
@@ -170,6 +177,8 @@ private:
 	// sprite
 	Sprite* _sprite; ///< @brief The _sprite of this Entity
 	Line* _line; ///< @brief The _line of this Entity
+
+	glm::mat4 _modelMatrix; ///< @brief The _modelMatrix of this Entity
 
 	/// @brief delete the Sprite of this Entity.
 	/// @return void

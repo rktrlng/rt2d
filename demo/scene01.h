@@ -25,6 +25,7 @@ private:
 	BasicEntity* default_entity;
 	BasicEntity* child1_entity;
 	BasicEntity* child2_entity;
+	BasicEntity* child3_entity;
 	BasicEntity* animated_entity;
 	BasicEntity* ui_element;
 

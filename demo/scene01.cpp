@@ -40,6 +40,13 @@ Scene01::Scene01() : SuperScene()
 	child2_entity->sprite()->color = RED; // red
 	child2_entity->position = Point2(64, 64); // position relative to parent (child1_entity)
 
+	// Create an Entity that's going to be a Child of default_entity.
+	// Easiest way to create a Sprite with sensible defaults. @see Sprite::setupSprite()
+	child3_entity = new BasicEntity();
+	child3_entity->addSprite("assets/grayscale.tga");
+	child3_entity->sprite()->color = PINK; // red
+	child3_entity->position = Point2(-64, -64); // position relative to parent (child1_entity)
+
 	// An example of using a SpriteSheet ("animated texture").
 	// Remember you can also animate UV's of any Sprite (uvoffset).
 	animated_entity = new BasicEntity();
@@ -59,6 +66,7 @@ Scene01::Scene01() : SuperScene()
 	// create a tree-structure to send to the Renderer
 	// by adding them to each other and/or the scene ('this', or one of the layers[])
 	child1_entity->addChild(child2_entity);
+	child1_entity->addChild(child3_entity);
 	default_entity->addChild(child1_entity);
 	layers[1]->addChild(default_entity);
 	layers[1]->addChild(animated_entity);
@@ -69,6 +77,7 @@ Scene01::Scene01() : SuperScene()
 Scene01::~Scene01()
 {
 	// deconstruct and delete the Tree
+	child1_entity->removeChild(child3_entity);
 	child1_entity->removeChild(child2_entity);
 	default_entity->removeChild(child1_entity);
 	layers[1]->removeChild(default_entity);
@@ -76,6 +85,7 @@ Scene01::~Scene01()
 	layers[top_layer]->removeChild(ui_element);
 
 	delete animated_entity;
+	delete child3_entity;
 	delete child2_entity;
 	delete child1_entity;
 	delete default_entity;
