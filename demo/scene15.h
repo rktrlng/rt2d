@@ -40,6 +40,11 @@ private:
 	void infinitGrowthB();
 	void rpentomino();
 	void pentadecathlon();
+	void pulsar();
+	void blinkerToadBeacon();
+	void lightweightSpaceship();
+	void glider();
+	void gliderGun();
 };
 
 #endif /* SCENE15_H */

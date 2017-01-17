@@ -12,7 +12,7 @@ Scene15::Scene15() : SuperScene()
 {
 	srand((unsigned)time(NULL));
 
-	text[0]->message("Scene15: Conway's Game Of Life. Press [SPACE] to reset. Also try [Q/W/E/S]");
+	text[0]->message("Scene15: Conway's Game Of Life. Press [SPACE] to reset. Also try [Q/W/E/A/S]");
 
 	timer.start();
 
@@ -62,7 +62,18 @@ void Scene15::update(float deltaTime)
 		this->rpentomino();
 	}
 	if (input()->getKeyDown( GLFW_KEY_S )) {
+		// oscillators on new canvas
+		const int w = canvas->width();
+		const int h = canvas->height();
+		field = std::vector<bool>(w*h, false);
 		this->pentadecathlon();
+		this->pulsar();
+		this->blinkerToadBeacon();
+		this->lightweightSpaceship();
+		this->glider();
+	}
+	if (input()->getKeyDown( GLFW_KEY_A )) {
+		this->gliderGun();
 	}
 
 	// ###############################################################
@@ -259,7 +270,7 @@ void Scene15::pentadecathlon()
 {
 	const int w = canvas->width();
 	const int h = canvas->height();
-	field = std::vector<bool>(w*h, false);
+	//field = std::vector<bool>(w*h, false);
 
 	std::vector<Pointi> points;
 	points.push_back(Pointi(1,0));
@@ -282,5 +293,191 @@ void Scene15::pentadecathlon()
 		x += w/2;
 		y += h/2;
 		field[getIdFromPos(x, y)] = true;
+	}
+}
+
+void Scene15::pulsar()
+{
+	const int w = canvas->width();
+	const int h = canvas->height();
+	//field = std::vector<bool>(w*h, false);
+
+	const unsigned int s = 169;
+	char pulsar[s] = { // 13*13
+		0,0,1,1,1,0,0,0,1,1,1,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,
+		1,0,0,0,0,1,0,1,0,0,0,0,1,
+		1,0,0,0,0,1,0,1,0,0,0,0,1,
+		1,0,0,0,0,1,0,1,0,0,0,0,1,
+		0,0,1,1,1,0,0,0,1,1,1,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,1,1,1,0,0,0,1,1,1,0,0,
+		1,0,0,0,0,1,0,1,0,0,0,0,1,
+		1,0,0,0,0,1,0,1,0,0,0,0,1,
+		1,0,0,0,0,1,0,1,0,0,0,0,1,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,1,1,1,0,0,0,1,1,1,0,0
+	};
+
+	for (unsigned int i = 0; i < s; i++) {
+		int x = i%13;
+		int y = i/13;
+		x += (w/4)*3;
+		y += h/2;
+		if (pulsar[i] == 1) {
+			field[getIdFromPos(x, y)] = true;
+		}
+	}
+}
+
+void Scene15::blinkerToadBeacon()
+{
+	const int w = canvas->width();
+	const int h = canvas->height();
+	//field = std::vector<bool>(w*h, false);
+
+	const unsigned int s = 115;
+	char pulsar[s] = { // 5*23
+		0,1,1,1,0,
+		0,0,0,0,0,
+		0,0,0,0,0,
+		0,0,0,0,0,
+		0,0,0,0,0,
+		0,0,0,0,0,
+		0,0,0,0,0,
+		0,0,0,0,0,
+		0,0,0,0,0,
+		0,0,1,1,1,
+		0,1,1,1,0,
+		0,0,0,0,0,
+		0,0,0,0,0,
+		0,0,0,0,0,
+		0,0,0,0,0,
+		0,0,0,0,0,
+		0,0,0,0,0,
+		0,0,0,0,0,
+		0,0,0,0,0,
+		1,1,0,0,0,
+		1,1,0,0,0,
+		0,0,1,1,0,
+		0,0,1,1,0
+	};
+
+	for (unsigned int i = 0; i < s; i++) {
+		int x = i%5;
+		int y = i/5;
+		x += w/4;
+		y += (h/2)-6;
+		if (pulsar[i] == 1) {
+			field[getIdFromPos(x, y)] = true;
+		}
+	}
+}
+
+void Scene15::lightweightSpaceship()
+{
+	const int w = canvas->width();
+	const int h = canvas->height();
+	//field = std::vector<bool>(w*h, false);
+
+	const unsigned int s = 20;
+	char pulsar[s] = { // 5*4
+		0,0,1,1,0,
+		1,1,0,1,1,
+		1,1,1,1,0,
+		0,1,1,0,0,
+	};
+
+	for (unsigned int i = 0; i < s; i++) {
+		int x = i%5;
+		int y = i/5;
+		x += w/2;
+		y += (h/2)-25;
+		if (pulsar[i] == 1) {
+			field[getIdFromPos(x, y)] = true;
+		}
+	}
+}
+
+void Scene15::glider()
+{
+	const int w = canvas->width();
+	const int h = canvas->height();
+	//field = std::vector<bool>(w*h, false);
+
+	const unsigned int s = 9;
+	char pulsar[s] = { // 3*3
+		0,1,0,
+		0,0,1,
+		1,1,1
+	};
+
+	for (unsigned int i = 0; i < s; i++) {
+		int x = i%3;
+		int y = i/3;
+		x += w/2;
+		y += (h/2)+25;
+		if (pulsar[i] == 1) {
+			field[getIdFromPos(x, y)] = true;
+		}
+	}
+}
+
+void Scene15::gliderGun()
+{
+	const int w = canvas->width();
+	const int h = canvas->height();
+	field = std::vector<bool>(w*h, false);
+
+	const unsigned int s = 418;
+	char pulsar[s] = { // 11*38
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,1,1,0,0,0,0,0,
+		0,0,0,0,1,1,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,1,1,1,0,0,0,0,0,
+		0,0,1,0,0,0,1,0,0,0,0,
+		0,1,0,0,0,0,0,1,0,0,0,
+		0,1,0,0,0,0,0,1,0,0,0,
+		0,0,0,0,1,0,0,0,0,0,0,
+		0,0,1,0,0,0,1,0,0,0,0,
+		0,0,0,1,1,1,0,0,0,0,0,
+		0,0,0,0,1,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,1,1,1,0,0,0,
+		0,0,0,0,0,1,1,1,0,0,0,
+		0,0,0,0,1,0,0,0,1,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,1,1,0,0,0,1,1,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,1,1,0,0,0,
+		0,0,0,0,0,0,1,1,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0
+	};
+
+	for (unsigned int i = 0; i < s; i++) {
+		int x = i%11;
+		int y = i/11;
+		x += w/2;
+		y += (h/2)-25;
+		if (pulsar[i] == 1) {
+			field[getIdFromPos(x, y)] = true;
+		}
 	}
 }
