@@ -90,6 +90,7 @@ Libraries
 - glfw: <http://www.glfw.org/>
 - glew: <http://glew.sourceforge.net/>
 - glm: <http://glm.g-truc.net/>
+- OpenAL: <https://github.com/kcat/openal-soft>
 
 Links
 -----
