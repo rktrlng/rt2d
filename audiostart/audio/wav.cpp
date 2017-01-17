@@ -60,7 +60,7 @@ bool loadWavFile(const std::string filename, ALuint* buffer)
     try {
         soundFile = fopen(filename.c_str(), "rb");
         if (!soundFile) {
-            throw(filename);
+            throw("File does not exist");
 		}
 //        std::cout << "File exists" << std::endl;
 
