@@ -58,6 +58,7 @@ private:
 	/// @param modelMatrix The modelMatrix of the parent
 	/// @param entity The Entity that needs rendering
 	/// @param camera The camera in case we need to cull Sprites
+	/// @param scene The scene in which the entity is being rendered.
 	/// @return void
 	void _renderEntity(glm::mat4& modelMatrix, Entity* entity, Camera* camera, Scene* scene);
 
