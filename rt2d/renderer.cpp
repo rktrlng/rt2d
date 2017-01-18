@@ -125,13 +125,13 @@ void Renderer::renderScene(Scene* scene)
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 
 	// start rendering everything, starting from the scene 'rootnode'
-	this->_renderEntity(modelMatrix, scene, scene->camera());
+	this->_renderEntity(modelMatrix, scene, scene->camera(), scene);
 
 	// Swap buffers
 	glfwSwapBuffers(_window);
 }
 
-void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity, Camera* camera)
+void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity, Camera* camera, Scene* scene)
 {
 	// multiply ModelMatrix for this child with the ModelMatrix of the parent (the caller of this method)
 	// the first time we do this (for the root-parent), modelMatrix is identity.
@@ -173,9 +173,29 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity, Camera* cam
 	std::vector<Entity*>::iterator child;
 	for (child = children.begin(); child != children.end(); child++) {
 		// Transform child's children...
-		this->_renderEntity(modelMatrix, *child, camera);
+		this->_renderEntity(modelMatrix, *child, camera, scene);
 		// ...then reset modelMatrix for siblings to the modelMatrix of the parent.
-		modelMatrix = this->_getModelMatrix( (*child)->parent() );
+
+		if (entity->parent() != scene)
+		{
+			modelMatrix = glm::mat4(1.0f);
+			std::vector<Entity*> parentStack;
+			Entity* curParent = (*child);
+			while (curParent->_parent != scene)
+			{
+				curParent = curParent->parent();
+				parentStack.push_back(curParent);
+			}
+			int numParents = parentStack.size();
+			for (int i = numParents - 1; i >= 0; i--)
+			{
+				modelMatrix *= _getModelMatrix(parentStack[i]);
+			}
+		}
+		else
+		{
+			modelMatrix = _getModelMatrix((*child)->parent());
+		}
 	}
 }
 

@@ -52,6 +52,7 @@ void Entity::removeChild(Entity* child)
 	std::vector< Entity* >::iterator it = _children.begin();
 	while (it != _children.end()) {
 		if ((*it)->_guid == child->_guid) {
+			child->_parent = NULL;
 			it = _children.erase(it);
 		} else {
 			++it;
