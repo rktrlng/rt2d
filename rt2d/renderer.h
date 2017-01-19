@@ -59,7 +59,7 @@ private:
 	/// @param entity The Entity that needs rendering
 	/// @param camera The camera in case we need to cull Sprites
 	/// @return void
-	void _renderEntity(glm::mat4& modelMatrix, Entity* entity, Camera* camera);
+	void _renderEntity(glm::mat4 modelMatrix, Entity* entity, Camera* camera);
 
 	/// @brief get the modelMatrix from an Entity
 	/// @param entity The Entity we need the modelMatrix from.
