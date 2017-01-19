@@ -5,7 +5,8 @@ project (rt2d)
 # delete CMakeCache.txt from the build directory when you edit these options
 OPTION(MAKE_START "Make RT2D start application" ON)
 OPTION(MAKE_DEMO "Make RT2D demo (tests) application" ON)
-OPTION(MAKE_RS232 "Make RS232 library" ON)
+OPTION(MAKE_FLOCKING "Make flocking application" ON)
+OPTION(MAKE_RS232 "Make RS232 library" OFF)
 OPTION(USE_OPENAL "Use OpenAL" OFF)
 OPTION(MAKE_AUDIOSTART "Make OpenAL/RT2D audiostart" OFF)
 OPTION(MAKE_OPENAL_TONEGEN "Make OpenAL Tone Generator" OFF)
@@ -152,67 +153,6 @@ file(
 )
 
 ####################################################################
-# demo                                                             #
-####################################################################
-IF(MAKE_DEMO)
-	add_executable(demo
-		demo/main.cpp
-		demo/basicentity.cpp
-		demo/basicentity.h
-		demo/canvas.cpp
-		demo/canvas.h
-		demo/scene00.cpp
-		demo/scene00.h
-		demo/scene01.cpp
-		demo/scene01.h
-		demo/scene02.cpp
-		demo/scene02.h
-		demo/scene03.cpp
-		demo/scene03.h
-		demo/scene03a.cpp
-		demo/scene03a.h
-		demo/scene03b.cpp
-		demo/scene03b.h
-		demo/scene04.cpp
-		demo/scene04.h
-		demo/scene05.cpp
-		demo/scene05.h
-		demo/scene06.cpp
-		demo/scene06.h
-		demo/scene06a.cpp
-		demo/scene06a.h
-		demo/scene07.cpp
-		demo/scene07.h
-		demo/scene08.cpp
-		demo/scene08.h
-		demo/scene09.cpp
-		demo/scene09.h
-		demo/scene10.cpp
-		demo/scene10.h
-		demo/scene11.cpp
-		demo/scene11.h
-	    demo/scene12.cpp
-	    demo/scene12.h
-	    demo/scene13.cpp
-	    demo/scene13.h
-	    demo/scene14.cpp
-	    demo/scene14.h
-		demo/scene15.cpp
-		demo/scene15.h
-		demo/superscene.cpp
-		demo/superscene.h
-	)
-	target_link_libraries(demo
-		${ALL_GRAPHICS_LIBS}
-	)
-	# Copy assets to the build directory
-	file(
-		COPY demo/assets
-		DESTINATION ${CMAKE_BINARY_DIR}
-	)
-ENDIF()
-
-####################################################################
 # start                                                            #
 ####################################################################
 IF(MAKE_START)
@@ -229,6 +169,87 @@ IF(MAKE_START)
 	# Copy assets to the build directory
 	file(
 		COPY start/assets
+		DESTINATION ${CMAKE_BINARY_DIR}
+	)
+ENDIF()
+
+####################################################################
+# demo                                                             #
+####################################################################
+IF(MAKE_DEMO)
+	add_executable(demo
+		projects/demo/main.cpp
+		projects/demo/basicentity.cpp
+		projects/demo/basicentity.h
+		projects/demo/canvas.cpp
+		projects/demo/canvas.h
+		projects/demo/scene00.cpp
+		projects/demo/scene00.h
+		projects/demo/scene01.cpp
+		projects/demo/scene01.h
+		projects/demo/scene02.cpp
+		projects/demo/scene02.h
+		projects/demo/scene03.cpp
+		projects/demo/scene03.h
+		projects/demo/scene03a.cpp
+		projects/demo/scene03a.h
+		projects/demo/scene03b.cpp
+		projects/demo/scene03b.h
+		projects/demo/scene04.cpp
+		projects/demo/scene04.h
+		projects/demo/scene05.cpp
+		projects/demo/scene05.h
+		projects/demo/scene06.cpp
+		projects/demo/scene06.h
+		projects/demo/scene06a.cpp
+		projects/demo/scene06a.h
+		projects/demo/scene07.cpp
+		projects/demo/scene07.h
+		projects/demo/scene08.cpp
+		projects/demo/scene08.h
+		projects/demo/scene09.cpp
+		projects/demo/scene09.h
+		projects/demo/scene10.cpp
+		projects/demo/scene10.h
+		projects/demo/scene11.cpp
+		projects/demo/scene11.h
+	    projects/demo/scene12.cpp
+	    projects/demo/scene12.h
+	    projects/demo/scene13.cpp
+	    projects/demo/scene13.h
+	    projects/demo/scene14.cpp
+	    projects/demo/scene14.h
+		projects/demo/scene15.cpp
+		projects/demo/scene15.h
+		projects/demo/superscene.cpp
+		projects/demo/superscene.h
+	)
+	target_link_libraries(demo
+		${ALL_GRAPHICS_LIBS}
+	)
+	# Copy assets to the build directory
+	file(
+		COPY projects/demo/assets
+		DESTINATION ${CMAKE_BINARY_DIR}
+	)
+ENDIF()
+
+####################################################################
+# flocking                                                         #
+####################################################################
+IF(MAKE_FLOCKING)
+	add_executable(flocking
+		projects/flocking/boid.cpp
+		projects/flocking/flock.cpp
+		projects/flocking/scene01.cpp
+		projects/flocking/main.cpp
+	)
+	target_link_libraries(flocking
+		${ALL_GRAPHICS_LIBS}
+	)
+	# Copy assets to the build directory
+	file(
+		COPY projects/flocking/assets
 		DESTINATION ${CMAKE_BINARY_DIR}
 	)
 ENDIF()
@@ -258,17 +279,17 @@ ENDIF()
 ####################################################################
 IF(MAKE_AUDIOSTART AND USE_OPENAL)
 	add_executable(audiostart
-		audiostart/main.cpp
-		audiostart/myentity.cpp
-		audiostart/myentity.h
-		audiostart/myscene.cpp
-		audiostart/myscene.h
-		audiostart/audio/audio.cpp
-		audiostart/audio/audio.h
-		audiostart/audio/sound.cpp
-		audiostart/audio/sound.h
-		audiostart/audio/wav.cpp
-		audiostart/audio/wav.h
+		projects/audiostart/main.cpp
+		projects/audiostart/myentity.cpp
+		projects/audiostart/myentity.h
+		projects/audiostart/myscene.cpp
+		projects/audiostart/myscene.h
+		projects/audiostart/audio/audio.cpp
+		projects/audiostart/audio/audio.h
+		projects/audiostart/audio/sound.cpp
+		projects/audiostart/audio/sound.h
+		projects/audiostart/audio/wav.cpp
+		projects/audiostart/audio/wav.h
 	)
 	target_link_libraries(audiostart
 		${ALL_GRAPHICS_LIBS}
@@ -276,7 +297,7 @@ IF(MAKE_AUDIOSTART AND USE_OPENAL)
 	)
 	# Copy assets to the build directory
 	file(
-		COPY audiostart/assets
+		COPY projects/audiostart/assets
 		DESTINATION ${CMAKE_BINARY_DIR}
 	)
 ENDIF()
