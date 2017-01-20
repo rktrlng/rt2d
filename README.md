@@ -80,7 +80,7 @@ In the powershell, run:
 	cd build
 	cmake -Wno-dev ..
 
-Then doubleclick the `rt2d.sln` file in the `build` directory. Right-click the 'demo' directory in Visual Studio and select 'Set as StartUp Project'. Then press ctrl-F5.
+Then doubleclick the `rt2d.sln` file in the `build` directory. Right-click the 'start' directory in Visual Studio and select 'Set as StartUp Project'. Then press ctrl-F5.
 
 Make sure that when you add new files within Visual Studio, you move them to the correct directory in `src` and add them to the `CMakeLists.txt` file.
 

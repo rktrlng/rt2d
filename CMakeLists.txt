@@ -316,30 +316,3 @@ IF(MAKE_OPENAL_TONEGEN AND USE_OPENAL)
 	)
 ENDIF()
 ####################################################################
-
-
-if(WIN32)
-	# Xcode and Visual working directories for demo
-	#set_target_properties(demo PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/demo/")
-	#create_target_launcher(demo WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/demo/")
-
-	# Xcode and Visual working directories for start
-	#set_target_properties(start PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/start/")
-	#create_target_launcher(start WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/start/")
-
-	# create file tabs in visual studio
-	#SOURCE_GROUP(rt2d REGULAR_EXPRESSION ".*/rt2d/.*" )
-	#SOURCE_GROUP(demo REGULAR_EXPRESSION ".*/demo/.*" )
-	#SOURCE_GROUP(start REGULAR_EXPRESSION ".*/start/.*" )
-	#SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*shaders$" )
-endif(WIN32)
-
-
-if (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
-#add_custom_command(
-#   TARGET demo POST_BUILD
-#   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/demo${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/demo/"
-#)
-elseif (${CMAKE_GENERATOR} MATCHES "Xcode" )
-
-endif (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
