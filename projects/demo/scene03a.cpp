@@ -115,17 +115,17 @@ void Scene03a::update(float deltaTime)
 	// ###############################################################
 	// text
 	// ###############################################################
-	std::string radiustxt = "<Q/E> radius: ";
-	radiustxt.append(rt2d::to_string<int>((int)radius));
-	text[5]->message(radiustxt);
+	std::stringstream radiustxt;
+	radiustxt << "<Q/E> radius: " << radius;
+	text[5]->message(radiustxt.str());
 
-	std::string amplitudetxt = "<W/S> amplitude: ";
-	amplitudetxt.append(rt2d::to_string<int>((int)amplitude));
-	text[6]->message(amplitudetxt);
+	std::stringstream amplitudetxt;
+	amplitudetxt << "<W/S> amplitude: " << amplitude;
+	text[6]->message(amplitudetxt.str());
 
-	std::string frequencytxt = "<A/D> frequency: ";
-	frequencytxt.append(rt2d::to_string<int>((int)frequency));
-	text[7]->message(frequencytxt);
+	std::stringstream frequencytxt;
+	frequencytxt << "<A/D> frequency: " << frequency;
+	text[7]->message(frequencytxt.str());
 
 	// ###############################################################
 	// frequency amplitude

@@ -72,16 +72,15 @@ void Scene07::update(float deltaTime)
 		unsigned int s = particles.size();
 
 		// update message
-		std::string msg = "Particles: ";
-		msg.append(rt2d::to_string<unsigned int>(s));
-		text[6]->message(msg);
+		std::stringstream msg;
+		msg << "Particles: " << s;
+		text[6]->message(msg.str());
 
 		if (fpstimer.seconds() > 1.0f - deltaTime) {
-			std::string fpstxt = "FPS: ";
-			fpstxt.append(rt2d::to_string<int>(framecounter));
-			fpstxt.append(" (capped)");
+			std::stringstream fpstxt;
+			fpstxt  << "FPS: " << framecounter << " (capped)";
 			framecounter = 0;
-			text[7]->message(fpstxt);
+			text[7]->message(fpstxt.str());
 			fpstimer.start();
 		}
 

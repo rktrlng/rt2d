@@ -97,9 +97,9 @@ void SuperScene::update(float deltaTime)
 			player->mouseclicks++;
 		}
 	}
-	std::string clicktxt = "click ";
-	clicktxt.append(rt2d::to_string<int>(player->mouseclicks));
-	text[10]->message(clicktxt);
+	std::stringstream clicktxt;
+	clicktxt << "click " << player->mouseclicks;
+	text[10]->message(clicktxt.str());
 
 	// ###############################################################
 	// logo and text follow camera
@@ -119,9 +119,9 @@ void SuperScene::update(float deltaTime)
 	// ###############################################################
 	static int framecounter = 0;
 	if (fpstimer.seconds() > 1.0f) {
-		std::string fpstxt = "FPS: ";
-		fpstxt.append(rt2d::to_string<int>(framecounter));
-		text[1]->message(fpstxt);
+		std::stringstream fpstxt;
+		fpstxt <<  "FPS: " << framecounter;
+		text[1]->message(fpstxt.str());
 		framecounter = 0;
 		fpstimer.start();
 	}

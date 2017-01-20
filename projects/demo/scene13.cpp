@@ -47,10 +47,9 @@ void Scene13::update(float deltaTime)
 	// ###############################################################
 	SuperScene::update(deltaTime);
 
-	std::string titletxt = "Scene13: Space Invaders (lives: ";
-	titletxt.append(rt2d::to_string<int>(lives));
-	titletxt.append(")");
-	text[0]->message(titletxt);
+	std::stringstream titletxt;
+	titletxt << "Scene13: Space Invaders (lives: " << lives << ")";
+	text[0]->message(titletxt.str());
 
 	//text[0]->message(""); // clear title
 	//text[1]->message(""); // clear fps message

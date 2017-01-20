@@ -97,12 +97,9 @@ void Scene01::update(float deltaTime)
 	// ###############################################################
 	int mousex = input()->getMouseX();
 	int mousey = input()->getMouseY();
-	std::string cursortxt = "cursor (";
-	cursortxt.append(rt2d::to_string<int>(mousex));
-	cursortxt.append(",");
-	cursortxt.append(rt2d::to_string<int>(mousey));
-	cursortxt.append(")");
-	text[9]->message(cursortxt);
+	std::stringstream cursortxt;
+	cursortxt << "cursor (" << mousex << "," << mousey << ")";
+	text[9]->message(cursortxt.str());
 
 	// ###############################################################
 	// Rotate default_entity

@@ -9,7 +9,6 @@
 #define SCENE14_H
 
 #include <vector>
-#include <rt2d/stringutil.h>
 #include <rt2d/timer.h>
 #include <rt2d/vectorx.h>
 #include "superscene.h"

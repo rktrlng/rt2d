@@ -102,12 +102,9 @@ void Scene10::update(float deltaTime)
 	// ###############################################################
 	int mousex = input()->getMouseX() + camera()->position.x - SWIDTH/2;
 	int mousey = input()->getMouseY() + camera()->position.y - SHEIGHT/2;
-	std::string cursortxt = "cursor (";
-	cursortxt.append(rt2d::to_string<int>(mousex));
-	cursortxt.append(",");
-	cursortxt.append(rt2d::to_string<int>(mousey));
-	cursortxt.append(")");
-	text[9]->message(cursortxt);
+	std::stringstream cursortxt;
+	cursortxt << "cursor (" << mousex << "," << mousey << ")";
+	text[9]->message(cursortxt.str());
 
 	// loop over grid
 	std::vector<Sprite*> spritebatch = field->spritebatch();
@@ -126,18 +123,11 @@ void Scene10::update(float deltaTime)
 			if ( mousex >= left && mousex < right && mousey >= top && mousey < bottom ) {
 				spritebatch[counter]->color.a = 192;
 
-				std::string postxt = "pos (";
-				postxt.append(rt2d::to_string<float>(x));
-				postxt.append(",");
-				postxt.append(rt2d::to_string<float>(y));
-				postxt.append(") RGB: (");
-				postxt.append(rt2d::to_string<int>(spritebatch[counter]->color.r));
-				postxt.append(",");
-				postxt.append(rt2d::to_string<int>(spritebatch[counter]->color.g));
-				postxt.append(",");
-				postxt.append(rt2d::to_string<int>(spritebatch[counter]->color.b));
-				postxt.append(")");
-				text[8]->message(postxt);
+				std::stringstream postxt;
+				postxt << "pos (" << x << "," << y << ")";
+				RGBAColor color = spritebatch[counter]->color;
+				postxt << " RGB: ("<< (int) color.r << "," << (int) color.g << "," << (int) color.b << ")";
+				text[8]->message(postxt.str());
 			} else {
 				spritebatch[counter]->color.a = 255;
 			}

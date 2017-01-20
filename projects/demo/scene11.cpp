@@ -71,9 +71,9 @@ void Scene11::update(float deltaTime)
 		int s = snake.size();
 
 		int score = s-1;
-		std::string scoretxt = "score: ";
-		scoretxt.append(rt2d::to_string<int>(score));
-		text[2]->message(scoretxt);
+		std::stringstream scoretxt;
+		scoretxt << "score: " << score;
+		text[2]->message(scoretxt.str());
 
 		// clear snake to background
 		for (int i=0; i<s; i++) {

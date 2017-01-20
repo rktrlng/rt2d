@@ -83,12 +83,9 @@ void Scene08::update(float deltaTime)
 	// ###############################################################
 	int mousex = input()->getMouseX() + camera()->position.x - SWIDTH/2;
 	int mousey = input()->getMouseY() + camera()->position.y - SHEIGHT/2;
-	std::string cursortxt = "cursor (";
-	cursortxt.append(rt2d::to_string<int>(mousex));
-	cursortxt.append(",");
-	cursortxt.append(rt2d::to_string<int>(mousey));
-	cursortxt.append(")");
-	text[9]->message(cursortxt);
+	std::stringstream cursortxt;
+	cursortxt << "cursor (" << mousex << "," << mousey << ")";
+	text[9]->message(cursortxt.str());
 
 	// ###############################################################
 	// Check mouseover for each cell

@@ -132,7 +132,6 @@ add_library(rt2d
 	rt2d/shader.h
 	rt2d/sprite.cpp
 	rt2d/sprite.h
-	rt2d/stringutil.h
 	rt2d/text.cpp
 	rt2d/text.h
 	rt2d/texture.cpp
@@ -193,8 +192,6 @@ IF(MAKE_DEMO)
 		projects/demo/scene03.h
 		projects/demo/scene03a.cpp
 		projects/demo/scene03a.h
-		projects/demo/scene03b.cpp
-		projects/demo/scene03b.h
 		projects/demo/scene04.cpp
 		projects/demo/scene04.h
 		projects/demo/scene05.cpp
