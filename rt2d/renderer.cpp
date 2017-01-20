@@ -131,7 +131,7 @@ void Renderer::renderScene(Scene* scene)
 	glfwSwapBuffers(_window);
 }
 
-void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity, Camera* camera)
+void Renderer::_renderEntity(glm::mat4 modelMatrix, Entity* entity, Camera* camera)
 {
 	// multiply ModelMatrix for this child with the ModelMatrix of the parent (the caller of this method)
 	// the first time we do this (for the root-parent), modelMatrix is identity.
@@ -174,8 +174,6 @@ void Renderer::_renderEntity(glm::mat4& modelMatrix, Entity* entity, Camera* cam
 	for (child = children.begin(); child != children.end(); child++) {
 		// Transform child's children...
 		this->_renderEntity(modelMatrix, *child, camera);
-		// ...then reset modelMatrix for siblings to the modelMatrix of the parent.
-		modelMatrix = this->_getModelMatrix( (*child)->parent() );
 	}
 }
 
