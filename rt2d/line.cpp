@@ -70,6 +70,21 @@ void Line::createCircle(int radius, int segments)
 	_filename = linename;
 }
 
+void Line::createBox(int hw, int hh)
+{
+	this->addPoint(-hw, -hh);
+	this->addPoint( hw, -hh);
+	this->addPoint( hw,  hh);
+	this->addPoint(-hw,  hh);
+	this->closed(true);
+
+	char buf[24]; // should be big enough: "box_hw999_hh999"
+	sprintf(buf, "box_hw%d_hh%d", hw, hh);
+	std::string linename(buf);
+
+	_filename = linename;
+}
+
 bool Line::loadLineFile(const std::string& filename)
 {
 	FILE * file = fopen(filename.c_str(), "r");

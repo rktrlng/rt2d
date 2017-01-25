@@ -3,14 +3,20 @@ cmake_minimum_required (VERSION 2.6)
 project (rt2d)
 
 # delete CMakeCache.txt from the build directory when you edit these options
+####################################################################
 OPTION(MAKE_START "Make RT2D start application" ON)
-OPTION(MAKE_DEMO "Make RT2D demo (tests) application" ON)
-OPTION(MAKE_FLOCKING "Make flocking application" ON)
-OPTION(MAKE_RS232 "Make RS232 library" OFF)
-OPTION(USE_OPENAL "Use OpenAL" OFF)
+OPTION(MAKE_DEMO "Make RT2D demo (tests) application" OFF)
+OPTION(MAKE_FLOCKING "Make flocking application" OFF)
+
+OPTION(USE_RS232 "Use RS232 library" OFF)
+
+OPTION(USE_OPENAL "Use OpenAL library" OFF)
 OPTION(MAKE_AUDIOSTART "Make OpenAL/RT2D audiostart" OFF)
 OPTION(MAKE_OPENAL_TONEGEN "Make OpenAL Tone Generator" OFF)
 
+OPTION(USE_BOX2D "Use Box2D" OFF)
+OPTION(MAKE_BOX2DSTART "Make Box2D/RT2D box2dstart" OFF)
+####################################################################
 
 if( CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR )
     message( FATAL_ERROR "Please select another Build Directory ! (and give it a clever name, like 'build')" )
@@ -56,17 +62,18 @@ find_package(OpenGL REQUIRED)
 add_subdirectory (external)
 
 include_directories(
-	${CMAKE_SOURCE_DIR}/external/glfw-3.0.3/include/GLFW/
-	${CMAKE_SOURCE_DIR}/external/glm-0.9.7.0/
-	${CMAKE_SOURCE_DIR}/external/glew-1.9.0/include/
-	${CMAKE_SOURCE_DIR}/rt2d/
+	${CMAKE_SOURCE_DIR}/external/glfw-3.0.3/include/GLFW
+	${CMAKE_SOURCE_DIR}/external/glm-0.9.7.0
+	${CMAKE_SOURCE_DIR}/external/glew-1.9.0/include
+	${CMAKE_SOURCE_DIR}/external
+	${CMAKE_SOURCE_DIR}/rt2d
 	${CMAKE_SOURCE_DIR}/.
 )
 
 link_directories(
-	${CMAKE_SOURCE_DIR}/external/glfw-3.0.3/src/
-	${CMAKE_SOURCE_DIR}/external/glew-1.9.0/
-	${CMAKE_SOURCE_DIR}/external/
+	${CMAKE_SOURCE_DIR}/external/glfw-3.0.3/src
+	${CMAKE_SOURCE_DIR}/external/glew-1.9.0
+	${CMAKE_SOURCE_DIR}/external
 	${CMAKE_SOURCE_DIR}/rt2d
 )
 
@@ -84,22 +91,6 @@ add_definitions(
 	-DGLEW_STATIC
 	-D_CRT_SECURE_NO_WARNINGS
 )
-
-####################################################################
-# librs232.a                                                       #
-####################################################################
-IF(MAKE_RS232)
-	include_directories(
-		${CMAKE_SOURCE_DIR}/external/rs232/
-	)
-	link_directories(
-		${CMAKE_SOURCE_DIR}/external/rs232
-	)
-	add_library( rs232 STATIC
-		external/rs232/rs232.c
-		external/rs232/rs232.h
-	)
-ENDIF()
 
 ####################################################################
 # librt2d.a                                                        #
@@ -252,6 +243,22 @@ IF(MAKE_FLOCKING)
 ENDIF()
 
 ####################################################################
+# librs232.a                                                       #
+####################################################################
+IF(USE_RS232)
+	include_directories(
+		${CMAKE_SOURCE_DIR}/external/rs232
+	)
+	link_directories(
+		${CMAKE_SOURCE_DIR}/external/rs232
+	)
+	add_library( rs232 STATIC
+		external/rs232/rs232.c
+		external/rs232/rs232.h
+	)
+ENDIF()
+
+####################################################################
 # OpenAL                                                           #
 ####################################################################
 IF(USE_OPENAL)
@@ -272,7 +279,7 @@ IF(USE_OPENAL)
 ENDIF()
 
 ####################################################################
-# RT2D/OpenAL audio start                                          #
+# RT2D/OpenAL audiostart                                           #
 ####################################################################
 IF(MAKE_AUDIOSTART AND USE_OPENAL)
 	add_executable(audiostart
@@ -299,7 +306,6 @@ IF(MAKE_AUDIOSTART AND USE_OPENAL)
 	)
 ENDIF()
 
-
 ####################################################################
 # OpenAL tone generator                                            #
 ####################################################################
@@ -312,4 +318,49 @@ IF(MAKE_OPENAL_TONEGEN AND USE_OPENAL)
 		${OPENAL}
 	)
 ENDIF()
+
+####################################################################
+# box2d.a                                                          #
+####################################################################
+IF(USE_BOX2D)
+	option(BOX2D_INSTALL "Install Box2D libs, includes, and CMake scripts" OFF)
+	option(BOX2D_INSTALL_DOC "Install Box2D documentation" OFF)
+	option(BOX2D_BUILD_SHARED "Build Box2D shared libraries" OFF)
+	option(BOX2D_BUILD_STATIC "Build Box2D static libraries" ON)
+	option(BOX2D_BUILD_EXAMPLES "Build Box2D examples" OFF)
+
+	set(BOX2D_VERSION 2.3.2)
+	set(LIB_INSTALL_DIR lib${LIB_SUFFIX})
+
+	# The Box2D library.
+	add_subdirectory(external/Box2D)
+
+	include_directories(
+		${CMAKE_SOURCE_DIR}/external/Box2D
+	)
+	link_directories(
+		${CMAKE_SOURCE_DIR}/external/Box2D
+	)
+	add_definitions(
+	    -DBOX2D_BUILD_STATIC
+	)
+	set(BOX2D_LIB
+	    Box2D
+	)
+ENDIF()
+
+####################################################################
+# Box2D/RT2D box2dstart                                            #
+####################################################################
+IF(MAKE_BOX2DSTART AND USE_BOX2D)
+	add_executable(box2dstart
+		projects/box2dstart/main.cpp
+		projects/box2dstart/scene01.cpp
+	)
+	target_link_libraries (box2dstart
+		${BOX2D_LIB}
+		${ALL_GRAPHICS_LIBS}
+	)
+ENDIF()
+
 ####################################################################

@@ -54,6 +54,11 @@ public:
 	/// @param segments the number of segments
 	/// @return void
 	void createCircle(int radius, int segments);
+	/// @brief Create a box
+	/// @param hw half the width of the box
+	/// @param hh half the height of the box
+	/// @return void
+	void createBox(int hw, int hh);
 
 	/// @brief Get the Points of this Line
 	/// @return std::vector<glm::vec3> _points
