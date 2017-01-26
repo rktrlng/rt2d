@@ -194,7 +194,7 @@ glm::mat4 Renderer::_getModelMatrix(Entity* entity)
 	return mm;
 }
 
-void Renderer::_renderSpriteBatch(glm::mat4& modelMatrix, std::vector<Sprite*>& spritebatch, Camera* camera)
+void Renderer::_renderSpriteBatch(glm::mat4 modelMatrix, std::vector<Sprite*>& spritebatch, Camera* camera)
 {
 	Sprite* spr = spritebatch[0];
 	Shader* shader = _uberShader;
@@ -274,7 +274,7 @@ void Renderer::_renderSpriteBatch(glm::mat4& modelMatrix, std::vector<Sprite*>& 
 
 }
 
-void Renderer::_renderSprite(const glm::mat4& modelMatrix, Sprite* sprite, bool dynamic)
+void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool dynamic)
 {
 	Shader* shader = _uberShader;
 	// ask resourcemanager
@@ -317,7 +317,7 @@ void Renderer::_renderSprite(const glm::mat4& modelMatrix, Sprite* sprite, bool 
 	}
 }
 
-void Renderer::_renderLine(const glm::mat4& modelMatrix, Line* line)
+void Renderer::_renderLine(const glm::mat4 modelMatrix, Line* line)
 {
 	Shader* shader = _uberShader;
 	// ask resourcemanager
@@ -352,7 +352,7 @@ void Renderer::_renderLine(const glm::mat4& modelMatrix, Line* line)
 	}
 }
 
-void Renderer::_renderMesh(const glm::mat4& modelMatrix, Shader* shader,
+void Renderer::_renderMesh(const glm::mat4 modelMatrix, Shader* shader,
 	Texture* texture, Mesh* mesh, int numverts,
 	GLuint mode, RGBAColor blendcolor)
 {
