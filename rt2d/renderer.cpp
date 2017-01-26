@@ -93,7 +93,7 @@ int Renderer::init()
 	//glDepthFunc(GL_LESS);
 
 	// Cull triangles which normal is not towards the camera
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 
 	if (UBERSHADER) { // from config.h
 		_uberShader =_resman.getShader(SPRITEVERTEXSHADER, SPRITEFRAGMENTSHADER);
@@ -181,12 +181,12 @@ glm::mat4 Renderer::_getModelMatrix(Entity* entity)
 {
 	// OpenGL doesn't understand our Vector2. Make it glm::vec3 compatible.
 	glm::vec3 position = glm::vec3(entity->position.x, entity->position.y, 0.0f);
-	glm::vec3 rotation = glm::vec3(0.0f, 0.0f, entity->rotation);
+	glm::vec3 rotation = glm::vec3(entity->rotation.x, entity->rotation.y, entity->rotation.z);
 	glm::vec3 scale = glm::vec3(entity->scale.x, entity->scale.y, 1.0f);
 
 	// Build the Model matrix
 	glm::mat4 translationMatrix	= glm::translate(glm::mat4(1.0f), position);
-	glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(0.0f, 0.0f, rotation.z);
+	glm::mat4 rotationMatrix	= glm::eulerAngleYXZ(rotation.y, rotation.x, rotation.z);
 	glm::mat4 scalingMatrix		= glm::scale(glm::mat4(1.0f), scale);
 
 	glm::mat4 mm = translationMatrix * rotationMatrix * scalingMatrix;

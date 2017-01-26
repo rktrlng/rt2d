@@ -104,8 +104,8 @@ void Scene01::update(float deltaTime)
 	// ###############################################################
 	// Rotate default_entity
 	// ###############################################################
-	default_entity->rotation -= 90 * DEG_TO_RAD * deltaTime; // 90 deg. per sec.
-	if (default_entity->rotation < TWO_PI) { default_entity->rotation += TWO_PI; }
+	default_entity->rotation.z -= 90 * DEG_TO_RAD * deltaTime; // 90 deg. per sec.
+	if (default_entity->rotation.z < TWO_PI) { default_entity->rotation.z += TWO_PI; }
 
 	// ###############################################################
 	// alpha child1_entity + child2_entity
@@ -118,8 +118,8 @@ void Scene01::update(float deltaTime)
 	// ###############################################################
 	// Animate animated_entity
 	// ###############################################################
-	animated_entity->rotation += 22.5 * DEG_TO_RAD * deltaTime;
-	if (animated_entity->rotation > -TWO_PI) { animated_entity->rotation -= TWO_PI; }
+	animated_entity->rotation.y += 22.5 * DEG_TO_RAD * deltaTime;
+	if (animated_entity->rotation.y > -TWO_PI) { animated_entity->rotation.y -= TWO_PI; }
 
 	static int f = 0;
 	if (f > 15) { f = 0; }

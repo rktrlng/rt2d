@@ -139,10 +139,10 @@ void Scene03::update(float deltaTime)
 	// ###############################################################
 	// rt2d_line
 	// ###############################################################
-	rt2d_line->rotation += 90 * DEG_TO_RAD * deltaTime;
-	if (rt2d_line->rotation > TWO_PI) { rt2d_line->rotation -= TWO_PI; }
-	rt2d_line->scale.x = sin(rt2d_line->rotation);
-	rt2d_line->scale.y = cos(rt2d_line->rotation);
+	rt2d_line->rotation.z += 90 * DEG_TO_RAD * deltaTime;
+	if (rt2d_line->rotation.z > TWO_PI) { rt2d_line->rotation.z -= TWO_PI; }
+	rt2d_line->scale.x = sin(rt2d_line->rotation.z);
+	rt2d_line->scale.y = cos(rt2d_line->rotation.z);
 	rt2d_line->line()->color = Color::rotate(rt2d_line->line()->color, deltaTime*2);
 
 	// ###############################################################
@@ -181,7 +181,7 @@ void Scene03::updateSpaceShip(float deltaTime)
 		polar.angle -= rotspeed * deltaTime; // rotate left
 	}
 
-	spaceship->rotation = polar.angle;
+	spaceship->rotation.z = polar.angle;
 	spaceship->position += velocity * deltaTime;
 
 	if (spaceship->position.x < 0) { spaceship->position.x = SWIDTH; }

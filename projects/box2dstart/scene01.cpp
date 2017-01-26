@@ -58,7 +58,7 @@ void Scene01::update(float deltaTime)
 			// apply to RT2D
 			entities[i]->position.x = position.x * 100;
 			entities[i]->position.y = SHEIGHT - (position.y * 100);
-			entities[i]->rotation = angle;
+			entities[i]->rotation.z = angle;
 		}
 
 		t.start();

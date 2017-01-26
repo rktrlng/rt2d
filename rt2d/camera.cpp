@@ -15,9 +15,9 @@ Camera::Camera()
 
 	// Initial position : on +Z
 	// Unintuitively, this is the centre of the screen, so add _offset
-	position = Point( 0, 0, 1 ) + _offset;
+	position = Point( 0, 0, 100 ) + _offset;
 
-	_projectionMatrix = glm::ortho(0.0f, (float)SWIDTH, (float)SHEIGHT, 0.0f, 0.1f, 100.0f);
+	_projectionMatrix = glm::ortho(0.0f, (float)SWIDTH, (float)SHEIGHT, 0.0f, 0.001f, 1000.0f);
 }
 
 Camera::~Camera()

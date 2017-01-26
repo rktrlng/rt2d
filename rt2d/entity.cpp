@@ -21,10 +21,10 @@ Entity::Entity()
 	_parent = NULL;
 
 	position = Point2(0.0f, 0.0f);
-	rotation = 0.0f;
-	scale = Point2(1.0f, 1.0f);
+	rotation = Point2(0.0f, 0.0f, 0.0f);
+	scale = Point3(1.0f, 1.0f, 1.0f);
 
-	_worldpos = Point2(0.0f, 0.0f);
+	_worldpos = Point3(0.0f, 0.0f, 0.0f);
 
 	_sprite = NULL;
 	_line = NULL;
