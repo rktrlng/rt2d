@@ -63,7 +63,7 @@ add_subdirectory (external)
 
 include_directories(
 	${CMAKE_SOURCE_DIR}/external/glfw-3.0.3/include/GLFW
-	${CMAKE_SOURCE_DIR}/external/glm-0.9.7.0
+	${CMAKE_SOURCE_DIR}/external/glm-0.9.8.4
 	${CMAKE_SOURCE_DIR}/external/glew-1.9.0/include
 	${CMAKE_SOURCE_DIR}/external
 	${CMAKE_SOURCE_DIR}/rt2d
