@@ -91,6 +91,7 @@ Libraries
 - glew: <http://glew.sourceforge.net/>
 - glm: <http://glm.g-truc.net/>
 - OpenAL: <https://github.com/kcat/openal-soft>
+- Box2D: <https://github.com/erincatto/Box2D>
 
 Links
 -----
