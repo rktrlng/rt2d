@@ -59,7 +59,7 @@ void Scene02::update(float deltaTime)
 	for (int i=0; i<s; i++) {
 		boids[i]->update(deltaTime);
 		_spritebatch[i]->spriteposition = boids[i]->position;
-		_spritebatch[i]->spriterotation = boids[i]->rotation;
+		_spritebatch[i]->spriterotation.z = boids[i]->rotation;
 		_spritebatch[i]->spritescale = boids[i]->scale;
 	}
 }

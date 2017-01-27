@@ -155,7 +155,7 @@ public:
 
 protected:
 	// updated world position after all transforms
-	Point2 _worldpos; /**< @brief The position of the Entity in the real world */
+	Point3 _worldpos; /**< @brief The position of the Entity in the real world */
 	std::vector<Sprite*> _spritebatch; ///< @brief The _spritebatch of this Entity
 
 private:

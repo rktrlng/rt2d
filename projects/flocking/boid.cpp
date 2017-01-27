@@ -56,7 +56,7 @@ void Boid::updateBoid()
 
 	// update Entity position & rotation
 	this->position = _location;
-	this->rotation = this->_velocity.getAngle();
+	this->rotation.z = this->_velocity.getAngle();
 }
 
 // We accumulate a new acceleration each time based on rules

@@ -92,7 +92,7 @@ void Scene05::update(float deltaTime)
 		float x = cos(adder) * 0.15f * deltaTime;
 		float y = sin(adder) * 0.15f * deltaTime;
 		sprite_container->sprite()->uvoffset += Point2(x, y);
-		sprite_container->rotation += PI / 16 * deltaTime;
+		sprite_container->rotation.z += PI / 16 * deltaTime;
 		adder += deltaTime;
 	}
 }

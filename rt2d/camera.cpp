@@ -25,6 +25,19 @@ Camera::~Camera()
 
 }
 
+void Camera::perspective()
+{
+	_offset = Point(0, 0, 0);
+	position = Point( 0, 0, 500 ) + _offset;
+
+	_projectionMatrix = glm::perspective(45.0f, (float)SWIDTH/(float)SHEIGHT, 0.1f, 1000.0f);
+
+	// Enable depth test
+	glEnable(GL_DEPTH_TEST);
+	// Accept fragment if it closer to the camera than the former one
+	glDepthFunc(GL_LESS);
+}
+
 // called from Core::run(Scene* scene)
 void Camera::updateCamera(float deltaTime)
 {

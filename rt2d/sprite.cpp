@@ -17,9 +17,10 @@ Sprite::Sprite()
 	_fragmentshader = SPRITEFRAGMENTSHADER;
 	_vertexshader = SPRITEVERTEXSHADER;
 
-	spriteposition = Point2(0.0f, 0.0f); // spritebatch only
-	spriterotation = 0.0f; // spritebatch only
-	spritescale = Point2(1.0f, 1.0f); // spritebatch only
+	spriteposition = Point3(0.0f, 0.0f, 0.0f); // spritebatch only
+	spriterotation = Point3(0.0f, 0.0f, 0.0f); // spritebatch only
+	spritescale = Point3(1.0f, 1.0f, 1.0f); // spritebatch only
+
 	pivot = Point2(0.5f, 0.5f);
 	uvdim = Point2(1.0f, 1.0f);
 	uvoffset = Point2(0.0f, 0.0f);

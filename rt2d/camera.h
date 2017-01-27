@@ -43,6 +43,8 @@ public:
 	/// @return glm::mat4 _projectionMatrix
 	glm::mat4 projectionMatrix() { return _projectionMatrix; };
 
+	void perspective();
+
 private:
 	glm::mat4 _viewMatrix; ///< @brief The viewMatrix of the Camera
 	glm::mat4 _projectionMatrix; ///< @brief The (orthographic) projectionMatrix of the Camera

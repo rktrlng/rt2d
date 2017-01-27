@@ -7,6 +7,7 @@ project (rt2d)
 OPTION(MAKE_START "Make RT2D start application" ON)
 OPTION(MAKE_DEMO "Make RT2D demo (tests) application" OFF)
 OPTION(MAKE_FLOCKING "Make flocking application" OFF)
+OPTION(MAKE_BASIC3D "Make basic3D application" ON)
 
 OPTION(USE_RS232 "Use RS232 library" OFF)
 
@@ -218,6 +219,27 @@ IF(MAKE_DEMO)
 	# Copy assets to the build directory
 	file(
 		COPY projects/demo/assets
+		DESTINATION ${CMAKE_BINARY_DIR}
+	)
+ENDIF()
+
+####################################################################
+# Cube                                                             #
+####################################################################
+IF(MAKE_BASIC3D)
+	add_executable(basic3D
+		projects/basic3D/main.cpp
+		projects/basic3D/cube.cpp
+		projects/basic3D/cube.h
+		projects/basic3D/myscene.cpp
+		projects/basic3D/myscene.h
+	)
+	target_link_libraries(basic3D
+		${ALL_GRAPHICS_LIBS}
+	)
+	# Copy assets to the build directory
+	file(
+		COPY projects/basic3D/assets
 		DESTINATION ${CMAKE_BINARY_DIR}
 	)
 ENDIF()

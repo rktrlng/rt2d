@@ -49,7 +49,7 @@ void Scene04::update(float deltaTime)
 	// ###############################################################
 	// pixel_container
 	// ###############################################################
-	pixel_container->rotation += PI / 16 * deltaTime;
+	pixel_container->rotation.z += PI / 16 * deltaTime;
 	//pixel_container->sprite()->uvoffset += Point2(deltaTime/8, deltaTime/8);
 
 	// change state every n seconds, pause timer when SPACE is pressed
