@@ -27,11 +27,11 @@ Cube::Cube() : Entity()
 	}
 
 	// 1 front
-	this->spritebatch()[0]->spriteposition.z = cellwidth/2;
-	this->spritebatch()[0]->spriterotation.y = PI;
+	this->spritebatch()[0]->spriteposition.z = -cellwidth/2;
 
 	// 6 back
-	this->spritebatch()[5]->spriteposition.z = -cellwidth/2;
+	this->spritebatch()[5]->spriteposition.z = cellwidth/2;
+	this->spritebatch()[5]->spriterotation.y = PI;
 
 	// 3 left
 	this->spritebatch()[2]->spriteposition.x = -cellwidth/2;

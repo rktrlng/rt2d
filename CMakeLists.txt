@@ -15,8 +15,8 @@ OPTION(USE_OPENAL "Use OpenAL library" OFF)
 OPTION(MAKE_AUDIOSTART "Make OpenAL/RT2D audiostart" OFF)
 OPTION(MAKE_OPENAL_TONEGEN "Make OpenAL Tone Generator" OFF)
 
-OPTION(USE_BOX2D "Use Box2D" OFF)
-OPTION(MAKE_BOX2DSTART "Make Box2D/RT2D box2dstart" OFF)
+OPTION(USE_BOX2D "Use Box2D" ON)
+OPTION(MAKE_BOX2DSTART "Make Box2D/RT2D box2dstart" ON)
 ####################################################################
 
 if( CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR )
