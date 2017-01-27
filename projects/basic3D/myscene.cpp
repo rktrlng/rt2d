@@ -21,11 +21,11 @@ MyScene::MyScene() : Scene()
 		Cube* cube = new Cube();
 		cube->position.x = i*xstep;
 		cube->position.x -= (SWIDTH/2)-xstep;
+		//cube->scale = Point3(0.5f,0.5f,0.5f);
 		cubes.push_back(cube);
 
 		this->addChild(cube);
 	}
-	//this->camera()->position.x = (SWIDTH/2)-(xstep*1.5);
 
 	entity = new BasicEntity();
 	entity->addSprite("assets/pencils.tga");
@@ -48,6 +48,9 @@ MyScene::~MyScene()
 
 void MyScene::update(float deltaTime)
 {
+	// ###############################################################
+	// Rotate all cubes
+	// ###############################################################
 	static float counter = 0;
 	size_t s = cubes.size();
 	for (size_t i = 0; i < s; i++) {
@@ -57,36 +60,44 @@ void MyScene::update(float deltaTime)
 	counter += deltaTime;
 
 	// ###############################################################
+	// First Person Shooter camera controls
+	// ###############################################################
+	this->fpsCam(deltaTime);
+
+	// ###############################################################
 	// Escape key stops the Scene
 	// ###############################################################
 	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
 		this->stop();
 	}
+}
 
-	// ###############################################################
-	// Move Camera (Arrow up, down, left, right)
-	// ###############################################################
-	float speed = 600.0f; // 600 units / second
+void MyScene::fpsCam(float deltaTime)
+{
+	float movspeed = 500.0f; // units per second
+	float rotspeed = PI / 4; // radians per second
+	float rollspeed = PI / 400; // radians per second
 
-	// Right and Down vector
-	Point2 right = Point2(1, 0);
-	Point2 up = Point2(0, 1);
-	// Direction
-	Vector2 direction = Vector2(0,0);
+	// Use keyboard to move and look around
+	// tilt
+	if (input()->getKey( GLFW_KEY_UP )) 	{ camera()->tilt(deltaTime * rotspeed); }
+	if (input()->getKey( GLFW_KEY_DOWN ))	{ camera()->tilt(deltaTime * -rotspeed); }
+	// pan
+	if (input()->getKey( GLFW_KEY_LEFT )) 	{ camera()->pan(deltaTime * rotspeed); }
+	if (input()->getKey( GLFW_KEY_RIGHT ))	{ camera()->pan(deltaTime * -rotspeed); }
+	// roll
+	if (input()->getKey('I'))	{ camera()->roll(deltaTime * rollspeed); }
+	if (input()->getKey('O'))	{ camera()->rotation.z = 0.0f; }
+	if (input()->getKey('P'))	{ camera()->roll(deltaTime * -rollspeed); }
+	// dolly
+	if (input()->getKey('W'))	{ camera()->dolly(deltaTime * movspeed / 2.0f); }
+	if (input()->getKey('S'))	{ camera()->dolly(deltaTime * -movspeed / 2.0f); }
+	// track
+	if (input()->getKey('A'))	{ camera()->track(deltaTime * -movspeed); }
+	if (input()->getKey('D'))	{ camera()->track(deltaTime * movspeed); }
+	// boom
+	if (input()->getKey('Q'))	{ camera()->boom(deltaTime * movspeed); }
+	if (input()->getKey('Z'))	{ camera()->boom(deltaTime * -movspeed); }
 
-	if (input()->getKey( GLFW_KEY_UP )) {
-		direction -= up;
-	}
-	if (input()->getKey( GLFW_KEY_DOWN )) {
-		direction += up;
-	}
-	if (input()->getKey( GLFW_KEY_RIGHT )) {
-		direction += right;
-	}
-	if (input()->getKey( GLFW_KEY_LEFT )) {
-		direction -= right;
-	}
-	direction.normalize();
-	direction *= deltaTime * speed;
-	camera()->position += direction;
+	//camera()->fov(45.0f - 5 * glfwGetMouseWheel());
 }

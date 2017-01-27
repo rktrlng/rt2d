@@ -26,6 +26,7 @@ private:
 	std::vector<Cube*> cubes;
 	Timer t;
 	BasicEntity* entity;
+	void fpsCam(float deltaTime);
 };
 
 #endif /* MYSCENE_H */

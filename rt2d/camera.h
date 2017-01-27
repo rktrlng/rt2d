@@ -17,9 +17,10 @@
 
 // Include GLM
 #include <glm/glm.hpp>
+#include <glm/ext.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include <rt2d/pointx.h>
+#include <rt2d/vectorx.h>
 
 /**
  * @brief The Camera class handles the concept of having a Camera in your Scene.
@@ -30,7 +31,15 @@ public:
 	Camera(); ///< @brief Constructor of the Camera
 	virtual ~Camera(); ///< @brief Destructor of the Camera
 
-	Point position; ///< @brief The position of the Camera
+	Point3 position; ///< @brief The position of the Camera
+	Point3 rotation; ///< @brief The rotation of the Camera
+
+	void tilt(float amount)		{ rotation.x += amount; }; ///< @brief tilt the Camera
+	void pan(float amount)		{ rotation.y += amount; }; ///< @brief pan the Camera
+	void roll(float amount)		{ rotation.z += amount; }; ///< @brief roll the Camera
+	void dolly(float amount)	{ position += (Point3(_direction.x, _direction.y, _direction.z) * amount); }; ///< @brief dolly the Camera
+	void track(float amount)	{ position += (Point3(_right.x, _right.y, _right.z) * amount); }; ///< @brief track the Camera
+	void boom(float amount)		{ position += (Point3(_up.x, _up.y, _up.z) * amount); }; ///< @brief boom the Camera
 
 	/// @brief updates the viewMatrix and projectionMatrix of the Camera.
 	/// @param deltaTime The time that's passed since the last update.
@@ -43,13 +52,22 @@ public:
 	/// @return glm::mat4 _projectionMatrix
 	glm::mat4 projectionMatrix() { return _projectionMatrix; };
 
+	/// @brief set the projectionMatrix in 'perspective mode'.
+	/// @return void
 	void perspective();
+	/// @brief set the projectionMatrix in 'orthogonal mode'.
+	/// @return void
+	void orthogonal();
 
 private:
 	glm::mat4 _viewMatrix; ///< @brief The viewMatrix of the Camera
 	glm::mat4 _projectionMatrix; ///< @brief The (orthographic) projectionMatrix of the Camera
 
-	Point _offset; ///< @brief The internal offset of the Camera. When Camera is in the middle of the screen, its position is (0,0).
+	Point3 _offset; ///< @brief The internal offset of the Camera. When Camera is in the middle of the screen, its position is (0,0,0).
+
+	glm::vec3 _up; ///< @brief The up vector of the Camera.
+	glm::vec3 _right; ///< @brief The right vector of the Camera.
+	glm::vec3 _direction; ///< @brief The vector where the Camera is looking.
 };
 
 #endif
