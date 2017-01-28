@@ -10,7 +10,7 @@
 
 Camera::Camera()
 {
-	position = Point3( 0, 0, 500 );
+	position = Point3( 0, 0, 650 );
 	rotation = Point3( 0, PI, 0 );
 
 	_direction = glm::vec3(0, 0, -5);
@@ -29,7 +29,7 @@ void Camera::perspective()
 {
 	// offset is 0,0,0 because in 3D we want 0,0,0 in the middle of the screen
 	_offset = Point3(0, 0, 0);
-	position = Point3( 0, 0, 500 ) + _offset;
+	position = Point3( 0, 0, 650 ) + _offset;
 
 	// FoV, aspectratio, nearclip, farclip
 	_projectionMatrix = glm::perspective(45.0f, (float)SWIDTH/(float)SHEIGHT, 0.1f, 10000.0f);
@@ -47,9 +47,9 @@ void Camera::orthogonal()
 
 	// Initial position : on +Z
 	// Unintuitively, this is the centre of the screen, so add _offset
-	position = Point3( 0, 0, 5 ) + _offset;
+	position = Point3( 0, 0, 650 ) + _offset;
 
-	_projectionMatrix = glm::ortho(0.0f, (float)SWIDTH, (float)SHEIGHT, 0.0f, 0.1f, 100.0f);
+	_projectionMatrix = glm::ortho(0.0f, (float)SWIDTH, (float)SHEIGHT, 0.0f, 0.1f, 1000.0f);
 
 	// Disable depth test (we don't need it in 2D)
 	glDisable(GL_DEPTH_TEST);

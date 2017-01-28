@@ -83,12 +83,16 @@ Scene03::Scene03() : SuperScene()
 	dynamic_line->addLine(dynamic);
 	delete dynamic;
 
+	cube3d = new Cube3D();
+
+
 	// Create Tree
 	layers[0]->addChild(dynamic_line);
 	layers[0]->addChild(rt2d_line);
 	layers[0]->addChild(default_line);
 	layers[0]->addChild(spaceship);
 	layers[0]->addChild(shape_container);
+	layers[0]->addChild(cube3d);
 }
 
 
@@ -99,11 +103,13 @@ Scene03::~Scene03()
 	layers[0]->removeChild(default_line);
 	layers[0]->removeChild(rt2d_line);
 	layers[0]->removeChild(dynamic_line);
+	layers[0]->removeChild(cube3d);
 
 	delete dynamic_line;
 	delete rt2d_line;
 	delete default_line;
 	delete spaceship;
+	delete cube3d;
 
 	int s = shapes.size();
 	for (int i=0; i<s; i++) {
