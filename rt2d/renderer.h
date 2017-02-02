@@ -61,11 +61,6 @@ private:
 	/// @return void
 	void _renderEntity(glm::mat4 modelMatrix, Entity* entity, Camera* camera);
 
-	/// @brief get the modelMatrix from an Entity
-	/// @param entity The Entity we need the modelMatrix from.
-	/// @return glm::mat4
-	inline glm::mat4 _getModelMatrix(Entity* entity);
-
 	/// @brief Renders the Sprite 'component' of an Entity.
 	/// @param modelMatrix The ModelMatrix of the Entity
 	/// @param sprite The Sprite 'component' of the Entity
