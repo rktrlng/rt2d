@@ -138,14 +138,17 @@ void Renderer::_renderEntity(glm::mat4 modelMatrix, Entity* entity, Camera* came
 	modelMatrix *= this->_getModelMatrix(entity);
 
 	// #######################################################
-	// send the real world transforms back to Entity
+	//glm::vec4 realpos = modelMatrix * glm::vec4(0,0,0,1);
+	//entity->_worldposition = Vector3(realpos.x, realpos.y, realpos.z);
+
+	// send the real world transforms back to Entity (glm::decompose is experimental)
 	glm::vec3 realscale;
 	glm::quat realrot;
 	glm::vec3 realpos;
 	glm::vec3 skew;
 	glm::vec4 perspective;
 	glm::decompose(modelMatrix, realscale, realrot, realpos, skew, perspective);
-	
+
 	entity->_worldposition = Point3(realpos.x, realpos.y, realpos.z);
 	entity->_worldrotation = Point3(realrot.x, realrot.y, realrot.z);
 	entity->_worldscale = Point3(realscale.x, realscale.y, realscale.z);
@@ -197,7 +200,7 @@ void Renderer::_renderEntity(glm::mat4 modelMatrix, Entity* entity, Camera* came
 
 glm::mat4 Renderer::_getModelMatrix(Entity* entity)
 {
-	// OpenGL doesn't understand our Vector2. Make it glm::vec3 compatible.
+	// OpenGL doesn't understand our Point3. Make it glm::vec3 compatible.
 	glm::vec3 position = glm::vec3(entity->position.x, entity->position.y, entity->position.z);
 	glm::vec3 rotation = glm::vec3(entity->rotation.x, entity->rotation.y, entity->rotation.z);
 	glm::vec3 scale = glm::vec3(entity->scale.x, entity->scale.y, entity->scale.z);
@@ -248,6 +251,7 @@ void Renderer::_renderSpriteBatch(glm::mat4 modelMatrix, std::vector<Sprite*>& s
 				int right_edge = camera->position.x + half_width;
 				int top_edge = camera->position.y - half_height;
 				int bottom_edge = camera->position.y + half_height;
+
 				float posx = sprite->spriteposition.x;
 				float posy = sprite->spriteposition.y;
 
