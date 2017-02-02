@@ -21,6 +21,7 @@
 #include <algorithm>
 
 #include <glm/glm.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
 
 #include <rt2d/rt2dconfig.h>
 #include <rt2d/timer.h>
@@ -147,15 +148,25 @@ public:
 	/// @brief get the parent of this Entity.
 	/// @return Entity* _parent
 	Entity* parent() { return _parent; };
+
 	/// @brief get the world position of this Entity.
-	/// @return Point2 _worldpos
-	Point2 worldpos() { return _worldpos; };
+	/// @return Point3 _worldposition
+	Point3 worldposition() { return _worldposition; };
+	/// @brief get the world rotation of this Entity.
+	/// @return Point3 _worldrotation
+	Point3 worldrotation() { return _worldrotation; };
+	/// @brief get the world scale of this Entity.
+	/// @return Point3 _worldscale
+	Point3 worldscale() { return _worldscale; };
 
 	friend class Renderer;
 
 protected:
-	// updated world position after all transforms
-	Point3 _worldpos; /**< @brief The position of the Entity in the real world */
+	// updated world transforms
+	Point3 _worldposition; /**< @brief The position of the Entity in the real world */
+	Point3 _worldrotation; /**< @brief The rotation of the Entity in the real world */
+	Point3 _worldscale; /**< @brief The scale of the Entity in the real world */
+
 	std::vector<Sprite*> _spritebatch; ///< @brief The _spritebatch of this Entity
 
 private:

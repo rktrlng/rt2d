@@ -138,10 +138,17 @@ void Renderer::_renderEntity(glm::mat4 modelMatrix, Entity* entity, Camera* came
 	modelMatrix *= this->_getModelMatrix(entity);
 
 	// #######################################################
-	// fill _worldpos in Entity
-	glm::vec4 realpos = modelMatrix * glm::vec4(0,0,0,1);
-	// send the real world position after these transforms back to Entity->worldpos
-	entity->_worldpos = Vector3(realpos.x, realpos.y, realpos.z);
+	// send the real world transforms back to Entity
+	glm::vec3 realscale;
+	glm::quat realrot;
+	glm::vec3 realpos;
+	glm::vec3 skew;
+	glm::vec4 perspective;
+	glm::decompose(modelMatrix, realscale, realrot, realpos, skew, perspective);
+	
+	entity->_worldposition = Point3(realpos.x, realpos.y, realpos.z);
+	entity->_worldrotation = Point3(realrot.x, realrot.y, realrot.z);
+	entity->_worldscale = Point3(realscale.x, realscale.y, realscale.z);
 	// #######################################################
 
 	// Check for Sprites to see if we need to render anything

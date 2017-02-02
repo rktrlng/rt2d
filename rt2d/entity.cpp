@@ -24,7 +24,9 @@ Entity::Entity()
 	rotation = Point3(0.0f, 0.0f, 0.0f);
 	scale = Point3(1.0f, 1.0f, 1.0f);
 
-	_worldpos = Point3(0.0f, 0.0f, 0.0f);
+	_worldposition = Point3(0.0f, 0.0f, 0.0f);
+	_worldrotation = Point3(0.0f, 0.0f, 0.0f);
+	_worldscale = Point3(1.0f, 1.0f, 1.0f);
 
 	_sprite = NULL;
 	_line = NULL;

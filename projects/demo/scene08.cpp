@@ -93,7 +93,7 @@ void Scene08::update(float deltaTime)
 	int s = cells.size();
 	for (int i=0; i<s; i++) {
 		Cell* c = cells[i];
-		Point2 pos = c->entity->worldpos();
+		Point2 pos = c->entity->worldposition();
 
 		int halfwidth = cellwidth/2;
 		int halfheight = cellheight/2;
