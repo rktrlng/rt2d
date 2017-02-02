@@ -5,12 +5,16 @@ RT2D is a RealTime 2D framework, based on somewhat 'modern' OpenGL (2.1+). It co
 
 Compatibility is chosen over features. Readability over efficiency. Simplicity over speed. There's no fancy OpenGL stuff here. Just update and render scenes with entities that contain (colored) sprites, spritesheets, spritebatches, pixelbuffers, fonts and lines.
 
+OpenAL and Box2D are not integrated into RT2D. Explicitly link to them if you want to use them. Look in CMakeLists.txt for examples.
+
 Compiling
 ---------
 
 Use cmake to create your project files in a separate `build` directory.
 
-> You should always be able to delete the `build` directory without losing your work! Whatever you do, work in the `src` directory! That's `demo` and/or `rt2d`.
+> You should always be able to delete the `build` directory without losing your work. Whatever you do, work in your `src` directory. That's probably `start`.
+
+Use the OPTION settings in CMakeLists.txt to decide what projects and libraries to compile.
 
 Documentation
 -------------
@@ -26,7 +30,7 @@ Linux
 
 On Debian-based Linux, install the following libraries:
 
-	sudo apt-get install -y git cmake doxygen g++ libgl1-mesa-dev libglu1-mesa-dev libxrandr-dev libxi-dev
+	sudo apt-get install git cmake doxygen g++ libgl1-mesa-dev libglu1-mesa-dev libxrandr-dev libxi-dev
 
 Run `bootstrap.sh` or:
 
