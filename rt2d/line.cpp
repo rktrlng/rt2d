@@ -37,18 +37,19 @@ Line::~Line()
 	_points.clear();
 }
 
-void Line::addPoint(float x, float y)
+void Line::addPoint(float x, float y, float z)
 {
-	glm::vec3 pnt(x, y, 0.0f);
+	glm::vec3 pnt(x, y, z);
 	_points.push_back(pnt);
 }
 
 
-void Line::editPoint(unsigned int id, float x, float y)
+void Line::editPoint(unsigned int id, float x, float y, float z)
 {
 	if (id < _points.size()) {
 		_points[id].x = x;
 		_points[id].y = y;
+		_points[id].z = z;
 	}
 }
 

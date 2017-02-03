@@ -42,13 +42,13 @@ public:
 	/// @param x coordinate of the Point
 	/// @param y coordinate of the Point
 	/// @return void
-	void addPoint(float x, float y);
+	void addPoint(float x, float y, float z = 0.0f);
 	/// @brief Edit a Point on the Line
 	/// @param id the Point to edit
 	/// @param x coordinate of the Point
 	/// @param y coordinate of the Point
 	/// @return void
-	void editPoint(unsigned int id, float x, float y);
+	void editPoint(unsigned int id, float x, float y, float z = 0.0f);
 	/// @brief Create a circle of points
 	/// @param radius the radius of the circle
 	/// @param segments the number of segments
