@@ -41,12 +41,14 @@ public:
 	/// @brief Add a Point to the Line
 	/// @param x coordinate of the Point
 	/// @param y coordinate of the Point
+	/// @param z coordinate of the Point (default 0.0f)
 	/// @return void
 	void addPoint(float x, float y, float z = 0.0f);
 	/// @brief Edit a Point on the Line
 	/// @param id the Point to edit
 	/// @param x coordinate of the Point
 	/// @param y coordinate of the Point
+	/// @param z coordinate of the Point (default 0.0f)
 	/// @return void
 	void editPoint(unsigned int id, float x, float y, float z = 0.0f);
 	/// @brief Create a circle of points
