@@ -34,12 +34,30 @@ public:
 	Point3 position; ///< @brief The position of the Camera
 	Point3 rotation; ///< @brief The rotation of the Camera
 
-	void tilt(float amount)		{ rotation.x += amount; }; ///< @brief tilt the Camera
-	void pan(float amount)		{ rotation.y += amount; }; ///< @brief pan the Camera
-	void roll(float amount)		{ rotation.z += amount; }; ///< @brief roll the Camera
-	void dolly(float amount)	{ position += (Point3(_direction.x, _direction.y, _direction.z) * amount); }; ///< @brief dolly the Camera
-	void track(float amount)	{ position += (Point3(_right.x, _right.y, _right.z) * amount); }; ///< @brief track the Camera
-	void boom(float amount)		{ position += (Point3(_up.x, _up.y, _up.z) * amount); }; ///< @brief boom the Camera
+	/// @brief tilt the Camera (look up/down)
+	/// @param amount the amount to tilt
+	/// @return void
+	void tilt(float amount)		{ rotation.x += amount; };
+	/// @brief pan the Camera (look left/right)
+	/// @param amount the amount to pan
+	/// @return void
+	void pan(float amount)		{ rotation.y += amount; };
+	/// @brief roll the Camera (around Z)
+	/// @param amount the amount to roll in radians
+	/// @return void
+	void roll(float amount)		{ rotation.z += amount; };
+	/// @brief dolly the Camera (walk forward/backward)
+	/// @param amount the amount to dolly
+	/// @return void
+	void dolly(float amount)	{ position += (Point3(_direction.x, _direction.y, _direction.z) * amount); };
+	/// @brief track the Camera (walk sideways / strafe)
+	/// @param amount the amount to track
+	/// @return void
+	void track(float amount)	{ position += (Point3(_right.x, _right.y, _right.z) * amount); };
+	/// @brief boom the Camera (walk up/down)
+	/// @param amount the amount to boom
+	/// @return void
+	void boom(float amount)		{ position += (Point3(_up.x, _up.y, _up.z) * amount); };
 
 	/// @brief updates the viewMatrix and projectionMatrix of the Camera.
 	/// @param deltaTime The time that's passed since the last update.
