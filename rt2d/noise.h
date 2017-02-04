@@ -5,47 +5,62 @@
  *
  * This file is part of RT2D, a 2D OpenGL framework.
  *
- * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
- *   - Initial commit
- */
+ * https://github.com/sol-prog/Perlin_Noise
+ * from the README:
+ *
+ * Perlin_Noise
+ * ============
+ *
+ * Here you could find the code for "Perlin noise in C++11", for more informations visit the project webpage:
+ *
+ * [http://solarianprogrammer.com/2012/07/18/perlin-noise-cpp-11/](http://solarianprogrammer.com/2012/07/18/perlin-noise-cpp-11/)
+ *
+ * You could use this program under the terms of GPL v3, for more details see:
+ *
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * Copyright 2012 Sol from www.solarianprogrammer.com
+ **/
 
 #ifndef NOISE_H
 #define NOISE_H
 
-/// @brief The Noise class generates noise (white, smooth, perlin).
-class Noise
+/// @brief The Noise class generates Perlin Noise.
+class PerlinNoise
 {
 public:
-	Noise(); ///< @brief Noise Constructor
-	virtual ~Noise(); ///< @brief Noise Destructor
-
-	/// @brief generate white noise
-	/// @param width the width of the field
-	/// @param height the height of the field
-	/// @return std::vector<float> single-line grid of noise values
-	static std::vector<float> whiteNoise(int width, int height);
-	/// @brief generate smooth noise
-	/// @param baseNoise a field of base noise that needs smoothing
-	/// @param octave the octave of the noise
-	/// @param width the width of the field
-	/// @param height the height of the field
-	/// @return std::vector<float> single-line grid of noise values
-	static std::vector<float> smoothNoise(std::vector<float>& baseNoise, int octave, int width, int height);
-	/// @brief generate smooth noise
-	/// @param baseNoise a field of base noise that needs smoothing
-	/// @param octaveCount how many fields with different octaves to blend
-	/// @param width the width of the field
-	/// @param height the height of the field
-	/// @return std::vector<float> single-line grid of noise values
-	static std::vector<float> perlinNoise(std::vector<float>& baseNoise, int octaveCount, int width, int height);
-
+	/// @brief Initialize with the reference values for the permutation vector
+	/// @return void
+	PerlinNoise();
+	/// @brief Generate a new permutation vector based on the value of seed
+	/// @param seed the seed of the noise
+	/// @return void
+	PerlinNoise(unsigned int seed);
+	/// @brief get a noise value, for 2D images z can have any value
+	/// @param x x
+	/// @param y y
+	/// @param z z
+	/// @return double nois value
+	double noise(double x, double y, double z);
 private:
-	/// @brief interpolates 2 values
-	/// @param x0 first parameter
-	/// @param x1 second parameter
-	/// @param alpha alpha value of interpolation
-	/// @return float interpolated value
-	static float interpolate(float x0, float x1, float alpha);
+	/// @brief fade a value
+	/// @param t value
+	/// @return double faded value
+	double fade(double t);
+	/// @brief lerp a value
+	/// @param t value
+	/// @param a min
+	/// @param b max
+	/// @return double lerped value
+	double lerp(double t, double a, double b);
+	/// @brief dotGridGradient
+	/// @param hash hash
+	/// @param x x
+	/// @param y y
+	/// @param z z
+	/// @return double gradient
+	double grad(int hash, double x, double y, double z);
+	std::vector<int> p; ///< @brief The permutation vector
 };
 
 #endif /* NOISE_H */

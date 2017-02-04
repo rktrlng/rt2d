@@ -67,7 +67,7 @@ void Scene04::update(float deltaTime)
 
 	if (t.seconds() > 1.0f) {
 		state++;
-		if (state > 13) { state = 0; }
+		if (state > 15) { state = 0; }
 		t.start();
 	}
 
@@ -133,10 +133,14 @@ void Scene04::update(float deltaTime)
 				rainbowPixels(buff, 4, 3);
 				text[4]->message("<SPACE> pause state (double rainbow filtered)");
 				break;
-			//case 14:
-			//	perlinNoisePixels(buff, 3);
-			//	text[4]->message("<SPACE> pause state (Smooth Noise)");
-			//	break;
+			case 14:
+				perlinNoisePixels(buff, 0);
+				text[4]->message("<SPACE> pause state (Perlin Noise)");
+				break;
+			case 15:
+				perlinNoisePixels(buff, 1);
+				text[4]->message("<SPACE> pause state (Wood Perlin Noise)");
+				break;
 			default:
 				break;
 		}
@@ -238,24 +242,38 @@ void Scene04::checkerPixels(PixelBuffer* pixels, int cellwidth, RGBAColor a, RGB
 	pixels->wrap = 2; // clamp
 }
 
-void Scene04::perlinNoisePixels(PixelBuffer* pixels, int octaveCount)
+void Scene04::perlinNoisePixels(PixelBuffer* pixels, int wood)
 {
-	int width = pixels->width;
-	int height = pixels->height;
-	std::vector<float> whitenoise = Noise::whiteNoise(width, height);
+	unsigned int width = pixels->width;
+	unsigned int height = pixels->height;
 
-	//std::vector<float> perlin = Noise::perlinNoise(whitenoise, octaveCount, width, height);
-	std::vector<float> smooth = Noise::smoothNoise(whitenoise, octaveCount, width, height);
+	// Create a PerlinNoise object with a random permutation vector generated with seed
+	//unsigned int seed = rand()%255;
+	unsigned int seed = 42;
+	PerlinNoise pn(seed);
 
 	long counter = 0;
-	int px = 0;
-	for (long y=0; y<pixels->height; y++) {
-		for (long x=0; x<pixels->width; x++) {
-			//float r = perlin[px]; px++;
-			float r = smooth[px]; px++;
-			pixels->data[counter+0] = r*255;
-			pixels->data[counter+1] = r*255;
-			pixels->data[counter+2] = r*255;
+	// Visit every pixel of the image and assign a color generated with Perlin noise
+	for(unsigned int i = 0; i < height; ++i) {     // y
+		for(unsigned int j = 0; j < width; ++j) {  // x
+			double x = (double)j/((double)width);
+			double y = (double)i/((double)height);
+
+			double n;
+
+			if (wood == 0) {
+				// Typical Perlin noise
+				n = pn.noise(10 * x, 10 * y, 0.8);
+			} else {
+				// Wood like structure
+				n = 20 * pn.noise(x, y, 0.8);
+				n = n - floor(n);
+			}
+
+			// Map the values to the [0, 255] interval, for simplicity we use tones of grey
+			pixels->data[counter+0] = floor(255 * n);
+			pixels->data[counter+1] = floor(255 * n);
+			pixels->data[counter+2] = floor(255 * n);
 			if (pixels->bitdepth == 4) {
 				pixels->data[counter+3] = 255; // opaque
 			}

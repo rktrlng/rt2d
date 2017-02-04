@@ -30,7 +30,7 @@ private:
 	void randomPixels(PixelBuffer* pixels, int filter);
 	void rainbowPixels(PixelBuffer* pixels, float step, int filter);
 	void checkerPixels(PixelBuffer* pixels, int cellwidth, RGBAColor a, RGBAColor b);
-	void perlinNoisePixels(PixelBuffer* pixels, int octaveCount);
+	void perlinNoisePixels(PixelBuffer* pixels, int wood = 0);
 };
 
 #endif /* SCENE04_H */
