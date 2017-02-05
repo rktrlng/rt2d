@@ -59,9 +59,8 @@ void MyScene::update(float deltaTime)
 		this->stop();
 	}
 
-	static double z = 0.0f;
 	static Point3 move = Point3(0.0f,0.0f,0.0f);
-	move.z = 0.0f;
+
 	if (input()->getKey( GLFW_KEY_W )) { move.z += deltaTime; }
 	if (input()->getKey( GLFW_KEY_S )) { move.z -= deltaTime; }
 	if (input()->getKey( GLFW_KEY_UP )) { move.y += deltaTime; }
@@ -83,10 +82,11 @@ void MyScene::update(float deltaTime)
 				// map width and height between 0 and 1
 				double x = (double)j/((double)width);
 				double y = (double)i/((double)height);
+				double z = 0.0f;
 
 				x += move.x;
 				y += move.y;
-				z += move.z/50;
+				z += move.z;
 
 				// pn->noise(xsize, ysize, zsize) * multiplier;
 				double a = pn->noise(1 * x, 1 * y, z) * 3;
