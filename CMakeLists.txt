@@ -8,6 +8,7 @@ OPTION(MAKE_START "Make RT2D start application" ON)
 OPTION(MAKE_DEMO "Make RT2D demo (tests) application" ON)
 OPTION(MAKE_FLOCKING "Make flocking application" OFF)
 OPTION(MAKE_BASIC3D "Make basic3D application" OFF)
+OPTION(MAKE_NOISE "Make Perlin Noise application" ON)
 
 OPTION(USE_RS232 "Use RS232 library" OFF)
 
@@ -241,6 +242,21 @@ IF(MAKE_BASIC3D)
 	file(
 		COPY projects/basic3D/assets
 		DESTINATION ${CMAKE_BINARY_DIR}
+	)
+ENDIF()
+
+
+####################################################################
+# Noise                                                            #
+####################################################################
+IF(MAKE_NOISE)
+	add_executable(noise
+		projects/perlinnoise/main.cpp
+		projects/perlinnoise/myscene.cpp
+		projects/perlinnoise/myscene.h
+	)
+	target_link_libraries(noise
+		${ALL_GRAPHICS_LIBS}
 	)
 ENDIF()
 
