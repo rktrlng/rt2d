@@ -60,15 +60,14 @@ void MyScene::update(float deltaTime)
 	}
 
 	static double z = 0.0f;
-	double delta = 0.000001f;
 	static Point3 move = Point3(0.0f,0.0f,0.0f);
 	move.z = 0.0f;
-	if (input()->getKey( GLFW_KEY_W )) { move.z += delta; }
-	if (input()->getKey( GLFW_KEY_S )) { move.z -= delta; }
-	if (input()->getKey( GLFW_KEY_UP )) { move.y += delta; }
-	if (input()->getKey( GLFW_KEY_DOWN )) { move.y -= delta; }
-	if (input()->getKey( GLFW_KEY_LEFT )) { move.x -= delta; }
-	if (input()->getKey( GLFW_KEY_RIGHT )) { move.x += delta; }
+	if (input()->getKey( GLFW_KEY_W )) { move.z += deltaTime; }
+	if (input()->getKey( GLFW_KEY_S )) { move.z -= deltaTime; }
+	if (input()->getKey( GLFW_KEY_UP )) { move.y += deltaTime; }
+	if (input()->getKey( GLFW_KEY_DOWN )) { move.y -= deltaTime; }
+	if (input()->getKey( GLFW_KEY_LEFT )) { move.x -= deltaTime; }
+	if (input()->getKey( GLFW_KEY_RIGHT )) { move.x += deltaTime; }
 
 
 	if (t.seconds() > 0.02f) {
@@ -85,9 +84,9 @@ void MyScene::update(float deltaTime)
 				double x = (double)j/((double)width);
 				double y = (double)i/((double)height);
 
-				x += move.x*200;
-				y += move.y*200;
-				z += move.z*5;
+				x += move.x;
+				y += move.y;
+				z += move.z/50;
 
 				// pn->noise(xsize, ysize, zsize) * multiplier;
 				double a = pn->noise(1 * x, 1 * y, z) * 3;
