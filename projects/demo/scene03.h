@@ -58,6 +58,67 @@ private:
 	std::vector<BasicEntity*> components;
 };
 
+// Have a quick and very dirty go at drawing a sphere
+// Seriously, don't do this...
+class Sphere3D: public Entity
+{
+public:
+	Sphere3D(): Entity() {
+		int halfsize = 48;
+		int segments = 12;
+		int numlongs = 8;
+		this->position = Point3(SWIDTH/2, SHEIGHT/2);
+		this->rotation.x = 0.15f;
+
+		// draw longitude / meridian lines
+		float rot = 0.0f;
+		for (int i = 0; i < numlongs/2; i++) {
+			BasicEntity* c = new BasicEntity();
+			Line circle; circle.color = GRAY;
+			circle.createCircle(halfsize, segments);
+			if (i == 0) { circle.color = GREEN; } // greenwich
+			if (i == numlongs/4) { circle.color = BLUE; }
+			c->rotation.y = rot;
+			rot += TWO_PI / numlongs;
+			c->addLine(&circle);
+			this->addChild(c);
+			components.push_back(c);
+		}
+
+		// draw latitude / parallel lines
+		for (int i = -2; i < 3; i++) {
+			BasicEntity* c = new BasicEntity();
+			Line circle; circle.color = GRAY;
+			circle.createCircle(halfsize, numlongs);
+			c->rotation.x = HALF_PI;
+			// TODO pretend you even tried ...
+			if (i == -2) { c->position.y = halfsize-segments/2; c->scale = Point3(0.5f, 0.5f, 1.0f); }
+			if (i == -1) { c->position.y = -halfsize/2; c->scale = Point3(0.9f, 0.9f, 1.0f); }
+			if (i ==  0) { c->position.y = 0; circle.color = RED; } // equator
+			if (i ==  1) { c->position.y = halfsize/2; c->scale = Point3(0.9f, 0.9f, 1.0f);}
+			if (i ==  2) { c->position.y = -halfsize+segments/2; c->scale = Point3(0.5f, 0.5f, 1.0f); }
+
+			c->addLine(&circle);
+			this->addChild(c);
+			components.push_back(c);
+		}
+	};
+	virtual ~Sphere3D() {
+		int s = components.size();
+		for (int i = 0; i < s; i++) {
+			this->removeChild(components[i]);
+			delete components[i];
+		}
+	};
+
+	virtual void update(float deltaTime) {
+		this->rotation.y += deltaTime;
+	};
+private:
+	std::vector<BasicEntity*> components;
+};
+
+
 class Scene03: public SuperScene
 {
 public:
@@ -79,6 +140,7 @@ private:
 	BasicEntity* dynamic_line;
 
 	Cube3D* cube3d;
+	Sphere3D* sphere3d;
 
 	void updateSpaceShip(float deltaTime);
 };
