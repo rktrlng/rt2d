@@ -191,6 +191,12 @@ void Renderer::_renderEntity(glm::mat4 modelMatrix, Entity* entity, Camera* came
 		}
 	}
 
+	// Check for Spritebatch to see if we need to render anything
+	if (entity->_spritebatch.size() > 0) {
+		// render the Spritebatch
+		this->_renderSpriteBatch(modelMatrix, entity->_spritebatch, camera);
+	}
+
 	// Check for Lines to see if we need to render anything
 	Line* line = entity->line();
 	if (line != NULL) {
@@ -198,10 +204,12 @@ void Renderer::_renderEntity(glm::mat4 modelMatrix, Entity* entity, Camera* came
 		this->_renderLine(modelMatrix, line);
 	}
 
-	// Check for Spritebatch to see if we need to render anything
-	if (entity->_spritebatch.size() > 0) {
-		// render the Spritebatch
-		this->_renderSpriteBatch(modelMatrix, entity->_spritebatch, camera);
+	// Check for Linebatch to see if we need to render anything
+	size_t s = entity->_linebatch.size();
+	if (s > 0) { // render the Linebatch
+		for (size_t i = 0; i < s; i++) {
+			this->_renderLine(modelMatrix, &entity->_linebatch[i]);
+		}
 	}
 
 	// Render all Children (recursively)

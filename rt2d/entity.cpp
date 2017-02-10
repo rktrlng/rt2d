@@ -38,6 +38,7 @@ Entity::~Entity()
 	deleteSprite();
 	deleteLine();
 	deleteSpritebatch();
+	deleteLinebatch();
 }
 
 void Entity::addChild(Entity* child)
@@ -72,15 +73,22 @@ Entity* Entity::getChild(unsigned int i)
 
 void Entity::addLine(const std::string& filename)
 {
-	deleteLine();
-	_line = new Line(filename);
+	// loaded from file: this line must be static, add to linebatch only
+	Line* line = new Line(filename);
+	_linebatch.push_back(*line);
 }
 
 void Entity::addLine(Line* line)
 {
-	deleteLine();
-	_line = new Line();
-	*_line = *line;
+	// if dynamic, we want to keep a pointer to it in our _line member
+	if (line->dynamic()) {
+		deleteLine();
+		_line = new Line();
+		*_line = *line;
+	} else {
+		// this line is static, add to linebatch only
+		_linebatch.push_back(*line);
+	}
 }
 
 void Entity::addSprite(Sprite* spr)

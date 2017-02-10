@@ -127,7 +127,16 @@ public:
 	// line
 	/// @brief get the Line from this Entity.
 	/// @return Line* _line
-	Line* line() { return _line; };
+	Line* line() {
+		if (_line != NULL) {
+			return _line;
+		} else {
+			if (_linebatch.size() > 0) {
+				return &_linebatch[0];
+			}
+		}
+		return NULL;
+	};
 	/// @brief add a Line to this Entity by Line*.
 	/// @param line A pointer to a Line.
 	/// @return void
@@ -141,6 +150,9 @@ public:
 	/// @brief get the spritebatch of this Entity.
 	/// @return std::vector<Sprite*>& _spritebatch
 	std::vector<Sprite*>& spritebatch() { return _spritebatch; };
+	/// @brief get the linebatch of this Entity.
+	/// @return std::vector<Line>& _linebatch
+	std::vector<Line>& linebatch() { return _linebatch; };
 
 	/// @brief get the guid of this Entity.
 	/// @return int _guid
@@ -168,6 +180,7 @@ protected:
 	Point3 _worldscale; /**< @brief The scale of the Entity in the real world */
 
 	std::vector<Sprite*> _spritebatch; ///< @brief The _spritebatch of this Entity
+	std::vector<Line> _linebatch; ///< @brief The _linebatch of this Entity
 
 private:
 	// identity
@@ -197,6 +210,11 @@ private:
 			delete _line;
 			_line = NULL;
 		}
+	};
+	/// @brief delete the Linebatch of this Entity.
+	/// @return void
+	void deleteLinebatch() {
+		_linebatch.clear();
 	};
 	/// @brief delete the Spritebatch of this Entity.
 	/// @return void
