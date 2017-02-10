@@ -79,7 +79,7 @@ void GeoMetric::makeSphere(float radius, int lats, int longs)
     float longitude_increment = 180.0f / longs;
 
 	// create longitudes
-    for (float u = 0; u <= 360.0f; u += latitude_increment) {
+    for (float u = 0; u < 360.0f; u += latitude_increment) {
 		Line semicircle;
         for (float t = 0; t <= 180.0f; t += longitude_increment) {
             float x = (float) (radius * sin(t*DEG_TO_RAD) * sin(u*DEG_TO_RAD));
@@ -96,8 +96,8 @@ void GeoMetric::makeSphere(float radius, int lats, int longs)
 		// optionally, some nice colors
 		if (u < 0.1f && u > -0.1f) { semicircle.color = GREEN; } // greenwich
 		if (u < 180.2f && u > 179.8f) { semicircle.color = GREEN; } // greenwich
-		if (u < 90.1f && u > 89.8) { semicircle.color = BLUE; }
-		if (u < 270.1f && u > 269.8) { semicircle.color = BLUE; }
+		if (u < 90.1f && u > 89.8) { semicircle.color = YELLOW; }
+		if (u < 270.1f && u > 269.8) { semicircle.color = YELLOW; }
 
 		this->addLine(&semicircle);
     }
@@ -122,8 +122,9 @@ void GeoMetric::makeCone(float radius, int height, int lats)
 {
 	float latitude_increment = 360.0f / lats;
 
-    for (float u = 0; u <= 360.0f; u += latitude_increment) {
+    for (float u = 0; u < 360.0f; u += latitude_increment) {
 		Line semicircle;
+		if (u < 0.1f && u > -0.1f) { semicircle.color = YELLOW; } // greenwich
 		semicircle.addPoint(0, height, 0);
 		float x = (float) (radius * sin(u*DEG_TO_RAD));
         float z = (float) (radius * cos(u*DEG_TO_RAD));
@@ -134,8 +135,40 @@ void GeoMetric::makeCone(float radius, int height, int lats)
     }
 
 	Line circle;
+	circle.color = GREEN;
 	for (float u = 0; u <= 360.0f; u += latitude_increment) {
 		circle.addPoint(radius * sin(u*DEG_TO_RAD), -height, radius * cos(u*DEG_TO_RAD));
 	}
 	this->addLine(&circle);
+}
+
+void GeoMetric::makeCylinder(float radius, int height, int lats)
+{
+	float latitude_increment = 360.0f / lats;
+
+    for (float u = 0; u < 360.0f; u += latitude_increment) {
+		Line semicircle;
+		if (u < 0.1f && u > -0.1f) { semicircle.color = YELLOW; } // greenwich
+		float x = (float) (radius * sin(u*DEG_TO_RAD));
+        float z = (float) (radius * cos(u*DEG_TO_RAD));
+		semicircle.addPoint(x,  height, z);
+		semicircle.addPoint(x, -height, z);
+		//semicircle.addPoint(0, -height, 0);
+
+		this->addLine(&semicircle);
+    }
+
+	Line top;
+	top.color = RED;
+	for (float u = 0; u <= 360.0f; u += latitude_increment) {
+		top.addPoint(radius * sin(u*DEG_TO_RAD), height, radius * cos(u*DEG_TO_RAD));
+	}
+	this->addLine(&top);
+
+	Line bottom;
+	bottom.color = GREEN;
+	for (float u = 0; u <= 360.0f; u += latitude_increment) {
+		bottom.addPoint(radius * sin(u*DEG_TO_RAD), -height, radius * cos(u*DEG_TO_RAD));
+	}
+	this->addLine(&bottom);
 }

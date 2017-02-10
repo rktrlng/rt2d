@@ -24,6 +24,7 @@ public:
 	void makeCube(int halfwidth, int halfheight, int halfdepth);
 	void makeSphere(float radius, int lats, int longs);
 	void makeCone(float radius, int height, int lats);
+	void makeCylinder(float radius, int height, int lats);
 
 private:
 

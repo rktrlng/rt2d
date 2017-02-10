@@ -29,6 +29,11 @@ MyScene::MyScene() : Scene()
 	cone->position = Point3(SWIDTH/4, -SHEIGHT/5);
 	cone->makeCone(96,96,8); // radius, height, lats (4 to make pyramid)
 	this->addChild(cone);
+
+	cylinder = new GeoMetric();
+	cylinder->position = Point3(0, SHEIGHT/5);
+	cylinder->makeCylinder(64,96,12); // radius, height, lats
+	this->addChild(cylinder);
 }
 
 
@@ -37,6 +42,7 @@ MyScene::~MyScene()
 	delete cube;
 	delete sphere;
 	delete cone;
+	delete cylinder;
 }
 
 void MyScene::update(float deltaTime)
