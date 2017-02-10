@@ -16,8 +16,14 @@ MyScene::MyScene() : Scene()
 	t.start();
 
 	cube = new GeoMetric();
+	cube->position = Point3(-SWIDTH/4, 0);
 	cube->makeCube(64,96,32);
 	this->addChild(cube);
+
+	sphere = new GeoMetric();
+	sphere->position = Point3(SWIDTH/4, 0);
+	sphere->makeSphere(96,12,8);
+	this->addChild(sphere);
 }
 
 
