@@ -64,7 +64,7 @@ public:
 
 	/// @brief Get the Points of this Line
 	/// @return std::vector<glm::vec3> _points
-	const std::vector<glm::vec3>& points() { return _points; };
+	std::vector<glm::vec3>& points() { return _points; };
 
 	/// @brief is this Line dynamic or not?
 	/// @return bool _dynamic

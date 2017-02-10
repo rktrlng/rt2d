@@ -9,6 +9,7 @@ OPTION(MAKE_DEMO "Make RT2D demo (tests) application" ON)
 OPTION(MAKE_FLOCKING "Make flocking application" OFF)
 OPTION(MAKE_BASIC3D "Make basic3D application" OFF)
 OPTION(MAKE_NOISE "Make Perlin Noise application" ON)
+OPTION(MAKE_GEOMETRIC "Make GeoMetric application" ON)
 
 OPTION(USE_RS232 "Use RS232 library" OFF)
 
@@ -256,6 +257,22 @@ IF(MAKE_NOISE)
 		projects/perlinnoise/myscene.h
 	)
 	target_link_libraries(noise
+		${ALL_GRAPHICS_LIBS}
+	)
+ENDIF()
+
+####################################################################
+# geometric                                                        #
+####################################################################
+IF(MAKE_GEOMETRIC)
+	add_executable(geometric
+		projects/geometric/main.cpp
+		projects/geometric/geometric.cpp
+		projects/geometric/geometric.h
+		projects/geometric/myscene.cpp
+		projects/geometric/myscene.h
+	)
+	target_link_libraries(geometric
 		${ALL_GRAPHICS_LIBS}
 	)
 ENDIF()
