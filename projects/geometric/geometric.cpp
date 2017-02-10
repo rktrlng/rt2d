@@ -77,15 +77,15 @@ void GeoMetric::addSphere(float radius, int lats, int longs)
 	std::vector<Point3> longcoords;
 
 	float latitude_increment = 360.0f / lats;
-    float longitude_increment = 180.0f / longs;
+	float longitude_increment = 180.0f / longs;
 
 	// create longitudes
-    for (float u = 0; u < 360.0f; u += latitude_increment) {
+	for (float u = 0; u < 360.0f; u += latitude_increment) {
 		Line semicircle;
-        for (float t = 0; t <= 180.0f; t += longitude_increment) {
-            float x = (float) (radius * sin(t*DEG_TO_RAD) * sin(u*DEG_TO_RAD));
-            float y = (float) (radius * cos(t*DEG_TO_RAD));
-            float z = (float) (radius * sin(t*DEG_TO_RAD) * cos(u*DEG_TO_RAD));
+		for (float t = 0; t <= 180.0f; t += longitude_increment) {
+			float x = (float) (radius * sin(t*DEG_TO_RAD) * sin(u*DEG_TO_RAD));
+			float y = (float) (radius * cos(t*DEG_TO_RAD));
+			float z = (float) (radius * sin(t*DEG_TO_RAD) * cos(u*DEG_TO_RAD));
 
 			semicircle.addPoint(x, y, z);
 
@@ -93,7 +93,7 @@ void GeoMetric::addSphere(float radius, int lats, int longs)
 			if (u == 0) {
 				longcoords.push_back(Point3(x,y,z));
 			}
-        }
+		}
 		// optionally, some nice colors
 		if (u < 0.1f && u > -0.1f) { semicircle.color = GREEN; } // greenwich
 		if (u < 180.2f && u > 179.8f) { semicircle.color = GREEN; } // greenwich
@@ -101,7 +101,7 @@ void GeoMetric::addSphere(float radius, int lats, int longs)
 		if (u < 270.1f && u > 269.8) { semicircle.color = YELLOW; }
 
 		this->addLine(&semicircle);
-    }
+	}
 
 	// create latitudes
 	size_t s = longcoords.size();
@@ -123,17 +123,17 @@ void GeoMetric::addCone(float radius, int height, int lats)
 {
 	float latitude_increment = 360.0f / lats;
 
-    for (float u = 0; u < 360.0f; u += latitude_increment) {
+	for (float u = 0; u < 360.0f; u += latitude_increment) {
 		Line semicircle;
 		if (u < 0.1f && u > -0.1f) { semicircle.color = YELLOW; } // greenwich
 		semicircle.addPoint(0, height, 0);
 		float x = (float) (radius * sin(u*DEG_TO_RAD));
-        float z = (float) (radius * cos(u*DEG_TO_RAD));
+		float z = (float) (radius * cos(u*DEG_TO_RAD));
 		semicircle.addPoint(x, -height, z);
 		//semicircle.addPoint(0, -height, 0);
 
 		this->addLine(&semicircle);
-    }
+	}
 
 	Line circle;
 	circle.color = GREEN;
@@ -147,17 +147,17 @@ void GeoMetric::addCylinder(float radius, int height, int lats)
 {
 	float latitude_increment = 360.0f / lats;
 
-    for (float u = 0; u < 360.0f; u += latitude_increment) {
+	for (float u = 0; u < 360.0f; u += latitude_increment) {
 		Line semicircle;
 		if (u < 0.1f && u > -0.1f) { semicircle.color = YELLOW; } // greenwich
 		float x = (float) (radius * sin(u*DEG_TO_RAD));
-        float z = (float) (radius * cos(u*DEG_TO_RAD));
+		float z = (float) (radius * cos(u*DEG_TO_RAD));
 		semicircle.addPoint(x,  height, z);
 		semicircle.addPoint(x, -height, z);
 		//semicircle.addPoint(0, -height, 0);
 
 		this->addLine(&semicircle);
-    }
+	}
 
 	Line top;
 	top.color = RED;
