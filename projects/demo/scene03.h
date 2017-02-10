@@ -13,6 +13,8 @@
 #include "superscene.h"
 #include "basicentity.h"
 
+// Ignore Cube3D and Sphere3D implementations here.
+// There are better examples in projects/geometric
 class Cube3D: public Entity
 {
 public:

@@ -27,7 +27,7 @@ void GeoMetric::update(float deltaTime)
 	}
 }
 
-void GeoMetric::makeCube(int halfwidth, int halfheight, int halfdepth)
+void GeoMetric::addCube(int halfwidth, int halfheight, int halfdepth)
 {
 	Line front;
 	front.color = GREEN;
@@ -71,7 +71,8 @@ void GeoMetric::makeCube(int halfwidth, int halfheight, int halfdepth)
 	conn4.addPoint( halfwidth,  halfheight,-halfdepth);
 	this->addLine(&conn4);
 }
-void GeoMetric::makeSphere(float radius, int lats, int longs)
+
+void GeoMetric::addSphere(float radius, int lats, int longs)
 {
 	std::vector<Point3> longcoords;
 
@@ -118,7 +119,7 @@ void GeoMetric::makeSphere(float radius, int lats, int longs)
 	longcoords.clear();
 }
 
-void GeoMetric::makeCone(float radius, int height, int lats)
+void GeoMetric::addCone(float radius, int height, int lats)
 {
 	float latitude_increment = 360.0f / lats;
 
@@ -142,7 +143,7 @@ void GeoMetric::makeCone(float radius, int height, int lats)
 	this->addLine(&circle);
 }
 
-void GeoMetric::makeCylinder(float radius, int height, int lats)
+void GeoMetric::addCylinder(float radius, int height, int lats)
 {
 	float latitude_increment = 360.0f / lats;
 

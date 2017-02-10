@@ -17,22 +17,22 @@ MyScene::MyScene() : Scene()
 
 	cube = new GeoMetric();
 	cube->position = Point3(-SWIDTH/4, -SHEIGHT/5);
-	cube->makeCube(64,96,32); // halfwidth, halfheight, halfdepth
+	cube->addCube(64,96,32); // halfwidth, halfheight, halfdepth
 	this->addChild(cube);
 
 	sphere = new GeoMetric();
 	sphere->position = Point3(0, -SHEIGHT/5);
-	sphere->makeSphere(96,12,8); // radius, lats, longs
+	sphere->addSphere(96,12,8); // radius, lats, longs
 	this->addChild(sphere);
 
 	cone = new GeoMetric();
 	cone->position = Point3(SWIDTH/4, -SHEIGHT/5);
-	cone->makeCone(96,96,8); // radius, height, lats (4 to make pyramid)
+	cone->addCone(96,96,8); // radius, height, lats (4 to make pyramid)
 	this->addChild(cone);
 
 	cylinder = new GeoMetric();
 	cylinder->position = Point3(0, SHEIGHT/5);
-	cylinder->makeCylinder(64,96,12); // radius, height, lats
+	cylinder->addCylinder(64,96,12); // radius, height, lats
 	this->addChild(cylinder);
 }
 

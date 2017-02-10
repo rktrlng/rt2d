@@ -1,5 +1,5 @@
 /**
- * This class describes Cube behavior.
+ * This class describes geometric behavior.
  *
  * Copyright 2017 Rik Teerling <rik@onandoffables.com>
  */
@@ -21,10 +21,10 @@ public:
 
 	virtual void update(float deltaTime);
 
-	void makeCube(int halfwidth, int halfheight, int halfdepth);
-	void makeSphere(float radius, int lats, int longs);
-	void makeCone(float radius, int height, int lats);
-	void makeCylinder(float radius, int height, int lats);
+	void addCube(int halfwidth, int halfheight, int halfdepth);
+	void addSphere(float radius, int lats, int longs);
+	void addCone(float radius, int height, int lats);
+	void addCylinder(float radius, int height, int lats);
 
 private:
 
