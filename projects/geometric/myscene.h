@@ -16,6 +16,7 @@ public:
 private:
 	GeoMetric* cube;
 	GeoMetric* sphere;
+	GeoMetric* cone;
 
 	Timer t;
 	void fpsCam(float deltaTime);

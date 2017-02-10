@@ -16,20 +16,27 @@ MyScene::MyScene() : Scene()
 	t.start();
 
 	cube = new GeoMetric();
-	cube->position = Point3(-SWIDTH/4, 0);
-	cube->makeCube(64,96,32);
+	cube->position = Point3(-SWIDTH/4, -SHEIGHT/5);
+	cube->makeCube(64,96,32); // halfwidth, halfheight, halfdepth
 	this->addChild(cube);
 
 	sphere = new GeoMetric();
-	sphere->position = Point3(SWIDTH/4, 0);
-	sphere->makeSphere(96,12,8);
+	sphere->position = Point3(0, -SHEIGHT/5);
+	sphere->makeSphere(96,12,8); // radius, lats, longs
 	this->addChild(sphere);
+
+	cone = new GeoMetric();
+	cone->position = Point3(SWIDTH/4, -SHEIGHT/5);
+	cone->makeCone(96,96,8); // radius, height, lats (4 to make pyramid)
+	this->addChild(cone);
 }
 
 
 MyScene::~MyScene()
 {
 	delete cube;
+	delete sphere;
+	delete cone;
 }
 
 void MyScene::update(float deltaTime)

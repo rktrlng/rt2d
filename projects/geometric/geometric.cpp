@@ -27,6 +27,50 @@ void GeoMetric::update(float deltaTime)
 	}
 }
 
+void GeoMetric::makeCube(int halfwidth, int halfheight, int halfdepth)
+{
+	Line front;
+	front.color = GREEN;
+	front.addPoint(-halfwidth, -halfheight, -halfdepth);
+	front.addPoint( halfwidth, -halfheight, -halfdepth);
+	front.addPoint( halfwidth,  halfheight, -halfdepth);
+	front.addPoint(-halfwidth,  halfheight, -halfdepth);
+	front.addPoint(-halfwidth, -halfheight, -halfdepth);
+	this->addLine(&front);
+
+	Line back;
+	back.color = RED;
+	back.addPoint(-halfwidth, -halfheight, halfdepth);
+	back.addPoint( halfwidth, -halfheight, halfdepth);
+	back.addPoint( halfwidth,  halfheight, halfdepth);
+	back.addPoint(-halfwidth,  halfheight, halfdepth);
+	back.addPoint(-halfwidth, -halfheight, halfdepth);
+	this->addLine(&back);
+
+	Line conn1;
+	//conn1.color = YELLOW;
+	conn1.addPoint(-halfwidth, -halfheight, halfdepth);
+	conn1.addPoint(-halfwidth, -halfheight,-halfdepth);
+	this->addLine(&conn1);
+
+	Line conn2;
+	//conn2.color = YELLOW;
+	conn2.addPoint( halfwidth, -halfheight, halfdepth);
+	conn2.addPoint( halfwidth, -halfheight,-halfdepth);
+	this->addLine(&conn2);
+
+	Line conn3;
+	//conn3.color = YELLOW;
+	conn3.addPoint(-halfwidth,  halfheight, halfdepth);
+	conn3.addPoint(-halfwidth,  halfheight,-halfdepth);
+	this->addLine(&conn3);
+
+	Line conn4;
+	//conn4.color = YELLOW;
+	conn4.addPoint( halfwidth,  halfheight, halfdepth);
+	conn4.addPoint( halfwidth,  halfheight,-halfdepth);
+	this->addLine(&conn4);
+}
 void GeoMetric::makeSphere(float radius, int lats, int longs)
 {
 	std::vector<Point3> longcoords;
@@ -74,47 +118,24 @@ void GeoMetric::makeSphere(float radius, int lats, int longs)
 	longcoords.clear();
 }
 
-void GeoMetric::makeCube(int halfwidth, int halfheight, int halfdepth)
+void GeoMetric::makeCone(float radius, int height, int lats)
 {
-	Line front;
-	front.color = GREEN;
-	front.addPoint(-halfwidth, -halfheight, -halfdepth);
-	front.addPoint( halfwidth, -halfheight, -halfdepth);
-	front.addPoint( halfwidth,  halfheight, -halfdepth);
-	front.addPoint(-halfwidth,  halfheight, -halfdepth);
-	front.addPoint(-halfwidth, -halfheight, -halfdepth);
-	this->addLine(&front);
+	float latitude_increment = 360.0f / lats;
 
-	Line back;
-	back.color = RED;
-	back.addPoint(-halfwidth, -halfheight, halfdepth);
-	back.addPoint( halfwidth, -halfheight, halfdepth);
-	back.addPoint( halfwidth,  halfheight, halfdepth);
-	back.addPoint(-halfwidth,  halfheight, halfdepth);
-	back.addPoint(-halfwidth, -halfheight, halfdepth);
-	this->addLine(&back);
+    for (float u = 0; u <= 360.0f; u += latitude_increment) {
+		Line semicircle;
+		semicircle.addPoint(0, height, 0);
+		float x = (float) (radius * sin(u*DEG_TO_RAD));
+        float z = (float) (radius * cos(u*DEG_TO_RAD));
+		semicircle.addPoint(x, -height, z);
+		//semicircle.addPoint(0, -height, 0);
 
-	Line conn1;
-	conn1.color = YELLOW;
-	conn1.addPoint(-halfwidth, -halfheight, halfdepth);
-	conn1.addPoint(-halfwidth, -halfheight,-halfdepth);
-	this->addLine(&conn1);
+		this->addLine(&semicircle);
+    }
 
-	Line conn2;
-	conn2.color = YELLOW;
-	conn2.addPoint( halfwidth, -halfheight, halfdepth);
-	conn2.addPoint( halfwidth, -halfheight,-halfdepth);
-	this->addLine(&conn2);
-
-	Line conn3;
-	conn3.color = YELLOW;
-	conn3.addPoint(-halfwidth,  halfheight, halfdepth);
-	conn3.addPoint(-halfwidth,  halfheight,-halfdepth);
-	this->addLine(&conn3);
-
-	Line conn4;
-	conn4.color = YELLOW;
-	conn4.addPoint( halfwidth,  halfheight, halfdepth);
-	conn4.addPoint( halfwidth,  halfheight,-halfdepth);
-	this->addLine(&conn4);
+	Line circle;
+	for (float u = 0; u <= 360.0f; u += latitude_increment) {
+		circle.addPoint(radius * sin(u*DEG_TO_RAD), -height, radius * cos(u*DEG_TO_RAD));
+	}
+	this->addLine(&circle);
 }
