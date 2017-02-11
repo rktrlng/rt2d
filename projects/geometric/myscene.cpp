@@ -16,7 +16,7 @@ MyScene::MyScene() : Scene()
 	t.start();
 
 	camera()->boom(175);
-	camera()->tilt(50);
+	camera()->tilt(-0.25f);
 
 	cube = new GeoMetric();
 	cube->position = Point3(-SWIDTH/4, -SHEIGHT/5);
