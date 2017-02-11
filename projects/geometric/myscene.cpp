@@ -15,6 +15,9 @@ MyScene::MyScene() : Scene()
 
 	t.start();
 
+	camera()->boom(175);
+	camera()->tilt(50);
+
 	cube = new GeoMetric();
 	cube->position = Point3(-SWIDTH/4, -SHEIGHT/5);
 	cube->addCube(64,96,32); // halfwidth, halfheight, halfdepth
@@ -31,9 +34,19 @@ MyScene::MyScene() : Scene()
 	this->addChild(cone);
 
 	cylinder = new GeoMetric();
-	cylinder->position = Point3(0, SHEIGHT/5);
+	cylinder->position = Point3(-SWIDTH/4, SHEIGHT/5);
 	cylinder->addCylinder(64,96,12); // radius, height, lats
 	this->addChild(cylinder);
+
+	torus = new GeoMetric();
+	torus->position = Point3(0, SHEIGHT/5);
+	torus->addTorus(75,35,12,4); // radius1, radius, lats, longs
+	this->addChild(torus);
+
+	pyramid = new GeoMetric();
+	pyramid->position = Point3(SWIDTH/4, SHEIGHT/5);
+	pyramid->addCone(96,64,4); // radius, height, lats (4 to make pyramid)
+	this->addChild(pyramid);
 }
 
 
@@ -43,6 +56,8 @@ MyScene::~MyScene()
 	delete sphere;
 	delete cone;
 	delete cylinder;
+	delete torus;
+	delete pyramid;
 }
 
 void MyScene::update(float deltaTime)
@@ -53,6 +68,9 @@ void MyScene::update(float deltaTime)
 	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
 		this->stop();
 	}
+
+	torus->rotation.x += deltaTime;
+	torus->rotation.y -= deltaTime;
 
 	// ###############################################################
 	// First Person Shooter camera controls

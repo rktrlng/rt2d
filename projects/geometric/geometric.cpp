@@ -90,9 +90,7 @@ void GeoMetric::addSphere(float radius, int lats, int longs)
 			semicircle.addPoint(x, y, z);
 
 			// remember points on first latitude to create longitude circles
-			if (u == 0) {
-				longcoords.push_back(Point3(x,y,z));
-			}
+			if (u == 0) { longcoords.push_back(Point3(x,y,z)); }
 		}
 		// optionally, some nice colors
 		if (u < 0.1f && u > -0.1f) { semicircle.color = GREEN; } // greenwich
@@ -101,6 +99,56 @@ void GeoMetric::addSphere(float radius, int lats, int longs)
 		if (u < 270.1f && u > 269.8) { semicircle.color = YELLOW; }
 
 		this->addLine(&semicircle);
+	}
+
+	// create latitudes
+	size_t s = longcoords.size();
+	for (size_t i = 0; i < s; i++) {
+		float rad = longcoords[i].z;
+		float height = longcoords[i].y;
+
+		Line circle;
+		for (float u = 0; u <= 360.0f; u += latitude_increment) {
+			circle.addPoint(rad * sin(u*DEG_TO_RAD), height, rad * cos(u*DEG_TO_RAD));
+			if (height < 0.1f && height > -0.1f) { circle.color = RED; } // equator
+		}
+		this->addLine(&circle);
+	}
+	longcoords.clear();
+}
+
+void GeoMetric::addTorus(float radius1, float radius, int lats, int longs)
+{
+	std::vector<Point3> longcoords;
+
+	float latitude_increment = 360.0f / lats;
+	float longitude_increment = 180.0f / longs;
+
+	// create longitudes
+	for (float u = 0; u < 360.0f; u += latitude_increment) {
+		Line slice;
+
+		// what slice
+		Vector3 r1x = Point3( sin(u*DEG_TO_RAD) * radius1, 0.0f, sin(u*DEG_TO_RAD) * radius1 );
+		Vector3 r1z = Point3( sin(u*DEG_TO_RAD) * radius1, 0.0f, cos(u*DEG_TO_RAD) * radius1 );
+
+		for (float t = 0; t <= 360.0f; t += longitude_increment) {
+			float x = (float) (r1x.x + radius * sin(t*DEG_TO_RAD) * sin(u*DEG_TO_RAD));
+			float y = (float) (radius * cos(t*DEG_TO_RAD));
+			float z = (float) (r1z.z + radius * sin(t*DEG_TO_RAD) * cos(u*DEG_TO_RAD));
+
+			slice.addPoint(x, y, z);
+
+			// remember points on first latitude to create longitude circles
+			if (u == 0) { longcoords.push_back(Point3(x,y,z)); }
+		}
+		// optionally, some nice colors
+		if (u < 0.1f && u > -0.1f) { slice.color = GREEN; } // greenwich
+		if (u < 180.2f && u > 179.8f) { slice.color = GREEN; } // greenwich
+		if (u < 90.1f && u > 89.8) { slice.color = YELLOW; }
+		if (u < 270.1f && u > 269.8) { slice.color = YELLOW; }
+
+		this->addLine(&slice);
 	}
 
 	// create latitudes
@@ -152,9 +200,10 @@ void GeoMetric::addCylinder(float radius, int height, int lats)
 		if (u < 0.1f && u > -0.1f) { semicircle.color = YELLOW; } // greenwich
 		float x = (float) (radius * sin(u*DEG_TO_RAD));
 		float z = (float) (radius * cos(u*DEG_TO_RAD));
+		//semicircle.addPoint(0,  height, 0); // top cap
 		semicircle.addPoint(x,  height, z);
 		semicircle.addPoint(x, -height, z);
-		//semicircle.addPoint(0, -height, 0);
+		//semicircle.addPoint(0, -height, 0); // bottom cap
 
 		this->addLine(&semicircle);
 	}
