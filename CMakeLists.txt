@@ -212,6 +212,8 @@ IF(MAKE_DEMO)
 	    projects/demo/scene14.h
 		projects/demo/scene15.cpp
 		projects/demo/scene15.h
+		projects/demo/scene16.cpp
+		projects/demo/scene16.h
 		projects/demo/superscene.cpp
 		projects/demo/superscene.h
 	)
