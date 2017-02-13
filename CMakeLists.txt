@@ -10,6 +10,7 @@ OPTION(MAKE_FLOCKING "Make flocking application" OFF)
 OPTION(MAKE_BASIC3D "Make basic3D application" OFF)
 OPTION(MAKE_NOISE "Make Perlin Noise application" ON)
 OPTION(MAKE_GEOMETRIC "Make GeoMetric application" ON)
+OPTION(MAKE_SHADY "Make custom Shader application" ON)
 
 OPTION(USE_RS232 "Use RS232 library" OFF)
 
@@ -276,6 +277,27 @@ IF(MAKE_GEOMETRIC)
 	)
 	target_link_libraries(geometric
 		${ALL_GRAPHICS_LIBS}
+	)
+ENDIF()
+
+####################################################################
+# slim shady                                                       #
+####################################################################
+IF(MAKE_SHADY)
+	add_executable(slimshady
+		projects/slimshady/main.cpp
+		projects/slimshady/myentity.cpp
+		projects/slimshady/myentity.h
+		projects/slimshady/myscene.cpp
+		projects/slimshady/myscene.h
+	)
+	target_link_libraries(slimshady
+		${ALL_GRAPHICS_LIBS}
+	)
+	# Copy assets to the build directory
+	file(
+		COPY projects/slimshady/assets
+		DESTINATION ${CMAKE_BINARY_DIR}
 	)
 ENDIF()
 
