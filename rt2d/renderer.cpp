@@ -26,7 +26,7 @@ using namespace glm;
 Renderer::Renderer()
 {
 	_window = NULL;
-	_uberShader = NULL;
+	_defaultShader = NULL;
 
 	this->init();
 }
@@ -95,10 +95,8 @@ int Renderer::init()
 	// Cull triangles which normal is not towards the camera
 	//glEnable(GL_CULL_FACE);
 
-	if (UBERSHADER) { // from config.h
-		_uberShader =_resman.getShader(SPRITEVERTEXSHADER, SPRITEFRAGMENTSHADER);
-		printf("Renderer using uberShader\n");
-	}
+	_defaultShader =_resman.getShader(SPRITEVERTEXSHADER, SPRITEFRAGMENTSHADER);
+		printf("Renderer using uberShader as fallback\n");
 
 	printf("Renderer::init() done\n");
 
@@ -223,10 +221,10 @@ void Renderer::_renderEntity(glm::mat4 modelMatrix, Entity* entity, Camera* came
 void Renderer::_renderSpriteBatch(glm::mat4 modelMatrix, std::vector<Sprite*>& spritebatch, Camera* camera)
 {
 	Sprite* spr = spritebatch[0];
-	Shader* shader = _uberShader;
+	Shader* shader = _resman.getShader(spr->vertexshader().c_str(), spr->fragmentshader().c_str());
 	// ask resourcemanager
 	if (shader == NULL) {
-		shader = _resman.getShader(spr->vertexshader().c_str(), spr->fragmentshader().c_str());
+		shader = _defaultShader; // fallback to defaultshader
 	}
 	std::string texturename = spr->texturename();
 	int filter = spr->filter();
@@ -295,7 +293,7 @@ void Renderer::_renderSpriteBatch(glm::mat4 modelMatrix, std::vector<Sprite*>& s
 
 				glm::mat4 mm = translationMatrix * rotationMatrix * scalingMatrix;
 
-				this->_renderMesh(mm, shader, texture, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
+				this->_renderMesh(mm, shader, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
 			}
 		}
 	}
@@ -304,11 +302,11 @@ void Renderer::_renderSpriteBatch(glm::mat4 modelMatrix, std::vector<Sprite*>& s
 
 void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool dynamic)
 {
-	Shader* shader = _uberShader;
-	// ask resourcemanager
+	Shader* shader = _resman.getShader(sprite->vertexshader().c_str(), sprite->fragmentshader().c_str());
 	if (shader == NULL) {
-		shader = _resman.getShader(sprite->vertexshader().c_str(), sprite->fragmentshader().c_str());
+		shader = _defaultShader; // fallback to defaultshader
 	}
+
 	Texture* texture = NULL;
 	if (dynamic) {
 		if (sprite->texture() != NULL) {
@@ -337,7 +335,7 @@ void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool d
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
 
-		this->_renderMesh(modelMatrix, shader, texture, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
+		this->_renderMesh(modelMatrix, shader, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
 	}
 
 	if (dynamic && texture != NULL) {
@@ -347,12 +345,8 @@ void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool d
 
 void Renderer::_renderLine(const glm::mat4 modelMatrix, Line* line)
 {
-	Shader* shader = _uberShader;
-	// ask resourcemanager
-	if (shader == NULL) {
-		// only uberShader for now TODO fix
-		//shader = _resman.getShader(sprite->vertexshader().c_str(), sprite->fragmentshader().c_str());
-	}
+	Shader* shader = _defaultShader;
+
 	Texture* texture = _resman.getTexture(AUTOGENWHITE, 0, 1);
 	Mesh* mesh = NULL;
 	RGBAColor blendcolor = line->color;
@@ -373,7 +367,7 @@ void Renderer::_renderLine(const glm::mat4 modelMatrix, Line* line)
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
 
-	this->_renderMesh(modelMatrix, shader, texture, mesh, numpoints, GL_LINES, blendcolor);
+	this->_renderMesh(modelMatrix, shader, mesh, numpoints, GL_LINES, blendcolor);
 
 	if (line->dynamic()) {
 		delete mesh;
@@ -381,8 +375,7 @@ void Renderer::_renderLine(const glm::mat4 modelMatrix, Line* line)
 }
 
 void Renderer::_renderMesh(const glm::mat4 modelMatrix, Shader* shader,
-	Texture* texture, Mesh* mesh, int numverts,
-	GLuint mode, RGBAColor blendcolor)
+	Mesh* mesh, int numverts, GLuint mode, RGBAColor blendcolor)
 {
 	// use our shader program
 	glUseProgram(shader->programID());

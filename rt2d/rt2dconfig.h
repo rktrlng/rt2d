@@ -26,12 +26,11 @@
 
 #define WINDOWNAME "RT2D" ///< The window name
 
-#define CLEARCOLOR_RED 0.1f ///< The red compnent of the color of the window
-#define CLEARCOLOR_GREEN 0.1f ///< The green compnent of the color of the window
-#define CLEARCOLOR_BLUE 0.1f ///< The blue compnent of the color of the window
+#define CLEARCOLOR_RED 0.1f ///< The red component of the color of the window
+#define CLEARCOLOR_GREEN 0.1f ///< The green component of the color of the window
+#define CLEARCOLOR_BLUE 0.1f ///< The blue component of the color of the window
 
-// renderer uses ubershader
-#define UBERSHADER 1 ///< use UberShader or not (0/1)
+// defaultshader for Renderer as fallback if Sprite has no shader defined
 #define SPRITEVERTEXSHADER "shaders/sprite.vert" ///< vertexshader name
 #define SPRITEFRAGMENTSHADER "shaders/sprite.frag" ///< fragmentshader name
 #define AUTOGENWHITE "#autogen-white-TGA#" ///< auto generated Texture

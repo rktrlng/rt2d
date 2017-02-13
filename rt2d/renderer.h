@@ -91,14 +91,13 @@ private:
 	/// @param blendcolor The Color to use for blending
 	/// @return void
 	inline void _renderMesh(const glm::mat4 modelMatrix, Shader* shader,
-		Texture* texture, Mesh* mesh, int numverts,
-		GLuint mode, RGBAColor blendcolor);
+		Mesh* mesh, int numverts, GLuint mode, RGBAColor blendcolor);
 
 	// temp 'local' variables.
 	glm::mat4 _projectionMatrix; ///< @brief The _projectionMatrix we get from the Camera. We only get the ProjectionMatrix from the orthographic camera once
 	glm::mat4 _viewMatrix; ///< @brief The _viewMatrix we get from the Camera once per frame.
 
-	Shader* _uberShader; ///< @brief We can choose to use an 'ubershader', or get the Shader from the Sprite.
+	Shader* _defaultShader; ///< @brief Fallback Shader if there's not in Sprite.
 };
 
 #endif /* RENDERER_H */
