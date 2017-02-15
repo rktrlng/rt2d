@@ -9,9 +9,7 @@ uniform vec4 blendColor;
 
 void main()
 {
-	// Output color = color of the texture at the specified UV
-	//gl_FragColor = texture2D( textureSampler, UV ) * blendColor;
-
-	vec4 customcolor = vec4(1.0f, 0.0f, 1.0f, 1.0f);
-	gl_FragColor = texture2D( textureSampler, UV ) * customcolor;
+	// gl_FragCoord = screen coords. bottom-left: 0.5,0.5 top-right: 1279.5,719.5
+	vec2 mapped = vec2(gl_FragCoord.x / 1280.0, gl_FragCoord.y / 720.0); // between 0.0f and 1.0f
+	gl_FragColor = vec4(sin(gl_FragCoord.x/10), cos(gl_FragCoord.y/10), mapped.y, 1.0);
 }

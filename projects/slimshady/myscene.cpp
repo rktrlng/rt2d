@@ -11,26 +11,17 @@
 
 MyScene::MyScene() : Scene()
 {
-	// start the timer.
 	t.start();
 
-	// create a single instance of MyEntity in the middle of the screen.
-	// the Sprite is added in Constructor of MyEntity.
 	myentity = new MyEntity();
 	myentity->position = Point2(SWIDTH/2, SHEIGHT/2);
-
-	// create the scene 'tree'
-	// add myentity to this Scene as a child.
 	this->addChild(myentity);
 }
 
 
 MyScene::~MyScene()
 {
-	// deconstruct and delete the Tree
 	this->removeChild(myentity);
-
-	// delete myentity from the heap (there was a 'new' in the constructor)
 	delete myentity;
 }
 
@@ -47,9 +38,9 @@ void MyScene::update(float deltaTime)
 	// Spacebar scales myentity
 	// ###############################################################
 	if (input()->getKeyDown( GLFW_KEY_SPACE )) {
-		myentity->scale = Point(0.5f, 0.5f);
+		myentity->scale = Point(16.0f, 16.0f);
 	}
 	if (input()->getKeyUp( GLFW_KEY_SPACE )) {
-		myentity->scale = Point(1.0f, 1.0f);
+		myentity->scale = Point(SWIDTH/32.0f, SHEIGHT/32.0f);
 	}
 }
