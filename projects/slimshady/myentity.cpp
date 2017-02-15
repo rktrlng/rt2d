@@ -11,6 +11,9 @@ MyEntity::MyEntity() : Entity()
 
 	this->sprite()->fragmentshader("assets/slimshady.frag");
 	this->sprite()->vertexshader("assets/slimshady.vert");
+
+	this->sprite()->customParams[0] = Point3(1280.0f, 720.0f, 1.0f); // resolution
+	this->sprite()->customParams[1] = Point3(1.0f, 1.0f, 1.0f);
 }
 
 MyEntity::~MyEntity()
@@ -20,6 +23,10 @@ MyEntity::~MyEntity()
 
 void MyEntity::update(float deltaTime)
 {
+	static float total = 1.0f;
+	total += deltaTime;
+	this->sprite()->customParams[1] = Point3(total, total, total);
+
 	// ###############################################################
 	// Rotate
 	// ###############################################################

@@ -281,6 +281,13 @@ void Renderer::_renderSpriteBatch(glm::mat4 modelMatrix, std::vector<Sprite*>& s
 				// _uvOffsetID
 				glUniform2f(shader->uvOffsetID(), sprite->uvoffset.x, sprite->uvoffset.y);
 
+				// _customParamsID
+				for (int i=0; i<8; i++) {
+					if (shader->customParamsID(i) != -1) {
+						glUniform3f(shader->customParamsID(i), sprite->customParams[i].x, sprite->customParams[i].y, sprite->customParams[i].z);
+					}
+				}
+
 				// use sprite transform to build the model matrix.
 				glm::vec3 position = glm::vec3(sprite->spriteposition.x, sprite->spriteposition.y, sprite->spriteposition.z);
 				glm::vec3 rotation = glm::vec3(sprite->spriterotation.x, sprite->spriterotation.y, sprite->spriterotation.z);
@@ -329,6 +336,13 @@ void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool d
 
 	// _uvOffsetID
 	glUniform2f(shader->uvOffsetID(), sprite->uvoffset.x, sprite->uvoffset.y);
+
+	// _customParamsID
+	for (int i=0; i<8; i++) {
+		if (shader->customParamsID(i) != -1) {
+			glUniform3f(shader->customParamsID(i), sprite->customParams[i].x, sprite->customParams[i].y, sprite->customParams[i].z);
+		}
+	}
 
 	if (texture != NULL) {
 		// Bind our texture in Texture Unit 0

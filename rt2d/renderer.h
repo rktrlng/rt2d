@@ -84,7 +84,6 @@ private:
 	/// @brief Renders the Mesh 'component' of a Sprite or Line.
 	/// @param modelMatrix The ModelMatrix of the Mesh
 	/// @param shader The Shader
-	/// @param texture The Texture
 	/// @param mesh The Mesh
 	/// @param numverts The number of vertices to render
 	/// @param mode The mode: GL_LINES or GL_TRIANGLES

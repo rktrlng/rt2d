@@ -26,6 +26,10 @@ Sprite::Sprite()
 	uvoffset = Point2(0.0f, 0.0f);
 	size = Point2(0, 0);
 
+	for (size_t i = 0; i < 8; i++) {
+		customParams[i] = Point3(0.0f, 0.0f, 0.0f);
+	}
+
 	_frame = 0;
 
 	_filter = DEFAULTFILTER;

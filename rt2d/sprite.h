@@ -65,6 +65,8 @@ public:
 	Point2 size; ///< @brief size Point_t of the Sprite (width and height of the Sprite)
 	RGBAColor color; ///< @brief blend Color of the Sprite
 
+	Point3 customParams[8]; ///< @brief custom Params that are sent to the shader
+
 	/// @brief prepare Sprite for creation by ResourceManager
 	/// @param filename path to the image.tga
 	/// @param pivotx X component of Pivot Point_t of the Sprite

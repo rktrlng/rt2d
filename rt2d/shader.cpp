@@ -28,6 +28,9 @@ Shader::Shader()
 	_textureID  =    -1;
 	_blendColorID =  -1;
 	_uvOffsetID =    -1;
+	for (int i = 0; i < 8; i++) {
+		_customParamsID[i] = -1;
+	}
 }
 
 Shader::~Shader()
@@ -44,6 +47,14 @@ void Shader::_attachID()
 	_textureID  =    glGetUniformLocation(_programID, "textureSampler"); // textureSampler uniform in fragment shader
 	_blendColorID =  glGetUniformLocation(_programID, "blendColor"); // blendColor uniform in fragment shader
 	_uvOffsetID = 	 glGetUniformLocation(_programID, "UVoffset"); // UVoffset uniform in fragment shader
+
+	// probably not the best way to set the shader variables, but here we are...
+	for (int i = 0; i < 8; i++) {
+		char customParams[18]; // should be enough
+		customParams[17] = '\0';
+		sprintf(customParams,"customParams[%d]",i);
+		_customParamsID[i] = glGetUniformLocation(_programID, customParams);
+	}
 }
 
 GLuint Shader::loadShaders(const char * vertex_file_path, const char * fragment_file_path)
