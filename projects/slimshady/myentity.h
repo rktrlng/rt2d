@@ -18,6 +18,9 @@ public:
 	int activeshader;
 	std::vector<std::string> fragshaders;
 
+	std::vector<Point3> positions;
+	std::vector<Point3> velocities;
+
 private:
 	/* add your private declarations */
 };

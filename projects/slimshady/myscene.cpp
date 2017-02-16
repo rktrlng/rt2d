@@ -11,6 +11,8 @@
 
 MyScene::MyScene() : Scene()
 {
+	srand((unsigned)time(NULL));
+
 	myentity = new MyEntity();
 	myentity->position = Point2(SWIDTH/2, SHEIGHT/2);
 	this->addChild(myentity);
