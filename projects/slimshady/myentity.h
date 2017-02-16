@@ -15,6 +15,9 @@ public:
 
 	virtual void update(float deltaTime);
 
+	int activeshader;
+	std::vector<std::string> fragshaders;
+
 private:
 	/* add your private declarations */
 };

@@ -11,8 +11,6 @@
 
 MyScene::MyScene() : Scene()
 {
-	t.start();
-
 	myentity = new MyEntity();
 	myentity->position = Point2(SWIDTH/2, SHEIGHT/2);
 	this->addChild(myentity);
@@ -43,4 +41,16 @@ void MyScene::update(float deltaTime)
 	if (input()->getKeyUp( GLFW_KEY_SPACE )) {
 		myentity->scale = Point(SWIDTH/32.0f, SHEIGHT/32.0f);
 	}
+
+	// ###############################################################
+	// '[' and ']' switch shaders
+	// ###############################################################
+	if (input()->getKeyUp( GLFW_KEY_LEFT_BRACKET )) {
+		myentity->activeshader--;
+	}
+	if (input()->getKeyUp( GLFW_KEY_RIGHT_BRACKET )) {
+		myentity->activeshader++;
+	}
+	if (myentity->activeshader >= (int) myentity->fragshaders.size()) { myentity->activeshader = 0; }
+	if (myentity->activeshader < 0) { myentity->activeshader = myentity->fragshaders.size()-1; }
 }

@@ -37,7 +37,7 @@ if(UNIX)
 	#set(CMAKE_CXX_FLAGS "-Wall -std=c++0x -pedantic -O2 -g -pg")
 	#set(CMAKE_CXX_FLAGS "-Wall -Wstrict-aliasing -std=c++0x -O2")
 
-	set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
+	set(CMAKE_CXX_FLAGS "-Wall -std=c++11 -O2")
 
 	# valgrind --leak-check=full ./demo
 	# ./demo # creates cmon.out
@@ -294,9 +294,9 @@ IF(MAKE_SHADY)
 	target_link_libraries(slimshady
 		${ALL_GRAPHICS_LIBS}
 	)
-	# Copy assets to the build directory
+	# Copy shaders to the build directory
 	file(
-		COPY projects/slimshady/assets
+		COPY projects/slimshady/shaders
 		DESTINATION ${CMAKE_BINARY_DIR}
 	)
 ENDIF()
