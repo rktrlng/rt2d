@@ -22,6 +22,9 @@ void main() {
 	}
 	sum /= 200;
 
-	if (sum > 0.99)
-    	gl_FragColor = vec4( sum, sum, sum, 1.0 );
+	if (sum > 0.99) {
+		gl_FragColor = vec4( customParams[2].x, customParams[3].y, customParams[4].z, 1.0 );
+	} else {
+		gl_FragColor = vec4( 1.0-customParams[2].x, 1.0-customParams[3].y, 1.0-customParams[2].z, 1.0 );
+	}
 }
