@@ -351,7 +351,7 @@ void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool d
 		glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 
-		glTexImage1D(GL_TEXTURE_1D, 0, 4, 256, 0, GL_RGBA, GL_UNSIGNED_BYTE, sprite->palette());
+		glTexImage1D(GL_TEXTURE_1D, 0, 3, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, sprite->palette());
 
 		glEnable(GL_TEXTURE_1D);
 
