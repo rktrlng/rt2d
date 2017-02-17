@@ -37,6 +37,9 @@ public:
 	/// @brief get the customParamsID
 	/// @return GLuint _customParamsID[i]
 	GLint customParamsID(int i) { return _customParamsID[i]; };
+	/// @brief get the paletteID
+	/// @return GLuint _paletteID
+	GLuint paletteID() { return _paletteID; };
 
 	/// @brief load shaders from disk
 	/// @param vertex_file_path path to vertexshader
@@ -47,10 +50,11 @@ public:
 private:
 	GLuint _programID; ///< @brief programID (pointer to compiled shader)
 	GLuint _matrixID; ///< @brief attaches to MVP uniform in shader
-	GLuint _textureID; ///< @brief attaches to textureSampler uniform in shader
+	GLuint _textureID; ///< @brief attaches to textureSampler2D uniform in shader
 	GLuint _blendColorID; ///< @brief attaches to blendColor uniform in shader
 	GLuint _uvOffsetID; ///< @brief attaches to UVoffset uniform in shader
 	GLuint _customParamsID[8]; ///< @brief attaches to customParams uniform in shader
+	GLuint _paletteID; ///< @brief attaches to paletteSampler1D uniform in shader
 
 	/// @brief attaches matrixID, textureID, vertexcolorID to uniforms in the shaders
 	/// @return void

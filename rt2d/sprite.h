@@ -109,6 +109,11 @@ public:
 	/// @return void
 	void setupSpriteTGAPixelBuffer(const std::string& filename, int filter, int wrap);
 
+	void setPalette(const std::string& filename);
+	/// @brief get the palette sampler1D
+	/// @return Texture* _palette
+	Texture* palette() { return _palette; };
+
 	/// @brief get the dynamic texture
 	/// @return Texture* _dyntexture
 	Texture* texture() { return _dyntexture; };
@@ -158,6 +163,8 @@ private:
 
 	std::string _fragmentshader; ///< @brief fragmentshader (path to the file)
 	std::string _vertexshader; ///< @brief vertexshader (path to the file)
+
+	Texture* _palette; ///< @brief the palette
 
 	Texture* _dyntexture; ///< @brief the dynamic texture
 	bool _dynamic; ///< @brief dynamic or not

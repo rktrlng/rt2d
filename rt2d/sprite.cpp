@@ -30,6 +30,8 @@ Sprite::Sprite()
 		customParams[i] = Point3(0.0f, 0.0f, 0.0f);
 	}
 
+	_palette = NULL;
+
 	_frame = 0;
 
 	_filter = DEFAULTFILTER;
@@ -54,6 +56,17 @@ Sprite::~Sprite()
 		delete _dyntexture;
 		_dyntexture = NULL;
 	}
+
+	if (_palette != NULL) {
+		delete _palette;
+		_palette = NULL;
+	}
+}
+
+void Sprite::setPalette(const std::string& filename)
+{
+	_palette = new Texture();
+	_palette->loadTGAImage(filename, 0, 0); // filename, filter, wrap
 }
 
 void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty, float uvwidth, float uvheight)

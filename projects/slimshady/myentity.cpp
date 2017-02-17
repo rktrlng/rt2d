@@ -6,15 +6,16 @@
 
 MyEntity::MyEntity() : Entity()
 {
-	this->addSprite(AUTOGENWHITE); // 32x32
-	this->scale = Point2(SWIDTH/32.0f, SHEIGHT/32.0f); // like a canvas
-
 	fragshaders.push_back("shaders/slimshady0.frag"); // grid
 	fragshaders.push_back("shaders/slimshady1.frag"); // colorshifts
 	fragshaders.push_back("shaders/metaballs.frag"); // metaballs
 	activeshader = 2;
 
-	this->sprite()->customParams[0] = Point3(1280.0f, 720.0f, 1.0f); // resolution
+	this->addSprite(AUTOGENWHITE); // 32x32
+	this->scale = Point2(SWIDTH/32.0f, SHEIGHT/32.0f); // like a canvas
+
+	this->sprite()->customParams[0] = Point3(1280.0f, 720.0f, 1.0f); // screen resolution
+	this->sprite()->setPalette("assets/palette.tga"); // 256x1 sampler1D
 
 	// metaballs positions
 	for (size_t i = 2; i < 8; i++) {

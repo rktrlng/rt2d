@@ -2,6 +2,7 @@
 
 // Custom parameters from Sprite
 uniform vec3 customParams[8];
+uniform sampler1D palette;
 
 // Interpolated values from the vertex shaders
 varying vec2 UV;
@@ -22,9 +23,12 @@ void main() {
 	}
 	sum /= 200;
 
+	gl_FragColor = texture1D(palette, sum/5);
+	/*
 	if (sum > 0.99) {
 		gl_FragColor = vec4( customParams[2].x, customParams[3].y, customParams[4].z, 1.0 );
 	} else {
 		gl_FragColor = vec4( 1.0-customParams[2].x, 1.0-customParams[3].y, 1.0-customParams[2].z, 1.0 );
 	}
+	*/
 }

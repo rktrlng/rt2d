@@ -299,6 +299,11 @@ IF(MAKE_SHADY)
 		COPY projects/slimshady/shaders
 		DESTINATION ${CMAKE_BINARY_DIR}
 	)
+	# Copy assets to the build directory
+	file(
+		COPY projects/slimshady/assets
+		DESTINATION ${CMAKE_BINARY_DIR}
+	)
 ENDIF()
 
 ####################################################################

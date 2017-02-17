@@ -31,6 +31,7 @@ Shader::Shader()
 	for (int i = 0; i < 8; i++) {
 		_customParamsID[i] = -1;
 	}
+	_paletteID =     -1;
 }
 
 Shader::~Shader()
@@ -55,6 +56,7 @@ void Shader::_attachID()
 		sprintf(customParams,"customParams[%d]",i);
 		_customParamsID[i] = glGetUniformLocation(_programID, customParams);
 	}
+	_paletteID = glGetUniformLocation(_programID, "palette"); // palette uniform in fragment shader
 }
 
 GLuint Shader::loadShaders(const char * vertex_file_path, const char * fragment_file_path)
