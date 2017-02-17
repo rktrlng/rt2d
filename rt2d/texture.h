@@ -160,7 +160,7 @@ public:
 	/// @param filter the filter
 	/// @param wrap the wrap
 	/// @return GLuint _texture, 0 if failed
-	GLuint loadTGAImage(const std::string& filename, int filter, int wrap);
+	GLuint loadTGAImage(const std::string& filename, int filter, int wrap, int dim = 2);
 	/// @brief write an image to file (tga only)
 	/// @param pixels the PixelBuffer to write
 	/// @return int 0 if failed
@@ -173,7 +173,7 @@ public:
 	/// @brief create a Texture from a PixelBuffer
 	/// @param pixels a PixelBuffer pointer
 	/// @return GLuint _texture, 0 if failed
-	void createFromBuffer(PixelBuffer* pixels);
+	void createFromBuffer(PixelBuffer* pixels, int dim = 2);
 
 	/// @brief get the warranty bit
 	/// @return unsigned char _warrantybit
