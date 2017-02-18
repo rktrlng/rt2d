@@ -16,6 +16,10 @@ MyScene::MyScene() : Scene()
 	myentity = new MyEntity();
 	myentity->position = Point2(SWIDTH/2, SHEIGHT/2);
 	this->addChild(myentity);
+
+	test = new BasicEntity();
+	test->addSprite("assets/default.tga");
+	//this->addChild(test);
 }
 
 
@@ -23,6 +27,9 @@ MyScene::~MyScene()
 {
 	this->removeChild(myentity);
 	delete myentity;
+
+	this->removeChild(test);
+	delete test;
 }
 
 void MyScene::update(float deltaTime)

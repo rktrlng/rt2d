@@ -20,26 +20,26 @@ public:
 	virtual ~Shader(); ///< @brief Destructor of the Shader
 
 	/// @brief get the programID
-	/// @return GLuint _programID
-	GLuint programID() { return _programID; };
+	/// @return GLint _programID
+	GLint programID() { return _programID; };
 	/// @brief get the ModelViewProjection MatrixID
-	/// @return GLuint _matrixID
-	GLuint matrixID() { return _matrixID; };
+	/// @return GLint _matrixID
+	GLint matrixID() { return _matrixID; };
 	/// @brief get the textureID
-	/// @return GLuint _textureID
-	GLuint textureID() { return _textureID; };
+	/// @return GLint _textureID
+	GLint textureID() { return _textureID; };
 	/// @brief get the blendColorID
-	/// @return GLuint _blendColorID
-	GLuint blendColorID() { return _blendColorID; };
+	/// @return GLint _blendColorID
+	GLint blendColorID() { return _blendColorID; };
 	/// @brief get the uvOffsetID
-	/// @return GLuint _uvOffsetID
-	GLuint uvOffsetID() { return _uvOffsetID; };
+	/// @return GLint _uvOffsetID
+	GLint uvOffsetID() { return _uvOffsetID; };
 	/// @brief get the customParamsID
-	/// @return GLuint _customParamsID[i]
+	/// @return GLint _customParamsID[i]
 	GLint customParamsID(int i) { return _customParamsID[i]; };
 	/// @brief get the paletteID
-	/// @return GLuint _paletteID
-	GLuint paletteID() { return _paletteID; };
+	/// @return GLint _paletteID
+	GLint paletteID() { return _paletteID; };
 
 	/// @brief load shaders from disk
 	/// @param vertex_file_path path to vertexshader
@@ -48,13 +48,13 @@ public:
 	GLuint loadShaders(const char * vertex_file_path, const char * fragment_file_path);
 
 private:
-	GLuint _programID; ///< @brief programID (pointer to compiled shader)
-	GLuint _matrixID; ///< @brief attaches to MVP uniform in shader
-	GLuint _textureID; ///< @brief attaches to textureSampler2D uniform in shader
-	GLuint _blendColorID; ///< @brief attaches to blendColor uniform in shader
-	GLuint _uvOffsetID; ///< @brief attaches to UVoffset uniform in shader
-	GLuint _customParamsID[8]; ///< @brief attaches to customParams uniform in shader
-	GLuint _paletteID; ///< @brief attaches to paletteSampler1D uniform in shader
+	GLint _programID; ///< @brief programID (pointer to compiled shader)
+	GLint _matrixID; ///< @brief attaches to MVP uniform in shader
+	GLint _textureID; ///< @brief attaches to textureSampler2D uniform in shader
+	GLint _blendColorID; ///< @brief attaches to blendColor uniform in shader
+	GLint _uvOffsetID; ///< @brief attaches to UVoffset uniform in shader
+	GLint _customParamsID[8]; ///< @brief attaches to customParams uniform in shader
+	GLint _paletteID; ///< @brief attaches to paletteSampler1D uniform in shader
 
 	/// @brief attaches matrixID, textureID, vertexcolorID to uniforms in the shaders
 	/// @return void

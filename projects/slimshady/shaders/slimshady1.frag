@@ -1,14 +1,14 @@
 #version 120
 
-// Custom parameters from Sprite
-uniform vec3 customParams[8];
-
 // Interpolated values from the vertex shaders
 varying vec2 UV;
 
 // Values that stay constant for the whole mesh.
 uniform sampler2D textureSampler;
 uniform vec4 blendColor;
+// Custom parameters from Sprite
+uniform vec3 customParams[8];
+uniform sampler1D palette;
 
 void main()
 {

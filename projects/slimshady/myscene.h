@@ -13,6 +13,15 @@
 
 #include "myentity.h"
 
+class BasicEntity: public Entity
+{
+public:
+	BasicEntity(): Entity() { };
+	virtual ~BasicEntity() { };
+
+	virtual void update(float deltaTime) { };
+};
+
 class MyScene : public Scene
 {
 public:
@@ -23,6 +32,7 @@ public:
 
 private:
 	MyEntity* myentity;
+	BasicEntity* test;
 };
 
 #endif /* SCENE00_H */

@@ -48,7 +48,7 @@ GLuint Texture::createWhitePixels(int width, int height)
 	PixelBuffer pixels = PixelBuffer(width, height, 3, 0, 0);
 
 	// Generate the OpenGL Texture
-	createFromBuffer(&pixels);
+	createFromBuffer(&pixels, 2);
 
 	return _gltexture[0];
 }
@@ -244,6 +244,7 @@ void Texture::createFromBuffer(PixelBuffer* pixels, int dim)
 		// setup first texture (the only one in this case)
 		// if you created more, use this->_gltexture[x], where x is the id of the texturename.
 		glBindTexture(GL_TEXTURE_2D, this->_gltexture[0]);
+		//glEnable(GL_TEXTURE_2D);
 
 		// handle transparency
 		if (this->_depth == 4) {
@@ -303,9 +304,9 @@ void Texture::createFromBuffer(PixelBuffer* pixels, int dim)
 		glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 
-		glTexImage1D(GL_TEXTURE_1D, 0, 3, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, _pixelbuffer->data);
+		glTexImage1D(GL_TEXTURE_1D, 0, 3, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels->data);
 
-		glEnable(GL_TEXTURE_1D);
+		//glEnable(GL_TEXTURE_1D);
 	}
 
 }

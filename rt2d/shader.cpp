@@ -43,11 +43,12 @@ Shader::~Shader()
 void Shader::_attachID()
 {
 	// Get handles for our uniforms and buffers and send them to the shader
-	_matrixID = glGetUniformLocation(_programID, "MVP"); // MVP uniform in vertex shader
+	_matrixID =      glGetUniformLocation(_programID, "MVP"); // MVP uniform in vertex shader
 
 	_textureID  =    glGetUniformLocation(_programID, "textureSampler"); // textureSampler uniform in fragment shader
 	_blendColorID =  glGetUniformLocation(_programID, "blendColor"); // blendColor uniform in fragment shader
 	_uvOffsetID = 	 glGetUniformLocation(_programID, "UVoffset"); // UVoffset uniform in fragment shader
+	_paletteID =     glGetUniformLocation(_programID, "palette"); // palette uniform in fragment shader
 
 	// probably not the best way to set the shader variables, but here we are...
 	for (int i = 0; i < 8; i++) {
@@ -56,7 +57,6 @@ void Shader::_attachID()
 		sprintf(customParams,"customParams[%d]",i);
 		_customParamsID[i] = glGetUniformLocation(_programID, customParams);
 	}
-	_paletteID = glGetUniformLocation(_programID, "palette"); // palette uniform in fragment shader
 }
 
 GLuint Shader::loadShaders(const char * vertex_file_path, const char * fragment_file_path)

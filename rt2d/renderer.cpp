@@ -237,9 +237,10 @@ void Renderer::_renderSpriteBatch(glm::mat4 modelMatrix, std::vector<Sprite*>& s
 	Mesh* mesh = _resman.getSpriteMesh(spr->size.x, spr->size.y, spr->pivot.x, spr->pivot.y, spr->uvdim.x, spr->uvdim.y, spr->circlemesh(), spr->which());
 
 	if (texture != NULL) {
-		// Bind our texture in Texture Unit 0
+		// Bind the texture in Texture Unit 0
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
+		//glUniform1i(shader->textureID(), 0);
 
 		// for every Sprite in the batch...
 		int s = spritebatch.size();
@@ -344,22 +345,21 @@ void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool d
 		}
 	}
 
+	if (texture != NULL) {
+		// Bind the texture in Texture Unit 0
+		glActiveTexture(GL_TEXTURE0 + 0);
+		glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
+		//glUniform1i(shader->textureID(), 0);
+	}
+
 	if (sprite->palette() != NULL) {
-		/* load the 1D palette texture */
+		// Bind the palette in Texture Unit 1
 		glActiveTexture(GL_TEXTURE0 + 1);
 		glBindTexture(GL_TEXTURE_1D, sprite->palette()->getGLTexture());
-
-		glUniform1i(shader->paletteID(), 1);
+		//glUniform1i(shader->paletteID(), 1);
 	}
 
-
-	if (texture != NULL) {
-		// Bind our texture in Texture Unit 0
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
-
-		this->_renderMesh(modelMatrix, shader, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
-	}
+	this->_renderMesh(modelMatrix, shader, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
 
 	if (dynamic && texture != NULL) {
 		delete texture;
@@ -386,9 +386,10 @@ void Renderer::_renderLine(const glm::mat4 modelMatrix, Line* line)
 		mesh = _resman.getLineMesh(line);
 	}
 
-	// Bind our texture in Texture Unit 0
-	glActiveTexture(GL_TEXTURE0);
+	// Bind the texture in Texture Unit 0
+	glActiveTexture(GL_TEXTURE0 + 0);
 	glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
+	//glUniform1i(shader->textureID(), 0);
 
 	this->_renderMesh(modelMatrix, shader, mesh, numpoints, GL_LINES, blendcolor);
 
@@ -414,6 +415,11 @@ void Renderer::_renderMesh(const glm::mat4 modelMatrix, Shader* shader,
 
 	// Set our "textureSampler" sampler to user Texture Unit 0
 	glUniform1i(shader->textureID(), 0);
+
+	// Set our "paletteSampler" sampler to user Texture Unit 1
+	if (shader->paletteID() != -1) {
+		glUniform1i(shader->paletteID(), 1);
+	}
 
 	// Note: We generated vertices in the correct order, with normals facing the camera.
 	// We can also get the normalbuffer from the Mesh, but that's ignored here.
