@@ -240,6 +240,7 @@ void Texture::createFromBuffer(PixelBuffer* pixels, int dim)
 	// generate a number of texturenames (just 1 for now)
 	glGenTextures(1, this->_gltexture);
 
+	// 2D Texture (diffuse)
 	if (dim == 2) {
 		// setup first texture (the only one in this case)
 		// if you created more, use this->_gltexture[x], where x is the id of the texturename.
@@ -297,6 +298,7 @@ void Texture::createFromBuffer(PixelBuffer* pixels, int dim)
 		}
 	}
 
+	// 1D texture (palette)
 	if (dim == 1) {
 		glBindTexture(GL_TEXTURE_1D, this->_gltexture[0]);
 
@@ -304,7 +306,8 @@ void Texture::createFromBuffer(PixelBuffer* pixels, int dim)
 		glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 
-		glTexImage1D(GL_TEXTURE_1D, 0, 3, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels->data);
+		// this assumes an RGB palette TODO fix
+		glTexImage1D(GL_TEXTURE_1D, 0, 3, pixels->width, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels->data);
 
 		//glEnable(GL_TEXTURE_1D);
 	}
