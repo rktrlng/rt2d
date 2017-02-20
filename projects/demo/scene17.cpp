@@ -157,11 +157,11 @@ void Scene17::handleModes()
 
 void Scene17::addDrop(int x_, int y_)
 {
-	int maxindex = field.size()-1;
+	int maxindex = field.size();
 	for (int y = y_-dropsize; y < y_+dropsize; y++) {
 		for (int x = x_-dropsize; x < x_+dropsize; x++) {
 			int index = (y * w) + x;
-			if (index > 0 && index < maxindex) {
+			if (index >= 0 && index < maxindex) {
 				field[index].B = 1.0f;
 			}
 		}
