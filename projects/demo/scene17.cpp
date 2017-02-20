@@ -25,7 +25,7 @@ Scene17::Scene17() : SuperScene()
 	std::cout << w << "," << h << std::endl;
 
 	dropsize = 5;
-	mode = 0;
+	mode = 1;
 	this->handleModes();
 
 	this->reset();
@@ -122,22 +122,38 @@ void Scene17::reset()
 
 void Scene17::handleModes()
 {
-	if (input()->getKeyDown( GLFW_KEY_A )) { mode = 0; }
-	if (input()->getKeyDown( GLFW_KEY_D )) { mode = 1; }
+	if (input()->getKeyDown( GLFW_KEY_1 )) { mode = 1; }
+	if (input()->getKeyDown( GLFW_KEY_2 )) { mode = 2; }
+	if (input()->getKeyDown( GLFW_KEY_3 )) { mode = 3; }
+	if (input()->getKeyDown( GLFW_KEY_4 )) { mode = 4; }
 
 	// "coral growth" simulation (f=.0545, k=.062)
-	if (mode == 0) {
+	if (mode == 1) {
 		dA = 1.0f; // diffusion rate A
 		dB = 0.5f; // diffusion rate B
 		feed = 0.0545; // feed rate
 		k = 0.062; // kill rate
 	}
+	// "string" simulation (f=.0385, k=.062)
+	if (mode == 2) {
+		dA = 1.0f; // diffusion rate A
+		dB = 0.5f; // diffusion rate B
+		feed = 0.0385; // feed rate
+		k = 0.062; // kill rate
+	}
 	// "mitosis" simulation (f=.0367, k=.0649)
-	if (mode == 1) {
+	if (mode == 3) {
 		dA = 1.0f; // diffusion rate A
 		dB = 0.5f; // diffusion rate B
 		feed = 0.0367; // feed rate
 		k = 0.0649; // kill rate
+	}
+	// "test" simulation
+	if (mode == 4) {
+		dA = 1.0f; // diffusion rate A
+		dB = 0.5f; // diffusion rate B
+		feed = 0.0445; // feed rate
+		k = 0.0615; // kill rate
 	}
 }
 
