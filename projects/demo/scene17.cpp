@@ -122,38 +122,36 @@ void Scene17::reset()
 
 void Scene17::handleModes()
 {
+	//http://mrob.com/pub/comp/xmorphia/pearson-classes.html
+
 	if (input()->getKeyDown( GLFW_KEY_1 )) { mode = 1; }
 	if (input()->getKeyDown( GLFW_KEY_2 )) { mode = 2; }
 	if (input()->getKeyDown( GLFW_KEY_3 )) { mode = 3; }
 	if (input()->getKeyDown( GLFW_KEY_4 )) { mode = 4; }
 
+	dA = 1.0f; // diffusion rate A
+	dB = 0.5f; // diffusion rate B
+
 	// "coral growth" simulation (f=.0545, k=.062)
 	if (mode == 1) {
-		dA = 1.0f; // diffusion rate A
-		dB = 0.5f; // diffusion rate B
 		feed = 0.0545; // feed rate
 		k = 0.062; // kill rate
 	}
 	// "string" simulation (f=.0385, k=.062)
 	if (mode == 2) {
-		dA = 1.0f; // diffusion rate A
-		dB = 0.5f; // diffusion rate B
 		feed = 0.0385; // feed rate
 		k = 0.062; // kill rate
 	}
 	// "mitosis" simulation (f=.0367, k=.0649)
 	if (mode == 3) {
-		dA = 1.0f; // diffusion rate A
-		dB = 0.5f; // diffusion rate B
 		feed = 0.0367; // feed rate
 		k = 0.0649; // kill rate
 	}
 	// "test" simulation
 	if (mode == 4) {
-		dA = 1.0f; // diffusion rate A
-		dB = 0.5f; // diffusion rate B
-		feed = 0.0445; // feed rate
+		feed = 0.0745; // feed rate
 		k = 0.0615; // kill rate
+		dropsize = 10;
 	}
 }
 
