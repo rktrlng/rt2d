@@ -41,6 +41,9 @@ private:
 	void addDrop(int x, int y);
 	int dropsize;
 
+	int mode;
+	void handleModes();
+
 	Pointi wrap(Pointi n);
 	inline int getIdFromPos(int x, int y) { return (y*canvas->width())+x; };
 

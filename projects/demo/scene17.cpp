@@ -14,13 +14,6 @@ Scene17::Scene17() : SuperScene()
 
 	text[0]->message("Scene17: Reaction Diffusion [CLICK]=add Drop [SPACE]=reset [S]=save image");
 
-	dA = 1.0f; // diffusion rate A
-	dB = 0.5f; // diffusion rate B
-	feed = 0.055; // feed rate
-	k = 0.062; // kill rate
-
-	dropsize = 5;
-
 	// create Canvas
 	pixelsize = 4;
 	canvas = new Canvas(pixelsize);
@@ -30,6 +23,10 @@ Scene17::Scene17() : SuperScene()
 	w = canvas->width();
 	h = canvas->height();
 	std::cout << w << "," << h << std::endl;
+
+	dropsize = 5;
+	mode = 0;
+	this->handleModes();
 
 	this->reset();
 }
@@ -53,6 +50,8 @@ void Scene17::update(float deltaTime)
 	text[2]->message(""); // clear [/] next scene
 	text[3]->message(""); // clear <esc> to quit
 	text[10]->message(""); // clear player click count message
+
+	this->handleModes();
 
 	if (input()->getKeyDown( GLFW_KEY_SPACE )) {
 		this->reset();
@@ -119,6 +118,27 @@ void Scene17::reset()
 	// create field (filled with A)
 	RDCell c;
 	field = std::vector<RDCell>(w*h, c);
+}
+
+void Scene17::handleModes()
+{
+	if (input()->getKeyDown( GLFW_KEY_A )) { mode = 0; }
+	if (input()->getKeyDown( GLFW_KEY_D )) { mode = 1; }
+
+	// "coral growth" simulation (f=.0545, k=.062)
+	if (mode == 0) {
+		dA = 1.0f; // diffusion rate A
+		dB = 0.5f; // diffusion rate B
+		feed = 0.0545; // feed rate
+		k = 0.062; // kill rate
+	}
+	// "mitosis" simulation (f=.0367, k=.0649)
+	if (mode == 1) {
+		dA = 1.0f; // diffusion rate A
+		dB = 0.5f; // diffusion rate B
+		feed = 0.0367; // feed rate
+		k = 0.0649; // kill rate
+	}
 }
 
 void Scene17::addDrop(int x_, int y_)

@@ -19,6 +19,7 @@ Scene16::Scene16() : SuperScene()
 	// create Canvas
 	int pixelsize = 8;
 	canvas = new Canvas(pixelsize);
+	canvas->sprite()->texture()->pixels()->filter = 3;
 	layers[0]->addChild(canvas);
 
 	// create blobs
