@@ -12,7 +12,7 @@ Scene17::Scene17() : SuperScene()
 {
 	srand((unsigned)time(NULL));
 
-	text[0]->message("Scene17: Reaction Diffusion. [CLICK] add Drop. [SPACE] reset.");
+	text[0]->message("Scene17: Reaction Diffusion [CLICK]=add Drop [SPACE]=reset [S]=save image");
 
 	dA = 1.0f; // diffusion rate A
 	dB = 0.5f; // diffusion rate B
@@ -62,6 +62,10 @@ void Scene17::update(float deltaTime)
 		int mousex = floor(input()->getMouseX())/pixelsize;
 		int mousey = floor(input()->getMouseY())/pixelsize;
 		this->addDrop(mousex, h-mousey);
+	}
+
+	if (input()->getKeyDown( GLFW_KEY_S )) {
+		canvas->sprite()->texture()->writeTGAImage();
 	}
 
 	// ###############################################################
@@ -124,9 +128,7 @@ void Scene17::addDrop(int x_, int y_)
 		for (int x = x_-dropsize; x < x_+dropsize; x++) {
 			int index = (y * w) + x;
 			if (index > 0 && index < maxindex) {
-				if (field[index].B < 0.5f && field[index].A < 1.0f) {
-					field[index].B = 0.99f;
-				}
+				field[index].B = 1.0f;
 			}
 		}
 	}

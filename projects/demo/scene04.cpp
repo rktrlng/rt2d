@@ -61,8 +61,7 @@ void Scene04::update(float deltaTime)
 		t.unpause();
 	}
 	if (input()->getKeyDown( GLFW_KEY_S )) {
-		PixelBuffer* buff = pixel_container->sprite()->texture()->pixels();
-		pixel_container->sprite()->texture()->writeTGAImage(buff);
+		pixel_container->sprite()->texture()->writeTGAImage();
 	}
 
 	if (t.seconds() > 1.0f) {

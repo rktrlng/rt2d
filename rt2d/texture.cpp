@@ -137,7 +137,7 @@ GLuint Texture::loadTGAImage(const std::string& filename, int filter, int wrap, 
 }
 
 // http://paulbourke.net/dataformats/tga/
-int Texture::writeTGAImage(PixelBuffer* pixels)
+int Texture::writeTGAImage()
 {
 	static int id = 0;
 	time_t t = time(NULL);
@@ -154,25 +154,25 @@ int Texture::writeTGAImage(PixelBuffer* pixels)
 	// The image header
 	unsigned char header[ 18 ] = { 0 };
 	header[ 2 ] = 2; // true color
-	header[ 12 ] = pixels->width & 0xFF;
-	header[ 13 ] = (pixels->width >> 8) & 0xFF;
-	header[ 14 ] = pixels->height & 0xFF;
-	header[ 15 ] = (pixels->height >> 8) & 0xFF;
-	header[ 16 ] = pixels->bitdepth * 8;
+	header[ 12 ] = _pixelbuffer->width & 0xFF;
+	header[ 13 ] = (_pixelbuffer->width >> 8) & 0xFF;
+	header[ 14 ] = _pixelbuffer->height & 0xFF;
+	header[ 15 ] = (_pixelbuffer->height >> 8) & 0xFF;
+	header[ 16 ] = _pixelbuffer->bitdepth * 8;
 
 	fwrite((const char*)&header, 1, sizeof(header), fp);
 
 	// The image data is stored bottom-to-top, left-to-right
 	unsigned int counter = 0;
-	for (int y = pixels->height-1; y >= 0; y--) {
-		for (int x = 0; x < pixels->width; x++) {
-			putc((int)(pixels->data[counter+2] & 0xFF), fp); // b
-			putc((int)(pixels->data[counter+1] & 0xFF), fp); // g
-			putc((int)(pixels->data[counter+0] & 0xFF), fp); // r
-			if (pixels->bitdepth == 4) {
-				putc((int)(pixels->data[counter+3] & 0xFF), fp);
+	for (int y = _pixelbuffer->height-1; y >= 0; y--) {
+		for (int x = 0; x < _pixelbuffer->width; x++) {
+			putc((int)(_pixelbuffer->data[counter+2] & 0xFF), fp); // b
+			putc((int)(_pixelbuffer->data[counter+1] & 0xFF), fp); // g
+			putc((int)(_pixelbuffer->data[counter+0] & 0xFF), fp); // r
+			if (_pixelbuffer->bitdepth == 4) {
+				putc((int)(_pixelbuffer->data[counter+3] & 0xFF), fp);
 			}
-			counter += pixels->bitdepth;
+			counter += _pixelbuffer->bitdepth;
 		}
 	}
 /*
