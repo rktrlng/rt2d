@@ -68,7 +68,7 @@ MyScene::~MyScene()
 	removeChild(torus); delete torus;
 	//removeChild(pyramid); delete pyramid;
 	lorenzcontainer->removeChild(lorenz); delete lorenz;
-	delete lorenzcontainer;
+	removeChild(lorenzcontainer); delete lorenzcontainer;
 }
 
 void MyScene::update(float deltaTime)

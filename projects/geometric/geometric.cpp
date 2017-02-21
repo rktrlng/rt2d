@@ -219,18 +219,18 @@ void GeoMetric::addCylinder(float radius, int height, int lats)
 
 void GeoMetric::addLorenz(int numlines)
 {
-	float lx = -0.01;
-	float ly = 0;
-	float lz = 0;
+	float lx = 0.01f;
+	float ly = 0.0f;
+	float lz = 0.0f;
 	float a = 10;
 	float b = 28;
-	float c = 8.0/3.0;
+	float c = 8.0f/3.0f;
 
 	//Line l; // one single line is cheaper, but single color.
 	RGBAColor color = RED;
 	for (int i = 0; i < numlines; i++) {
 		// update lorenz
-		float dt = 0.021f;
+		float dt = 0.02f;
 		float dx = (a * (ly - lx))*dt;
 		float dy = (lx * (b - lz) - ly)*dt;
 		float dz = (lx * ly - c * lz)*dt;
