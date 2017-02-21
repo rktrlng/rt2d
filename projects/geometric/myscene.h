@@ -19,7 +19,10 @@ private:
 	GeoMetric* cone;
 	GeoMetric* cylinder;
 	GeoMetric* torus;
-	GeoMetric* pyramid;
+	//GeoMetric* pyramid;
+	GeoMetric* lorenz;
+	// we need a container to offset the pivot point of lorenz.
+	GeoMetric* lorenzcontainer;
 
 	Timer t;
 	void fpsCam(float deltaTime);

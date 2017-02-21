@@ -18,13 +18,7 @@ GeoMetric::~GeoMetric()
 
 void GeoMetric::update(float deltaTime)
 {
-	// ###############################################################
-	// Rotate
-	// ###############################################################
-	this->rotation.y += HALF_PI * deltaTime / 2;
-	if (this->rotation.y > TWO_PI) {
-		this->rotation.y -= TWO_PI;
-	}
+
 }
 
 void GeoMetric::addCube(int halfwidth, int halfheight, int halfdepth)
@@ -221,4 +215,34 @@ void GeoMetric::addCylinder(float radius, int height, int lats)
 		bottom.addPoint(radius * sin(u*DEG_TO_RAD), -height, radius * cos(u*DEG_TO_RAD));
 	}
 	this->addLine(&bottom);
+}
+
+void GeoMetric::addLorenz(int numlines)
+{
+	float lx = -0.01;
+	float ly = 0;
+	float lz = 0;
+	float a = 10;
+	float b = 28;
+	float c = 8.0/3.0;
+
+	//Line l; // one single line is cheaper, but single color.
+	RGBAColor color = RED;
+	for (int i = 0; i < numlines; i++) {
+		// update lorenz
+		float dt = 0.021f;
+		float dx = (a * (ly - lx))*dt;
+		float dy = (lx * (b - lz) - ly)*dt;
+		float dz = (lx * ly - c * lz)*dt;
+		Line l; // individual colored segments
+		l.color = color;
+		l.addPoint(lx, ly, lz);
+		lx = lx + dx;
+		ly = ly + dy;
+		lz = lz + dz;
+		l.addPoint(lx, ly, lz);
+		this->addLine(&l); // comment if 1 line
+		color = Color::rotate(color, 0.005f);
+	}
+	//this->addLine(&l); // only with a single line
 }

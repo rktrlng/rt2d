@@ -26,6 +26,7 @@ public:
 	void addTorus(float radius1, float radius, int lats, int longs);
 	void addCone(float radius, int height, int lats);
 	void addCylinder(float radius, int height, int lats);
+	void addLorenz(int numlines);
 
 private:
 
