@@ -27,6 +27,7 @@
 #include "scene15.h"
 #include "scene16.h"
 #include "scene17.h"
+#include "scene18.h"
 
 int main( void )
 {
@@ -35,26 +36,27 @@ int main( void )
 
 	// Create all scenes on the heap and keep a list
 	std::vector<SuperScene*> scenes;
-	scenes.push_back(new Scene00());
-	scenes.push_back(new Scene01());
-	scenes.push_back(new Scene02());
-	scenes.push_back(new Scene03());
-	scenes.push_back(new Scene03a());
-	scenes.push_back(new Scene04());
-	scenes.push_back(new Scene05());
-	scenes.push_back(new Scene06());
-	scenes.push_back(new Scene06a());
-	scenes.push_back(new Scene07());
-	scenes.push_back(new Scene08());
-	scenes.push_back(new Scene09());
-	scenes.push_back(new Scene10());
-	scenes.push_back(new Scene11());
-	scenes.push_back(new Scene12());
-	scenes.push_back(new Scene13());
-	scenes.push_back(new Scene14());
-	scenes.push_back(new Scene15());
-	scenes.push_back(new Scene16());
-	scenes.push_back(new Scene17());
+	scenes.push_back(new Scene00()); // text Alice in wonderland
+	scenes.push_back(new Scene01()); // parent/child, spritesheet, blending etc
+	scenes.push_back(new Scene02()); // spritebatch
+	scenes.push_back(new Scene03()); // lines
+	scenes.push_back(new Scene03a()); // math lines
+	scenes.push_back(new Scene04()); // dynamic pixelbuffer
+	scenes.push_back(new Scene05()); // dynamic pixelbuffer from file
+	scenes.push_back(new Scene06()); // haxagons, ngons
+	scenes.push_back(new Scene06a()); // hex map
+	scenes.push_back(new Scene07()); // canvas pixel particles
+	scenes.push_back(new Scene08()); // mouse vs world
+	scenes.push_back(new Scene09()); // spritesheet grid
+	scenes.push_back(new Scene10()); // heightmap
+	scenes.push_back(new Scene11()); // canvas snake
+	scenes.push_back(new Scene12()); // canvas pixelsprite
+	scenes.push_back(new Scene13()); // canvas space invaders
+	scenes.push_back(new Scene14()); // canvas tetris
+	scenes.push_back(new Scene15()); // canvas game of life
+	scenes.push_back(new Scene16()); // canvas metaballs
+	scenes.push_back(new Scene17()); // canvas reaction diffusion
+	scenes.push_back(new Scene18()); // maze generation recursive backtracking
 	int s = scenes.size();
 
 	// SuperScene::Player in superscene.h
