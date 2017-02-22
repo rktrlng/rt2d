@@ -61,6 +61,7 @@ void Scene18::update(float deltaTime)
 		reset();
 	}
 
+	static bool backtracking = false;
 	if (t.seconds() > 0.005f)
 	{
 		// loop over grid and draw each sprite
@@ -83,7 +84,11 @@ void Scene18::update(float deltaTime)
 
 				// color current cell
 				if (cells[counter] == current) {
-					spritebatch[counter]->color = RED;
+					if (backtracking) {
+						spritebatch[counter]->color = RED;
+					} else {
+						spritebatch[counter]->color = BLUE;
+					}
 				}
 
 				counter++;
@@ -102,6 +107,7 @@ void Scene18::update(float deltaTime)
 		// STEP 1: while there is a neighbour...
 		MCell* next = this->getRandomUnvisitedNeighbour(current);
 		if (next != NULL) { // there's still an unvisited neighbour. We're not stuck
+			backtracking = false;
 			next->visited = true;
 
 			// STEP 2
@@ -113,6 +119,7 @@ void Scene18::update(float deltaTime)
 			// STEP 4
 			current = next;
 		} else { // we're stuck! backtrack our steps...
+			backtracking = true;
 			if (stack.size() > 0) {
 				current = stack.back(); // make previous our current cell
 				stack.pop_back(); // remove from the stack (eat the breadcrumb)
