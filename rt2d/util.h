@@ -49,6 +49,15 @@ uint16_t makeWord(unsigned char high, unsigned char low);
  */
 double map(double x, double in_min, double in_max, double out_min, double out_max);
 
+/**
+ * @brief constrains a value between a range
+ * @param value The value we need to constrain
+ * @param min  The low range of the input value
+ * @param max  The upper range of the input value
+ * @return double value
+ */
+double constrain(double value, double min, double max);
+
 #ifdef __cplusplus
 }
 #endif

@@ -27,3 +27,10 @@ double map(double x, double in_min, double in_max, double out_min, double out_ma
 {
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
+
+double constrain(double value, double min, double max)
+{
+	if (value < min) { value = min; }
+	if (value > max) { value = max; }
+	return value;
+}
