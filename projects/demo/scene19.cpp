@@ -120,15 +120,16 @@ void Scene19::updateDrawTree()
 				touching.push_back(p);
 			}
 		}
+
 		if (touching.size() > 0) {
-			for (int i = touching.size()-1; i >= 0; i--) {
+			for (int t = touching.size()-1; t >= 0; t--) {
 				// add particle to tree
-				tree.push_back(particles[touching[i]]);
-				particles.erase(particles.begin()+touching[i]);
+				tree.push_back(particles[touching[t]]);
+				particles.erase(particles.begin()+touching[t]);
 				//std::cout << "particles: " << particles.size() << " tree: " << tree.size() << std::endl;
 			}
+			touching.clear();
 		}
-		touching.clear();
 
 		// color pixels in framebuffer
 		canvas->setPixel(tree[i].position.x, tree[i].position.y, tree[i].color);
