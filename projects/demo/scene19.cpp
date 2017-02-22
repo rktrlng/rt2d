@@ -100,35 +100,30 @@ void Scene19::update(float deltaTime)
 void Scene19::updateDrawTree()
 {
 	// check for particles touching the tree
-	std::vector<int> touching;
-	for (unsigned int i = 0; i < tree.size(); i++) {
-		for (unsigned int p = 0; p < particles.size(); p++) {
+	unsigned int s = tree.size();
+	for (unsigned int i = 0; i < s; i++) {
+		std::deque<Element>::iterator it = particles.begin();
+		while (it != particles.end()) {
 			// look around for particles
-			Point2 ul = Point2(particles[p].position.x-1, particles[p].position.y-1);
-			Point2 dl = Point2(particles[p].position.x-1, particles[p].position.y+1);
-			Point2 ur = Point2(particles[p].position.x+1, particles[p].position.y-1);
-			Point2 dr = Point2(particles[p].position.x+1, particles[p].position.y+1);
+			Point2 ul = Point2((*it).position.x-1, (*it).position.y-1);
+			Point2 dl = Point2((*it).position.x-1, (*it).position.y+1);
+			Point2 ur = Point2((*it).position.x+1, (*it).position.y-1);
+			Point2 dr = Point2((*it).position.x+1, (*it).position.y+1);
 
-			Point2 up = Point2(particles[p].position.x, particles[p].position.y-1);
-			Point2 down = Point2(particles[p].position.x, particles[p].position.y+1);
-			Point2 left = Point2(particles[p].position.x-1, particles[p].position.y);
-			Point2 right = Point2(particles[p].position.x+1, particles[p].position.y);
+			Point2 up = Point2((*it).position.x, (*it).position.y-1);
+			Point2 down = Point2((*it).position.x, (*it).position.y+1);
+			Point2 left = Point2((*it).position.x-1, (*it).position.y);
+			Point2 right = Point2((*it).position.x+1, (*it).position.y);
 
 			Point2 pos = tree[i].position;
 			if (pos == up || pos == down || pos == left || pos == right ||
-				pos == ul || pos == ur || pos == dr || pos == dl) {
-				touching.push_back(p);
+				pos == ul || pos == ur || pos == dr || pos == dl)
+			{
+				tree.push_back((*it));
+				it = particles.erase(it);
+			} else {
+				++it;
 			}
-		}
-
-		if (touching.size() > 0) {
-			for (int t = touching.size()-1; t >= 0; t--) {
-				// add particle to tree
-				tree.push_back(particles[touching[t]]);
-				particles.erase(particles.begin()+touching[t]);
-				//std::cout << "particles: " << particles.size() << " tree: " << tree.size() << std::endl;
-			}
-			touching.clear();
 		}
 
 		// color pixels in framebuffer
