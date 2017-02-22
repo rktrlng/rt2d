@@ -23,7 +23,7 @@ uint16_t makeWord(unsigned char high, unsigned char low)
 }
 
 // map(973, 0, 1023, 0, 255); // returns: 242
-long map(long x, long in_min, long in_max, long out_min, long out_max)
+double map(double x, double in_min, double in_max, double out_min, double out_max)
 {
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
