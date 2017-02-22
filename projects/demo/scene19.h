@@ -33,7 +33,6 @@ private:
 	std::deque<Element> particles;
 	std::deque<Element> tree;
 	Timer timer;
-	Timer colortimer;
 
 	int w;
 	int h;

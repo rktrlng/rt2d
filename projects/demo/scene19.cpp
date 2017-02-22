@@ -18,7 +18,6 @@ Scene19::Scene19() : SuperScene()
 	//text[7]->message("FPS: ---");
 
 	timer.start();
-	colortimer.start();
 
 	// create Canvas
 	canvas = new Canvas(8); // pixelsize
@@ -45,7 +44,6 @@ Scene19::~Scene19()
 void Scene19::clear()
 {
 	timer.start();
-	colortimer.start();
 
 	canvas->fill(canvas->backgroundcolor);
 	particles.clear();
@@ -57,7 +55,7 @@ void Scene19::setup()
 	this->clear();
 
 	// generate a number of particles with a random position
-	unsigned int maxparticles = 1500;
+	unsigned int maxparticles = 800;
 	for (unsigned int i = 0; i < maxparticles; i++) {
 		Element p;
 		p.position = Point2(rand()%w, rand()%h);
@@ -102,8 +100,8 @@ void Scene19::update(float deltaTime)
 void Scene19::updateDrawTree()
 {
 	// check for particles touching the tree
+	std::vector<int> touching;
 	for (unsigned int i = 0; i < tree.size(); i++) {
-		std::vector<int> touching;
 		for (unsigned int p = 0; p < particles.size(); p++) {
 			// look around for particles
 			Point2 ul = Point2(particles[p].position.x-1, particles[p].position.y-1);
@@ -144,16 +142,13 @@ void Scene19::updateDrawParticles()
 
 	if (s > 0) {
 		// decide on color
-		static float colorcounter = 0;
-		float step = 0.01f;
 		RGBAColor c = particles[0].color;
-		if (colortimer.seconds() > 0.5f) {
-			colorcounter += step;
-			if (colorcounter < 0.65f) { // clamp to blue
-				c = Color::rotate(particles[0].color, step);
-			}
-			colortimer.start();
+		static long int n = 0;
+		if (n%4 == 0) {
+			c = Color::rotate(particles[0].color, 0.001f);
 		}
+		n++;
+
 		// update and draw each particle
 		for (unsigned int i = 0; i < s; i++) {
 			// clear the background
