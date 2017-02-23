@@ -271,7 +271,7 @@ public:
 	 * @return
 	 * boolean. true if this VectorX_t is shorter than other
 	 */
-	const bool operator<(VectorX_t<T> other) const;
+	bool operator<(VectorX_t<T> other);
 	/**
 	 * @brief Overloads the > operator
 	 *
@@ -281,7 +281,7 @@ public:
 	 * @return
 	 * boolean. true if this VectorX_t is longer than other
 	 */
-	const bool operator>(VectorX_t<T> other) const;
+	bool operator>(VectorX_t<T> other);
 	/**
 	 * @brief Overloads the <= operator
 	 *
@@ -291,7 +291,7 @@ public:
 	 * @return
 	 * boolean. true if this VectorX_t is shorter or equal to other.
 	 */
-	const bool operator<=(VectorX_t<T> other) const;
+	bool operator<=(VectorX_t<T> other);
 	/**
 	 * @brief Overloads the >= operator
 	 *
@@ -301,7 +301,7 @@ public:
 	 * @return
 	 * boolean. true if this VectorX_t is longer or equal to other.
 	 */
-	const bool operator>=(VectorX_t<T> other) const;
+	bool operator>=(VectorX_t<T> other);
 };
 
 // =================================================
@@ -595,25 +595,25 @@ void VectorX_t<T>::limit(T amount)
 
 // operator <, >, <=, >= overloader
 template <class T>
-const bool VectorX_t<T>::operator<(VectorX_t<T> other) const
+bool VectorX_t<T>::operator<(VectorX_t<T> other)
 {
 	return (this->getLengthSquared() < other.getLengthSquared());
 }
 
 template <class T>
-const bool VectorX_t<T>::operator>(VectorX_t<T> other) const
+bool VectorX_t<T>::operator>(VectorX_t<T> other)
 {
 	return (this->getLengthSquared() > other.getLengthSquared());
 }
 
 template <class T>
-const bool VectorX_t<T>::operator<=(VectorX_t<T> other) const
+bool VectorX_t<T>::operator<=(VectorX_t<T> other)
 {
 	return (this->getLengthSquared() <= other.getLengthSquared());
 }
 
 template <class T>
-const bool VectorX_t<T>::operator>=(VectorX_t<T> other) const
+bool VectorX_t<T>::operator>=(VectorX_t<T> other)
 {
 	return (this->getLengthSquared() >= other.getLengthSquared());
 }
