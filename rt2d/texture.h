@@ -99,9 +99,15 @@ struct PixelBuffer
 		int start = ((y*this->width) + x) * this->bitdepth;
 		if (start > this->width * this->height * this->bitdepth || start < 0) { return; }
 
-		this->data[start+0] = color.r;
-		this->data[start+1] = color.g;
-		this->data[start+2] = color.b;
+		if (this->bitdepth == 1) {
+			int value = (color.r + color.g + color.b) / 3;
+			this->data[start+0] = value;
+		}
+		if (this->bitdepth == 3 || this->bitdepth == 4) {
+			this->data[start+0] = color.r;
+			this->data[start+1] = color.g;
+			this->data[start+2] = color.b;
+		}
 		if (this->bitdepth == 4) {
 			this->data[start+3] = color.a;
 		}
@@ -117,9 +123,16 @@ struct PixelBuffer
 		int start = ((y*this->width) + x) * this->bitdepth;
 		if (start > this->width * this->height * this->bitdepth || start < 0) { return color; }
 
-		color.r = this->data[start+0];
-		color.g = this->data[start+1];
-		color.b = this->data[start+2];
+		if (this->bitdepth == 1) {
+			color.r = this->data[start+0];
+			color.g = this->data[start+0];
+			color.b = this->data[start+0];
+		}
+		if (this->bitdepth == 3 || this->bitdepth == 4) {
+			color.r = this->data[start+0];
+			color.g = this->data[start+1];
+			color.b = this->data[start+2];
+		}
 		if (this->bitdepth == 4) {
 			color.a = this->data[start+3];
 		}
