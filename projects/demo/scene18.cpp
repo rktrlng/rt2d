@@ -25,7 +25,8 @@ Scene18::Scene18() : SuperScene()
 
 	// create grid
 	grid = new BasicEntity();
-	grid->addGrid("assets/mazewalls.tga", 4, 4, gridwidth, gridheight, cellwidth, cellheight);
+	//grid->addGrid("assets/mazewalls.tga", 4, 4, gridwidth, gridheight, cellwidth, cellheight);
+	grid->addGrid("assets/mazeroads.tga", 4, 4, gridwidth, gridheight, cellwidth, cellheight);
 	// center on screen
 	Point2 pos = Point2(SWIDTH/2-(gridwidth*cellwidth)/2, SHEIGHT/2-(gridheight*cellheight)/2);
 	grid->position = pos;
@@ -94,6 +95,8 @@ void Scene18::update(float deltaTime)
 				counter++;
 			}
 		}
+
+		spritebatch[0]->color = WHITE; // first cell
 
 		// no more unvisited cells. We're done.
 		if (unvisitedcounter == 0) {
