@@ -9,7 +9,6 @@
 #define SCENE17_H
 
 #include <vector>
-#include <rt2d/vectorx.h>
 #include "superscene.h"
 #include "canvas.h"
 

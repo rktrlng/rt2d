@@ -58,8 +58,8 @@ void Scene17::update(float deltaTime)
 	}
 
 	if (input()->getMouseDown( 0 )) {
-		int mousex = floor(input()->getMouseX())/pixelsize;
-		int mousey = floor(input()->getMouseY())/pixelsize;
+		int mousex = floor(input()->getMouseX()/pixelsize);
+		int mousey = floor(input()->getMouseY()/pixelsize);
 		this->addDrop(mousex, h-mousey);
 	}
 
