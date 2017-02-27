@@ -62,4 +62,9 @@ void MyScene::update(float deltaTime)
 	}
 	if (myentity->activeshader >= (int) myentity->fragshaders.size()) { myentity->activeshader = 0; }
 	if (myentity->activeshader < 0) { myentity->activeshader = myentity->fragshaders.size()-1; }
+
+	// screen resolution fix
+	int w = input()->getWindowWidth();
+	int h = input()->getWindowHeight();
+	myentity->sprite()->customParams[0] = Point3(w, h, 1.0f);
 }
