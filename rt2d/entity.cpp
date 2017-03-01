@@ -158,7 +158,7 @@ void Entity::addGrid(const std::string& filename, int u, int v, int cols, int ro
 			s->spriteposition.y = y * sizey;
 			float uvwidth = 1.0f / u;
 			float uvheight = 1.0f / v;
-			s->setupSprite(filename, 0.5f, 0.5f, uvwidth, uvheight, DEFAULTFILTER, DEFAULTWRAP); // trilinear filter, mirror repeat
+			s->setupSprite(filename, 0.5f, 0.5f, uvwidth, uvheight, 3, 0); // trilinear filter, repeat
 			_spritebatch.push_back(s);
 		}
 	}
