@@ -1,4 +1,4 @@
-int counter = -32768;
+int counter = -32768; // 16 bit signed int (to 32767)
 
 void setup()
 {
