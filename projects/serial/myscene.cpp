@@ -57,7 +57,7 @@ void MyScene::update(float deltaTime)
 	if (input()->getKeyDown( GLFW_KEY_A )) { cmd = 'a'; }
 	if (input()->getKeyDown( GLFW_KEY_B )) { cmd = 'b'; }
 
-	if (t.seconds() > 0.01f) {
+	if (t.seconds() > 0.016f) {
 		std::vector<int> tokens = transceive(cmd);
 
 		// we now have a clean list of ints that we received
