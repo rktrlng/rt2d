@@ -8,11 +8,12 @@ OPTION(MAKE_START "Make RT2D start application" ON)
 OPTION(MAKE_DEMO "Make RT2D demo (tests) application" ON)
 OPTION(MAKE_FLOCKING "Make flocking application" OFF)
 OPTION(MAKE_BASIC3D "Make basic3D application" OFF)
-OPTION(MAKE_NOISE "Make Perlin Noise application" ON)
-OPTION(MAKE_GEOMETRIC "Make GeoMetric application" ON)
-OPTION(MAKE_SHADY "Make custom Shader application" ON)
+OPTION(MAKE_NOISE "Make Perlin Noise application" OFF)
+OPTION(MAKE_GEOMETRIC "Make GeoMetric application" OFF)
+OPTION(MAKE_SHADY "Make custom Shader application" OFF)
 
-OPTION(USE_RS232 "Use RS232 library" OFF)
+OPTION(USE_RS232 "Use RS232 library" ON)
+OPTION(MAKE_SERIAL "Make serial application" ON)
 
 OPTION(USE_OPENAL "Use OpenAL library" OFF)
 OPTION(MAKE_AUDIOSTART "Make OpenAL/RT2D audiostart" OFF)
@@ -347,6 +348,21 @@ IF(USE_RS232)
 	add_library( rs232 STATIC
 		external/rs232/rs232.c
 		external/rs232/rs232.h
+	)
+ENDIF()
+
+####################################################################
+# serial                                                           #
+####################################################################
+IF(MAKE_SERIAL AND USE_RS232)
+	add_executable(serial
+		projects/serial/main.cpp
+		projects/serial/myscene.cpp
+		projects/serial/myscene.h
+	)
+	target_link_libraries(serial
+		${ALL_GRAPHICS_LIBS}
+		rs232
 	)
 ENDIF()
 
