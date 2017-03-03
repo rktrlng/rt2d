@@ -45,7 +45,7 @@ int main( void )
 	scenes.push_back(new Scene03a()); // math lines
 	scenes.push_back(new Scene04()); // dynamic pixelbuffer
 	scenes.push_back(new Scene05()); // dynamic pixelbuffer from file
-	scenes.push_back(new Scene06()); // haxagons, ngons
+	scenes.push_back(new Scene06()); // hexagons, ngons
 	scenes.push_back(new Scene06a()); // hex map
 	scenes.push_back(new Scene07()); // canvas pixel particles
 	scenes.push_back(new Scene08()); // mouse vs world

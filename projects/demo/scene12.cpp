@@ -97,7 +97,7 @@ void Scene12::update(float deltaTime)
 		static float d = 0.0f;
 		static PixelSprite spr = sprite;
 		canvas->clearSprite(spr);
-		spr = sprite.rotation(d);
+		spr = sprite.rotated(d);
 		spr.position = Pointi((canvas->width() / 4)*3, canvas->height() / 2);
 		d += HALF_PI / 16;
 		if (d > TWO_PI) { d -= TWO_PI; }

@@ -10,8 +10,8 @@
 
 #include <vector>
 #include <rt2d/timer.h>
+#include <rt2d/canvas.h>
 #include "superscene.h"
-#include "canvas.h"
 
 const Point_t<int> UP = Point_t<int>(0,1);
 const Point_t<int> DOWN = Point_t<int>(0,-1);

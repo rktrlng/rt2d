@@ -10,8 +10,8 @@
 
 #include <deque>
 #include <rt2d/timer.h>
+#include <rt2d/canvas.h>
 #include "superscene.h"
-#include "canvas.h"
 
 struct Particle {
 	Point2 position;

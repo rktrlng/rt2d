@@ -11,8 +11,8 @@
 #include <vector>
 #include <rt2d/timer.h>
 #include <rt2d/vectorx.h>
+#include <rt2d/canvas.h>
 #include "superscene.h"
-#include "canvas.h"
 
 
 class Scene15: public SuperScene

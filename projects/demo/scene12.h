@@ -10,9 +10,9 @@
 
 #include <vector>
 #include <rt2d/timer.h>
+#include <rt2d/canvas.h>
 #include <rt2d/vectorx.h>
 #include "superscene.h"
-#include "canvas.h"
 
 
 class Scene12: public SuperScene

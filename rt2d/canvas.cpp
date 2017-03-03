@@ -1,9 +1,9 @@
 /**
- * This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
- *
- * - Copyright 2017 Rik Teerling <rik@onandoffables.com>
- *     - Initial commit
- */
+  * This file is part of RT2D, a 2D OpenGL framework.
+  *
+  * - Copyright 2017 Rik Teerling <rik@onandoffables.com>
+  *   - Initial commit
+  */
 
 #include "canvas.h"
 

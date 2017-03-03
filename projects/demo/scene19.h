@@ -9,10 +9,10 @@
 #define SCENE19_H
 
 #include <deque>
+#include <rt2d/canvas.h>
 #include <rt2d/timer.h>
 #include <rt2d/util.h>
 #include "superscene.h"
-#include "canvas.h"
 
 struct Element {
 	Point2 position;

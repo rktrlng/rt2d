@@ -6,11 +6,11 @@ project (rt2d)
 ####################################################################
 OPTION(MAKE_START "Make RT2D start application" ON)
 OPTION(MAKE_DEMO "Make RT2D demo (tests) application" ON)
-OPTION(MAKE_FLOCKING "Make flocking application" OFF)
-OPTION(MAKE_BASIC3D "Make basic3D application" OFF)
-OPTION(MAKE_NOISE "Make Perlin Noise application" OFF)
-OPTION(MAKE_GEOMETRIC "Make GeoMetric application" OFF)
-OPTION(MAKE_SHADY "Make custom Shader application" OFF)
+OPTION(MAKE_FLOCKING "Make flocking application" ON)
+OPTION(MAKE_BASIC3D "Make basic3D application" ON)
+OPTION(MAKE_NOISE "Make Perlin Noise application" ON)
+OPTION(MAKE_GEOMETRIC "Make GeoMetric application" ON)
+OPTION(MAKE_SHADY "Make custom Shader application" ON)
 
 OPTION(USE_RS232 "Use RS232 library" ON)
 OPTION(MAKE_SERIAL "Make serial application" ON)
@@ -103,6 +103,8 @@ add_definitions(
 add_library(rt2d
 	rt2d/camera.cpp
 	rt2d/camera.h
+	rt2d/canvas.cpp
+	rt2d/canvas.h
 	rt2d/color.h
 	rt2d/core.cpp
 	rt2d/core.h
@@ -176,8 +178,6 @@ IF(MAKE_DEMO)
 		projects/demo/main.cpp
 		projects/demo/basicentity.cpp
 		projects/demo/basicentity.h
-		projects/demo/canvas.cpp
-		projects/demo/canvas.h
 		projects/demo/scene00.cpp
 		projects/demo/scene00.h
 		projects/demo/scene01.cpp

@@ -11,8 +11,8 @@
 #include <deque>
 #include <rt2d/timer.h>
 #include <rt2d/util.h>
+#include <rt2d/canvas.h>
 #include "superscene.h"
-#include "canvas.h"
 
 class Scene20: public SuperScene
 {

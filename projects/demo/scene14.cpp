@@ -91,7 +91,7 @@ void Scene14::update(float deltaTime)
 	if (input()->getKeyDown( GLFW_KEY_UP )) {
 		rot--; if (rot<0) {rot=3;}
 		if (active_block != 3) { // 3 is the 2x2 shape. don't rotate this one.
-			PixelSprite spr = pixelsprites[active_block].rotation(rot * HALF_PI);
+			PixelSprite spr = pixelsprites[active_block].rotated(rot * HALF_PI);
 			spr.position = block.position;
 			block = spr;
 		}

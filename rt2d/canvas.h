@@ -1,8 +1,12 @@
 /**
- * This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
+ * @file canvas.h
+ *
+ * @brief The Canvas header file.
+ *
+ * This file is part of RT2D, a 2D OpenGL framework.
  *
  * - Copyright 2017 Rik Teerling <rik@onandoffables.com>
- *     - Initial commit
+ *   - Initial commit
  */
 
 #ifndef CANVAS_H
@@ -50,7 +54,7 @@ struct PixelSprite {
 		}
 	};
 
-	PixelSprite rotation(float a) {
+	PixelSprite rotated(float a) {
 		PixelSprite copy;
 		copy.position = this->position;
 		size_t s = pixels.size();

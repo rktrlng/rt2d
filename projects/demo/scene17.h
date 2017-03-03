@@ -9,8 +9,8 @@
 #define SCENE17_H
 
 #include <vector>
+#include <rt2d/canvas.h>
 #include "superscene.h"
-#include "canvas.h"
 
 struct RDCell {
 	float A = 1.0f;
