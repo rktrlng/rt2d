@@ -1,5 +1,4 @@
-int counter = 0;
-int subcounter = 0;
+int counter = -32768;
 
 void setup()
 {
@@ -31,19 +30,13 @@ void loop()
       str += adc0;
       str += " ";
       str += counter;
-      str += " ";
-      str += subcounter;
-
-      counter++;
-      if(counter > 255) {
-        counter = 0;
-        subcounter++;
-      }
-      if(subcounter > 255) {
-        subcounter = 0;
-      }
     }
 
     Serial.println(str);
+
+    counter++;
+    if(counter == 32767) {
+      counter = -32768;
+    }
   }
 }

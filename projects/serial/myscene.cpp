@@ -66,9 +66,11 @@ void MyScene::update(float deltaTime)
 			msg << "snd: '" << cmd << "' rcv: ";
 			for (size_t i = 0; i < tokens.size(); i++) {
 				if (i != 0) {
-					msg << ",";
+					msg << tokens[i];
+					if (i != tokens.size()-1) {
+						msg << ",";
+					}
 				}
-				msg << tokens[i];
 			}
 			msg << " (" << tokens[0] << " bytes)";
 			text->message(msg.str());
