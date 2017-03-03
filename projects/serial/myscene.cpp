@@ -18,13 +18,13 @@ MyScene::MyScene() : Scene()
 	text->scale = Point2(0.5f,0.5f);
 	this->addChild(text);
 
-    char mode[]={'8','N','1',0};
+	char mode[]={'8','N','1',0};
 
 	CPORT_NR = 16; // /dev/ttyUSB0
 	BDRATE = 115200;
 
 	connected = 0;
-    if(RS232_OpenComport(CPORT_NR, BDRATE, mode)) {
+	if(RS232_OpenComport(CPORT_NR, BDRATE, mode)) {
 		text->message("Serial port not open");
 	} else {
 		text->message("Serial port open and connected");
