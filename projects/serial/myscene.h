@@ -17,7 +17,7 @@ private:
 	Timer t;
 	Text* text;
 
-	std::vector<int> tranceive(unsigned char c);
+	std::vector<int> transceive(unsigned char c);
 	int connected;
 	int CPORT_NR;
 	int BDRATE;

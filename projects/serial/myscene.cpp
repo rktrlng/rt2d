@@ -58,7 +58,7 @@ void MyScene::update(float deltaTime)
 	if (input()->getKeyDown( GLFW_KEY_B )) { cmd = 'b'; }
 
 	if (t.seconds() > 0.01f) {
-		std::vector<int> tokens = tranceive(cmd);
+		std::vector<int> tokens = transceive(cmd);
 
 		// we now have a clean list of ints that we received
 		if (connected && tokens.size() > 1) {
@@ -79,7 +79,7 @@ void MyScene::update(float deltaTime)
 
 }
 
-std::vector<int> MyScene::tranceive(unsigned char cmd)
+std::vector<int> MyScene::transceive(unsigned char cmd)
 {
 	// protocol:
 	// tokens[0] = number of bytes received
