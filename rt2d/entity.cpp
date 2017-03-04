@@ -31,7 +31,7 @@ Entity::Entity()
 	_sprite = NULL;
 	_line = NULL;
 
-	_input = Singleton<Input>::Instance();
+	_input = Singleton<Input>::instance();
 }
 
 Entity::~Entity()

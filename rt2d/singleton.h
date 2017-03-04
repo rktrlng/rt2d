@@ -19,9 +19,9 @@ template<class T>
 class Singleton {
 public:
     /// @brief a pointer to the instance
-    static T* Instance();
+    static T* instance();
     /// @brief destroy the instance
-    static void Destroy();
+    static void destroy();
 
 protected:
 	/// @brief constructor
@@ -31,58 +31,44 @@ protected:
     }
     /// @brief destructor
     ~Singleton() {
-        Singleton::_instance = 0;
+        Singleton::destroy();
     }
 
 private:
-	/// @brief create an instance (only once)
-    static T* CreateInstance();
     /// @brief schedule for destruction
-    static void ScheduleForDestruction(void (*)());
-    /// @brief destroy the instance
-    static void DestroyInstance(T*);
+    static void scheduleForDestruction(void (*)());
 
 	/// @brief the instance itself
     static T* _instance;
 
-	/// @brief constructor overloader
+	/// @brief overloaded copy constructor
     Singleton(Singleton const&) {}
-    /// @brief operator= overloader
+    /// @brief overloaded operator=
     Singleton& operator=(Singleton const&) { return *this; }
 };
 
 // ========================== implementation ==========================
 
 template<class T>
-T* Singleton<T>::Instance() {
+T* Singleton<T>::instance() {
     if ( Singleton::_instance == 0 ) {
-        Singleton::_instance = CreateInstance();
-        ScheduleForDestruction(Singleton::Destroy);
+        Singleton::_instance = new T();
+        scheduleForDestruction(Singleton::destroy);
     }
     return Singleton::_instance;
 }
 
 template<class T>
-void Singleton<T>::Destroy() {
+void Singleton<T>::destroy() {
     if ( Singleton::_instance != 0 ) {
-        DestroyInstance(Singleton::_instance);
+		delete Singleton::_instance;
         Singleton::_instance = 0;
     }
 }
 
 template<class T>
-inline T* Singleton<T>::CreateInstance() {
-    return new T();
-}
-
-template<class T>
-inline void Singleton<T>::ScheduleForDestruction(void (*pFun)()) {
+inline void Singleton<T>::scheduleForDestruction(void (*pFun)()) {
     std::atexit(pFun);
-}
-
-template<class T>
-inline void Singleton<T>::DestroyInstance(T* p) {
-    delete p;
 }
 
 template<class T>
