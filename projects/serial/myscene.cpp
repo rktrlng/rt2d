@@ -13,6 +13,11 @@ MyScene::MyScene() : Scene()
 {
 	t.start();
 
+	canvas = new Canvas(4); // pixelsize
+	this->addChild(canvas);
+
+	history = std::deque<int>(canvas->width(),0);
+
 	text = new Text();
 	text->position = Point2(50,50);
 	text->scale = Point2(0.5f,0.5f);
@@ -37,6 +42,9 @@ MyScene::~MyScene()
 {
 	RS232_CloseComport(CPORT_NR);
 
+	this->removeChild(canvas);
+	delete canvas;
+
 	this->removeChild(text);
 	delete text;
 }
@@ -58,6 +66,7 @@ void MyScene::update(float deltaTime)
 	if (input()->getKeyDown( GLFW_KEY_B )) { cmd = 'b'; }
 
 	if (t.seconds() > 0.016f) {
+		this->clearHistory();
 		std::vector<int> tokens = transceive(cmd);
 
 		// we now have a clean list of ints that we received
@@ -74,11 +83,36 @@ void MyScene::update(float deltaTime)
 			}
 			msg << " (" << tokens[0] << " bytes)";
 			text->message(msg.str());
+
+			history.pop_front();
+			history.push_back(tokens[2]);
 		}
+
+		this->drawHistory();
 
 		t.start();
 	} // end if t.seconds()
 
+}
+
+void MyScene::drawHistory()
+{
+	int s = history.size();
+	for (int x = 0; x < s; x++) {
+		int y = history[x];
+		y = map(y, 0, 1024, 0, canvas->height());
+		canvas->setPixel(x, y, RED);
+	}
+}
+
+void MyScene::clearHistory()
+{
+	int s = history.size();
+	for (int x = 0; x < s; x++) {
+		int y = history[x];
+		y = map(y, 0, 1024, 0, canvas->height());
+		canvas->clearPixel(x, y);
+	}
 }
 
 std::vector<int> MyScene::transceive(unsigned char cmd)
