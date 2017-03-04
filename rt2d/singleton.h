@@ -18,57 +18,57 @@
 template<class T>
 class Singleton {
 public:
-    /// @brief a pointer to the instance
-    static T* instance();
-    /// @brief destroy the instance
-    static void destroy();
+	/// @brief a pointer to the instance
+	static T* instance();
+	/// @brief destroy the instance
+	static void destroy();
 
 protected:
 	/// @brief constructor
-    Singleton() {
-        assert(Singleton::_instance == 0);
-        Singleton::_instance = static_cast<T*>(this);
-    }
-    /// @brief destructor
-    ~Singleton() {
-        Singleton::destroy();
-    }
+	Singleton() {
+		assert(Singleton::_instance == 0);
+		Singleton::_instance = static_cast<T*>(this);
+	}
+	/// @brief destructor
+	~Singleton() {
+		Singleton::destroy();
+	}
 
 private:
-    /// @brief schedule for destruction
-    static void scheduleForDestruction(void (*)());
+	/// @brief schedule for destruction
+	static void scheduleForDestruction(void (*)());
 
 	/// @brief the instance itself
-    static T* _instance;
+	static T* _instance;
 
 	/// @brief overloaded copy constructor
-    Singleton(Singleton const&) {}
-    /// @brief overloaded operator=
-    Singleton& operator=(Singleton const&) { return *this; }
+	Singleton(Singleton const&) {}
+	/// @brief overloaded operator=
+	Singleton& operator=(Singleton const&) { return *this; }
 };
 
 // ========================== implementation ==========================
 
 template<class T>
 T* Singleton<T>::instance() {
-    if ( Singleton::_instance == 0 ) {
-        Singleton::_instance = new T();
-        scheduleForDestruction(Singleton::destroy);
-    }
-    return Singleton::_instance;
+	if ( Singleton::_instance == 0 ) {
+		Singleton::_instance = new T();
+		scheduleForDestruction(Singleton::destroy);
+	}
+	return Singleton::_instance;
 }
 
 template<class T>
 void Singleton<T>::destroy() {
-    if ( Singleton::_instance != 0 ) {
+	if ( Singleton::_instance != 0 ) {
 		delete Singleton::_instance;
-        Singleton::_instance = 0;
-    }
+		Singleton::_instance = 0;
+	}
 }
 
 template<class T>
 inline void Singleton<T>::scheduleForDestruction(void (*pFun)()) {
-    std::atexit(pFun);
+	std::atexit(pFun);
 }
 
 template<class T>
