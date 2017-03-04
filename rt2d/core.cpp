@@ -22,8 +22,8 @@ void Core::run(Scene* scene)
 	// update our _deltaTime
 	_calculateDeltaTime();
 
-	// Update input instance in Scene
-	scene->input()->updateInput(_renderer.window());
+	// Update Input singleton instance
+	Singleton<Input>::instance()->updateInput(_renderer.window());
 
 	// Update camera instance in Scene
 	scene->camera()->updateCamera((float)_deltaTime);
