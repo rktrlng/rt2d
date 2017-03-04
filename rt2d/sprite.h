@@ -109,6 +109,9 @@ public:
 	/// @return void
 	void setupSpriteTGAPixelBuffer(const std::string& filename, int filter, int wrap);
 
+	/// @brief set the palette sampler1D
+	/// @param filename path to the image.tga
+	/// @return void
 	void setPalette(const std::string& filename);
 	/// @brief get the palette sampler1D
 	/// @return Texture* _palette

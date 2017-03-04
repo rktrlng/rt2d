@@ -172,6 +172,7 @@ public:
 	/// @param filename the path to the image
 	/// @param filter the filter
 	/// @param wrap the wrap
+	/// @param dim if this is a 1D palette or a 2D texture (default)
 	/// @return GLuint _texture, 0 if failed
 	GLuint loadTGAImage(const std::string& filename, int filter, int wrap, int dim = 2);
 	/// @brief write _pixelbuffer as image to file (tga only)
@@ -184,6 +185,7 @@ public:
 	GLuint createWhitePixels(int width, int height);
 	/// @brief create a Texture from a PixelBuffer
 	/// @param pixels a PixelBuffer pointer
+	/// @param dim if this is a 1D palette or a 2D texture (default)
 	/// @return GLuint _texture, 0 if failed
 	void createFromBuffer(PixelBuffer* pixels, int dim = 2);
 

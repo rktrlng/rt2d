@@ -15,7 +15,7 @@
 #include <rt2d/entity.h>
 #include <rt2d/camera.h>
 
-/// @brief The Scene class is the Base class for your own Scenes. It has a Camera, Input and basic on/off state machine.
+/// @brief The Scene class is the Base class for your own Scenes. It has a Camera and basic on/off state machine.
 class Scene: public Entity
 {
 public:
