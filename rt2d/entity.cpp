@@ -30,6 +30,8 @@ Entity::Entity()
 
 	_sprite = NULL;
 	_line = NULL;
+
+	_input = Singleton<Input>::Instance();
 }
 
 Entity::~Entity()

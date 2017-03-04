@@ -13,7 +13,6 @@
 #define SCENE_H
 
 #include <rt2d/entity.h>
-#include <rt2d/input.h>
 #include <rt2d/camera.h>
 
 /// @brief The Scene class is the Base class for your own Scenes. It has a Camera, Input and basic on/off state machine.
@@ -36,9 +35,6 @@ public:
 	/// @brief get a pointer to the Camera
 	/// @return Texture* a pointer to the Camera
 	Camera* camera() { return _camera; };
-	/// @brief get a pointer to the Input
-	/// @return Input* a pointer to the Input
-	Input* input() { return _input; };
 
 	/// @brief update this Scene
 	/// @param deltaTime the number of seconds since the last update
@@ -53,7 +49,6 @@ private:
 	void _updateEntity(Entity* entity, float deltaTime);
 
 	Camera* _camera; ///< @brief the Camera instance
-	Input*  _input; ///< @brief the Input instance
 
 	bool _isRunning; ///< @brief running or not
 };

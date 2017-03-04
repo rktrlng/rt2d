@@ -12,7 +12,6 @@ Scene::Scene()
 {
 	std::cout << "################ new Scene ################" << std::endl;
 	_camera = new Camera();
-	_input = new Input();
 
 	_isRunning = true;
 }
@@ -20,7 +19,6 @@ Scene::Scene()
 Scene::~Scene()
 {
 	delete _camera;
-	delete _input;
 }
 
 void Scene::updateScene(float deltaTime)

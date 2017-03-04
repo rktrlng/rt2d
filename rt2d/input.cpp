@@ -31,7 +31,7 @@ Input::Input()
 
 Input::~Input()
 {
-
+	std::cout << "Input destructor" << std::endl;
 }
 
 void Input::updateInput(GLFWwindow* w)

@@ -28,6 +28,8 @@
 #include <rt2d/sprite.h>
 #include <rt2d/line.h>
 #include <rt2d/vectorx.h>
+#include <rt2d/input.h>
+#include <rt2d/singleton.h>
 
 /// @brief The Entity class is the Base class for the elements in your Scene.
 class Entity
@@ -171,6 +173,10 @@ public:
 	/// @return Point3 _worldscale
 	Point3 worldscale() { return _worldscale; };
 
+	/// @brief get a pointer to the Input
+	/// @return Input* a pointer to the Input
+	Input* input() { return _input; };
+
 	friend class Renderer;
 
 protected:
@@ -194,6 +200,8 @@ private:
 	// sprite
 	Sprite* _sprite; ///< @brief The _sprite of this Entity
 	Line* _line; ///< @brief The _line of this Entity
+
+	Input* _input; ///< @brief the Input instance
 
 	/// @brief delete the Sprite of this Entity.
 	/// @return void
