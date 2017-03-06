@@ -112,6 +112,7 @@ add_library(rt2d
 	rt2d/entity.h
 	rt2d/input.cpp
 	rt2d/input.h
+	rt2d/keycode.h
 	rt2d/line.cpp
 	rt2d/line.h
 	rt2d/mesh.cpp
