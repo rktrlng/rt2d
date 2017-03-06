@@ -1,6 +1,6 @@
 #ifndef KEYCODE_H
 #define KEYCODE_H
-
+/// @brief KeyCode used by Input
 enum KeyCode
 {
 	Space = 32,
