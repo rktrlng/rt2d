@@ -88,7 +88,7 @@ void Scene14::update(float deltaTime)
 	// ###############################################################
 	// Input
 	// ###############################################################
-	if (input()->getKeyDown( GLFW_KEY_UP )) {
+	if (input()->getKeyDown( KeyCode::Up )) {
 		rot--; if (rot<0) {rot=3;}
 		if (active_block != 3) { // 3 is the 2x2 shape. don't rotate this one.
 			PixelSprite spr = pixelsprites[active_block].rotated(rot * HALF_PI);
@@ -96,18 +96,18 @@ void Scene14::update(float deltaTime)
 			block = spr;
 		}
 	}
-	if (input()->getKeyDown( GLFW_KEY_LEFT )) {
+	if (input()->getKeyDown( KeyCode::Left )) {
 		block.position.x--;
 		if (block.position.x <= left) { block.position.x = left; }
 	}
-	if (input()->getKeyDown( GLFW_KEY_RIGHT )) {
+	if (input()->getKeyDown( KeyCode::Right )) {
 		block.position.x++;
 		if (block.position.x >= right-1) { block.position.x = right-1; }
 	}
-	if (input()->getKeyDown( GLFW_KEY_DOWN )) {
+	if (input()->getKeyDown( KeyCode::Down )) {
 		timestep = 4;
 	}
-	if (input()->getKeyUp( GLFW_KEY_DOWN )) {
+	if (input()->getKeyUp( KeyCode::Down )) {
 		timestep = 25;
 	}
 }

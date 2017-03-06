@@ -53,7 +53,7 @@ void Scene17::update(float deltaTime)
 
 	this->handleModes();
 
-	if (input()->getKeyDown( GLFW_KEY_SPACE )) {
+	if (input()->getKeyDown(KeyCode::Space)) {
 		this->reset();
 	}
 
@@ -63,7 +63,7 @@ void Scene17::update(float deltaTime)
 		this->addDrop(mousex, h-mousey);
 	}
 
-	if (input()->getKeyDown( GLFW_KEY_S )) {
+	if (input()->getKeyDown(KeyCode::S)) {
 		canvas->sprite()->texture()->writeTGAImage();
 	}
 
@@ -124,10 +124,10 @@ void Scene17::handleModes()
 {
 	//http://mrob.com/pub/comp/xmorphia/pearson-classes.html
 
-	if (input()->getKeyDown( GLFW_KEY_1 )) { mode = 1; }
-	if (input()->getKeyDown( GLFW_KEY_2 )) { mode = 2; }
-	if (input()->getKeyDown( GLFW_KEY_3 )) { mode = 3; }
-	if (input()->getKeyDown( GLFW_KEY_4 )) { mode = 4; }
+	if (input()->getKeyDown(KeyCode::Alpha1)) { mode = 1; }
+	if (input()->getKeyDown(KeyCode::Alpha2)) { mode = 2; }
+	if (input()->getKeyDown(KeyCode::Alpha3)) { mode = 3; }
+	if (input()->getKeyDown(KeyCode::Alpha4)) { mode = 4; }
 
 	dA = 1.0f; // diffusion rate A
 	dB = 0.5f; // diffusion rate B

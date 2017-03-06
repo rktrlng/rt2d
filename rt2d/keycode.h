@@ -1,4 +1,5 @@
-#pragma once
+#ifndef KEYCODE_H
+#define KEYCODE_H
 
 enum KeyCode
 {
@@ -121,3 +122,5 @@ enum KeyCode
 	RightSuper = 347,
 	Menu = 348
 };
+
+#endif

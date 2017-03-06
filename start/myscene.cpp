@@ -39,17 +39,17 @@ void MyScene::update(float deltaTime)
 	// ###############################################################
 	// Escape key stops the Scene
 	// ###############################################################
-	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
+	if (input()->getKeyUp(KeyCode::Escape)) {
 		this->stop();
 	}
 
 	// ###############################################################
 	// Spacebar scales myentity
 	// ###############################################################
-	if (input()->getKeyDown( GLFW_KEY_SPACE )) {
+	if (input()->getKeyDown(KeyCode::Space)) {
 		myentity->scale = Point(0.5f, 0.5f);
 	}
-	if (input()->getKeyUp( GLFW_KEY_SPACE )) {
+	if (input()->getKeyUp(KeyCode::Space)) {
 		myentity->scale = Point(1.0f, 1.0f);
 	}
 

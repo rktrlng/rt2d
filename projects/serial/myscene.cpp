@@ -54,7 +54,7 @@ void MyScene::update(float deltaTime)
 	// ###############################################################
 	// Escape key stops the Scene
 	// ###############################################################
-	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
+	if (input()->getKeyUp(KeyCode::Escape)) {
 		this->stop();
 	}
 
@@ -62,8 +62,8 @@ void MyScene::update(float deltaTime)
 	// send and receive data
 	// ###############################################################
 	static unsigned char cmd = 'a';
-	if (input()->getKeyDown( GLFW_KEY_A )) { cmd = 'a'; }
-	if (input()->getKeyDown( GLFW_KEY_B )) { cmd = 'b'; }
+	if (input()->getKeyDown(KeyCode::A)) { cmd = 'a'; }
+	if (input()->getKeyDown(KeyCode::B)) { cmd = 'b'; }
 
 	if (t.seconds() > 0.016f) {
 		this->clearHistory();

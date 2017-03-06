@@ -37,27 +37,27 @@ void MyScene::update(float deltaTime)
 	// ###############################################################
 	// Escape key stops the Scene
 	// ###############################################################
-	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
+	if (input()->getKeyUp(KeyCode::Escape)) {
 		this->stop();
 	}
 
 	// ###############################################################
 	// Spacebar scales myentity
 	// ###############################################################
-	if (input()->getKeyDown( GLFW_KEY_SPACE )) {
+	if (input()->getKeyDown(KeyCode::Space)) {
 		myentity->scale = Point(16.0f, 16.0f);
 	}
-	if (input()->getKeyUp( GLFW_KEY_SPACE )) {
+	if (input()->getKeyUp(KeyCode::Space)) {
 		myentity->scale = Point(SWIDTH/32.0f, SHEIGHT/32.0f);
 	}
 
 	// ###############################################################
 	// '[' and ']' switch shaders
 	// ###############################################################
-	if (input()->getKeyUp( GLFW_KEY_LEFT_BRACKET )) {
+	if (input()->getKeyUp(KeyCode::LeftBracket)) {
 		myentity->activeshader--;
 	}
-	if (input()->getKeyUp( GLFW_KEY_RIGHT_BRACKET )) {
+	if (input()->getKeyUp(KeyCode::RightBracket)) {
 		myentity->activeshader++;
 	}
 	if (myentity->activeshader >= (int) myentity->fragshaders.size()) { myentity->activeshader = 0; }

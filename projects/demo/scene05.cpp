@@ -50,17 +50,17 @@ void Scene05::update(float deltaTime)
 	// ###############################################################
 	// wrap and filter
 	// ###############################################################
-	if (input()->getKeyDown( GLFW_KEY_W )) {
+	if (input()->getKeyDown( KeyCode::W )) {
 		wrap++; if (wrap > 2) { wrap = 0;}
 		dynamic_sprite->texture()->pixels()->filter = filter;
 		dynamic_sprite->texture()->pixels()->wrap = wrap;
 	}
-	if (input()->getKeyDown( GLFW_KEY_F )) {
+	if (input()->getKeyDown( KeyCode::F )) {
 		filter++; if (filter > 3) { filter = 0;}
 		dynamic_sprite->texture()->pixels()->filter = filter;
 		dynamic_sprite->texture()->pixels()->wrap = wrap;
 	}
-	if (input()->getKeyDown( GLFW_KEY_N )) {
+	if (input()->getKeyDown( KeyCode::N )) {
 		negative++; if (negative > 1) { negative = 0;}
 		PixelBuffer* buffer = dynamic_sprite->texture()->pixels();
 		buffer->filter = filter;
@@ -81,10 +81,10 @@ void Scene05::update(float deltaTime)
 	// sprite_container
 	// ###############################################################
 	// pause timer when SPACE is pressed
-	if (input()->getKey( GLFW_KEY_SPACE )) {
+	if (input()->getKey( KeyCode::Space )) {
 		t.pause();
 	}
-	if (input()->getKeyUp( GLFW_KEY_SPACE )) {
+	if (input()->getKeyUp( KeyCode::Space )) {
 		t.unpause();
 	}
 	static float adder = 0.0f;

@@ -49,19 +49,19 @@ void Scene15::update(float deltaTime)
 	text[3]->message(""); // clear <esc> to quit
 	text[10]->message(""); // clear player click count message
 
-	if (input()->getKeyDown( GLFW_KEY_SPACE )) {
+	if (input()->getKeyDown(KeyCode::Space)) {
 		this->randomField();
 	}
-	if (input()->getKeyDown( GLFW_KEY_Q )) {
+	if (input()->getKeyDown(KeyCode::Q)) {
 		this->infinitGrowthA();
 	}
-	if (input()->getKeyDown( GLFW_KEY_E )) {
+	if (input()->getKeyDown(KeyCode::E)) {
 		this->infinitGrowthB();
 	}
-	if (input()->getKeyDown( GLFW_KEY_W )) {
+	if (input()->getKeyDown(KeyCode::W)) {
 		this->rpentomino();
 	}
-	if (input()->getKeyDown( GLFW_KEY_S )) {
+	if (input()->getKeyDown(KeyCode::S)) {
 		// oscillators on new canvas
 		const int w = canvas->width();
 		const int h = canvas->height();
@@ -72,7 +72,7 @@ void Scene15::update(float deltaTime)
 		this->lightweightSpaceship();
 		this->glider();
 	}
-	if (input()->getKeyDown( GLFW_KEY_A )) {
+	if (input()->getKeyDown(KeyCode::A)) {
 		this->gliderGun();
 	}
 

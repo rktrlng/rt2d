@@ -61,22 +61,22 @@ void MyScene::update(float deltaTime)
 	// ###############################################################
 	// Escape key stops the Scene
 	// ###############################################################
-	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
+	if (input()->getKeyUp(KeyCode::Escape)) {
 		this->stop();
 	}
 
 	static Point3 move = Point3(0.0f,0.0f,0.0f);
 
-	if (input()->getKey( GLFW_KEY_W )) { move.z += deltaTime; }
-	if (input()->getKey( GLFW_KEY_S )) { move.z -= deltaTime; }
-	if (input()->getKey( GLFW_KEY_UP )) { move.y += deltaTime; }
-	if (input()->getKey( GLFW_KEY_DOWN )) { move.y -= deltaTime; }
-	if (input()->getKey( GLFW_KEY_LEFT )) { move.x -= deltaTime; }
-	if (input()->getKey( GLFW_KEY_RIGHT )) { move.x += deltaTime; }
+	if (input()->getKey(KeyCode::W)) { move.z += deltaTime; }
+	if (input()->getKey(KeyCode::S)) { move.z -= deltaTime; }
+	if (input()->getKey(KeyCode::Up)) { move.y += deltaTime; }
+	if (input()->getKey(KeyCode::Down)) { move.y -= deltaTime; }
+	if (input()->getKey(KeyCode::Left)) { move.x -= deltaTime; }
+	if (input()->getKey(KeyCode::Right)) { move.x += deltaTime; }
 
-	if (input()->getKeyDown( GLFW_KEY_C )) { contrast = !contrast; }
-	if (input()->getKeyDown( GLFW_KEY_P )) { posterize = !posterize; }
-	if (input()->getKeyDown( GLFW_KEY_O )) { colorize = !colorize; }
+	if (input()->getKeyDown(KeyCode::C)) { contrast = !contrast; }
+	if (input()->getKeyDown(KeyCode::P)) { posterize = !posterize; }
+	if (input()->getKeyDown(KeyCode::O)) { colorize = !colorize; }
 
 	if (t.seconds() > 0.02f) {
 		PixelBuffer* pixels = entity->sprite()->texture()->pixels();

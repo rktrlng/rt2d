@@ -179,14 +179,14 @@ void Scene03::updateSpaceShip(float deltaTime)
 	static Vector2 velocity = Vector2((rand()%100)-50, (rand()%100)-50);
 	static Polar polar = Polar((rand()%360) * DEG_TO_RAD, 400.0f);
 
-	if (input()->getKey( GLFW_KEY_UP )) {
+	if (input()->getKey( KeyCode::Up )) {
 		spaceship->line()->color = RED;
 		velocity += polar.cartesian() * deltaTime; // thrust
 	}
-	if (input()->getKey( GLFW_KEY_RIGHT )) {
+	if (input()->getKey( KeyCode::Right )) {
 		polar.angle += rotspeed * deltaTime; // rotate right
 	}
-	if (input()->getKey( GLFW_KEY_LEFT )) {
+	if (input()->getKey( KeyCode::Left )) {
 		polar.angle -= rotspeed * deltaTime; // rotate left
 	}
 

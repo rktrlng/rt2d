@@ -58,7 +58,7 @@ void Scene18::update(float deltaTime)
 	text[6]->message("");
 	text[10]->message(""); // clear player click count message
 
-	if (input()->getKeyDown( GLFW_KEY_SPACE )) {
+	if (input()->getKeyDown(KeyCode::Space)) {
 		reset();
 	}
 
