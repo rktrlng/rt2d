@@ -175,7 +175,7 @@ public:
 	/// @brief Is this key pressed?
 	/// @param key as int
 	/// @return bool key is pressed or not
-	bool getKey(int key) { return getKey((KeyCode) key); }
+	bool getKey(int key) { return getKey((KeyCode)key); }
 	/// @brief Is this mouse button pressed?
 	/// @param button num
 	/// @return bool button is pressed or not
@@ -189,7 +189,7 @@ public:
 	/// @brief Is this key pressed? Only check first press down
 	/// @param key as int
 	/// @return bool key is pressed first time or not
-	bool getKeyDown(int key) { return getKeyDown((KeyCode) key); }
+	bool getKeyDown(int key) { return getKeyDown((KeyCode)key); }
 	/// @brief Is this mouse button pressed? Only check first press down
 	/// @param button num
 	/// @return bool button is pressed or not
@@ -203,7 +203,7 @@ public:
 	/// @brief Is this key released?
 	/// @param key as int
 	/// @return bool key is released or not
-	bool getKeyUp(int key) { return getKeyUp((KeyCode) key); }
+	bool getKeyUp(int key) { return getKeyUp((KeyCode)key); }
 	/// @brief Is this mouse button released?
 	/// @param button num
 	/// @return bool button is released or not

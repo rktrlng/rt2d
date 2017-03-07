@@ -90,26 +90,24 @@ void Input::_handleMouse(int button)
 
 void Input::_handleKey(int key)
 {
-	KeyCode keyCode = (KeyCode)key;
-
-	if (glfwGetKey( _window, keyCode) == GLFW_PRESS) {
-		if (_keys[keyCode] == false) { // if first time pressed down
-			_keys[keyCode] = true;
-			_keysDown[keyCode] = true;
+	if (glfwGetKey( _window, key) == GLFW_PRESS) {
+		if (_keys[key] == false) { // if first time pressed down
+			_keys[key] = true;
+			_keysDown[key] = true;
 			//std::cout << "DOWN: " << key << std::endl;
 		} else {
 			// not the first time this is pressed
 			// keys[key] is still true;
-			_keysDown[keyCode] = false;
+			_keysDown[key] = false;
 		}
 	}
-	if (glfwGetKey( _window, keyCode) == GLFW_RELEASE) {
-		if (_keys[keyCode] == true) { // still pressed
-			_keys[keyCode] = false;
-			_keysUp[keyCode] = true;
+	if (glfwGetKey( _window, key) == GLFW_RELEASE) {
+		if (_keys[key] == true) { // still pressed
+			_keys[key] = false;
+			_keysUp[key] = true;
 			//std::cout << "UP: " << key << std::endl;
 		} else {
-			_keysUp[keyCode] = false;
+			_keysUp[key] = false;
 		}
 	}
 }
