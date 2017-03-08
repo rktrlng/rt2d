@@ -19,74 +19,6 @@
 #include <rt2dconfig.h>
 
 /*
-#define 	GLFW_KEY_UNKNOWN   -1
-#define 	GLFW_KEY_SPACE   32
-#define 	GLFW_KEY_APOSTROPHE   39 // '
-#define 	GLFW_KEY_COMMA   44 // ,
-#define 	GLFW_KEY_MINUS   45 // -
-#define 	GLFW_KEY_PERIOD   46 // .
-#define 	GLFW_KEY_SLASH   47 // /
-#define 	GLFW_KEY_0   48
-...
-#define 	GLFW_KEY_9   57
-#define 	GLFW_KEY_SEMICOLON   59 // ;
-#define 	GLFW_KEY_EQUAL   61 // =
-#define 	GLFW_KEY_A   65
-#define 	GLFW_KEY_B   66
-#define 	GLFW_KEY_C   67
-...
-#define 	GLFW_KEY_Z   90
-#define 	GLFW_KEY_LEFT_BRACKET   91 // [
-#define 	GLFW_KEY_BACKSLASH   92 // \
-#define 	GLFW_KEY_RIGHT_BRACKET   93 // ]
-#define 	GLFW_KEY_GRAVE_ACCENT   96 // `
-#define 	GLFW_KEY_WORLD_1   161 // non-US #1
-#define 	GLFW_KEY_WORLD_2   162 // non-US #2
-#define 	GLFW_KEY_ESCAPE   256
-#define 	GLFW_KEY_ENTER   257
-#define 	GLFW_KEY_TAB   258
-#define 	GLFW_KEY_BACKSPACE   259
-#define 	GLFW_KEY_INSERT   260
-#define 	GLFW_KEY_DELETE   261
-#define 	GLFW_KEY_RIGHT   262
-#define 	GLFW_KEY_LEFT   263
-#define 	GLFW_KEY_DOWN   264
-#define 	GLFW_KEY_UP   265
-#define 	GLFW_KEY_PAGE_UP   266
-#define 	GLFW_KEY_PAGE_DOWN   267
-#define 	GLFW_KEY_HOME   268
-#define 	GLFW_KEY_END   269
-#define 	GLFW_KEY_CAPS_LOCK   280
-#define 	GLFW_KEY_SCROLL_LOCK   281
-#define 	GLFW_KEY_NUM_LOCK   282
-#define 	GLFW_KEY_PRINT_SCREEN   283
-#define 	GLFW_KEY_PAUSE   284
-#define 	GLFW_KEY_F1   290
-...
-#define 	GLFW_KEY_F25   314
-#define 	GLFW_KEY_KP_0   320
-...
-#define 	GLFW_KEY_KP_9   329
-#define 	GLFW_KEY_KP_DECIMAL   330
-#define 	GLFW_KEY_KP_DIVIDE   331
-#define 	GLFW_KEY_KP_MULTIPLY   332
-#define 	GLFW_KEY_KP_SUBTRACT   333
-#define 	GLFW_KEY_KP_ADD   334
-#define 	GLFW_KEY_KP_ENTER   335
-#define 	GLFW_KEY_KP_EQUAL   336
-#define 	GLFW_KEY_LEFT_SHIFT   340
-#define 	GLFW_KEY_LEFT_CONTROL   341
-#define 	GLFW_KEY_LEFT_ALT   342
-#define 	GLFW_KEY_LEFT_SUPER   343
-#define 	GLFW_KEY_RIGHT_SHIFT   344
-#define 	GLFW_KEY_RIGHT_CONTROL   345
-#define 	GLFW_KEY_RIGHT_ALT   346
-#define 	GLFW_KEY_RIGHT_SUPER   347
-#define 	GLFW_KEY_MENU   348
-#define 	GLFW_KEY_LAST   GLFW_KEY_MENU
-*/
-
-/*
 #define 	GLFW_MOUSE_BUTTON_1   0
 #define 	GLFW_MOUSE_BUTTON_2   1
 #define 	GLFW_MOUSE_BUTTON_3   2
@@ -101,6 +33,129 @@
 #define 	GLFW_MOUSE_BUTTON_MIDDLE   GLFW_MOUSE_BUTTON_3
 */
 
+/// @brief KeyCode used by Input
+enum KeyCode
+{
+	Space = 32,
+	Apostrophe = 39,
+	Comma = 44,
+	Minus = 45,
+	Period = 46,
+	Slash = 47,
+	Alpha0 = 48,
+	Alpha1 = 49,
+	Alpha2 = 50,
+	Alpha3 = 51,
+	Alpha4 = 52,
+	Alpha5 = 53,
+	Alpha6 = 54,
+	Alpha7 = 55,
+	Alpha8 = 56,
+	Alpha9 = 57,
+	Semicolon = 59,
+	Equal = 61,
+	A = 65,
+	B = 66,
+	C = 67,
+	D = 68,
+	E = 69,
+	F = 70,
+	G = 71,
+	H = 72,
+	I = 73,
+	J = 74,
+	K = 75,
+	L = 76,
+	M = 77,
+	N = 78,
+	O = 79,
+	P = 80,
+	Q = 81,
+	R = 82,
+	S = 83,
+	T = 84,
+	U = 85,
+	V = 86,
+	W = 87,
+	X = 88,
+	Y = 89,
+	Z = 90,
+	LeftBracket = 91,
+	Backslash = 92,
+	RightBracket = 93,
+	GraveAccent = 96,
+	Escape = 256,
+	Enter = 257,
+	Tab = 258,
+	Backspace = 259,
+	Insert = 260,
+	Delete = 261,
+	Right = 262,
+	Left = 263,
+	Down = 264,
+	Up = 265,
+	PageUp = 266,
+	PageDown = 267,
+	Home = 268,
+	End = 269,
+	CapsLock = 280,
+	ScrollLock = 281,
+	NumLock = 282,
+	PrintScreen = 283,
+	Pause = 284,
+	F1 = 290,
+	F2 = 291,
+	F3 = 292,
+	F4 = 293,
+	F5 = 294,
+	F6 = 295,
+	F7 = 296,
+	F8 = 297,
+	F9 = 298,
+	F10 = 299,
+	F11 = 300,
+	F12 = 301,
+	F13 = 302,
+	F14 = 303,
+	F15 = 304,
+	F16 = 305,
+	F17 = 306,
+	F18 = 307,
+	F19 = 308,
+	F20 = 309,
+	F21 = 310,
+	F22 = 311,
+	F23 = 312,
+	F24 = 313,
+	F25 = 314,
+	KeyPad0 = 320,
+	KeyPad1 = 321,
+	KeyPad2 = 322,
+	KeyPad3 = 323,
+	KeyPad4 = 324,
+	KeyPad5 = 325,
+	KeyPad6 = 326,
+	KeyPad7 = 327,
+	KeyPad8 = 328,
+	KeyPad9 = 329,
+	KeyPadDecimal = 330,
+	KeyPadDivide = 331,
+	KeyPadMultiply = 332,
+	KeyPadSubtract = 333,
+	KeyPadAdd = 334,
+	KeyPadEnter = 335,
+	KeyPadEqual = 336,
+	LeftShift = 340,
+	LeftControl = 341,
+	LeftAlt = 342,
+	LeftSuper = 343,
+	RightShift = 344,
+	RightControl = 345,
+	RightAlt = 346,
+	RightSuper = 347,
+	Menu = 348
+};
+
 /// @brief The Input class handles Keyboard and Mouse.
 class Input
 {
@@ -114,13 +169,17 @@ public:
 
 	// keys while down
 	/// @brief Is this key pressed?
-	/// @param key as int (see defines)
+	/// @param keyCode as KeyCode
 	/// @return bool key is pressed or not
-	bool getKey(int key) { return _keys[key]; }
+	bool getKey(KeyCode keyCode) { return _keys[keyCode]; }
 	/// @brief Is this key pressed?
-	/// @param key as char (ie 'a')
+	/// @param key as int
 	/// @return bool key is pressed or not
-	bool getKey(char key) { return getKey((int) key); }
+	bool getKey(int key) { return getKey((KeyCode)key); }
+	/// @brief Is this key pressed? Only check first press down
+	/// @param key as char (ie: getKey('A') )
+	/// @return bool key is pressed first time or not
+	bool getKey(char key) { return getKey((KeyCode)key); }
 	/// @brief Is this mouse button pressed?
 	/// @param button num
 	/// @return bool button is pressed or not
@@ -128,13 +187,17 @@ public:
 
 	// down
 	/// @brief Is this key pressed? Only check first press down
-	/// @param key as int (see defines)
+	/// @param keyCode as KeyCode (see defines)
 	/// @return bool key is pressed first time or not
-	bool getKeyDown(int key) { return _keysDown[key]; }
+	bool getKeyDown(KeyCode keyCode) { return _keysDown[keyCode]; }
 	/// @brief Is this key pressed? Only check first press down
-	/// @param key as char (ie 'a')
+	/// @param key as int
 	/// @return bool key is pressed first time or not
-	bool getKeyDown(char key) { return getKeyDown((int) key); }
+	bool getKeyDown(int key) { return getKeyDown((KeyCode)key); }
+	/// @brief Is this key pressed? Only check first press down
+	/// @param key as char (ie: getKeyDown('A') )
+	/// @return bool key is pressed first time or not
+	bool getKeyDown(char key) { return getKeyDown((KeyCode)key); }
 	/// @brief Is this mouse button pressed? Only check first press down
 	/// @param button num
 	/// @return bool button is pressed or not
@@ -142,13 +205,17 @@ public:
 
 	// up
 	/// @brief Is this key released?
-	/// @param key as int (see defines)
+	/// @param keyCode as KeyCode (see defines)
 	/// @return bool true or false
-	bool getKeyUp(int key) { return _keysUp[key]; }
+	bool getKeyUp(KeyCode keyCode) { return _keysUp[keyCode]; }
 	/// @brief Is this key released?
-	/// @param key as char (ie 'a')
+	/// @param key as int
 	/// @return bool key is released or not
-	bool getKeyUp(char key) { return getKeyUp((int) key); }
+	bool getKeyUp(int key) { return getKeyUp((KeyCode)key); }
+	/// @brief Is this key pressed? Only check first press down
+	/// @param key as char (ie: getKeyUp('A') )
+	/// @return bool key is pressed first time or not
+	bool getKeyUp(char key) { return getKeyUp((KeyCode)key); }
 	/// @brief Is this mouse button released?
 	/// @param button num
 	/// @return bool button is released or not

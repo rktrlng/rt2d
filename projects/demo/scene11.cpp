@@ -49,16 +49,16 @@ void Scene11::update(float deltaTime)
 	// ###############################################################
 	// move snake head
 	// ###############################################################
-	if (input()->getKeyDown( GLFW_KEY_UP )) {
+	if (input()->getKeyDown(KeyCode::Up)) {
 		snake[0].velocity = UP;
 	}
-	if (input()->getKeyDown( GLFW_KEY_DOWN )) {
+	if (input()->getKeyDown(KeyCode::Down)) {
 		snake[0].velocity = DOWN;
 	}
-	if (input()->getKeyDown( GLFW_KEY_LEFT )) {
+	if (input()->getKeyDown(KeyCode::Left)) {
 		snake[0].velocity = LEFT;
 	}
-	if (input()->getKeyDown( GLFW_KEY_RIGHT )) {
+	if (input()->getKeyDown(KeyCode::Right)) {
 		snake[0].velocity = RIGHT;
 	}
 

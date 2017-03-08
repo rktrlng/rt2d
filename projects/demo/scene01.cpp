@@ -139,7 +139,7 @@ void Scene01::update(float deltaTime)
 	// ###############################################################
 	static float xoffset = 0.0f;
 	xoffset += deltaTime / 2;
-	if (input()->getKey( GLFW_KEY_SPACE )) {
+	if (input()->getKey( KeyCode::Space )) {
 		xoffset = 0.0f;
 	}
 	ui_element->sprite()->uvoffset.x = xoffset;

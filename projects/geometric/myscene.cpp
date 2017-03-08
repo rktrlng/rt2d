@@ -76,7 +76,7 @@ void MyScene::update(float deltaTime)
 	// ###############################################################
 	// Escape key stops the Scene
 	// ###############################################################
-	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
+	if (input()->getKeyUp(KeyCode::Escape)) {
 		this->stop();
 	}
 
@@ -105,11 +105,11 @@ void MyScene::fpsCam(float deltaTime)
 
 	// Use keyboard to move and look around
 	// tilt
-	if (input()->getKey( GLFW_KEY_UP )) 	{ camera()->tilt(deltaTime * rotspeed); }
-	if (input()->getKey( GLFW_KEY_DOWN ))	{ camera()->tilt(deltaTime * -rotspeed); }
+	if (input()->getKey(KeyCode::Up)) 	{ camera()->tilt(deltaTime * rotspeed); }
+	if (input()->getKey(KeyCode::Down))	{ camera()->tilt(deltaTime * -rotspeed); }
 	// pan
-	if (input()->getKey( GLFW_KEY_LEFT )) 	{ camera()->pan(deltaTime * rotspeed); }
-	if (input()->getKey( GLFW_KEY_RIGHT ))	{ camera()->pan(deltaTime * -rotspeed); }
+	if (input()->getKey(KeyCode::Left)) 	{ camera()->pan(deltaTime * rotspeed); }
+	if (input()->getKey(KeyCode::Right))	{ camera()->pan(deltaTime * -rotspeed); }
 	// roll
 	if (input()->getKey('I'))	{ camera()->roll(deltaTime * rollspeed); }
 	if (input()->getKey('O'))	{ camera()->rotation.z = 0.0f; }

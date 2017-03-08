@@ -71,17 +71,17 @@ void SuperScene::update(float deltaTime)
 	// ###############################################################
 	// Escape key stops the Scene
 	// ###############################################################
-	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
+	if (input()->getKeyUp(KeyCode::Escape)) {
 		this->stop();
 	}
 
 	// ###############################################################
 	// '[' and ']' switch scenes
 	// ###############################################################
-	if (input()->getKeyUp( GLFW_KEY_LEFT_BRACKET )) {
+	if (input()->getKeyUp(KeyCode::LeftBracket)) {
 		activescene--;
 	}
-	if (input()->getKeyUp( GLFW_KEY_RIGHT_BRACKET )) {
+	if (input()->getKeyUp(KeyCode::RightBracket)) {
 		activescene++;
 	}
 
@@ -141,16 +141,16 @@ void SuperScene::moveCamera(float deltaTime)
 	// Direction
 	Vector2 direction = Vector2(0,0);
 
-	if (input()->getKey( GLFW_KEY_UP )) {
+	if (input()->getKey(KeyCode::Up)) {
 		direction -= up;
 	}
-	if (input()->getKey( GLFW_KEY_DOWN )) {
+	if (input()->getKey(KeyCode::Down)) {
 		direction += up;
 	}
-	if (input()->getKey( GLFW_KEY_RIGHT )) {
+	if (input()->getKey(KeyCode::Right)) {
 		direction += right;
 	}
-	if (input()->getKey( GLFW_KEY_LEFT )) {
+	if (input()->getKey(KeyCode::Left)) {
 		direction -= right;
 	}
 	direction.normalize();

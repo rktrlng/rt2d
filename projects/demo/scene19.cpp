@@ -92,7 +92,7 @@ void Scene19::update(float deltaTime)
 	}
 
 	// restart
-	if (input()->getKeyDown( GLFW_KEY_SPACE )) {
+	if (input()->getKeyDown(KeyCode::Space)) {
 		this->setup();
 	}
 }

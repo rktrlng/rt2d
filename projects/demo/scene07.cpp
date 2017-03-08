@@ -112,7 +112,7 @@ void Scene07::update(float deltaTime)
 	// ###############################################################
 	// Clear particles
 	// ###############################################################
-	if (input()->getKeyDown( GLFW_KEY_SPACE )) {
+	if (input()->getKeyDown(KeyCode::Space)) {
 		clearParticles();
 	}
 }

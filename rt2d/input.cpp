@@ -90,7 +90,7 @@ void Input::_handleMouse(int button)
 
 void Input::_handleKey(int key)
 {
-	if (glfwGetKey( _window, key ) == GLFW_PRESS) {
+	if (glfwGetKey( _window, key) == GLFW_PRESS) {
 		if (_keys[key] == false) { // if first time pressed down
 			_keys[key] = true;
 			_keysDown[key] = true;
@@ -101,7 +101,7 @@ void Input::_handleKey(int key)
 			_keysDown[key] = false;
 		}
 	}
-	if (glfwGetKey( _window, key ) == GLFW_RELEASE) {
+	if (glfwGetKey( _window, key) == GLFW_RELEASE) {
 		if (_keys[key] == true) { // still pressed
 			_keys[key] = false;
 			_keysUp[key] = true;

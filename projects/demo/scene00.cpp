@@ -78,14 +78,14 @@ void Scene00::update(float deltaTime)
 		first=0;
 	}
 	float scrolldelay = 0.025f; // 40 FPS
-	if (input()->getKey( GLFW_KEY_DOWN )) {
+	if (input()->getKey( KeyCode::Down )) {
 		if (t.seconds() > scrolldelay) {
 			index++;
 			updateconsoletext();
 			t.start();
 		}
 	}
-	if (input()->getKey( GLFW_KEY_UP )) {
+	if (input()->getKey( KeyCode::Up )) {
 		if (t.seconds() > scrolldelay) {
 			index--; if (index<0) {index=0;}
 			updateconsoletext();

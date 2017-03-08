@@ -54,13 +54,13 @@ void Scene04::update(float deltaTime)
 
 	// change state every n seconds, pause timer when SPACE is pressed
 	static int state = 0;
-	if (input()->getKey( GLFW_KEY_SPACE )) {
+	if (input()->getKey(KeyCode::Space)) {
 		t.pause();
 	}
-	if (input()->getKeyUp( GLFW_KEY_SPACE )) {
+	if (input()->getKeyUp(KeyCode::Space)) {
 		t.unpause();
 	}
-	if (input()->getKeyDown( GLFW_KEY_S )) {
+	if (input()->getKeyDown(KeyCode::S)) {
 		pixel_container->sprite()->texture()->writeTGAImage();
 	}
 

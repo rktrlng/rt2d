@@ -58,7 +58,7 @@ void Scene13::update(float deltaTime)
 	text[10]->message(""); // clear player click count message
 
 	// player wants to shoot
-	if (input()->getKeyDown( GLFW_KEY_SPACE )) {
+	if (input()->getKeyDown( KeyCode::Space )) {
 		if (shoottimer.seconds() > 0.8f) {
 			PixelSprite b = player_bullet; // copy sprites etc
 			b.position = player.position + Pointi(0,2);
@@ -288,10 +288,10 @@ void Scene13::updateEnemies()
 void Scene13::updatePlayer()
 {
 	canvas->clearSprite(player);
-	if (input()->getKey( GLFW_KEY_LEFT )) {
+	if (input()->getKey( KeyCode::Left )) {
 		player.position.x -= 1;
 	}
-	if (input()->getKey( GLFW_KEY_RIGHT )) {
+	if (input()->getKey( KeyCode::Right )) {
 		player.position.x += 1;
 	}
 	canvas->drawSprite(player);

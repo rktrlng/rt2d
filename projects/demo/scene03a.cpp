@@ -130,10 +130,10 @@ void Scene03a::update(float deltaTime)
 	// ###############################################################
 	// frequency amplitude
 	// ###############################################################
-	if (input()->getKeyDown( GLFW_KEY_A )) { frequency -= 1; }
-	if (input()->getKeyDown( GLFW_KEY_D )) { frequency += 1; }
-	if (input()->getKey( GLFW_KEY_S )) { amplitude -= 50 * deltaTime; }
-	if (input()->getKey( GLFW_KEY_W )) { amplitude += 50 * deltaTime; }
-	if (input()->getKey( GLFW_KEY_Q )) { radius -= 100 * deltaTime; }
-	if (input()->getKey( GLFW_KEY_E )) { radius += 100 * deltaTime; }
+	if (input()->getKeyDown( KeyCode::A )) { frequency -= 1; }
+	if (input()->getKeyDown( KeyCode::D )) { frequency += 1; }
+	if (input()->getKey(KeyCode::S)) { amplitude -= 50 * deltaTime; }
+	if (input()->getKey(KeyCode::W)) { amplitude += 50 * deltaTime; }
+	if (input()->getKey(KeyCode::Q)) { radius -= 100 * deltaTime; }
+	if (input()->getKey(KeyCode::E)) { radius += 100 * deltaTime; }
 }

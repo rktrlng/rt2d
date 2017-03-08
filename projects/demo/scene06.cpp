@@ -114,10 +114,10 @@ void Scene06::update(float deltaTime)
 	// texture swapping
 	// ###############################################################
 	// pause timer when SPACE is pressed
-	if (input()->getKey( GLFW_KEY_SPACE )) {
+	if (input()->getKey(KeyCode::Space)) {
 		t.pause();
 	}
-	if (input()->getKeyUp( GLFW_KEY_SPACE )) {
+	if (input()->getKeyUp(KeyCode::Space)) {
 		t.unpause();
 	}
 	static int count = 0;
