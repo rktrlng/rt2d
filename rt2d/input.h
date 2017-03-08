@@ -172,6 +172,11 @@ public:
 	/// @param keyCode as KeyCode
 	/// @return bool key is pressed or not
 	bool getKey(KeyCode keyCode) { return _keys[(unsigned int)keyCode]; }
+	/// @deprecated use KeyCode enum or char, not GLFW_KEY*
+	/// @brief Is this key pressed?
+	/// @param key as int
+	/// @return bool key is pressed or not
+	bool getKey(int key) { return getKey((KeyCode)key); }
 	/// @brief Is this key pressed? Only check first press down
 	/// @param key as char (ie: getKey('A') )
 	/// @return bool key is pressed first time or not
@@ -186,6 +191,11 @@ public:
 	/// @param keyCode as KeyCode (see defines)
 	/// @return bool key is pressed first time or not
 	bool getKeyDown(KeyCode keyCode) { return _keysDown[(unsigned int)keyCode]; }
+	/// @deprecated use KeyCode enum or char, not GLFW_KEY*
+	/// @brief Is this key pressed? Only check first press down
+	/// @param key as int
+	/// @return bool key is pressed first time or not
+	bool getKeyDown(int key) { return getKeyDown((KeyCode)key); }
 	/// @brief Is this key pressed? Only check first press down
 	/// @param key as char (ie: getKeyDown('A') )
 	/// @return bool key is pressed first time or not
@@ -200,6 +210,11 @@ public:
 	/// @param keyCode as KeyCode (see defines)
 	/// @return bool true or false
 	bool getKeyUp(KeyCode keyCode) { return _keysUp[(unsigned int)keyCode]; }
+	/// @deprecated use KeyCode enum or char, not GLFW_KEY*
+	/// @brief Is this key released?
+	/// @param key as int
+	/// @return bool key is released or not
+	bool getKeyUp(int key) { return getKeyUp((KeyCode)key); }
 	/// @brief Is this key pressed? Only check first press down
 	/// @param key as char (ie: getKeyUp('A') )
 	/// @return bool key is pressed first time or not
