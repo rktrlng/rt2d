@@ -171,11 +171,7 @@ public:
 	/// @brief Is this key pressed?
 	/// @param keyCode as KeyCode
 	/// @return bool key is pressed or not
-	bool getKey(KeyCode keyCode) { return _keys[keyCode]; }
-	/// @brief Is this key pressed?
-	/// @param key as int
-	/// @return bool key is pressed or not
-	bool getKey(int key) { return getKey((KeyCode)key); }
+	bool getKey(KeyCode keyCode) { return _keys[(unsigned int)keyCode]; }
 	/// @brief Is this key pressed? Only check first press down
 	/// @param key as char (ie: getKey('A') )
 	/// @return bool key is pressed first time or not
@@ -183,17 +179,13 @@ public:
 	/// @brief Is this mouse button pressed?
 	/// @param button num
 	/// @return bool button is pressed or not
-	bool getMouse(int button) { return _mouse[button]; }
+	bool getMouse(unsigned int button) { return _mouse[button]; }
 
 	// down
 	/// @brief Is this key pressed? Only check first press down
 	/// @param keyCode as KeyCode (see defines)
 	/// @return bool key is pressed first time or not
-	bool getKeyDown(KeyCode keyCode) { return _keysDown[keyCode]; }
-	/// @brief Is this key pressed? Only check first press down
-	/// @param key as int
-	/// @return bool key is pressed first time or not
-	bool getKeyDown(int key) { return getKeyDown((KeyCode)key); }
+	bool getKeyDown(KeyCode keyCode) { return _keysDown[(unsigned int)keyCode]; }
 	/// @brief Is this key pressed? Only check first press down
 	/// @param key as char (ie: getKeyDown('A') )
 	/// @return bool key is pressed first time or not
@@ -201,17 +193,13 @@ public:
 	/// @brief Is this mouse button pressed? Only check first press down
 	/// @param button num
 	/// @return bool button is pressed or not
-	bool getMouseDown(int button) { return _mouseDown[button]; }
+	bool getMouseDown(unsigned int button) { return _mouseDown[button]; }
 
 	// up
 	/// @brief Is this key released?
 	/// @param keyCode as KeyCode (see defines)
 	/// @return bool true or false
-	bool getKeyUp(KeyCode keyCode) { return _keysUp[keyCode]; }
-	/// @brief Is this key released?
-	/// @param key as int
-	/// @return bool key is released or not
-	bool getKeyUp(int key) { return getKeyUp((KeyCode)key); }
+	bool getKeyUp(KeyCode keyCode) { return _keysUp[(unsigned int)keyCode]; }
 	/// @brief Is this key pressed? Only check first press down
 	/// @param key as char (ie: getKeyUp('A') )
 	/// @return bool key is pressed first time or not
@@ -219,7 +207,7 @@ public:
 	/// @brief Is this mouse button released?
 	/// @param button num
 	/// @return bool button is released or not
-	bool getMouseUp(int button) { return _mouseUp[button]; }
+	bool getMouseUp(unsigned int button) { return _mouseUp[button]; }
 
 	// mouse
 	/// @brief get X position of the Mouse
@@ -244,8 +232,8 @@ public:
 
 private:
 	GLFWwindow* _window; ///< @brief GLFWwindow* _window
-	void _handleKey(int key); ///< @brief update internal array of keys
-	void _handleMouse(int key); ///< @brief update internal array of keys
+	void _handleKey(unsigned int key); ///< @brief update internal array of keys
+	void _handleMouse(unsigned int key); ///< @brief update internal array of keys
 
 	bool _keys[GLFW_KEY_LAST]; ///< @brief internal array of pressed keys
 	bool _keysUp[GLFW_KEY_LAST]; ///< @brief internal array of released keys

@@ -16,13 +16,12 @@ Input::Input()
 	_windowWidth = 0;
 	_windowHeight = 0;
 
-	int i;
-	for(i=0; i<GLFW_KEY_LAST; i++) {
+	for(unsigned int i=0; i<GLFW_KEY_LAST; i++) {
 		_keys[i] = false;
 		_keysUp[i] = false;
 		_keysDown[i] = false;
 	}
-	for(i=0; i<GLFW_MOUSE_BUTTON_LAST; i++) {
+	for(unsigned int i=0; i<GLFW_MOUSE_BUTTON_LAST; i++) {
 		_mouse[i] = false;
 		_mouseUp[i] = false;
 		_mouseDown[i] = false;
@@ -41,12 +40,11 @@ void Input::updateInput(GLFWwindow* w)
 	glfwPollEvents();
 
 	// 32-97 = ' ' to '`'
-	int i;
-	for(i=32; i<97;i++) {
+	for(unsigned int i=32; i<97; i++) {
 		_handleKey(i);
 	}
 	// Func + arrows + esc, etc
-	for(i=255; i<GLFW_KEY_LAST;i++) {
+	for(unsigned int i=255; i<GLFW_KEY_LAST; i++) {
 		_handleKey(i);
 	}
 	//  window size
@@ -59,12 +57,12 @@ void Input::updateInput(GLFWwindow* w)
 	_mouseY = ((float)SHEIGHT / _windowHeight) * _mouseY;
 
 	// mouse buttons
-	for(i=0; i<GLFW_MOUSE_BUTTON_LAST;i++) {
+	for(unsigned int i=0; i<GLFW_MOUSE_BUTTON_LAST; i++) {
 		_handleMouse(i);
 	}
 }
 
-void Input::_handleMouse(int button)
+void Input::_handleMouse(unsigned int button)
 {
 	if (glfwGetMouseButton( _window, button ) == GLFW_PRESS) {
 		if (_mouse[button] == false) { // if first time pressed down
@@ -88,7 +86,7 @@ void Input::_handleMouse(int button)
 	}
 }
 
-void Input::_handleKey(int key)
+void Input::_handleKey(unsigned int key)
 {
 	if (glfwGetKey( _window, key) == GLFW_PRESS) {
 		if (_keys[key] == false) { // if first time pressed down
