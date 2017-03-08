@@ -17,14 +17,14 @@
 /// @brief A pixel
 struct Pixel {
 	/// @brief position relative to the 'pivotpoint' of a pixelsprite or canvas (0.0)
-	Point_t<int> position;
+	Point2i position;
 	/// @brief color of the pixel
 	RGBAColor color;
 
 	/// @brief constructor
 	/// @param pos the position of the pixel
 	/// @param c the color of the pixel
-	Pixel(Point_t<int> pos, RGBAColor c) { position = pos; color = c; };
+	Pixel(Point2i pos, RGBAColor c) { position = pos; color = c; };
 };
 
 /// @brief A pixelsprite
@@ -32,7 +32,7 @@ struct PixelSprite {
 	/// @brief a collection of pixels
 	std::vector<Pixel> pixels;
 	/// @brief position of the pixelsprite on the canvas
-	Point_t<int> position;
+	Point2i position;
 
 	/// @brief s imple color pallete
 	RGBAColor pallete[10] = {
@@ -63,9 +63,23 @@ struct PixelSprite {
 			int value = (int) data[i];
 			if (value != 0) {
 				color = pallete[value];
-				//this->pixels.push_back(Pixel(Point_t<int>(x, y*-1), color)); // pivot at (0,0)
-				this->pixels.push_back(Pixel(Point_t<int>(x-(w/2), (y*-1)+(h/2)), color)); // pivot centered
+				//this->pixels.push_back( Pixel(Point2i(x, y*-1), color) ); // pivot at (0,0)
+				this->pixels.push_back( Pixel(Point2i(x-(w/2), (y*-1)+(h/2)), color) ); // pivot centered
 			}
+		}
+	};
+
+	/// @brief create line pixels from a Vector2
+	/// @param vec the Vector2 to draw
+	/// @param color the RGBAColor of the Pixel on the line
+	/// @return void
+	void createLine(Vector2f vec, RGBAColor color) {
+		// naive line drawing algorithm
+		int len = vec.getLength();
+		for (int i = len; i >= 0; i--) {
+			vec.limit(i);
+			Point2i point = Point2i(vec.x, vec.y);
+			this->pixels.push_back( Pixel(point, color) );
 		}
 	};
 
@@ -77,11 +91,11 @@ struct PixelSprite {
 		copy.position = this->position;
 		size_t s = pixels.size();
 		for (size_t i = 0; i < s; i++) {
-			VectorX_t<float> v = VectorX_t<float>(pixels[i].position.x, pixels[i].position.y, 0);
+			Vector2f v = Vector2f(pixels[i].position.x, pixels[i].position.y, 0);
 			v.rotate(a);
 			int x = nearbyint(v.x+0.1); // rounding up a bit works a little better
 			int y = nearbyint(v.y+0.1);
-			copy.pixels.push_back(Pixel(Point_t<int>(x, y), pixels[i].color));
+			copy.pixels.push_back(Pixel(Point2i(x, y), pixels[i].color));
 		}
 		return copy;
 	};

@@ -26,6 +26,7 @@ public:
 private:
 	PixelSprite sprite;
 	PixelSprite bob;
+	PixelSprite line;
 
 	Canvas* canvas;
 	Timer timer;

@@ -56,6 +56,9 @@ Scene12::Scene12() : SuperScene()
 
 	sprite.init(pixelarray, 16, 16);
 	sprite.position = Pointi(canvas->width() / 4, canvas->height() / 2);
+
+	// ###############################################################
+	line.position = Point2i(canvas->width() / 2, canvas->height() / 2);
 }
 
 
@@ -66,6 +69,7 @@ Scene12::~Scene12()
 
 	sprite.pixels.clear();
 	bob.pixels.clear();
+	line.pixels.clear();
 }
 
 void Scene12::update(float deltaTime)
@@ -103,21 +107,25 @@ void Scene12::update(float deltaTime)
 		if (d > TWO_PI) { d -= TWO_PI; }
 		canvas->drawSprite(spr);
 
+		// draw line
+		static float a = TWO_PI;
+		static Vector2f vec = Vector2f(30,0);
+		canvas->clearSprite(line);
+		line.pixels.clear(); // empty pixels array before creating new line
+		line.createLine(vec, GREEN); // vec, color
+		a -= TWO_PI / 60; if (a < 0) { a += TWO_PI; }
+		vec.rotation(a);
+		canvas->drawSprite(line);
+
 		// draw bob
-		Vector2 vel = Vector2((rand()%3)-1, (rand()%3)-1);
-		if (bob.position.x < 0) {
+		Vector2i vel = Vector2i((int)(rand()%3)-1, (int)(rand()%3)-1);
+		if (bob.position.x < 0 || bob.position.x > canvas->width()) {
 			bob.position.x = canvas->width() / 2;
 		}
-		if (bob.position.x > canvas->width()) {
-			bob.position.x = canvas->width() / 2;
-		}
-		if (bob.position.y < 0) {
+		if (bob.position.y < 0 || bob.position.y > canvas->height()) {
 			bob.position.y = canvas->height() / 2;
 		}
-		if (bob.position.y > canvas->height()) {
-			bob.position.y = canvas->height() / 2;
-		}
-		bob.position += Vector2i(round(vel.x), round(vel.y));
+		bob.position += vel;
 		canvas->drawSprite(bob);
 
 		// restart frametimer
