@@ -59,6 +59,10 @@ Scene12::Scene12() : SuperScene()
 
 	// ###############################################################
 	line.position = Point2i(canvas->width() / 2, canvas->height() / 2);
+
+	// ###############################################################
+	circle.createCircle(25, YELLOW);
+	circle.position = Point2i(canvas->width() / 2, canvas->height() / 2);
 }
 
 
@@ -70,6 +74,7 @@ Scene12::~Scene12()
 	sprite.pixels.clear();
 	bob.pixels.clear();
 	line.pixels.clear();
+	circle.pixels.clear();
 }
 
 void Scene12::update(float deltaTime)
@@ -109,13 +114,17 @@ void Scene12::update(float deltaTime)
 
 		// draw line
 		static float a = TWO_PI;
-		static Vector2f vec = Vector2f(30,0);
+		static Vector2f vec = Vector2f(22,0);
 		canvas->clearSprite(line);
 		line.pixels.clear(); // empty pixels array before creating new line
 		line.createLine(vec, GREEN); // vec, color
 		a -= TWO_PI / 60; if (a < 0) { a += TWO_PI; }
 		vec.rotation(a);
 		canvas->drawSprite(line);
+
+		// draw circle
+		canvas->clearSprite(circle);
+		canvas->drawSprite(circle);
 
 		// draw bob
 		Vector2i vel = Vector2i((int)(rand()%3)-1, (int)(rand()%3)-1);

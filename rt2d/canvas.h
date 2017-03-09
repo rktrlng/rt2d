@@ -34,7 +34,7 @@ struct PixelSprite {
 	/// @brief position of the pixelsprite on the canvas
 	Point2i position;
 
-	/// @brief s imple color pallete
+	/// @brief simple color pallete
 	RGBAColor pallete[10] = {
 		MAGENTA, // 0 shouldn't generate a pixel
 		WHITE,
@@ -71,7 +71,7 @@ struct PixelSprite {
 
 	/// @brief create line pixels from a Vector2
 	/// @param vec the Vector2 to draw
-	/// @param color the RGBAColor of the Pixel on the line
+	/// @param color the RGBAColor of the line
 	/// @return void
 	void createLine(Vector2f vec, RGBAColor color) {
 		// naive line drawing algorithm
@@ -82,6 +82,37 @@ struct PixelSprite {
 			this->pixels.push_back( Pixel(point, color) );
 		}
 	};
+
+	/// @brief create circle pixels
+	/// @param radius the radius of the circle
+	/// @param color the RGBAColor of the circle
+	/// @return void
+	// https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
+	void createCircle(int radius, RGBAColor color) {
+		int x = radius;
+		int y = 0;
+		int err = 0;
+
+		while (x >= y) {
+			this->pixels.push_back( Pixel(Point2i( x, y), color) );
+			this->pixels.push_back( Pixel(Point2i( y, x), color) );
+			this->pixels.push_back( Pixel(Point2i(-y, x), color) );
+			this->pixels.push_back( Pixel(Point2i(-x, y), color) );
+			this->pixels.push_back( Pixel(Point2i(-x, -y), color) );
+			this->pixels.push_back( Pixel(Point2i(-y, -x), color) );
+			this->pixels.push_back( Pixel(Point2i( y, -x), color) );
+			this->pixels.push_back( Pixel(Point2i( x, -y), color) );
+
+			if (err <= 0) {
+				y += 1;
+				err += 2*y + 1;
+			}
+			if (err > 0) {
+				x -= 1;
+				err -= 2*x + 1;
+			}
+		}
+	}
 
 	/// @brief rotate the pixelsprite
 	/// @param a angle in radians
