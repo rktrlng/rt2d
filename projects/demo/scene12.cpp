@@ -61,7 +61,7 @@ Scene12::Scene12() : SuperScene()
 	line.position = Point2i(canvas->width() / 2, canvas->height() / 2);
 
 	// ###############################################################
-	circle.createCircle(25, YELLOW);
+	circle.createCircle(16, YELLOW);
 	circle.position = Point2i(canvas->width() / 2, canvas->height() / 2);
 }
 
@@ -114,7 +114,7 @@ void Scene12::update(float deltaTime)
 
 		// draw line
 		static float a = TWO_PI;
-		static Vector2f vec = Vector2f(22,0);
+		static Vector2f vec = Vector2f(12,0);
 		canvas->clearSprite(line);
 		line.pixels.clear(); // empty pixels array before creating new line
 		line.createLine(vec, GREEN); // vec, color

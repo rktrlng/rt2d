@@ -74,12 +74,38 @@ struct PixelSprite {
 	/// @param color the RGBAColor of the line
 	/// @return void
 	void createLine(Vector2f vec, RGBAColor color) {
-		// naive line drawing algorithm
-		int len = vec.getLength();
-		for (int i = len; i >= 0; i--) {
-			vec.limit(i);
-			Point2i point = Point2i(vec.x, vec.y);
-			this->pixels.push_back( Pixel(point, color) );
+		float x0 = 0.0f;
+		float y0 = 0.0f;
+		float x1 = vec.x;
+		float y1 = vec.y;
+
+		bool steep = false;
+		if (std::abs(x0-x1) < std::abs(y0-y1)) {
+			std::swap(x0, y0);
+			std::swap(x1, y1);
+			steep = true;
+		}
+		if (x0 > x1) {
+			std::swap(x0, x1);
+			std::swap(y0, y1);
+		}
+		int dx = x1-x0;
+		int dy = y1-y0;
+		int derror2 = std::abs(dy)*2;
+		int error2 = 0;
+		int y = y0;
+		for (int x = x0; x <= x1; x++) {
+			if (steep) {
+				this->pixels.push_back( Pixel(Point2i(y,x), color) );
+			} else {
+				this->pixels.push_back( Pixel(Point2i(x,y), color) );
+			}
+			error2 += derror2;
+
+			if (error2 > dx) {
+				y += (y1 > y0 ? 1 : -1);
+				error2 -= dx*2;
+			}
 		}
 	};
 
