@@ -16,8 +16,21 @@ Scene12::Scene12() : SuperScene()
 
 	timer.start();
 
-	// create Canvas
-	canvas = new Canvas(8); // pixelsize
+	const unsigned int pixelsize = 8;
+
+	// Create backgroundcanvas. Fill with opaque gradient.
+	// This will stay the background canvas. No need to update it.
+	backgroundcanvas = new Canvas(pixelsize);
+	layers[0]->addChild(backgroundcanvas);
+	for (int y = 0; y < backgroundcanvas->height(); y++) {
+		for (int x = 0; x < backgroundcanvas->width(); x++) {
+			backgroundcanvas->setPixel(x, y, RGBAColor(0, y, 0, 255));
+		}
+	}
+
+	// Create canvas. Default color is transparent black.
+	// This is the one where we clear/draw pixels in update.
+	canvas = new Canvas(pixelsize);
 	layers[0]->addChild(canvas);
 
 	// ###############################################################
@@ -61,7 +74,7 @@ Scene12::Scene12() : SuperScene()
 	line.position = Point2i(canvas->width() / 2, canvas->height() / 2);
 
 	// ###############################################################
-	circle.createCircle(16, YELLOW);
+	circle.createCircle(12, YELLOW);
 	circle.position = Point2i(canvas->width() / 2, canvas->height() / 2);
 }
 
@@ -70,6 +83,8 @@ Scene12::~Scene12()
 {
 	layers[0]->removeChild(canvas);
 	delete canvas;
+	layers[0]->removeChild(backgroundcanvas);
+	delete backgroundcanvas;
 
 	sprite.pixels.clear();
 	bob.pixels.clear();

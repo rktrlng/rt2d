@@ -29,6 +29,7 @@ private:
 	PixelSprite line;
 	PixelSprite circle;
 
+	Canvas* backgroundcanvas;
 	Canvas* canvas;
 	Timer timer;
 };
