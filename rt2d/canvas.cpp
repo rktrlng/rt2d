@@ -34,19 +34,17 @@ void Canvas::init(int pixelsize)
 	this->position = Point2(SWIDTH/2, SHEIGHT/2);
 	this->scale = Point2(pixelsize, pixelsize);
 
-	int border = 0;
-
 	// width, height, bitdepth, filter, wrap
-	PixelBuffer tmp = PixelBuffer((SWIDTH/pixelsize)-border, (SHEIGHT/pixelsize)-border, 3, 0, 0);
+	PixelBuffer tmp = PixelBuffer(SWIDTH/pixelsize, SHEIGHT/pixelsize, 4, 0, 0);
 	this->addDynamicSprite(&tmp);
 
-	// get the pixels from the texture and call it the global framebuffer
+	// get the pixels from the texture and make the framebuffer point to it
 	this->_framebuffer = this->sprite()->texture()->pixels();
 
 	this->_width = SWIDTH / pixelsize;
 	this->_height = SHEIGHT / pixelsize;
 
-	backgroundcolor = RGBAColor(32, 32, 32, 255);
+	backgroundcolor = RGBAColor(0, 0, 0, 0);
 	this->fill(backgroundcolor);
 }
 
