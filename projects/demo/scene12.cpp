@@ -114,11 +114,11 @@ void Scene12::update(float deltaTime)
 
 		// draw line
 		static float a = TWO_PI;
-		static Vector2f vec = Vector2f(12,0);
+		static Vector2f vec = Vector2f(36,0);
 		canvas->clearSprite(line);
 		line.pixels.clear(); // empty pixels array before creating new line
 		line.createLine(vec, GREEN); // vec, color
-		a -= TWO_PI / 60; if (a < 0) { a += TWO_PI; }
+		a -= PI / 60; if (a < 0) { a += TWO_PI; }
 		vec.rotation(a);
 		canvas->drawSprite(line);
 
