@@ -20,6 +20,7 @@ Wolfenstein::Wolfenstein() : Scene()
 	pos = Point2d(22,12); // x and y start position
 	dir = Point2d(-1,0); // initial direction vector
 	plane = Point2d(0.0,0.66); // the 2d raycaster version of camera plane
+	wallHeight = 1.25f;
 
 	char level[576] = { // 24 * 24
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -33,7 +34,7 @@ Wolfenstein::Wolfenstein() : Scene()
 		1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -65,10 +66,7 @@ void Wolfenstein::update(float deltaTime)
 		this->stop();
 	}
 
-	// clear canvas
-	canvas->fill(canvas->backgroundcolor);
-
-	// Raycast every x. Draw vertical line depending on distance
+	// draw world
 	this->raycastAndDraw();
 
 	// handle Input: Up Down Left Right
@@ -77,6 +75,7 @@ void Wolfenstein::update(float deltaTime)
 
 void Wolfenstein::raycastAndDraw()
 {
+	// Raycast every x. Draw vertical line. Height depending on distance
 	for(int x = 0; x < canvas->width(); x++) {
 		//calculate ray position and direction
 		double cameraX = 2 * x / double(canvas->width()) - 1; //x-coordinate in camera space
@@ -107,16 +106,14 @@ void Wolfenstein::raycastAndDraw()
 		if (rayDirX < 0) {
 			stepX = -1;
 			sideDistX = (rayPosX - mapX) * deltaDistX;
-		}
-		else {
+		} else {
 			stepX = 1;
 			sideDistX = (mapX + 1.0 - rayPosX) * deltaDistX;
 		}
 		if (rayDirY < 0) {
 			stepY = -1;
 			sideDistY = (rayPosY - mapY) * deltaDistY;
-		}
-		else {
+		} else {
 			stepY = 1;
 			sideDistY = (mapY + 1.0 - rayPosY) * deltaDistY;
 		}
@@ -127,8 +124,7 @@ void Wolfenstein::raycastAndDraw()
 				sideDistX += deltaDistX;
 				mapX += stepX;
 				side = 0;
-			}
-			else {
+			} else {
 				sideDistY += deltaDistY;
 				mapY += stepY;
 				side = 1;
@@ -137,8 +133,13 @@ void Wolfenstein::raycastAndDraw()
 			if (world.map(mapX, mapY) > 0) { hit = 1; }
 		}
 		//Calculate distance projected on camera direction (oblique distance will give fisheye effect!)
-		if (side == 0)	{ perpWallDist = (mapX - rayPosX + (1 - stepX) / 2) / rayDirX; }
-		else			{ perpWallDist = (mapY - rayPosY + (1 - stepY) / 2) / rayDirY; }
+		if (side == 0) {
+			perpWallDist = (mapX - rayPosX + (1 - stepX) / 2) / rayDirX;
+		} else {
+			perpWallDist = (mapY - rayPosY + (1 - stepY) / 2) / rayDirY;
+		}
+
+		perpWallDist /= wallHeight;
 
 		//Calculate height of line to draw on screen
 		int lineHeight = (int)(canvas->height() / perpWallDist);
@@ -151,12 +152,13 @@ void Wolfenstein::raycastAndDraw()
 
 		//choose wall color
 		RGBAColor color;
-		switch(world.map(mapX, mapY)) {
-			case 1:	color = RED;	break;
-			case 2:	color = GREEN;	break;
-			case 3:	color = BLUE;	 break;
-			case 4:	color = CYAN;	break;
-			case 5:	color = YELLOW;	break;
+		switch( world.map(mapX, mapY) ) {
+			case 1:	color = RED; break;
+			case 2:	color = GREEN; break;
+			case 3:	color = BLUE; break;
+			case 4:	color = CYAN; break;
+			case 5:	color = YELLOW; break;
+			case 6:	color = MAGENTA; break;
 			default: color = WHITE; break;
 		}
 
@@ -167,11 +169,19 @@ void Wolfenstein::raycastAndDraw()
 			color.b = color.b / 2;
 		}
 
-		//draw the pixels of the stripe as a vertical line
-		for (int y = drawStart; y < drawEnd; y++) {
-			canvas->setPixel(x, y, color);
+		//draw pixels of y (vertical line) for this x
+		int ctint = 128; // ceiling tint
+		int ftint = 64; // floor tint
+		for (int y = 0; y < canvas->height(); y++) {
+			if (y < drawStart) { // floor
+				canvas->setPixel(x, y, RGBAColor(ftint,ftint,ftint,255));
+			} else if (y >= drawStart && y < drawEnd) { // wall
+				canvas->setPixel(x, y, color);
+			} else {
+				canvas->setPixel(x, y, RGBAColor(ctint,ctint,ctint,255));
+			}
 		}
-	} // end for loop
+	} // end for x loop
 }
 
 void Wolfenstein::handleInput(float deltaTime)
