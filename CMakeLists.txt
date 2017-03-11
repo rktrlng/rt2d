@@ -11,6 +11,7 @@ OPTION(MAKE_BASIC3D "Make basic3D application" ON)
 OPTION(MAKE_NOISE "Make Perlin Noise application" ON)
 OPTION(MAKE_GEOMETRIC "Make GeoMetric application" ON)
 OPTION(MAKE_SHADY "Make custom Shader application" ON)
+OPTION(MAKE_WOLFENSTEIN "Make Wolfenstein3D raycasting application" ON)
 
 OPTION(USE_RS232 "Use RS232 library" ON)
 OPTION(MAKE_SERIAL "Make serial application" ON)
@@ -332,6 +333,19 @@ IF(MAKE_FLOCKING)
 	file(
 		COPY projects/flocking/assets
 		DESTINATION ${CMAKE_BINARY_DIR}
+	)
+ENDIF()
+
+####################################################################
+# Wolfenstein3D                                                    #
+####################################################################
+IF(MAKE_WOLFENSTEIN)
+	add_executable(wolfenstein
+		projects/wolfenstein/wolfenstein.cpp
+		projects/wolfenstein/main.cpp
+	)
+	target_link_libraries(wolfenstein
+		${ALL_GRAPHICS_LIBS}
 	)
 ENDIF()
 
