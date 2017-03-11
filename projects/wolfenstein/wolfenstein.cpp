@@ -201,12 +201,12 @@ void Wolfenstein::handleInput(float deltaTime)
 	//Strafe right (this can get you stuck, just rotate and walk forwards or backwards)
 	if ( input()->getKey(KeyCode::D) ) {
 		if(world.map(int(pos.x + plane.x * moveSpeed), int(pos.y)) == 0) { pos.x += plane.x * moveSpeed; }
-		if(world.map(int(pos.x), int(pos.y + dir.y * moveSpeed)) == 0) { pos.y += plane.y * moveSpeed; }
+		if(world.map(int(pos.x), int(pos.y + plane.y * moveSpeed)) == 0) { pos.y += plane.y * moveSpeed; }
 	}
 	//Strafe left (this can get you stuck, just rotate and walk forwards or backwards)
 	if ( input()->getKey(KeyCode::A) ) {
 		if(world.map(int(pos.x + plane.x * moveSpeed), int(pos.y)) == 0) { pos.x -= plane.x * moveSpeed; }
-		if(world.map(int(pos.x), int(pos.y + dir.y * moveSpeed)) == 0) { pos.y -= plane.y * moveSpeed; }
+		if(world.map(int(pos.x), int(pos.y + plane.y * moveSpeed)) == 0) { pos.y -= plane.y * moveSpeed; }
 	}
 	//rotate to the right
 	if ( input()->getKey(KeyCode::E) || input()->getKey(KeyCode::Right) ) {
