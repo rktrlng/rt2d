@@ -69,7 +69,7 @@ void Wolfenstein::update(float deltaTime)
 	// draw world
 	this->raycastAndDraw();
 
-	// handle Input: Up Down Left Right
+	// handle Input: Up Down Left Right / QWEASD
 	this->handleInput(deltaTime);
 }
 
@@ -191,17 +191,27 @@ void Wolfenstein::handleInput(float deltaTime)
 	double rotSpeed = deltaTime * 1.5; //the constant value is in radians/second
 
 	//move forward if no wall in front of you
-	if ( input()->getKey(KeyCode::Up) ) {
+	if ( input()->getKey(KeyCode::W) || input()->getKey(KeyCode::Up) ) {
 		if(world.map(int(pos.x + dir.x * moveSpeed), int(pos.y)) == false) { pos.x += dir.x * moveSpeed; }
 		if(world.map(int(pos.x), int(pos.y + dir.y * moveSpeed)) == false) { pos.y += dir.y * moveSpeed; }
 	}
 	//move backwards if no wall behind you
-	if ( input()->getKey(KeyCode::Down) ) {
+	if ( input()->getKey(KeyCode::S) || input()->getKey(KeyCode::Down) ) {
 		if(world.map(int(pos.x - dir.x * moveSpeed), int(pos.y)) == false) { pos.x -= dir.x * moveSpeed; }
 		if(world.map(int(pos.x), int(pos.y - dir.y * moveSpeed)) == false) { pos.y -= dir.y * moveSpeed; }
 	}
+	//Strafe right if no wall to the right of you
+	if ( input()->getKey(KeyCode::D) ) {
+		if(world.map(int(pos.x + dir.x * moveSpeed), int(pos.y)) == false) { pos.x += plane.x * moveSpeed; }
+		if(world.map(int(pos.x), int(pos.y + dir.y * moveSpeed)) == false) { pos.y += plane.y * moveSpeed; }
+	}
+	//Strafe left if no wall to the left of you
+	if ( input()->getKey(KeyCode::A) ) {
+		if(world.map(int(pos.x + dir.x * moveSpeed), int(pos.y)) == false) { pos.x -= plane.x * moveSpeed; }
+		if(world.map(int(pos.x), int(pos.y + dir.y * moveSpeed)) == false) { pos.y -= plane.y * moveSpeed; }
+	}
 	//rotate to the right
-	if ( input()->getKey(KeyCode::Right) ) {
+	if ( input()->getKey(KeyCode::E) || input()->getKey(KeyCode::Right) ) {
 		//both camera direction and camera plane must be rotated
 		double oldDirX = dir.x;
 		dir.x = dir.x * cos(-rotSpeed) - dir.y * sin(-rotSpeed);
@@ -211,7 +221,7 @@ void Wolfenstein::handleInput(float deltaTime)
 		plane.y = oldPlaneX * sin(-rotSpeed) + plane.y * cos(-rotSpeed);
 	}
 	//rotate to the left
-	if ( input()->getKey(KeyCode::Left) ) {
+	if ( input()->getKey(KeyCode::Q) || input()->getKey(KeyCode::Left) ) {
 		//both camera direction and camera plane must be rotated
 		double oldDirX = dir.x;
 		dir.x = dir.x * cos(rotSpeed) - dir.y * sin(rotSpeed);
