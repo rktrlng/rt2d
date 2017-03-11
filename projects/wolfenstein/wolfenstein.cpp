@@ -17,10 +17,10 @@ Wolfenstein::Wolfenstein() : Scene()
 	canvas = new Canvas(2); // pixelsize
 	this->addChild(canvas);
 
-	pos = Point2d(22,12); // x and y start position
-	dir = Point2d(-1,0); // initial direction vector
-	plane = Point2d(0.0,0.66); // the 2d raycaster version of camera plane
-	wallHeight = 1.25f;
+	aspect = 0.85f;
+	pos = Point2d(22, 12); // x and y start position
+	dir = Point2d(-1, 0); // initial direction vector
+	plane = Point2d(0.0, aspect); // the 2d raycaster version of camera plane
 
 	char level[576] = { // 24 * 24
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -139,8 +139,6 @@ void Wolfenstein::raycastAndDraw()
 			perpWallDist = (mapY - rayPosY + (1 - stepY) / 2) / rayDirY;
 		}
 
-		perpWallDist /= wallHeight;
-
 		//Calculate height of line to draw on screen
 		int lineHeight = (int)(canvas->height() / perpWallDist);
 
@@ -169,16 +167,16 @@ void Wolfenstein::raycastAndDraw()
 			color.b = color.b / 2;
 		}
 
-		//draw pixels of y (vertical line) for this x
-		int ctint = 128; // ceiling tint
-		int ftint = 64; // floor tint
+		//draw pixels of y (vertical line) for this x. Bottom to top.
+		RGBAColor ceilcolor = RGBAColor(128, 128, 128, 255);
+		RGBAColor floorcolor = RGBAColor(64, 64, 64, 255);
 		for (int y = 0; y < canvas->height(); y++) {
 			if (y < drawStart) { // floor
-				canvas->setPixel(x, y, RGBAColor(ftint,ftint,ftint,255));
+				canvas->setPixel(x, y, floorcolor);
 			} else if (y >= drawStart && y < drawEnd) { // wall
 				canvas->setPixel(x, y, color);
 			} else {
-				canvas->setPixel(x, y, RGBAColor(ctint,ctint,ctint,255));
+				canvas->setPixel(x, y, ceilcolor);
 			}
 		}
 	} // end for x loop
@@ -192,23 +190,23 @@ void Wolfenstein::handleInput(float deltaTime)
 
 	//move forward if no wall in front of you
 	if ( input()->getKey(KeyCode::W) || input()->getKey(KeyCode::Up) ) {
-		if(world.map(int(pos.x + dir.x * moveSpeed), int(pos.y)) == false) { pos.x += dir.x * moveSpeed; }
-		if(world.map(int(pos.x), int(pos.y + dir.y * moveSpeed)) == false) { pos.y += dir.y * moveSpeed; }
+		if(world.map(int(pos.x + dir.x * moveSpeed), int(pos.y)) == 0) { pos.x += dir.x * moveSpeed; }
+		if(world.map(int(pos.x), int(pos.y + dir.y * moveSpeed)) == 0) { pos.y += dir.y * moveSpeed; }
 	}
 	//move backwards if no wall behind you
 	if ( input()->getKey(KeyCode::S) || input()->getKey(KeyCode::Down) ) {
-		if(world.map(int(pos.x - dir.x * moveSpeed), int(pos.y)) == false) { pos.x -= dir.x * moveSpeed; }
-		if(world.map(int(pos.x), int(pos.y - dir.y * moveSpeed)) == false) { pos.y -= dir.y * moveSpeed; }
+		if(world.map(int(pos.x - dir.x * moveSpeed), int(pos.y)) == 0) { pos.x -= dir.x * moveSpeed; }
+		if(world.map(int(pos.x), int(pos.y - dir.y * moveSpeed)) == 0) { pos.y -= dir.y * moveSpeed; }
 	}
-	//Strafe right if no wall to the right of you
+	//Strafe right (this can get you stuck, just rotate and walk forwards or backwards)
 	if ( input()->getKey(KeyCode::D) ) {
-		if(world.map(int(pos.x + dir.x * moveSpeed), int(pos.y)) == false) { pos.x += plane.x * moveSpeed; }
-		if(world.map(int(pos.x), int(pos.y + dir.y * moveSpeed)) == false) { pos.y += plane.y * moveSpeed; }
+		if(world.map(int(pos.x + plane.x * moveSpeed), int(pos.y)) == 0) { pos.x += plane.x * moveSpeed; }
+		if(world.map(int(pos.x), int(pos.y + dir.y * moveSpeed)) == 0) { pos.y += plane.y * moveSpeed; }
 	}
-	//Strafe left if no wall to the left of you
+	//Strafe left (this can get you stuck, just rotate and walk forwards or backwards)
 	if ( input()->getKey(KeyCode::A) ) {
-		if(world.map(int(pos.x + dir.x * moveSpeed), int(pos.y)) == false) { pos.x -= plane.x * moveSpeed; }
-		if(world.map(int(pos.x), int(pos.y + dir.y * moveSpeed)) == false) { pos.y -= plane.y * moveSpeed; }
+		if(world.map(int(pos.x + plane.x * moveSpeed), int(pos.y)) == 0) { pos.x -= plane.x * moveSpeed; }
+		if(world.map(int(pos.x), int(pos.y + dir.y * moveSpeed)) == 0) { pos.y -= plane.y * moveSpeed; }
 	}
 	//rotate to the right
 	if ( input()->getKey(KeyCode::E) || input()->getKey(KeyCode::Right) ) {

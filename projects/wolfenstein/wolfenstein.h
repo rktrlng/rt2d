@@ -44,7 +44,7 @@ private:
 	Point2d pos; // x and y start position
 	Point2d dir; // initial direction vector
 	Point2d plane; // the 2d raycaster version of camera plane
-	float wallHeight; // the 2d raycaster version of camera plane
+	float aspect; // the camera plane aspect ratio
 };
 
 #endif /* WOLFENSTEIN_H */
