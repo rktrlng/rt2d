@@ -3,6 +3,7 @@
 
 #include <rt2d/scene.h>
 #include <rt2d/canvas.h>
+#include <rt2d/color.h>
 
 // see http://lodev.org/cgtutor/raycasting.html
 

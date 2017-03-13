@@ -149,7 +149,7 @@ void Wolfenstein::raycastAndDraw()
 		if(drawEnd >= canvas->height()) { drawEnd = canvas->height() - 1; }
 
 		//choose wall color
-		RGBAColor color;
+		RGBAColor color = WHITE;
 		switch( world.map(mapX, mapY) ) {
 			case 1:	color = RED; break;
 			case 2:	color = GREEN; break;
@@ -160,11 +160,17 @@ void Wolfenstein::raycastAndDraw()
 			default: color = WHITE; break;
 		}
 
+		// Shading. Walls far away are darker.
+		float tintfactor = lineHeight / 25.0f; // higher magic number = darker sooner
+		if (tintfactor <= 1) { tintfactor = 1; } // clamp colors to 0-255
+		color.r -= color.r / tintfactor;
+		color.g -= color.g / tintfactor;
+		color.b -= color.b / tintfactor;
 		//give x and y sides different brightness
 		if (side == 1) {
-			color.r = color.r / 2;
-			color.g = color.g / 2;
-			color.b = color.b / 2;
+			color.r /= 2;
+			color.g /= 2;
+			color.b /= 2;
 		}
 
 		//draw pixels of y (vertical line) for this x. Bottom to top.
@@ -175,7 +181,7 @@ void Wolfenstein::raycastAndDraw()
 				canvas->setPixel(x, y, floorcolor);
 			} else if (y >= drawStart && y < drawEnd) { // wall
 				canvas->setPixel(x, y, color);
-			} else {
+			} else { // ceiling
 				canvas->setPixel(x, y, ceilcolor);
 			}
 		}
