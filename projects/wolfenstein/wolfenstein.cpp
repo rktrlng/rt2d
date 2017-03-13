@@ -162,7 +162,7 @@ void Wolfenstein::raycastAndDraw()
 
 		// Shading. Walls far away are darker.
 		float tintfactor = lineHeight / 25.0f; // higher magic number = darker sooner
-		if (tintfactor <= 1) { tintfactor = 1; } // clamp colors to 0-255
+		if (tintfactor <= 1) { tintfactor = 1; } // clamp colors to 0
 		color.r -= color.r / tintfactor;
 		color.g -= color.g / tintfactor;
 		color.b -= color.b / tintfactor;
@@ -174,15 +174,15 @@ void Wolfenstein::raycastAndDraw()
 		}
 
 		//draw pixels of y (vertical line) for this x. Bottom to top.
-		RGBAColor ceilcolor = RGBAColor(128, 128, 128, 255);
-		RGBAColor floorcolor = RGBAColor(64, 64, 64, 255);
+		int ceiltint = 64;
+		int floortint = 96;
 		for (int y = 0; y < canvas->height(); y++) {
 			if (y < drawStart) { // floor
-				canvas->setPixel(x, y, floorcolor);
+				canvas->setPixel(x, y, RGBAColor(floortint-y/2, floortint-y/2, floortint-y/2, 255));
 			} else if (y >= drawStart && y < drawEnd) { // wall
 				canvas->setPixel(x, y, color);
 			} else { // ceiling
-				canvas->setPixel(x, y, ceilcolor);
+				canvas->setPixel(x, y, RGBAColor(y/2-ceiltint, y/2-ceiltint, y/2-ceiltint, 255));
 			}
 		}
 	} // end for x loop
