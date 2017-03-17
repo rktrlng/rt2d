@@ -78,7 +78,7 @@ void Scene01::update(float deltaTime)
 		st.start();
 	}
 
-	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
+	if (input()->getKeyUp( KeyCode::Escape )) {
 		this->stop();
 	}
 }

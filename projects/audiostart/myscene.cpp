@@ -52,7 +52,7 @@ void MyScene::update(float deltaTime)
 	// ###############################################################
 	// Escape key stops the Scene
 	// ###############################################################
-	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
+	if (input()->getKeyUp( KeyCode::Escape )) {
 		this->stop();
 	}
 
@@ -64,34 +64,34 @@ void MyScene::update(float deltaTime)
 	static float currvolume = 1.5f;
 
 	// music select
-	if (input()->getKeyDown( GLFW_KEY_SPACE )) {
+	if (input()->getKeyDown( KeyCode::Space )) {
 		square->scale = Point(0.5f, 0.5f);
 		sounds[currmusic]->pause();
 	}
-	if (input()->getKeyUp( GLFW_KEY_SPACE )) {
+	if (input()->getKeyUp( KeyCode::Space )) {
 		square->scale = Point(1.0f, 1.0f);
 		sounds[currmusic]->play();
 	}
 
 	// sound effects
-	if (input()->getKeyDown( GLFW_KEY_1 )) {
+	if (input()->getKeyDown( KeyCode::Alpha1 )) {
 		sounds[3]->play();
 	}
-	if (input()->getKeyDown( GLFW_KEY_2 )) {
+	if (input()->getKeyDown( KeyCode::Alpha2 )) {
 		sounds[4]->play();
 	}
-	if (input()->getKeyDown( GLFW_KEY_3 )) {
+	if (input()->getKeyDown( KeyCode::Alpha3 )) {
 		sounds[5]->play();
 	}
 
 	// select music
-	if (input()->getKeyDown( GLFW_KEY_RIGHT_BRACKET )) {
+	if (input()->getKeyDown( KeyCode::RightBracket )) {
 		sounds[currmusic]->pause();
 		currmusic++;
 		if (currmusic > 2) { currmusic = 0; }
 		sounds[currmusic]->play();
 	}
-	if (input()->getKeyDown( GLFW_KEY_LEFT_BRACKET )) {
+	if (input()->getKeyDown( KeyCode::LeftBracket )) {
 		sounds[currmusic]->pause();
 		currmusic--;
 		if (currmusic < 0) { currmusic = 2; }
@@ -99,8 +99,8 @@ void MyScene::update(float deltaTime)
 	}
 
 	// set pitch
-	if (input()->getKeyDown( GLFW_KEY_E )) { currpitch += 0.1f; }
-	if (input()->getKeyDown( GLFW_KEY_Q )) { currpitch -= 0.1f; }
+	if (input()->getKeyDown( KeyCode::E )) { currpitch += 0.1f; }
+	if (input()->getKeyDown( KeyCode::Q )) { currpitch -= 0.1f; }
 	sounds[currmusic]->pitch(currpitch);
 
 	std::stringstream sp;
@@ -108,8 +108,8 @@ void MyScene::update(float deltaTime)
 	text[2]->message(sp.str());
 
 	// volume
-	if (input()->getKeyDown( GLFW_KEY_A )) { currvolume -= 0.5f; }
-	if (input()->getKeyDown( GLFW_KEY_D )) { currvolume += 0.5f; }
+	if (input()->getKeyDown( KeyCode::A )) { currvolume -= 0.5f; }
+	if (input()->getKeyDown( KeyCode::D )) { currvolume += 0.5f; }
 	Audio::volume(currvolume);
 	std::stringstream sv;
 	sv << "Volume: " << currvolume;
