@@ -5,7 +5,7 @@ RT2D is a RealTime 2D framework, based on somewhat 'modern' OpenGL (2.1+). It co
 
 Compatibility is chosen over features. Readability over efficiency. Simplicity over speed. There's no fancy OpenGL stuff here. Just update and render scenes with entities that contain (colored) sprites, spritesheets, spritebatches, pixelbuffers, fonts and lines.
 
-OpenAL and Box2D are not integrated into RT2D. Explicitly link to them if you want to use them. Look in CMakeLists.txt for examples.
+OpenAL (audio) and Box2D (physics) are not integrated into RT2D. Explicitly link to them if you want to use them. RT2D is just a renderer. Look in CMakeLists.txt for examples.
 
 Compiling
 ---------
@@ -73,7 +73,7 @@ MS Windows (VS2015)
 
 Install the following:
 
-- Visual Studio 2015 Community Edition (VS2013 also works fine).
+- Visual Studio 2015 Community Edition (VS2013 also works fine) + Visual C++ (do a custom install)
 - git
 - cmake
 - doxygen
