@@ -45,6 +45,7 @@ private:
 	void removeWalls(MCell* c, MCell* n);
 	void clear();
 	void reset();
+	void export_grid();
 
 	int gridwidth;
 	int gridheight;

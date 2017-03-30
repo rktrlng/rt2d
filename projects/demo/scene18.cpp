@@ -101,6 +101,7 @@ void Scene18::update(float deltaTime)
 		// no more unvisited cells. We're done.
 		if (unvisitedcounter == 0) {
 			text[2]->message("done!");
+			this->export_grid();
 		} else {
 			text[2]->message("generating...");
 		}
@@ -132,6 +133,27 @@ void Scene18::update(float deltaTime)
 		t.start();
 	}
 
+}
+
+void Scene18::export_grid()
+{
+	static int first_time = 1;
+	if (first_time == 1) {
+		first_time = 0;
+		std::cout << "export " << cells.size() << std::endl;
+		int counter = 0;
+		for (int y=0; y<gridheight; y++) {
+			for (int x=0; x<gridwidth; x++) {
+				int fr = (int) cells[counter]->walls.to_ulong();
+
+				if (fr < 10) { std::cout << " "; }
+				std::cout << fr << ",";
+
+				counter++;
+			}
+			std::cout << std::endl;
+		}
+	}
 }
 
 void Scene18::removeWalls(MCell* c, MCell* n)
