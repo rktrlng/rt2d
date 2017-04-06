@@ -12,8 +12,6 @@
 #ifndef SINGLETON_H
 #define SINGLETON_H
 
-#include <cstdlib>
-
 /// @brief a template class to create a Singleton
 template<class T>
 class Singleton {
@@ -23,10 +21,9 @@ public:
 	/// @brief destroy the instance
 	static void destroy();
 
-protected:
+private:
 	/// @brief constructor
 	Singleton() {
-		assert(Singleton::_instance == 0);
 		Singleton::_instance = static_cast<T*>(this);
 	}
 	/// @brief destructor
@@ -34,26 +31,16 @@ protected:
 		Singleton::destroy();
 	}
 
-private:
-	/// @brief schedule for destruction
-	static void scheduleForDestruction(void (*)());
-
 	/// @brief the instance itself
 	static T* _instance;
-
-	/// @brief overloaded copy constructor
-	Singleton(Singleton const&) {}
-	/// @brief overloaded operator=
-	Singleton& operator=(Singleton const&) { return *this; }
 };
 
 // ========================== implementation ==========================
-
 template<class T>
 T* Singleton<T>::instance() {
 	if ( Singleton::_instance == 0 ) {
 		Singleton::_instance = new T();
-		scheduleForDestruction(Singleton::destroy);
+		std::atexit(Singleton::destroy);
 	}
 	return Singleton::_instance;
 }
@@ -64,11 +51,6 @@ void Singleton<T>::destroy() {
 		delete Singleton::_instance;
 		Singleton::_instance = 0;
 	}
-}
-
-template<class T>
-inline void Singleton<T>::scheduleForDestruction(void (*pFun)()) {
-	std::atexit(pFun);
 }
 
 template<class T>
