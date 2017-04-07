@@ -31,6 +31,11 @@ private:
 		Singleton::destroy();
 	}
 
+	/// @brief overloaded copy constructor (no implementation)
+	Singleton(Singleton const&);
+	/// @brief overloaded operator= (no implementation)
+	Singleton& operator=(Singleton const&);
+
 	/// @brief the instance itself
 	static T* _instance;
 };
