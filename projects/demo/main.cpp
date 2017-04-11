@@ -31,6 +31,7 @@
 #include "scene19.h"
 #include "scene20.h"
 #include "scene21.h"
+#include "scene22.h"
 
 int main( void )
 {
@@ -62,7 +63,8 @@ int main( void )
 	scenes.push_back(new Scene18()); // maze generation recursive backtracking
 	//scenes.push_back(new Scene19()); // canvas diffusion-limited aggregation
 	scenes.push_back(new Scene20()); // canvas mandelbrot
-	scenes.push_back(new Scene21()); // Phyllotaxis
+	scenes.push_back(new Scene21()); // phyllotaxis
+	scenes.push_back(new Scene22()); // emulated vertex lighting
 	int s = scenes.size();
 
 	// SuperScene::Player in superscene.h
