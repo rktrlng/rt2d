@@ -195,6 +195,23 @@ struct Color
 		if (hsv.h < 0.0f) { hsv.h += 1.0f; }
 		return HSV2RGBA(hsv);
 	}
+
+	/// @brief lerp from color to another color
+	/// @param c1 first RGBAColor
+	/// @param c2 second RGBAColor
+	/// @param amount between 0 and 1
+	/// @brief return RGBAColor lerped color
+	static RGBAColor lerpColor(RGBAColor c1, RGBAColor c2, float amount) {
+		if (amount < 0) { amount = 0; }
+		if (amount > 1) { amount = 1; }
+
+		uint8_t r = floor(c1.r + (c2.r-c1.r)*amount);
+		uint8_t g = floor(c1.g + (c2.g-c1.g)*amount);
+		uint8_t b = floor(c1.b + (c2.b-c1.b)*amount);
+		uint8_t a = floor(c1.a + (c2.a-c1.a)*amount);
+
+		return RGBAColor(r, g, b, a);
+	}
 };
 
 #define BLACK   RGBAColor(0,   0,   0,   255) ///< @brief color black
