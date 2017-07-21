@@ -46,6 +46,7 @@ Scene01::Scene01() : SuperScene()
 	animated_entity->addLine("assets/default.line"); // Add a line (default line fits nicely)
 	animated_entity->addSpriteSheet("assets/spritesheet.tga", 4, 4); // divide Texture in 4x4 slices
 	animated_entity->position = Point2(SWIDTH/3*2, SHEIGHT/2);
+    animated_entity->sprite()->setFlipped(true);
 
 	// Create a UI entity
 	ui_element = new BasicEntity();

@@ -325,7 +325,10 @@ void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool d
 		texture = _resman.getTexture(sprite->texturename(), sprite->filter(), sprite->wrap());
 	}
 
-	if (sprite->size.x == 0) { sprite->size.x = texture->width() * sprite->uvdim.x; }
+    float flip_multiplier = 1.0f;
+    if (sprite->isFlipped()) { flip_multiplier = -1.0f; }
+
+	if (sprite->size.x == 0) { sprite->size.x = texture->width() * sprite->uvdim.x * flip_multiplier; }
 	if (sprite->size.y == 0) { sprite->size.y = texture->height() * sprite->uvdim.y; }
 
 	Mesh* mesh = _resman.getSpriteMesh(sprite->size.x, sprite->size.y, sprite->pivot.x, sprite->pivot.y, sprite->uvdim.x, sprite->uvdim.y, sprite->circlemesh(), sprite->which());
