@@ -157,6 +157,14 @@ public:
 	/// @return void
 	void useCulling(int c) { _useculling = c; };
 
+    /// @brief check if the sprite is flipped
+    /// @return bool _isflipped
+    bool isFlipped() { return _isflipped; }
+
+    /// @brief set the sprite to flip or not
+    /// @return void
+    void setFlipped(bool b) { _isflipped = b; }
+
 protected:
 
 private:
@@ -179,6 +187,8 @@ private:
 	int _which; ///< @brief which segment
 
 	int _useculling; ///< @brief use culling or not
+
+    bool _isflipped;
 };
 
 #endif /* SPRITE_H */

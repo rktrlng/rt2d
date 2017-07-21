@@ -45,6 +45,8 @@ Sprite::Sprite()
 
 	_useculling = 0;
 
+    _isflipped = false;
+
 	color = RGBAColor(255, 255, 255, 255);
 }
 
