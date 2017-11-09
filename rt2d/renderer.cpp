@@ -96,7 +96,7 @@ int Renderer::init()
 	//glEnable(GL_CULL_FACE);
 
 	_defaultShader =_resman.getShader(SPRITEVERTEXSHADER, SPRITEFRAGMENTSHADER);
-		printf("Renderer using uberShader as fallback\n");
+	printf("Renderer using uberShader as fallback\n");
 
 	printf("Renderer::init() done\n");
 
