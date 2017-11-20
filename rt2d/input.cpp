@@ -68,6 +68,7 @@ void Input::_handleMouse(unsigned int button)
 		if (_mouse[button] == false) { // if first time pressed down
 			_mouse[button] = true;
 			_mouseDown[button] = true;
+			_mouseUp[button] = false;//added by mike
 			//std::cout << "DOWN: " << button << std::endl;
 		} else {
 			// not the first time this is pressed
@@ -79,6 +80,7 @@ void Input::_handleMouse(unsigned int button)
 		if (_mouse[button] == true) { // still pressed
 			_mouse[button] = false;
 			_mouseUp[button] = true;
+			_mouseDown[button] = false;//added by mike
 			//std::cout << "UP: " << button << std::endl;
 		} else {
 			_mouseUp[button] = false;
