@@ -87,10 +87,8 @@ void Scene01::update(float deltaTime)
 	// ###############################################################
 	// Make SuperScene do what it needs to do
 	// - Escape key stops Scene
-	// - Move Camera
 	// ###############################################################
 	SuperScene::update(deltaTime);
-	SuperScene::moveCamera(deltaTime);
 
 	// ###############################################################
 	// Mouse cursor in screen coordinates
@@ -144,4 +142,7 @@ void Scene01::update(float deltaTime)
 	}
 	ui_element->sprite()->uvoffset.x = xoffset;
 	ui_element->position = Point2(camera()->position.x + SWIDTH/2 - 150, camera()->position.y - SHEIGHT/2 + 20);
+
+	// move camera last, to avoid nervous ui_element behaviour (windows)
+	SuperScene::moveCamera(deltaTime);
 }
