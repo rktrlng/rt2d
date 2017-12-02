@@ -49,16 +49,8 @@ endif(UNIX)
 
 
 if(WIN32)
-	# On Visual 2005 and above, this module can set the debug working directory
-	list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/external/rpavlik-cmake-modules-1c73e35")
-	include(CreateLaunchers)
-	include(MSVCMultipleProcessCompile) # /MP
-
-	if(MINGW)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-	ELSE(MINGW)
-		add_definitions( "/W1 /D_CRT_SECURE_NO_WARNINGS /wd4514 /nologo" ) # suppress pedantic warnings
-	endif(MINGW)
+	# suppress pedantic warnings
+	add_definitions( "/W1 /D_CRT_SECURE_NO_WARNINGS /wd4514 /nologo" )
 endif(WIN32)
 
 
