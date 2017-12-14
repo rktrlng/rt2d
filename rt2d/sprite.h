@@ -55,6 +55,13 @@ public:
 	/// @return int _frame
 	int frame() { return _frame; };
 
+	/// @brief get the width (of the texture)
+	/// @return int size.x
+	int width() { return (int) this->size.x; };
+	/// @brief get the height (of the texture)
+	/// @return int size.y
+	int height() { return (int) this->size.y; };
+
 	Point3 spriteposition; ///< @brief Sprite position Point_t of the Sprite (only for Spritebatches)
 	Point3 spriterotation; ///< @brief Sprite rotation of the Sprite (only for Spritebatches)
 	Point3 spritescale; ///< @brief Sprite scale Point_t of the Sprite (only for Spritebatches)
