@@ -62,25 +62,24 @@ void Scene23::update(float deltaTime)
 		reset();
 	}
 
-	// Check mouseover for each cell
-	int mousex = input()->getMouseX() - SWIDTH/2;
-	int mousey = input()->getMouseY() - SHEIGHT/2;
-
-	int s = cells.size();
 	std::vector<Sprite*> spritebatch = grid->spritebatch();
-	for (int i=0; i<s; i++) {
-		Sprite* c = spritebatch[i];
-		Point3 pos = c->spriteposition;
+	if (input()->getMouseDown( 0 )) {
+		int mousex = input()->getMouseX() - SWIDTH/2;
+		int mousey = input()->getMouseY() - SHEIGHT/2;
 
-		int halfwidth = cellwidth/2;
-		int halfheight = cellheight/2;
-		int left = pos.x - halfwidth - (gridwidth*cellwidth/2);
-		int right = pos.x + halfwidth - (gridwidth*cellwidth/2);
-		int top = pos.y - halfheight - (gridheight*cellheight/2);
-		int bottom = pos.y + halfheight - (gridheight*cellheight/2);
+		int s = cells.size();
+		for (int i=0; i<s; i++) {
+			Sprite* c = spritebatch[i];
+			Point3 pos = c->spriteposition;
 
-		if ( mousex > left && mousex < right && mousey > top && mousey < bottom ) {
-			if (input()->getMouseDown( 0 )) {
+			int halfwidth = cellwidth/2;
+			int halfheight = cellheight/2;
+			int left = pos.x - halfwidth - (gridwidth*cellwidth/2);
+			int right = pos.x + halfwidth - (gridwidth*cellwidth/2);
+			int top = pos.y - halfheight - (gridheight*cellheight/2);
+			int bottom = pos.y + halfheight - (gridheight*cellheight/2);
+
+			if ( mousex > left && mousex < right && mousey > top && mousey < bottom ) {
 				cells[i]->revealed = true;
 
 				if (cells[i]->neighborCount == 0) {
