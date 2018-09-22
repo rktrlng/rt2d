@@ -99,7 +99,7 @@ void Mesh::generateCircleMesh(int radius, int segments, float uvwidth, float uvh
 	float y = 0.0f;
 	float u = 0.5f;
 	float v = 0.5f;
-	int deg = 360;
+	float deg = 360.0f;
 	// for each triangle, do ...
 	for (unsigned int i = 0; i < step; i++) {
 		// ####################################################
@@ -118,7 +118,7 @@ void Mesh::generateCircleMesh(int radius, int segments, float uvwidth, float uvh
 
 		// #############################
 		// rotate n degrees for the final vertex
-		deg -= 360/step;
+		deg -= 360.0f/step;
 		// create third vertex
 		x = cos(deg*DEG_TO_RAD)*radius;
 		y = sin(deg*DEG_TO_RAD)*radius;
@@ -143,8 +143,8 @@ void Mesh::generateSegmentMesh(int radius, int segments, int which)
 	float y = 0.0f;
 	float u = 0.5f;
 	float v = 0.5f;
-	int deg = 360;
-	int step = deg/segments;
+	float deg = 360.0f;
+	float step = deg/segments;
 
 	// ####################################################
 	// start at, and always go back to (0,0), UV (0.5,0.5)
