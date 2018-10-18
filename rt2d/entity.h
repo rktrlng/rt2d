@@ -21,6 +21,7 @@
 #include <algorithm>
 
 #include <glm/glm.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/matrix_decompose.hpp>
 
 #include <rt2d/rt2dconfig.h>
