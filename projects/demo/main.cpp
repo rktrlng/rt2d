@@ -16,20 +16,10 @@
 #include "scene05.h"
 #include "scene06.h"
 #include "scene06a.h"
-#include "scene07.h"
 #include "scene08.h"
 #include "scene09.h"
 #include "scene10.h"
-#include "scene11.h"
-#include "scene12.h"
-#include "scene13.h"
-#include "scene14.h"
-#include "scene15.h"
-#include "scene16.h"
-#include "scene17.h"
 #include "scene18.h"
-#include "scene19.h"
-#include "scene20.h"
 #include "scene21.h"
 #include "scene22.h"
 #include "scene23.h"
@@ -50,20 +40,10 @@ int main( void )
 	scenes.push_back(new Scene05()); // dynamic pixelbuffer from file
 	scenes.push_back(new Scene06()); // hexagons, ngons
 	scenes.push_back(new Scene06a()); // hex map
-	scenes.push_back(new Scene07()); // canvas pixel particles
 	scenes.push_back(new Scene08()); // mouse vs world
 	scenes.push_back(new Scene09()); // spritesheet grid
 	scenes.push_back(new Scene10()); // heightmap
-	scenes.push_back(new Scene11()); // canvas snake
-	scenes.push_back(new Scene12()); // canvas pixelsprite
-	scenes.push_back(new Scene13()); // canvas space invaders
-	scenes.push_back(new Scene14()); // canvas tetris
-	scenes.push_back(new Scene15()); // canvas game of life
-	scenes.push_back(new Scene16()); // canvas metaballs
-	scenes.push_back(new Scene17()); // canvas reaction diffusion
 	scenes.push_back(new Scene18()); // maze generation recursive backtracking
-	//scenes.push_back(new Scene19()); // canvas diffusion-limited aggregation
-	scenes.push_back(new Scene20()); // canvas mandelbrot
 	scenes.push_back(new Scene21()); // phyllotaxis
 	//scenes.push_back(new Scene22()); // emulated vertex lighting
 	scenes.push_back(new Scene23()); // mineSweeper
