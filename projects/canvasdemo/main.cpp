@@ -33,8 +33,8 @@ int main( void )
 	scenes.push_back(new Scene15()); // canvas game of life
 	scenes.push_back(new Scene16()); // canvas metaballs
 	scenes.push_back(new Scene17()); // canvas reaction diffusion
-	scenes.push_back(new Scene19()); // canvas diffusion-limited aggregation
-	scenes.push_back(new Scene20()); // canvas mandelbrot
+	// scenes.push_back(new Scene19()); // canvas diffusion-limited aggregation
+	// scenes.push_back(new Scene20()); // canvas mandelbrot
 	int s = scenes.size();
 
 	// start running with the first Scene
