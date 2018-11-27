@@ -10,7 +10,7 @@
 
 Scene13::Scene13() : SuperScene()
 {
-	srand((unsigned)time(NULL));
+	srand((unsigned)time(nullptr));
 
 	text[0]->message("Scene13: Space Invaders");
 

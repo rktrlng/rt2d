@@ -118,7 +118,7 @@ Scene03::~Scene03()
 	for (int i=0; i<s; i++) {
 		shape_container->removeChild(shapes[i]);
 		delete shapes[i];
-		shapes[i] = NULL;
+		shapes[i] = nullptr;
 	}
 	shapes.clear();
 

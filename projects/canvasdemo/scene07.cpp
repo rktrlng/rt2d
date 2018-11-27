@@ -10,7 +10,7 @@
 
 Scene07::Scene07() : SuperScene()
 {
-	srand((unsigned)time(NULL));
+	srand((unsigned)time(nullptr));
 
 	text[0]->message("Scene07: Pixel Particles");
 

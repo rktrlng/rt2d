@@ -131,14 +131,14 @@ public:
 	/// @brief get the Line from this Entity.
 	/// @return Line* _line
 	Line* line() {
-		if (_line != NULL) {
+		if (_line != nullptr) {
 			return _line;
 		} else {
 			if (_linebatch.size() > 0) {
 				return &_linebatch[0];
 			}
 		}
-		return NULL;
+		return nullptr;
 	};
 	/// @brief add a Line to this Entity by Line*.
 	/// @param line A pointer to a Line.
@@ -207,17 +207,17 @@ private:
 	/// @brief delete the Sprite of this Entity.
 	/// @return void
 	void deleteSprite() {
-		if (_sprite != NULL) {
+		if (_sprite != nullptr) {
 			delete _sprite;
-			_sprite = NULL;
+			_sprite = nullptr;
 		}
 	};
 	/// @brief delete the Line of this Entity.
 	/// @return void
 	void deleteLine() {
-		if (_line != NULL) {
+		if (_line != nullptr) {
 			delete _line;
-			_line = NULL;
+			_line = nullptr;
 		}
 	};
 	/// @brief delete the Linebatch of this Entity.

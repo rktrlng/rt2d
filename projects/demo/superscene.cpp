@@ -13,7 +13,7 @@ SuperScene::SuperScene() : Scene()
 {
 	fpstimer.start();
 
-	player = NULL;
+	player = nullptr;
 	top_layer = 7; // 8 layers (0-7)
 
 	for (unsigned int i = 0; i <= top_layer; i++) {
@@ -50,7 +50,7 @@ SuperScene::~SuperScene()
 	for (int i=0; i<ls; i++) {
 		this->removeChild(layers[i]);
 		delete layers[i];
-		layers[i] = NULL;
+		layers[i] = nullptr;
 	}
 	layers.clear();
 
@@ -58,7 +58,7 @@ SuperScene::~SuperScene()
 	for (int i=0; i<ts; i++) {
 		this->removeChild(text[i]);
 		delete text[i];
-		text[i] = NULL;
+		text[i] = nullptr;
 	}
 	text.clear();
 

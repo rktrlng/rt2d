@@ -11,7 +11,7 @@
 
 Input::Input()
 {
-	_window = NULL;
+	_window = nullptr;
 
 	_windowWidth = 0;
 	_windowHeight = 0;

@@ -10,7 +10,7 @@
 
 Scene17::Scene17() : SuperScene()
 {
-	srand((unsigned)time(NULL));
+	srand((unsigned)time(nullptr));
 
 	text[0]->message("Scene17: Reaction Diffusion [CLICK]=add Drop [SPACE]=reset [S]=save image");
 

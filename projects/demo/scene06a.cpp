@@ -9,7 +9,7 @@
 
 Scene06a::Scene06a() : SuperScene()
 {
-	srand((unsigned)time(NULL));
+	srand((unsigned)time(nullptr));
 
 	text[0]->message("Scene06a: Hexmap");
 	text[4]->message("<Arrow keys> move camera");

@@ -10,7 +10,7 @@
 
 Scene02::Scene02() : SuperScene()
 {
-	srand((unsigned)time(NULL));
+	srand((unsigned)time(nullptr));
 
 	text[0]->message("Scene02: Lists of n Things (SpriteBatch)");
 

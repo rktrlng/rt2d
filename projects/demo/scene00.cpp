@@ -49,7 +49,7 @@ Scene00::~Scene00()
 	for (int i=0; i<ts; i++) {
 		consolecontainer->removeChild(consoletext[i]);
 		delete consoletext[i];
-		consoletext[i] = NULL;
+		consoletext[i] = nullptr;
 	}
 	consoletext.clear();
 

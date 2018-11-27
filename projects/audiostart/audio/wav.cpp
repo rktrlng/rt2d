@@ -47,11 +47,11 @@ struct WAVE_Data
 bool loadWavFile(const std::string filename, ALuint* buffer)
 {
 	int ret = 0;
-    ALsizei* size = NULL;
-    ALsizei* frequency = NULL;
+    ALsizei* size = nullptr;
+    ALsizei* frequency = nullptr;
     ALenum format = 0;
     //Local Declarations
-    FILE* soundFile = NULL;
+    FILE* soundFile = nullptr;
     WAVE_Format wave_format;
     RIFF_Header riff_header;
     WAVE_Data wave_data;
@@ -153,7 +153,7 @@ bool loadWavFile(const std::string filename, ALuint* buffer)
         //our catch statement for if we throw a string
         std::cerr << error << " : trying to load " << filename << std::endl;
         //clean up memory if wave loading fails
-        if (soundFile != NULL)
+        if (soundFile != nullptr)
             fclose(soundFile);
         //return false to indicate the failure to load wave
         return false;

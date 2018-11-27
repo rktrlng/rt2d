@@ -10,7 +10,7 @@
 
 Scene20::Scene20() : SuperScene()
 {
-	srand((unsigned)time(NULL));
+	srand((unsigned)time(nullptr));
 
 	text[0]->message("Scene20: Mandelbrot");
 

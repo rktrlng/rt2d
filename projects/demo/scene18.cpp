@@ -12,7 +12,7 @@
 
 Scene18::Scene18() : SuperScene()
 {
-	srand((unsigned)time(NULL));
+	srand((unsigned)time(nullptr));
 
 	t.start();
 
@@ -110,7 +110,7 @@ void Scene18::update(float deltaTime)
 		current->visited = true;
 		// STEP 1: while there is a neighbour...
 		MCell* next = this->getRandomUnvisitedNeighbour(current);
-		if (next != NULL) { // there's still an unvisited neighbour. We're not stuck
+		if (next != nullptr) { // there's still an unvisited neighbour. We're not stuck
 			backtracking = false;
 			next->visited = true;
 
@@ -230,7 +230,7 @@ MCell* Scene18::getRandomUnvisitedNeighbour(MCell* mc)
 	}
 
 	// no neighbours
-	return NULL;
+	return nullptr;
 }
 
 void Scene18::clear()
@@ -239,7 +239,7 @@ void Scene18::clear()
 	if (s>0) {
 		for (int i = 0; i < s; i++) {
 			delete cells[i]; // we did 'new' when we pushed the cell
-			cells[i] = NULL;
+			cells[i] = nullptr;
 		}
 		cells.clear();
 	}

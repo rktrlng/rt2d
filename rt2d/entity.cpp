@@ -18,7 +18,7 @@ Entity::Entity()
 
 	//printf("Entity ctor %d\n", _guid);
 
-	_parent = NULL;
+	_parent = nullptr;
 
 	position = Point3(0.0f, 0.0f, 0.0f);
 	rotation = Point3(0.0f, 0.0f, 0.0f);
@@ -28,8 +28,8 @@ Entity::Entity()
 	_worldrotation = Point3(0.0f, 0.0f, 0.0f);
 	_worldscale = Point3(1.0f, 1.0f, 1.0f);
 
-	_sprite = NULL;
-	_line = NULL;
+	_sprite = nullptr;
+	_line = nullptr;
 
 	_input = Singleton<Input>::instance();
 }
@@ -45,7 +45,7 @@ Entity::~Entity()
 
 void Entity::addChild(Entity* child)
 {
-	if(child->_parent != NULL) {
+	if(child->_parent != nullptr) {
 		child->_parent->removeChild(child);
 	}
 	child->_parent = this;
@@ -57,7 +57,7 @@ void Entity::removeChild(Entity* child)
 	std::vector< Entity* >::iterator it = _children.begin();
 	while (it != _children.end()) {
 		if ((*it)->_guid == child->_guid) {
-			child->_parent = NULL;
+			child->_parent = nullptr;
 			it = _children.erase(it);
 		} else {
 			++it;
@@ -70,7 +70,7 @@ Entity* Entity::getChild(unsigned int i)
 	if (i < _children.size()) {
 		return _children[i];
 	}
-	return NULL;
+	return nullptr;
 }
 
 void Entity::addLine(const std::string& filename)

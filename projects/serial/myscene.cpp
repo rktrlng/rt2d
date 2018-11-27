@@ -132,7 +132,7 @@ std::vector<int> MyScene::transceive(unsigned char cmd)
 		int n = RS232_PollComport(CPORT_NR, buf, 4095);
 		tokens[0] = n;
 		if(n > 0) { // we received something
-			buf[n] = 0; // always put a "null" at the end of a string
+			buf[n] = 0; // always put a "nullptr" at the end of a string
 
 			// replace unreadable control-codes by spaces
 			for(int i=0; i < n; i++) {

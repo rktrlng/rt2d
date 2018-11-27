@@ -97,7 +97,7 @@ Scene06::~Scene06()
 	for (int i=0; i<s; i++) {
 		segments_container->removeChild(elements[i]);
 		delete elements[i];
-		elements[i] = NULL;
+		elements[i] = nullptr;
 	}
 	elements.clear();
 	delete segments_container;

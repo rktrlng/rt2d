@@ -12,7 +12,7 @@ int main( void )
 	Core core;
 
 	// scene handle
-	Scene* scene = NULL;
+	Scene* scene = nullptr;
 
 	scene = new Scene01();		// create Scene on the heap
 	while(scene->isRunning()) {	// check status of Scene every frame

@@ -10,7 +10,7 @@
 
 Scene23::Scene23() : SuperScene()
 {
-	srand((unsigned)time(NULL));
+	srand((unsigned)time(nullptr));
 
 	text[0]->message("Scene23: MineSweeper [SPACE]=reset");
 
@@ -172,7 +172,7 @@ void Scene23::clear()
 	if (s > 0) {
 		for (int i = 0; i < s; i++) {
 			delete cells[i];
-			cells[i] = NULL;
+			cells[i] = nullptr;
 		}
 		cells.clear();
 	}

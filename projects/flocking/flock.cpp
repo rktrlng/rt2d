@@ -10,7 +10,7 @@ int Flock::_nextGuid = 0;
 Flock::Flock(int amount)
 	: Entity()
 {
-	srand((unsigned)time(NULL)+_nextGuid);
+	srand((unsigned)time(nullptr)+_nextGuid);
 	_nextGuid++;
 
 	t.start();

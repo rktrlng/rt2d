@@ -49,7 +49,7 @@ SuperScene::~SuperScene()
 	for (int i=0; i<ls; i++) {
 		this->removeChild(layers[i]);
 		delete layers[i];
-		layers[i] = NULL;
+		layers[i] = nullptr;
 	}
 	layers.clear();
 
@@ -57,7 +57,7 @@ SuperScene::~SuperScene()
 	for (int i=0; i<ts; i++) {
 		this->removeChild(text[i]);
 		delete text[i];
-		text[i] = NULL;
+		text[i] = nullptr;
 	}
 	text.clear();
 

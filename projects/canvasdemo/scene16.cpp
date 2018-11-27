@@ -10,7 +10,7 @@
 
 Scene16::Scene16() : SuperScene()
 {
-	srand((unsigned)time(NULL));
+	srand((unsigned)time(nullptr));
 
 	text[0]->message("Scene16: Metaballs");
 

@@ -13,7 +13,7 @@
 
 Scene21::Scene21() : SuperScene()
 {
-	srand((unsigned)time(NULL));
+	srand((unsigned)time(nullptr));
 
 	t.start();
 

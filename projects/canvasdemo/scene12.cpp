@@ -10,7 +10,7 @@
 
 Scene12::Scene12() : SuperScene()
 {
-	srand((unsigned)time(NULL));
+	srand((unsigned)time(nullptr));
 
 	text[0]->message("Scene12: PixelSprite");
 

@@ -16,7 +16,7 @@ MyScene::MyScene() : Scene()
 {
 	t.start();
 
-	srand((unsigned)time(NULL));
+	srand((unsigned)time(nullptr));
 
 	// Create a PerlinNoise object with a random permutation vector generated with seed
 	unsigned int seed = rand()%1000;

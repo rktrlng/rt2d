@@ -2,8 +2,8 @@
 
 #include "audio.h"
 
-ALCdevice* Audio::device = alcOpenDevice( alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER) );
-ALCcontext* Audio::context = alcCreateContext(device, NULL);
+ALCdevice* Audio::device = alcOpenDevice( alcGetString(nullptr, ALC_DEFAULT_DEVICE_SPECIFIER) );
+ALCcontext* Audio::context = alcCreateContext(device, nullptr);
 
 Audio::Audio()
 {
@@ -24,7 +24,7 @@ void Audio::init()
         alcDestroyContext(Audio::context);
     }
 
-    const ALCchar *defaultDeviceName = alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER);
+    const ALCchar *defaultDeviceName = alcGetString(nullptr, ALC_DEFAULT_DEVICE_SPECIFIER);
     Audio::device = alcOpenDevice(defaultDeviceName);
     if (Audio::device) {
         std::cout << "Created audio device: " << defaultDeviceName << std::endl;
@@ -32,7 +32,7 @@ void Audio::init()
     std::cout << "Device: " << alcGetString(device, ALC_DEVICE_SPECIFIER) << std::endl;
     alGetError();
 
-    Audio::context = alcCreateContext(Audio::device, NULL);
+    Audio::context = alcCreateContext(Audio::device, nullptr);
     if (Audio::context) {
         std::cout << "Created audio context." << std::endl;
     }

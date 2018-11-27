@@ -207,14 +207,14 @@ private:
 	GLuint _gltexture[1];
 
 	unsigned char _warrantybit; ///< @brief flipped if not a power of 2
-	PixelBuffer* _pixelbuffer; ///< @brief pixelbuffer pointer. Will not be used if NULL.
+	PixelBuffer* _pixelbuffer; ///< @brief pixelbuffer pointer. Will not be used if nullptr.
 
 	/// @brief delete the PixelBuffer of this Entity.
 	/// @return void
 	void deletePixelBuffer() {
-		if (_pixelbuffer != NULL) {
+		if (_pixelbuffer != nullptr) {
 			delete _pixelbuffer;
-			_pixelbuffer = NULL;
+			_pixelbuffer = nullptr;
 		}
 	};
 };

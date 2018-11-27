@@ -22,7 +22,7 @@ ResourceManager::~ResourceManager()
 	std::cout << "---------- Delete Shaders ----------" << std::endl;
 	std::map<std::string, Shader*>::iterator shad_it;
 	for (shad_it=_shaders.begin(); shad_it!=_shaders.end(); ++shad_it) {
-		if (shad_it->second != NULL) {
+		if (shad_it->second != nullptr) {
 			//std::cout << shad_it->first << " => " << shad_it->second << '\n';
 			deleteShader(shad_it->first);
 		}
@@ -45,7 +45,7 @@ void ResourceManager::cleanup()
 	std::cout << "---------- Delete Textures ----------" << std::endl;
 	std::map<std::string, Texture*>::iterator text_it;
 	for (text_it=_textures.begin(); text_it!=_textures.end(); ++text_it) {
-		if (text_it->second != NULL) {
+		if (text_it->second != nullptr) {
 			//std::cout << text_it->first << " => " << text_it->second << '\n';
 			deleteTexture(text_it->first);
 		}
@@ -56,7 +56,7 @@ void ResourceManager::cleanup()
 	std::cout << "---------- Delete Meshes ----------" << std::endl;
 	std::map<std::string, Mesh*>::iterator mesh_it;
 	for (mesh_it=_meshes.begin(); mesh_it!=_meshes.end(); ++mesh_it) {
-		if (mesh_it->second != NULL) {
+		if (mesh_it->second != nullptr) {
 			//std::cout << mesh_it->first << " => " << mesh_it->second << '\n';
 			deleteMesh(mesh_it->first);
 		}
@@ -67,7 +67,7 @@ void ResourceManager::cleanup()
 // Texture
 Texture* ResourceManager::getTexture(const std::string& filename, int filter, int wrap)
 {
-	if (_textures[filename] != NULL) {
+	if (_textures[filename] != nullptr) {
 		//std::cout << "return existing resource: " << filename << " (texture)" << std::endl;
 		return _textures[filename];
 	} else {
@@ -82,13 +82,13 @@ Texture* ResourceManager::getTexture(const std::string& filename, int filter, in
 		return t;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 void ResourceManager::deleteTexture(const std::string& filename)
 {
 	delete _textures[filename];
-	_textures[filename] = NULL;
+	_textures[filename] = nullptr;
 
 	std::cout << "==> deleting resource: " << filename << " (texture)" << std::endl;
 }
@@ -101,7 +101,7 @@ Shader* ResourceManager::getShader(const std::string& vs, const std::string& fs)
 	std::string tmp("_");
 	filename.append(tmp);
 	filename.append(fs);
-	if (_shaders[filename] != NULL) {
+	if (_shaders[filename] != nullptr) {
 		//std::cout << "return existing resource: " << filename << " (shader)" << std::endl;
 		return _shaders[filename];
 	} else {
@@ -117,7 +117,7 @@ Shader* ResourceManager::getShader(const std::string& vs, const std::string& fs)
 		return s;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 void ResourceManager::deleteShader(const std::string& shadername)
@@ -126,7 +126,7 @@ void ResourceManager::deleteShader(const std::string& shadername)
 	filename.append(shadername);
 
 	delete _shaders[filename];
-	_shaders[filename] = NULL;
+	_shaders[filename] = nullptr;
 
 	std::cout << "==> deleting resource: " << filename << " (shader)" << std::endl;
 }
@@ -139,7 +139,7 @@ Mesh* ResourceManager::getSpriteMesh(int width, int height, float pivotx, float 
 	sprintf(buf, "%dx%d_%.5fx%.5f_%.5fx%.5f_%d_%d", width, height, pivotx, pivoty, uvwidth, uvheight, circle, which);
 	std::string meshname(buf);
 
-	if (_meshes[meshname] != NULL) {
+	if (_meshes[meshname] != nullptr) {
 		//std::cout << "return existing resource: " << meshname << " (mesh)" << std::endl;
 		return _meshes[meshname];
 	} else {
@@ -159,7 +159,7 @@ Mesh* ResourceManager::getSpriteMesh(int width, int height, float pivotx, float 
 		return m;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 
@@ -167,7 +167,7 @@ Mesh* ResourceManager::getLineMesh(Line* line)
 {
 	std::string meshname = line->filename();
 
-	if (_meshes[meshname] != NULL) {
+	if (_meshes[meshname] != nullptr) {
 		//std::cout << "return existing resource: " << meshname << " (mesh)" << std::endl;
 		return _meshes[meshname];
 	} else {
@@ -179,13 +179,13 @@ Mesh* ResourceManager::getLineMesh(Line* line)
 		return m;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 void ResourceManager::deleteMesh(const std::string& meshname)
 {
 	delete _meshes[meshname];
-	_meshes[meshname] = NULL;
+	_meshes[meshname] = nullptr;
 
 	std::cout << "==> deleting resource: " << meshname << " (mesh)" << std::endl;
 }

@@ -30,14 +30,14 @@ Sprite::Sprite()
 		customParams[i] = Point3(0.0f, 0.0f, 0.0f);
 	}
 
-	_palette = NULL;
+	_palette = nullptr;
 
 	_frame = 0;
 
 	_filter = DEFAULTFILTER;
 	_wrap = DEFAULTWRAP;
 
-	_dyntexture = NULL;
+	_dyntexture = nullptr;
 	_dynamic = false;
 
 	_circlemesh = 0; // false
@@ -50,24 +50,24 @@ Sprite::Sprite()
 
 Sprite::~Sprite()
 {
-	//if (_dyntexture != NULL) {
+	//if (_dyntexture != nullptr) {
 	// TODO this leaks the dynamic textures (get rid of !dynamic)
-	if (_dyntexture != NULL && !_dynamic) {
+	if (_dyntexture != nullptr && !_dynamic) {
 		delete _dyntexture;
-		_dyntexture = NULL;
+		_dyntexture = nullptr;
 	}
 
-	if (_palette != NULL) {
+	if (_palette != nullptr) {
 		delete _palette;
-		_palette = NULL;
+		_palette = nullptr;
 	}
 }
 
 void Sprite::setPalette(const std::string& filename)
 {
-	if (_palette != NULL) {
+	if (_palette != nullptr) {
 		delete _palette;
-		_palette = NULL;
+		_palette = nullptr;
 	}
 	_palette = new Texture();
 	_palette->loadTGAImage(filename, 0, 0, 1); // filename, filter, wrap, dimension
@@ -119,9 +119,9 @@ void Sprite::setupSprite(const std::string& filename, float pivotx, float pivoty
 void Sprite::setupSpriteByPixelBuffer(PixelBuffer* pixels)
 {
 	std::cout << "Sprite::setupSpriteByPixelBuffer() " <<  std::endl;
-	if (_dyntexture != NULL) {
+	if (_dyntexture != nullptr) {
 		delete _dyntexture;
-		_dyntexture = NULL;
+		_dyntexture = nullptr;
 	}
 
 	_filter = pixels->filter;
@@ -138,9 +138,9 @@ void Sprite::setupSpriteByPixelBuffer(PixelBuffer* pixels)
 void Sprite::setupSpriteTGAPixelBuffer(const std::string& filename, int filter, int wrap)
 {
 	std::cout << "Sprite::setupSpriteByPixelBuffer() " <<  std::endl;
-	if (_dyntexture != NULL) {
+	if (_dyntexture != nullptr) {
 		delete _dyntexture;
-		_dyntexture = NULL;
+		_dyntexture = nullptr;
 	}
 
 	_dyntexture = new Texture();

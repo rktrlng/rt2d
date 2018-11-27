@@ -10,7 +10,7 @@
 
 Scene15::Scene15() : SuperScene()
 {
-	srand((unsigned)time(NULL));
+	srand((unsigned)time(nullptr));
 
 	text[0]->message("Scene15: Conway's Game Of Life. Press [SPACE] to reset. Also try [Q/W/E/A/S]");
 

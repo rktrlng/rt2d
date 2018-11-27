@@ -59,7 +59,7 @@ Scene08::~Scene08()
 		layers[0]->removeChild(cells[i]->entity);
 		delete cells[i]->entity;
 		delete cells[i];
-		cells[i] = NULL;
+		cells[i] = nullptr;
 	}
 	cells.clear();
 

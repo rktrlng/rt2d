@@ -25,8 +25,8 @@ using namespace glm;
 
 Renderer::Renderer()
 {
-	_window = NULL;
-	_defaultShader = NULL;
+	_window = nullptr;
+	_defaultShader = nullptr;
 
 	this->init();
 }
@@ -56,12 +56,12 @@ int Renderer::init()
 
 	// Open a window and create its OpenGL context
 	if (FULLSCREEN) {
-		_window = glfwCreateWindow( SWIDTH, SHEIGHT, WINDOWNAME, primary, NULL);
+		_window = glfwCreateWindow( SWIDTH, SHEIGHT, WINDOWNAME, primary, nullptr);
 	} else {
-		_window = glfwCreateWindow( SWIDTH, SHEIGHT, WINDOWNAME, NULL, NULL);
+		_window = glfwCreateWindow( SWIDTH, SHEIGHT, WINDOWNAME, nullptr, nullptr);
 	}
 
-	if( _window == NULL ) {
+	if( _window == nullptr ) {
 		fprintf( stderr, "Failed to open GLFW window.\n" );
 		glfwTerminate();
 		return -1;
@@ -180,7 +180,7 @@ void Renderer::_renderEntity(glm::mat4 modelMatrix, Entity* entity, Camera* came
 
 	// Check for Sprites to see if we need to render anything
 	Sprite* sprite = entity->sprite();
-	if (sprite != NULL) {
+	if (sprite != nullptr) {
 		// render the Sprite. Just use the model matrix for the entity since this is a single sprite.
 		if (sprite->dynamic()) {
 			this->_renderSprite(modelMatrix, sprite, true); // dynamic Sprite from PixelBuffer
@@ -197,7 +197,7 @@ void Renderer::_renderEntity(glm::mat4 modelMatrix, Entity* entity, Camera* came
 
 	// Check for Lines to see if we need to render anything
 	Line* line = entity->line();
-	if (line != NULL) {
+	if (line != nullptr) {
 		// render the Line.
 		this->_renderLine(modelMatrix, line);
 	}
@@ -223,7 +223,7 @@ void Renderer::_renderSpriteBatch(glm::mat4 modelMatrix, std::vector<Sprite*>& s
 	Sprite* spr = spritebatch[0];
 	Shader* shader = _resman.getShader(spr->vertexshader().c_str(), spr->fragmentshader().c_str());
 	// ask resourcemanager
-	if (shader == NULL) {
+	if (shader == nullptr) {
 		shader = _defaultShader; // fallback to defaultshader
 	}
 	std::string texturename = spr->texturename();
@@ -236,7 +236,7 @@ void Renderer::_renderSpriteBatch(glm::mat4 modelMatrix, std::vector<Sprite*>& s
 
 	Mesh* mesh = _resman.getSpriteMesh(spr->size.x, spr->size.y, spr->pivot.x, spr->pivot.y, spr->uvdim.x, spr->uvdim.y, spr->circlemesh(), spr->which());
 
-	if (texture != NULL) {
+	if (texture != nullptr) {
 		// Bind the texture in Texture Unit 0
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
@@ -311,13 +311,13 @@ void Renderer::_renderSpriteBatch(glm::mat4 modelMatrix, std::vector<Sprite*>& s
 void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool dynamic)
 {
 	Shader* shader = _resman.getShader(sprite->vertexshader().c_str(), sprite->fragmentshader().c_str());
-	if (shader == NULL) {
+	if (shader == nullptr) {
 		shader = _defaultShader; // fallback to defaultshader
 	}
 
-	Texture* texture = NULL;
+	Texture* texture = nullptr;
 	if (dynamic) {
-		if (sprite->texture() != NULL) {
+		if (sprite->texture() != nullptr) {
 			texture = new Texture();
 			texture->createFromBuffer(sprite->texture()->pixels());
 		}
@@ -345,14 +345,14 @@ void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool d
 		}
 	}
 
-	if (texture != NULL) {
+	if (texture != nullptr) {
 		// Bind the texture in Texture Unit 0
 		glActiveTexture(GL_TEXTURE0 + 0);
 		glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
 		//glUniform1i(shader->textureID(), 0);
 	}
 
-	if (sprite->palette() != NULL) {
+	if (sprite->palette() != nullptr) {
 		// Bind the palette in Texture Unit 1
 		glActiveTexture(GL_TEXTURE0 + 1);
 		glBindTexture(GL_TEXTURE_1D, sprite->palette()->getGLTexture());
@@ -361,7 +361,7 @@ void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool d
 
 	this->_renderMesh(modelMatrix, shader, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
 
-	if (dynamic && texture != NULL) {
+	if (dynamic && texture != nullptr) {
 		delete texture;
 	}
 }
@@ -371,7 +371,7 @@ void Renderer::_renderLine(const glm::mat4 modelMatrix, Line* line)
 	Shader* shader = _defaultShader;
 
 	Texture* texture = _resman.getTexture(AUTOGENWHITE, 0, 1);
-	Mesh* mesh = NULL;
+	Mesh* mesh = nullptr;
 	RGBAColor blendcolor = line->color;
 
 	int numpoints = (line->points().size()*2) - 1;

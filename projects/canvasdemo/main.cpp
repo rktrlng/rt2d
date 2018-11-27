@@ -54,7 +54,7 @@ int main( void )
 	// delete all scenes
 	for (int i = 0; i < s; i++) {
 		delete scenes[i];
-		scenes[i] = NULL;
+		scenes[i] = nullptr;
 	}
 	scenes.clear();
 

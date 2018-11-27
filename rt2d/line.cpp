@@ -89,7 +89,7 @@ void Line::createBox(int hw, int hh)
 bool Line::loadLineFile(const std::string& filename)
 {
 	FILE * file = fopen(filename.c_str(), "r");
-	if( file == NULL ){
+	if( file == nullptr ){
 		printf("Can't open %s\n", filename.c_str());
 		return false;
 	}
