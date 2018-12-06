@@ -40,7 +40,7 @@ int main( void )
 	scenes.push_back(new Scene05()); // dynamic pixelbuffer from file
 	scenes.push_back(new Scene06()); // hexagons, ngons
 	scenes.push_back(new Scene06a()); // hex map
-	scenes.push_back(new Scene08()); // mouse vs world
+	//scenes.push_back(new Scene08()); // mouse vs world
 	scenes.push_back(new Scene09()); // spritesheet grid
 	scenes.push_back(new Scene10()); // heightmap
 	scenes.push_back(new Scene18()); // maze generation recursive backtracking
