@@ -190,6 +190,63 @@ int Texture::writeTGAImage()
 	return 1;
 }
 
+// http://paulbourke.net/dataformats/tga/
+int Texture::writeTGAImage(std::string filePath)
+{
+	if (!filePath[filePath.size()-4] == '.' || !filePath[filePath.size() - 4] == 't' || !filePath[filePath.size() - 4] == 'g' || !filePath[filePath.size() - 4] == 'a') {
+		return 0;
+	}
+	static int id = 0;
+	time_t t = time(nullptr);
+
+	std::stringstream filename;
+	filename << filePath;
+	id++;
+
+	FILE *fp = fopen(filename.str().c_str(), "w");
+	if (fp == nullptr) {
+		return 0;
+	}
+
+	// The image header
+	unsigned char header[18] = { 0 };
+	header[2] = 2; // true color
+	header[12] = _pixelbuffer->width & 0xFF;
+	header[13] = (_pixelbuffer->width >> 8) & 0xFF;
+	header[14] = _pixelbuffer->height & 0xFF;
+	header[15] = (_pixelbuffer->height >> 8) & 0xFF;
+	header[16] = _pixelbuffer->bitdepth * 8;
+
+	fwrite((const char*)&header, 1, sizeof(header), fp);
+
+	// The image data is stored bottom-to-top, left-to-right
+	unsigned int counter = 0;
+	for (int y = _pixelbuffer->height - 1; y >= 0; y--) {
+		for (int x = 0; x < _pixelbuffer->width; x++) {
+			putc((int)(_pixelbuffer->data[counter + 2] & 0xFF), fp); // b
+			putc((int)(_pixelbuffer->data[counter + 1] & 0xFF), fp); // g
+			putc((int)(_pixelbuffer->data[counter + 0] & 0xFF), fp); // r
+			if (_pixelbuffer->bitdepth == 4) {
+				putc((int)(_pixelbuffer->data[counter + 3] & 0xFF), fp);
+			}
+			counter += _pixelbuffer->bitdepth;
+		}
+	}
+	/*
+		// The file footer
+		static const char footer[ 26 ] =
+		"\0\0\0\0" // no extension area
+		"\0\0\0\0" // no developer directory
+		"TRUEVISION-XFILE" // https://en.wikipedia.org/wiki/Truevision_TGA
+		".";
+		fwrite((const char*)&footer, 1, sizeof(footer), fp);
+	*/
+	fclose(fp);
+	//std::cout << "WROTE " << filename << std::endl;
+
+	return 1;
+}
+
 void Texture::BGR2RGB(PixelBuffer* pixels)
 {
 	// this also works as BGRA2RGBA
