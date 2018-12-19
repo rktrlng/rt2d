@@ -202,7 +202,6 @@ int Texture::writeTGAImage(std::string filePath)
 	std::stringstream filename;
 	filename << filePath;
 	id++;
-
 	FILE *fp = fopen(filename.str().c_str(), "w");
 	if (fp == nullptr) {
 		return 0;

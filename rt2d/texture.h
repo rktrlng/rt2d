@@ -178,7 +178,7 @@ public:
 	/// @brief write _pixelbuffer as image to file (tga only)
 	/// @return int 0 if failed
 	int writeTGAImage();
-	/// @brief write _pixelbuffer as image to file (tga only) using a custom filepath and filename
+	/// @brief write _pixelbuffer as image to file (tga only) using a custom filepath and filename. The function will not work if the given directory does not exist.
 	/// @return int 0 if failed
 	int Texture::writeTGAImage(std::string filePath);
 	/// @brief create a width x height white PixelBuffer & GLpixeldata
