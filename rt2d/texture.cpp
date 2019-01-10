@@ -146,7 +146,7 @@ int Texture::writeTGAImage()
 	filename << "rt2d_" << t << "_" << id << ".tga";
 	id++;
 
-	FILE *fp = fopen(filename.str().c_str(), "w");
+	FILE *fp = fopen(filename.str().c_str(), "wb");
 	if (fp == nullptr) {
 		return 0;
 	}
