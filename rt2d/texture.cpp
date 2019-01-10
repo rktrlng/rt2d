@@ -137,16 +137,17 @@ GLuint Texture::loadTGAImage(const std::string& filename, int filter, int wrap, 
 }
 
 // http://paulbourke.net/dataformats/tga/
-int Texture::writeTGAImage()
+int Texture::writeTGAImage(std::string filename /* std::string() */)
 {
 	static int id = 0;
-	time_t t = time(nullptr);
 
-	std::stringstream filename;
-	filename << "rt2d_" << t << "_" << id << ".tga";
-	id++;
+	if (filename.empty()) {
+		time_t t = time(nullptr);
+		filename = "rt2d_" + std::to_string(t) + "_" + std::to_string(id) + ".tga";
+		id++;
+	}
 
-	FILE *fp = fopen(filename.str().c_str(), "wb");
+	FILE *fp = fopen(filename.c_str(), "wb");
 	if (fp == nullptr) {
 		return 0;
 	}
