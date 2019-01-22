@@ -13,6 +13,7 @@ OPTION(MAKE_NOISE "Make Perlin Noise application" ON)
 OPTION(MAKE_GEOMETRIC "Make GeoMetric application" ON)
 OPTION(MAKE_SHADY "Make custom Shader application" ON)
 OPTION(MAKE_WOLFENSTEIN "Make Wolfenstein3D raycasting application" ON)
+OPTION(MAKE_COLLISION "Make Collision application" ON)
 
 OPTION(USE_RS232 "Use RS232 library" OFF)
 OPTION(MAKE_SERIAL "Make serial application" OFF)
@@ -366,6 +367,22 @@ IF(MAKE_WOLFENSTEIN)
 		projects/wolfenstein/main.cpp
 	)
 	target_link_libraries(wolfenstein
+		${ALL_GRAPHICS_LIBS}
+	)
+ENDIF()
+
+####################################################################
+# collision                                                        #
+####################################################################
+IF(MAKE_COLLISION)
+	add_executable(collision
+		projects/collision/main.cpp
+		projects/collision/shape.cpp
+		projects/collision/shape.h
+		projects/collision/myscene.cpp
+		projects/collision/myscene.h
+	)
+	target_link_libraries(collision
 		${ALL_GRAPHICS_LIBS}
 	)
 ENDIF()
