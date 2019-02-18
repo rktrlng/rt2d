@@ -53,14 +53,14 @@ void Line::editPoint(unsigned int id, float x, float y, float z)
 	}
 }
 
-void Line::createCircle(int radius, int segments)
+void Line::createCircle(int radius, int segments, float _x, float _y)
 {
 	int step = 360 / segments;
 
 	for (int i = 0; i < 360; i += step) {
 		float x = cos(i*DEG_TO_RAD)*radius;
 		float y = sin(i*DEG_TO_RAD)*radius;
-		this->addPoint(x, y);
+		this->addPoint(x + _x, y + _y);
 	}
 	this->addPoint(_points[0].x, _points[0].y);
 

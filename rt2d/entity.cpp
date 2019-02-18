@@ -167,3 +167,39 @@ void Entity::addGrid(const std::string& filename, int u, int v, int cols, int ro
 
 	std::cout << "grid added: " << _spritebatch.size() << " sprites." << std::endl;
 }
+
+// ############################################################
+// Debug Draw
+// ############################################################
+
+void Entity::ddLine(float x0, float y0, float x1, float y1, RGBAColor color) {
+	Line line;
+	line.addPoint(x0,y0);
+	line.addPoint(x1,y1);
+	line.color = color;
+	line.dynamic(true);
+
+	_linebatch.push_back(line);
+}
+
+void Entity::ddCircle(float x, float y, float radius, RGBAColor color) {
+	Line line;
+	line.createCircle(radius, 36, x, y);
+	line.color = color;
+	line.dynamic(true);
+
+	_linebatch.push_back(line);
+}
+
+void Entity::ddSquare(float x, float y, float width, float height, RGBAColor color) {
+	Line line;
+	line.addPoint(x,y);
+	line.addPoint(width, y);
+	line.addPoint(width, height);
+	line.addPoint(x, height);
+	line.addPoint(x, y);
+	line.color = color;
+	line.dynamic(true);
+
+	_linebatch.push_back(line);
+}

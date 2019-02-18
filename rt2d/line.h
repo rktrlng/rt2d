@@ -54,8 +54,10 @@ public:
 	/// @brief Create a circle of points
 	/// @param radius the radius of the circle
 	/// @param segments the number of segments
+	/// @param _x the optional x pos of the Circle
+	/// @param _y the optional y pos of the Circle
 	/// @return void
-	void createCircle(int radius, int segments);
+	void createCircle(int radius, int segments, float _x = 0.0f, float _y = 0.0f);
 	/// @brief Create a box
 	/// @param hw half the width of the box
 	/// @param hh half the height of the box

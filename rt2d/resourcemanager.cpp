@@ -175,7 +175,7 @@ Mesh* ResourceManager::getLineMesh(Line* line)
 		m->generateLineMesh(line);
 		_meshes[meshname] = m;
 
-		std::cout << "return new resource: " << meshname << " (mesh)" << std::endl;
+		std::cout << "return new resource: " << meshname << " (line mesh)" << std::endl;
 		return m;
 	}
 

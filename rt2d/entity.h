@@ -180,6 +180,37 @@ public:
 
 	friend class Renderer;
 
+	// ############################################################
+	// Debug Draw
+	// ############################################################
+
+	/// @brief clear the previous Debug Draw calls
+	/// @return void
+	void ddClear() { this->deleteLinebatch(); };
+	/// @brief draw a Debug Line
+	/// @param x0 start x coordinate of the Line
+	/// @param y0 start y coordinate of the Line
+	/// @param x1 end x coordinate of the Line
+	/// @param y1 end x coordinate of the Line
+	/// @param color RGBAColor of the line
+	/// @return void
+	void ddLine(float x0, float y0, float x1, float y1, RGBAColor color);
+	/// @brief draw a Debug Circle
+	/// @param x coordinate of the Circle
+	/// @param y coordinate of the Circle
+	/// @param radius of the Circle
+	/// @param color RGBAColor of the Circle
+	/// @return void
+	void ddCircle(float x, float y, float radius, RGBAColor color);
+	/// @brief draw a Debug Squre
+	/// @param x coordinate of the Square (top left)
+	/// @param y coordinate of the Square (top left)
+	/// @param width of the Square
+	/// @param height of the Square
+	/// @param color RGBAColor of the Square
+	/// @return void
+	void ddSquare(float x, float y, float width, float height, RGBAColor color);
+
 protected:
 	// updated world transforms
 	Point3 _worldposition; /**< @brief The position of the Entity in the real world */
