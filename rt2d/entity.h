@@ -191,10 +191,18 @@ public:
 	/// @param x0 start x coordinate of the Line
 	/// @param y0 start y coordinate of the Line
 	/// @param x1 end x coordinate of the Line
-	/// @param y1 end x coordinate of the Line
+	/// @param y1 end y coordinate of the Line
 	/// @param color RGBAColor of the line
 	/// @return void
 	void ddLine(float x0, float y0, float x1, float y1, RGBAColor color);
+	/// @brief draw a Debug Line
+	/// @param start position of the Line
+	/// @param end position of the Line
+	/// @param color RGBAColor of the line
+	/// @return void
+	void ddLine(Point start, Point end, RGBAColor color) {
+		ddLine(start.x, start.y, end.x, end.y, color);
+	}
 	/// @brief draw a Debug Circle
 	/// @param x coordinate of the Circle
 	/// @param y coordinate of the Circle

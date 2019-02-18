@@ -1,5 +1,5 @@
 /**
- * Demo of point, circle, rectangle collisions
+ * Demo of debug drawing a line, circle, or rectangle in update()
  *
  * Copyright 2019 Rik Teerling <on@onandoffables.com>
  */
