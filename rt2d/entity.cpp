@@ -194,9 +194,9 @@ void Entity::ddCircle(float x, float y, float radius, RGBAColor color) {
 void Entity::ddSquare(float x, float y, float width, float height, RGBAColor color) {
 	Line line;
 	line.addPoint(x,y);
-	line.addPoint(width, y);
-	line.addPoint(width, height);
-	line.addPoint(x, height);
+	line.addPoint(width + x, y);
+	line.addPoint(width + x, height + y);
+	line.addPoint(x, height + y);
 	line.addPoint(x, y);
 	line.color = color;
 	line.dynamic(true);

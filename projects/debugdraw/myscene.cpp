@@ -42,5 +42,5 @@ void MyScene::update(float deltaTime)
 	// Debug Draw a square
 	// x, y, width, height, color
 	int border = 100;
-	ddSquare(border, border, SWIDTH-border, SHEIGHT-border, PINK);
+	ddSquare(border, border, SWIDTH-(border*2), SHEIGHT-(border*2), PINK);
 }
