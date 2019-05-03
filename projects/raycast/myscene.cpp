@@ -11,9 +11,9 @@ MyScene::MyScene() : Scene()
 	std::srand(std::time(nullptr));
 	for (size_t i = 0; i < 5; i++) {
 		int x1 = std::rand() % SWIDTH;
-    	int y1 = std::rand() % SHEIGHT;
+		int y1 = std::rand() % SHEIGHT;
 		int x2 = std::rand() % SWIDTH;
-    	int y2 = std::rand() % SHEIGHT;
+		int y2 = std::rand() % SHEIGHT;
 		Boundary wall = Boundary(x1, y1, x2, y2);
 		walls.push_back(wall);
 	}
@@ -37,9 +37,9 @@ void MyScene::update(float deltaTime)
 	if (input()->getKeyUp(KeyCode::Space)) {
 		for (size_t i = 0; i < walls.size(); i++) {
 			int x1 = std::rand() % SWIDTH;
-	    	int y1 = std::rand() % SHEIGHT;
+			int y1 = std::rand() % SHEIGHT;
 			int x2 = std::rand() % SWIDTH;
-	    	int y2 = std::rand() % SHEIGHT;
+			int y2 = std::rand() % SHEIGHT;
 			walls[i].start = Point2(x1, y1);
 			walls[i].end = Point2(x2, y2);
 		}
