@@ -15,6 +15,7 @@ OPTION(MAKE_SHADY "Make custom Shader application" ON)
 OPTION(MAKE_WOLFENSTEIN "Make Wolfenstein3D raycasting application" ON)
 OPTION(MAKE_COLLISION "Make Collision application" ON)
 OPTION(MAKE_DEBUGDRAW "Make DebugDraw application" ON)
+OPTION(MAKE_RAYCAST "Make Raycast application" ON)
 
 OPTION(USE_RS232 "Use RS232 library" OFF)
 OPTION(MAKE_SERIAL "Make serial application" OFF)
@@ -398,6 +399,20 @@ IF(MAKE_DEBUGDRAW)
 		projects/debugdraw/myscene.h
 	)
 	target_link_libraries(debugdraw
+		${ALL_GRAPHICS_LIBS}
+	)
+ENDIF()
+
+####################################################################
+# raycast                                                          #
+####################################################################
+IF(MAKE_RAYCAST)
+	add_executable(raycast
+		projects/raycast/main.cpp
+		projects/raycast/myscene.cpp
+		projects/raycast/myscene.h
+	)
+	target_link_libraries(raycast
 		${ALL_GRAPHICS_LIBS}
 	)
 ENDIF()

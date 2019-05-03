@@ -135,6 +135,14 @@ public:
 	 */
 	const T getLengthSquared() const;
 	/**
+	 * @brief Set the length of the Vector_t<T>
+	 *
+	 * Sets the length of the Vector_t<T>
+	 *
+	 * @return void
+	 */
+	void setLength(T length);
+	/**
 	 * @brief Get the angle of the Vector2 in radians on the X-axis
 	 *
 	 * @return angle
@@ -445,6 +453,15 @@ const T VectorX_t<T>::getLengthSquared() const
 	T zz = this->z;
 
     return (xx*xx)+(yy*yy)+(zz*zz);
+}
+
+// setLength()
+template <class T>
+void VectorX_t<T>::setLength(T length)
+{
+	this->normalize();
+	this->x *= length;
+	this->y *= length;
 }
 
 // getAngle()

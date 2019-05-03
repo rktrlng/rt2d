@@ -18,7 +18,12 @@ Line::Line()
 	_dynamic = false;
 	_closed = false;
 
-	char buf[12]; // should be big enough: "Line99999"
+	// TODO make this more elegant
+	if (_nextGuid > 2000000000) { // buffer overflow protection
+		_nextGuid = 0;
+	}
+
+	char buf[24]; // should be big enough: "Line2147483647"
 	sprintf(buf, "line%d", _guid);
 	std::string linename(buf);
 
