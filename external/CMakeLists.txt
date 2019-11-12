@@ -12,11 +12,14 @@ add_definitions(
 )
 
 ### GLFW ###
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-add_subdirectory (glfw-3.0.3)
+add_subdirectory (glfw-3.3)
 
 include_directories(
-	glfw-3.0.3/include/GLFW/
+	glfw-3.3/include/GLFW/
 	glew-1.9.0/include/
 )
 
