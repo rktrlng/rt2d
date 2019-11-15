@@ -40,7 +40,7 @@ void MyScene::update(float deltaTime)
 			int y1 = std::rand() % SHEIGHT;
 			int x2 = std::rand() % SWIDTH;
 			int y2 = std::rand() % SHEIGHT;
-			walls[i].start = Point2(x1, y1);
+			walls[i].begin = Point2(x1, y1);
 			walls[i].end = Point2(x2, y2);
 		}
 		robot = Robot(SWIDTH/2, SHEIGHT/2);
@@ -87,7 +87,7 @@ void MyScene::update(float deltaTime)
 }
 
 void MyScene::draw(Boundary& wall) {
-	ddLine(wall.start, wall.end, RED);
+	ddLine(wall.begin, wall.end, RED);
 }
 
 void MyScene::draw(Ray& ray) {
