@@ -97,27 +97,19 @@ void Scene15::gameOfLifeUpdate()
 	int counter = 0;
 	for (int y = 0; y < h; y++) {
 		for (int x = 0; x < w; x++) {
+			// check 8 neighbours and count the ones that are alive
 			int nc = 0; // number of neighbour cells
 			Pointi n;
-
-			// check 8 neighbours and count the ones that are alive
-			n = this->wrap(Pointi(x-1, y+1)); // top left
-			if (field[getIdFromPos(n.x,n.y)] == true) { nc++; }
-			n = this->wrap(Pointi(x, y+1)); // top
-			if (field[getIdFromPos(n.x,n.y)] == true) { nc++; }
-			n = this->wrap(Pointi(x+1, y+1)); // top right
-			if (field[getIdFromPos(n.x,n.y)] == true) { nc++; }
-			n = this->wrap(Pointi(x-1, y)); // left
-			if (field[getIdFromPos(n.x,n.y)] == true) { nc++; }
-			n = this->wrap(Pointi(x+1, y)); // right
-			if (field[getIdFromPos(n.x,n.y)] == true) { nc++; }
-			n = this->wrap(Pointi(x-1, y-1)); // bottom left
-			if (field[getIdFromPos(n.x,n.y)] == true) { nc++; }
-			n = this->wrap(Pointi(x, y-1)); // bottom
-			if (field[getIdFromPos(n.x,n.y)] == true) { nc++; }
-			n = this->wrap(Pointi(x+1, y-1)); // bottom right
-			if (field[getIdFromPos(n.x,n.y)] == true) { nc++; }
-
+			for (int r = -1; r < 2; r++) {
+				for (int c = -1; c < 2; c++) {
+					if (r == 0 && c == 0) {
+						// this is us
+					} else {
+						n = this->wrap(Pointi(x+c, y+r));
+						if (field[getIdFromPos(n.x,n.y)] == true) { nc++; }
+					}
+				}
+			}
 			// Apply rules:
 			//- Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
 			//- Any live cell with two or three live neighbours lives on to the next generation.
