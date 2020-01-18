@@ -103,7 +103,7 @@ void Scene01::update(float deltaTime)
 			Vector2f from = Vector2f(drawpoints[a].x, canvas->height() - drawpoints[a].y);
 			Vector2f to = Vector2f(drawpoints[b].x, canvas->height() - drawpoints[b].y);
 			canvas->drawLine(from, to, color);
-	    }
+		}
 
 		// draw debug box
 		ddClear();
@@ -117,7 +117,7 @@ void Scene01::update(float deltaTime)
 			} else {
 				ddLine(drawpoints[a].x, drawpoints[a].y, drawpoints[b].x, drawpoints[b].y, CYAN);
 			}
-	    }
+		}
 
 		// draw points
 		for (size_t i = 0; i < 8; i++) {
