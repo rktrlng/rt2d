@@ -216,6 +216,13 @@ class Canvas: public Entity
 		/// @brief the backgroundcolor of the canvas
 		RGBAColor backgroundcolor;
 
+		/// @brief create line pixels from a Vector2
+		/// @param from start position
+		/// @param to end position
+		/// @param color the RGBAColor of the line
+		/// @return void
+		void drawLine(Vector2f from, Vector2f to, RGBAColor color);
+
 	private:
 		/// @brief _framebuffer the internal pixelbuffer
 		PixelBuffer* _framebuffer;
