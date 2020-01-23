@@ -68,8 +68,8 @@ public:
     static Matrix4 scaleMatrix4(const Vector4 scale) {
         Matrix4 sm = Matrix4();
         sm.m[0][0] = scale.x; sm.m[0][1] = 0.0;     sm.m[0][2] = 0.0;     sm.m[0][3] = 0.0;
-        sm.m[1][0] = 0.0;     sm.m[1][1] = scale.x; sm.m[1][2] = 0.0;     sm.m[1][3] = 0.0;
-        sm.m[2][0] = 0.0;     sm.m[2][1] = 0.0;     sm.m[2][2] = scale.x; sm.m[2][3] = 0.0;
+        sm.m[1][0] = 0.0;     sm.m[1][1] = scale.y; sm.m[1][2] = 0.0;     sm.m[1][3] = 0.0;
+        sm.m[2][0] = 0.0;     sm.m[2][1] = 0.0;     sm.m[2][2] = scale.z; sm.m[2][3] = 0.0;
         sm.m[3][0] = 0.0;     sm.m[3][1] = 0.0;     sm.m[3][2] = 0.0;     sm.m[3][3] = 1.0;
         return sm;
     }
