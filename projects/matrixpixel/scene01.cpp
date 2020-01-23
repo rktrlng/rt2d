@@ -52,16 +52,17 @@ void Scene01::update(float deltaTime)
 		math::Vector4 rotation = math::Vector4(angle, angle + PI/3, angle - PI/3, 0.0);
 		math::Vector4 position = math::Vector4(canvas->width()/2, canvas->height()/2, 0.0, 0.0);
 
-		// math::Vector4 scaled = math::Matrix4::scale(points[i], scale);
-		// math::Vector4 rotated = math::Matrix4::rotate(scaled, rotation);
-		// math::Vector4 translated = math::Matrix4::translate(rotated, translation);
-
 		// create modelmatrix
 		math::Matrix4 modelmatrix = math::Matrix4::modelMatrix(position, rotation, scale);
 		//math::Matrix4::print(modelmatrix);
 
 		Vector3 drawpoints[8];
 		for (size_t i = 0; i < 8; i++) {
+			// math::Vector4 scaled = math::Matrix4::scale(points[i], scale);
+			// math::Vector4 rotated = math::Matrix4::rotate(scaled, rotation);
+			// math::Vector4 translated = math::Matrix4::translate(rotated, translation);
+			// drawpoints[i] = Vector3(translated.x, translated.y, translated.z);
+
 			// transform each point in 3D object to screen coords
 			math::Vector4 transformed = math::Matrix4::matmul(modelmatrix, points[i]);
 
