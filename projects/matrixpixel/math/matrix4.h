@@ -60,53 +60,53 @@ public:
 
     static Matrix4 modelMatrix(const Vector4 position, const Vector4 rotation, const Vector4 scale) {
         // get corresponding matrices
-		Matrix4 scalematrix = Matrix4::scaleMatrix4(scale);
-		Matrix4 rotmatrix = Matrix4::rotationMatrix4(rotation);
-		Matrix4 transmatrix = Matrix4::translationMatrix4(position);
+        Matrix4 scalematrix = Matrix4::scaleMatrix4(scale);
+        Matrix4 rotmatrix = Matrix4::rotationMatrix4(rotation);
+        Matrix4 transmatrix = Matrix4::translationMatrix4(position);
 
-		// create modelmatrix. order is important (first scale, then rotate, finally translate).
-		Matrix4 modelmatrix;
-		modelmatrix = Matrix4::matmul(scalematrix, modelmatrix);
-		modelmatrix = Matrix4::matmul(rotmatrix, modelmatrix);
-		modelmatrix = Matrix4::matmul(transmatrix, modelmatrix);
+        // create modelmatrix. order is important (first scale, then rotate, finally translate).
+        Matrix4 modelmatrix;
+        modelmatrix = Matrix4::matmul(scalematrix, modelmatrix);
+        modelmatrix = Matrix4::matmul(rotmatrix, modelmatrix);
+        modelmatrix = Matrix4::matmul(transmatrix, modelmatrix);
         return modelmatrix;
     }
 
     /*
     static Matrix4 lookAt(Vector4 eye, Vector4 center, Vector4 up) {
         Vector4 centerminuseye = Vector4(center.x-eye.x, center.y-eye.y, center.z-eye.z, center.w-eye.w);
-		Vector4 f = Vector4::normalize(centerminuseye);
+        Vector4 f = Vector4::normalize(centerminuseye);
         Vector4 crossfup = Vector4::cross(f, up);
         Vector4 s = Vector4::normalize(crossfup);
         Vector4 u = Vector4::cross(s, f);
 
-		Matrix4 result = Matrix4();
-		result.m[0][0] = s.x;
-		result.m[1][0] = s.y;
-		result.m[2][0] = s.z;
-		result.m[0][1] = u.x;
-		result.m[1][1] = u.y;
-		result.m[2][1] = u.z;
-		result.m[0][2] =-f.x;
-		result.m[1][2] =-f.y;
-		result.m[2][2] =-f.z;
-		result.m[3][0] =-Vector4::dot(s, eye);
-		result.m[3][1] =-Vector4::dot(u, eye);
-		result.m[3][2] = Vector4::dot(f, eye);
-		return result;
+        Matrix4 result = Matrix4();
+        result.m[0][0] = s.x;
+        result.m[1][0] = s.y;
+        result.m[2][0] = s.z;
+        result.m[0][1] = u.x;
+        result.m[1][1] = u.y;
+        result.m[2][1] = u.z;
+        result.m[0][2] =-f.x;
+        result.m[1][2] =-f.y;
+        result.m[2][2] =-f.z;
+        result.m[3][0] =-Vector4::dot(s, eye);
+        result.m[3][1] =-Vector4::dot(u, eye);
+        result.m[3][2] = Vector4::dot(f, eye);
+        return result;
 	}
 
     static Matrix4 perspectiveMatrix(const double fovy, const double aspect, const double zNear, const double zFar) {
-		double rad = fovy;
-		double tanHalfFovy = tan(rad / 2);
+        double rad = fovy;
+        double tanHalfFovy = tan(rad / 2);
 
-		Matrix4 result = Matrix4();
-		result.m[0][0] = 1.0 / (aspect * tanHalfFovy);
-		result.m[1][1] = 1.0 / (tanHalfFovy);
-		result.m[2][2] = - (zFar + zNear) / (zFar - zNear);
-		result.m[2][3] = - 1.0;
-		result.m[3][2] = - (2 * zFar * zNear) / (zFar - zNear);
-		return result;
+        Matrix4 result = Matrix4();
+        result.m[0][0] = 1.0 / (aspect * tanHalfFovy);
+        result.m[1][1] = 1.0 / (tanHalfFovy);
+        result.m[2][2] = - (zFar + zNear) / (zFar - zNear);
+        result.m[2][3] = - 1.0;
+        result.m[3][2] = - (2 * zFar * zNear) / (zFar - zNear);
+        return result;
 	}
     */
 
@@ -125,12 +125,11 @@ public:
     }
 
     static Matrix4 rotationMatrix4(const Vector4 angles) {
-        Matrix4 result = Matrix4();
-
         Matrix4 rz = rotationZMatrix4(angles.z);
         Matrix4 ry = rotationYMatrix4(angles.y);
         Matrix4 rx = rotationXMatrix4(angles.x);
 
+        Matrix4 result = Matrix4();
         result = matmul(result, rz);
         result = matmul(result, ry);
         result = matmul(result, rx);
