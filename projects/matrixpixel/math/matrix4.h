@@ -9,11 +9,11 @@ namespace math {
 
 class Matrix4 {
 public:
-    double m[16] = {
-        1.0, 0.0, 0.0, 0.0,
-        0.0, 1.0, 0.0, 0.0,
-        0.0, 0.0, 1.0, 0.0,
-        0.0, 0.0, 0.0, 1.0
+    double m[4][4] = {
+        { 1.0, 0.0, 0.0, 0.0 },
+        { 0.0, 1.0, 0.0, 0.0 },
+        { 0.0, 0.0, 1.0, 0.0 },
+        { 0.0, 0.0, 0.0, 1.0 }
     }; // Identity
 
     Matrix4() {
@@ -24,29 +24,12 @@ public:
 
     }
 
-    void set(const double* other) {
-        // this is unsafe
-        for (size_t i = 0; i < 16; i++) {
-            this->m[i] = other[i];
-        }
-    }
-
-    void print() {
-        std::cout << "--------" << std::endl;
-        for (size_t i = 0; i < 16; i++) {
-            std::cout << this->m[i] << " ";
-            if (i == 3 || i == 7 || i == 11 || i == 15) {
-                std::cout << std::endl;
-            }
-        }
-    }
-
     static Vector4 matmul(const Matrix4 m, const Vector4 v) {
         Vector4 result = Vector4();
-        result.x = (m.m[0] * v.x) + (m.m[1] * v.y) + (m.m[2] * v.z) + (m.m[3] * v.w);
-        result.y = (m.m[4] * v.x) + (m.m[5] * v.y) + (m.m[6] * v.z) + (m.m[7] * v.w);
-        result.z = (m.m[8] * v.x) + (m.m[9] * v.y) + (m.m[10] * v.z) + (m.m[11] * v.w);
-        result.w = (m.m[12] * v.x) + (m.m[13] * v.y) + (m.m[14] * v.z) + (m.m[15] * v.w);
+        result.x = (m.m[0][0] * v.x) + (m.m[0][1] * v.y) + (m.m[0][2] * v.z) + (m.m[0][3] * v.w);
+        result.y = (m.m[1][0] * v.x) + (m.m[1][1] * v.y) + (m.m[1][2] * v.z) + (m.m[1][3] * v.w);
+        result.z = (m.m[2][0] * v.x) + (m.m[2][1] * v.y) + (m.m[2][2] * v.z) + (m.m[2][3] * v.w);
+        result.w = (m.m[3][0] * v.x) + (m.m[3][1] * v.y) + (m.m[3][2] * v.z) + (m.m[3][3] * v.w);
         return result;
     }
 
@@ -83,63 +66,48 @@ public:
 
     // #################### Matrices ####################
     static Matrix4 scaleMatrix4(const Vector4 scale) {
-        Matrix4 scalemat = Matrix4();
-        double scl[16] = {
-            scale.x, 0.0, 0.0, 0.0,
-            0.0, scale.y, 0.0, 0.0,
-            0.0, 0.0, scale.z, 0.0,
-            0.0, 0.0, 0.0, 1.0
-        };
-        scalemat.set(scl);
-        return scalemat;
+        Matrix4 sm = Matrix4();
+        sm.m[0][0] = scale.x; sm.m[0][1] = 0.0;     sm.m[0][2] = 0.0;     sm.m[0][3] = 0.0;
+        sm.m[1][0] = 0.0;     sm.m[1][1] = scale.x; sm.m[1][2] = 0.0;     sm.m[1][3] = 0.0;
+        sm.m[2][0] = 0.0;     sm.m[2][1] = 0.0;     sm.m[2][2] = scale.x; sm.m[2][3] = 0.0;
+        sm.m[3][0] = 0.0;     sm.m[3][1] = 0.0;     sm.m[3][2] = 0.0;     sm.m[3][3] = 1.0;
+        return sm;
     }
 
     static Matrix4 rotationZMatrix4(const double angle) {
-        Matrix4 rotmat = Matrix4();
-        double rotz[16] = {
-            cos(angle), -sin(angle), 0.0, 0.0,
-            sin(angle), cos(angle), 0.0, 0.0,
-            0.0, 0.0, 1.0, 0.0,
-            0.0, 0.0, 0.0, 1.0
-        };
-        rotmat.set(rotz);
-        return rotmat;
+        Matrix4 rm = Matrix4();
+        rm.m[0][0] = cos(angle); rm.m[0][1] = -sin(angle); rm.m[0][2] = 0.0; rm.m[0][3] = 0.0;
+        rm.m[1][0] = sin(angle); rm.m[1][1] = cos(angle);  rm.m[1][2] = 0.0; rm.m[1][3] = 0.0;
+        rm.m[2][0] = 0.0;        rm.m[2][1] = 0.0;         rm.m[2][2] = 0.0; rm.m[2][3] = 0.0;
+        rm.m[3][0] = 0.0;        rm.m[3][1] = 0.0;         rm.m[3][2] = 0.0; rm.m[3][3] = 1.0;
+        return rm;
     }
 
     static Matrix4 rotationYMatrix4(const double angle) {
-        Matrix4 rotmat = Matrix4();
-        double roty[16] = {
-            cos(angle), 0.0, sin(angle), 0.0,
-            0.0, 1.0, 0.0, 0.0,
-            -sin(angle), 0.0, cos(angle), 0.0,
-            0.0, 0.0, 0.0, 1.0
-        };
-        rotmat.set(roty);
-        return rotmat;
+        Matrix4 rm = Matrix4();
+        rm.m[0][0] = cos(angle);  rm.m[0][1] = 0.0; rm.m[0][2] = sin(angle); rm.m[0][3] = 0.0;
+        rm.m[1][0] = 0.0;         rm.m[1][1] = 1.0; rm.m[1][2] = 0.0;        rm.m[1][3] = 0.0;
+        rm.m[2][0] = -sin(angle); rm.m[2][1] = 0.0; rm.m[2][2] = cos(angle); rm.m[2][3] = 0.0;
+        rm.m[3][0] = 0.0;         rm.m[3][1] = 0.0; rm.m[3][2] = 0.0;        rm.m[3][3] = 1.0;
+        return rm;
     }
 
     static Matrix4 rotationXMatrix4(const double angle) {
-        Matrix4 rotmat = Matrix4();
-        double rotx[16] = {
-            1.0, 0.0, 0.0, 0.0,
-            0.0, cos(angle), -sin(angle), 0.0,
-            0.0, sin(angle), cos(angle), 0.0,
-            0.0, 0.0, 0.0, 1.0
-        };
-        rotmat.set(rotx);
-        return rotmat;
+        Matrix4 rm = Matrix4();
+        rm.m[0][0] = 1.0; rm.m[0][1] = 0.0;        rm.m[0][2] = 0.0;         rm.m[0][3] = 0.0;
+        rm.m[1][0] = 0.0; rm.m[1][1] = cos(angle); rm.m[1][2] = -sin(angle); rm.m[1][3] = 0.0;
+        rm.m[2][0] = 0.0; rm.m[2][1] = sin(angle); rm.m[2][2] = cos(angle);  rm.m[2][3] = 0.0;
+        rm.m[3][0] = 0.0; rm.m[3][1] = 0.0;        rm.m[3][2] = 0.0;         rm.m[3][3] = 1.0;
+        return rm;
     }
 
     static Matrix4 translationMatrix4(const Vector4 delta) {
-        Matrix4 transmat = Matrix4();
-        double trans[16] = {
-            1.0, 0.0, 0.0, delta.x,
-            0.0, 1.0, 0.0, delta.y,
-            0.0, 0.0, 1.0, delta.z,
-            0.0, 0.0, 0.0, 1.0
-        };
-        transmat.set(trans);
-        return transmat;
+        Matrix4 tm = Matrix4();
+        tm.m[0][0] = 1.0; tm.m[0][1] = 0.0; tm.m[0][2] = 0.0; tm.m[0][3] = delta.x;
+        tm.m[1][0] = 0.0; tm.m[1][1] = 1.0; tm.m[1][2] = 0.0; tm.m[1][3] = delta.y;
+        tm.m[2][0] = 0.0; tm.m[2][1] = 0.0; tm.m[2][2] = 1.0; tm.m[2][3] = delta.z;
+        tm.m[3][0] = 0.0; tm.m[3][1] = 0.0; tm.m[3][2] = 0.0; tm.m[3][3] = 1.0;
+        return tm;
     }
 
 };
