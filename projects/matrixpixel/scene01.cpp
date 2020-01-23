@@ -47,29 +47,28 @@ void Scene01::update(float deltaTime)
 	if (tsec > 0.016667f - deltaTime) { // 0.0167 is 60 fps
 		canvas->fill(canvas->backgroundcolor);
 
-		// transform points in 3D cube to screen coords
+		// define transform for object
+		math::Vector4 scale = math::Vector4(25.0, 25.0, 25.0, 0.0);
+		math::Vector4 rotation = math::Vector4(angle, angle + PI/3, angle - PI/3, 0.0);
+		math::Vector4 position = math::Vector4(canvas->width()/2, canvas->height()/2, 0.0, 0.0);
+
+		// math::Vector4 scaled = math::Matrix4::scale(points[i], scale);
+		// math::Vector4 rotated = math::Matrix4::rotate(scaled, rotation);
+		// math::Vector4 translated = math::Matrix4::translate(rotated, translation);
+
+		// create modelmatrix
+		math::Matrix4 modelmatrix = math::Matrix4::modelMatrix(position, rotation, scale);
+		//math::Matrix4::print(modelmatrix);
+
 		Vector3 drawpoints[8];
 		for (size_t i = 0; i < 8; i++) {
-			// defining ...
-			math::Vector4 scale = math::Vector4(50.0, 50.0, 50.0, 0.0);
-			math::Vector4 rotation = math::Vector4(angle, angle + PI/4, angle, 0.0);
-			math::Vector4 translation = math::Vector4(canvas->width()/2, canvas->height()/2, 0.0, 0.0);
-
-			// transforming ...
-			math::Vector4 scaled = math::Matrix4::scale(points[i], scale);
-			math::Vector4 rotated = math::Matrix4::rotate(scaled, rotation);
-			math::Vector4 translated = math::Matrix4::translate(rotated, translation);
+			// transform each point in 3D object to screen coords
+			math::Vector4 transformed = math::Matrix4::matmul(modelmatrix, points[i]);
 
 			// convert to Vector3
-			drawpoints[i] = Vector3(translated.x, translated.y, translated.z);
+			drawpoints[i] = Vector3(transformed.x, transformed.y, transformed.z);
 		}
 		angle += 0.01;
-
-		//draw circles around points
-		PixelSprite circle = PixelSprite();
-		for (size_t i = 0; i < 8; i++) {
-			circle.position = Point2i(drawpoints[i].x, canvas->height() - drawpoints[i].y); circle.createCircle(5, MAGENTA); canvas->drawSprite(circle);
-		}
 
 		// define edges between points
 		std::vector<Point2i> edges;
@@ -105,6 +104,14 @@ void Scene01::update(float deltaTime)
 			canvas->drawLine(from, to, color);
 		}
 
+		//draw circles around points
+		for (size_t i = 0; i < 8; i++) {
+			PixelSprite circle = PixelSprite();
+			circle.position = Point2i(drawpoints[i].x, canvas->height() - drawpoints[i].y);
+			circle.createCircle(1, MAGENTA);
+			canvas->drawSprite(circle);
+		}
+
 		// draw debug box
 		ddClear();
 		for (size_t i = 0; i < edges.size(); i++) {
@@ -121,7 +128,7 @@ void Scene01::update(float deltaTime)
 
 		// draw points
 		for (size_t i = 0; i < 8; i++) {
-			// canvas->setPixel(drawpoints[i].x, canvas->height() - drawpoints[i].y, MAGENTA);
+			canvas->setPixel(drawpoints[i].x, canvas->height() - drawpoints[i].y, BLACK);
 		}
 
 		timer.start();
