@@ -24,6 +24,7 @@ public:
 	virtual ~Scene01();
 
 	virtual void update(float deltaTime);
+	void matrixtest();
 
 private:
 	RGBAColor backgroundcolor;

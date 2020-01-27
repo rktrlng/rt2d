@@ -24,15 +24,15 @@ public:
 
     }
 
-    static void print(const Matrix4 matrix) {
-        std::cout << "--------------" << std::endl;
+    void print() {
+        std::cout << "mat4 {" << std::endl;
         for (size_t i = 0; i < 4; i++) {
             for (size_t j = 0; j < 4; j++) {
-                std::cout << matrix.m[i][j] << " ";
+                std::cout << "  " << this->m[i][j] << " ";
             }
             std::cout << std::endl;
-
         }
+        std::cout << "}" << std::endl;
     }
 
     static Vector4 matmul(const Matrix4 m, const Vector4 v) {

@@ -25,12 +25,33 @@ Scene01::Scene01() : Scene()
 	points[5] = math::Vector4( 0.5, -0.5,  0.5, 1.0);
 	points[6] = math::Vector4( 0.5,  0.5,  0.5, 1.0);
 	points[7] = math::Vector4(-0.5,  0.5,  0.5, 1.0);
+
+	matrixtest();
 }
 
 Scene01::~Scene01()
 {
 	this->removeChild(canvas);
 	delete canvas;
+}
+
+void Scene01::matrixtest() {
+	math::Vector4 position(1.0, 1.0, 0.0, 1.0); // 1 vertex
+    std::cout << "position: "; position.print();
+
+    math::Vector4 translation(10.0, 0.0, 0.0, 0.0);
+    math::Vector4 rotation(3.141592/4, 0.0, 0.0, 0.0);
+    math::Vector4 scale(2.0, 2.0, 2.0, 0.0);
+
+    std::cout << "translation: "; translation.print();
+    std::cout << "rotation: "; rotation.print();
+    std::cout << "scale: "; scale.print();
+
+    math::Matrix4 modelmatrix = math::Matrix4::modelMatrix(translation, rotation, scale);
+    std::cout << "modelmatrix: "; modelmatrix.print();
+
+    math::Vector4 newpos = math::Matrix4::matmul(modelmatrix, position);
+    std::cout << "newpos: "; newpos.print();
 }
 
 void Scene01::update(float deltaTime)
@@ -50,19 +71,14 @@ void Scene01::update(float deltaTime)
 		// define transform for object
 		math::Vector4 scale = math::Vector4(25.0, 25.0, 25.0, 0.0);
 		math::Vector4 rotation = math::Vector4(angle, angle + PI/3, angle - PI/3, 0.0);
-		math::Vector4 position = math::Vector4(canvas->width()/2, canvas->height()/2, 0.0, 0.0);
+		math::Vector4 translation = math::Vector4(canvas->width()/2, canvas->height()/2, 0.0, 0.0);
 
 		// create modelmatrix
-		math::Matrix4 modelmatrix = math::Matrix4::modelMatrix(position, rotation, scale);
+		math::Matrix4 modelmatrix = math::Matrix4::modelMatrix(translation, rotation, scale);
 		//math::Matrix4::print(modelmatrix);
 
 		Vector3 drawpoints[8];
 		for (size_t i = 0; i < 8; i++) {
-			// math::Vector4 scaled = math::Matrix4::scale(points[i], scale);
-			// math::Vector4 rotated = math::Matrix4::rotate(scaled, rotation);
-			// math::Vector4 translated = math::Matrix4::translate(rotated, translation);
-			// drawpoints[i] = Vector3(translated.x, translated.y, translated.z);
-
 			// transform each point in 3D object to screen coords
 			math::Vector4 transformed = math::Matrix4::matmul(modelmatrix, points[i]);
 

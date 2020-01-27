@@ -28,7 +28,7 @@ public:
     }
 
     void print() {
-        std::cout << "(" << this->x << "," << this->y << "," << this->z << "," << this->w << ")" << std::endl;
+        std::cout << "vec4 { " << this->x << ", " << this->y << ", " << this->z << ", " << this->w << " }" << std::endl;
     }
 
     /*
