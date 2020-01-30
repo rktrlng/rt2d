@@ -28,21 +28,21 @@ struct Matrix4 {
 };
 
 extern "C" {
-    Vector4 matmulMV(const Matrix4 m, const Vector4 v);
-    Matrix4 matmulMM(const Matrix4 a, const Matrix4 b);
-    Matrix4 rotationZMatrix(const double angle);
-    Matrix4 rotationYMatrix(const double angle);
-    Matrix4 rotationXMatrix(const double angle);
-    Matrix4 scaleMatrix(const Vector4 scale);
-    Matrix4 rotationMatrix(const Vector4 angles);
-    Matrix4 translationMatrix(const Vector4 delta);
-    Matrix4 modelMatrix(const Vector4 position, const Vector4 rotation, const Vector4 scale);
-    Vector4 scale(const Vector4 origin, const Vector4 scale);
-    Vector4 rotateZ(const Vector4 vec, const double angle);
-    Vector4 rotateY(const Vector4 vec, const double angle);
-    Vector4 rotateX(const Vector4 vec, const double angle);
-    Vector4 rotate(const Vector4 vec, const Vector4 angles);
-    Vector4 translate(const Vector4 origin, const Vector4 delta);
+    Vector4 matmulMV(Matrix4 m, Vector4 v);
+    Matrix4 matmulMM(Matrix4 a, Matrix4 b);
+    Matrix4 rotationZMatrix(double angle);
+    Matrix4 rotationYMatrix(double angle);
+    Matrix4 rotationXMatrix(double angle);
+    Matrix4 scaleMatrix(Vector4 scale);
+    Matrix4 rotationMatrix(Vector4 angles);
+    Matrix4 translationMatrix(Vector4 delta);
+    Matrix4 modelMatrix(Vector4 position, Vector4 rotation, Vector4 scale);
+    Vector4 scale(Vector4 origin, Vector4 scale);
+    Vector4 rotateZ(Vector4 vec, double angle);
+    Vector4 rotateY(Vector4 vec, double angle);
+    Vector4 rotateX(Vector4 vec, double angle);
+    Vector4 rotate(Vector4 vec, Vector4 angles);
+    Vector4 translate(Vector4 origin, Vector4 delta);
 }
 
 } // namespace math

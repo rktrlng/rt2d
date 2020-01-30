@@ -2,7 +2,7 @@
 
 namespace math {
 
-double dot(const Vector4 a, const Vector4 b)
+double dot(Vector4 a, Vector4 b)
 {
     double x = a.x * b.x;
     double y = a.y * b.y;
@@ -11,7 +11,7 @@ double dot(const Vector4 a, const Vector4 b)
     return (x + y + z);
 }
 
-Vector4 cross(const Vector4 a, const Vector4 b)
+Vector4 cross(Vector4 a, Vector4 b)
 {
     double x = (a.y * b.z) - (a.z * b.y);
     double y = (a.z * b.x) - (a.x * b.z);
@@ -21,12 +21,12 @@ Vector4 cross(const Vector4 a, const Vector4 b)
     return Vector4(x,y,z,w);
 }
 
-double magnitude(const Vector4 v)
+double magnitude(Vector4 v)
 {
     return sqrtf(magnitudeSquared(v));
 }
 
-double magnitudeSquared(const Vector4 v)
+double magnitudeSquared(Vector4 v)
 {
     double x = v.x;
     double y = v.y;
@@ -35,7 +35,7 @@ double magnitudeSquared(const Vector4 v)
     return (x*x)+(y*y)+(z*z);
 }
 
-Vector4 normalize(const Vector4 v) {
+Vector4 normalize(Vector4 v) {
     double l = magnitude(v);
     Vector4 n = Vector4();
     if (l != 0.0) {

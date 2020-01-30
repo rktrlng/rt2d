@@ -4,7 +4,7 @@
 namespace math {
 
 // #################### Functions ####################
-Vector4 matmulMV(const Matrix4 m, const Vector4 v) {
+Vector4 matmulMV(Matrix4 m, Vector4 v) {
     Vector4 result = Vector4();
     result.x = (m.m[0][0] * v.x) + (m.m[0][1] * v.y) + (m.m[0][2] * v.z) + (m.m[0][3] * v.w);
     result.y = (m.m[1][0] * v.x) + (m.m[1][1] * v.y) + (m.m[1][2] * v.z) + (m.m[1][3] * v.w);
@@ -13,7 +13,7 @@ Vector4 matmulMV(const Matrix4 m, const Vector4 v) {
     return result;
 }
 
-Matrix4 matmulMM(const Matrix4 a, const Matrix4 b) {
+Matrix4 matmulMM(Matrix4 a, Matrix4 b) {
     Matrix4 result = Matrix4();
     for (size_t i = 0; i < 4; i++) {
         for (size_t j = 0; j < 4; j++) {
@@ -28,7 +28,7 @@ Matrix4 matmulMM(const Matrix4 a, const Matrix4 b) {
 }
 
 // ######################## helpers ########################
- Matrix4 rotationZMatrix(const double angle) {
+ Matrix4 rotationZMatrix(double angle) {
     Matrix4 rm = Matrix4();
     rm.m[0][0] = cos(angle);
     rm.m[0][1] = -sin(angle);
@@ -42,7 +42,7 @@ Matrix4 matmulMM(const Matrix4 a, const Matrix4 b) {
     return rm;
 }
 
-Matrix4 rotationYMatrix(const double angle) {
+Matrix4 rotationYMatrix(double angle) {
     Matrix4 rm = Matrix4();
     rm.m[0][0] = cos(angle);
     rm.m[0][2] = sin(angle);
@@ -56,7 +56,7 @@ Matrix4 rotationYMatrix(const double angle) {
     return rm;
 }
 
-Matrix4 rotationXMatrix(const double angle) {
+Matrix4 rotationXMatrix(double angle) {
     Matrix4 rm = Matrix4();
     rm.m[1][1] = cos(angle);
     rm.m[1][2] = -sin(angle);
@@ -71,7 +71,7 @@ Matrix4 rotationXMatrix(const double angle) {
 }
 
 // #################### Matrices ####################
-Matrix4 scaleMatrix(const Vector4 scale) {
+Matrix4 scaleMatrix(Vector4 scale) {
     Matrix4 sm = Matrix4();
     sm.m[0][0] = scale.x;
     sm.m[1][1] = scale.y;
@@ -84,7 +84,7 @@ Matrix4 scaleMatrix(const Vector4 scale) {
     return sm;
 }
 
-Matrix4 rotationMatrix(const Vector4 angles) {
+Matrix4 rotationMatrix(Vector4 angles) {
     Matrix4 rz = rotationZMatrix(angles.z);
     Matrix4 ry = rotationYMatrix(angles.y);
     Matrix4 rx = rotationXMatrix(angles.x);
@@ -97,7 +97,7 @@ Matrix4 rotationMatrix(const Vector4 angles) {
     return result;
 }
 
-Matrix4 translationMatrix(const Vector4 delta) {
+Matrix4 translationMatrix(Vector4 delta) {
     Matrix4 tm = Matrix4();
     tm.m[0][3] = delta.x;
     tm.m[1][3] = delta.y;
@@ -110,7 +110,7 @@ Matrix4 translationMatrix(const Vector4 delta) {
     return tm;
 }
 
-Matrix4 modelMatrix(const Vector4 position, const Vector4 rotation, const Vector4 scale) {
+Matrix4 modelMatrix(Vector4 position, Vector4 rotation, Vector4 scale) {
     // get corresponding matrices
     Matrix4 scalematrix = scaleMatrix(scale);
     Matrix4 rotmatrix = rotationMatrix(rotation);
@@ -125,24 +125,24 @@ Matrix4 modelMatrix(const Vector4 position, const Vector4 rotation, const Vector
 }
 
 // #################### Scale ####################
-Vector4 scale(const Vector4 origin, const Vector4 scale) {
+Vector4 scale(Vector4 origin, Vector4 scale) {
     return matmulMV(scaleMatrix(scale), origin);
 }
 
 // #################### Rotation ####################
-Vector4 rotateZ(const Vector4 vec, const double angle) {
+Vector4 rotateZ(Vector4 vec, double angle) {
     return matmulMV(rotationZMatrix(angle), vec);
 }
 
-Vector4 rotateY(const Vector4 vec, const double angle) {
+Vector4 rotateY(Vector4 vec, double angle) {
     return matmulMV(rotationYMatrix(angle), vec);
 }
 
-Vector4 rotateX(const Vector4 vec, const double angle) {
+Vector4 rotateX(Vector4 vec, double angle) {
     return matmulMV(rotationXMatrix(angle), vec);
 }
 
-Vector4 rotate(const Vector4 vec, const Vector4 angles) {
+Vector4 rotate(Vector4 vec, Vector4 angles) {
     Vector4 ret = Vector4(vec.x, vec.y, vec.z, vec.w);
     ret = rotateZ(ret, angles.z);
     ret = rotateY(ret, angles.y);
@@ -151,7 +151,7 @@ Vector4 rotate(const Vector4 vec, const Vector4 angles) {
 }
 
 // #################### Translation ####################
-Vector4 translate(const Vector4 origin, const Vector4 delta) {
+Vector4 translate(Vector4 origin, Vector4 delta) {
     return matmulMV(translationMatrix(delta), origin);
 }
 

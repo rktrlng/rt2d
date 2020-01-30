@@ -33,11 +33,11 @@ struct Vector4 {
 };
 
 extern "C" {
-    double dot(const Vector4 a, const Vector4 b);
-    Vector4 cross(const Vector4 a, const Vector4 b);
-    double magnitude(const Vector4 v);
-    double magnitudeSquared(const Vector4 v);
-    Vector4 normalize(const Vector4 v);
+    double dot(Vector4 a, Vector4 b);
+    Vector4 cross(Vector4 a, Vector4 b);
+    double magnitude(Vector4 v);
+    double magnitudeSquared(Vector4 v);
+    Vector4 normalize(Vector4 v);
 }
 
 } // namespace math
