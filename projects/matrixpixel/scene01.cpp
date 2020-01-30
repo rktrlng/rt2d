@@ -37,21 +37,21 @@ Scene01::~Scene01()
 
 void Scene01::matrixtest() {
 	math::Vector4 position(1.0, 1.0, 0.0, 1.0); // 1 vertex
-    std::cout << "position: "; position.print();
+	std::cout << "position: "; position.print();
 
-    math::Vector4 translation(10.0, 0.0, 0.0, 0.0);
-    math::Vector4 rotation(3.141592/4, 0.0, 0.0, 0.0);
-    math::Vector4 scale(2.0, 2.0, 2.0, 0.0);
+	math::Vector4 translation(10.0, 0.0, 0.0, 0.0);
+	math::Vector4 rotation(3.141592/4, 0.0, 0.0, 0.0);
+	math::Vector4 scale(2.0, 2.0, 2.0, 0.0);
 
-    std::cout << "translation: "; translation.print();
-    std::cout << "rotation: "; rotation.print();
-    std::cout << "scale: "; scale.print();
+	std::cout << "translation: "; translation.print();
+	std::cout << "rotation: "; rotation.print();
+	std::cout << "scale: "; scale.print();
 
-    math::Matrix4 modelmatrix = math::modelMatrix(translation, rotation, scale);
-    std::cout << "modelmatrix: "; modelmatrix.print();
+	math::Matrix4 modelmatrix = math::modelMatrix(translation, rotation, scale);
+	std::cout << "modelmatrix: "; modelmatrix.print();
 
-    math::Vector4 newpos = math::matmulMV(modelmatrix, position);
-    std::cout << "newpos: "; newpos.print();
+	math::Vector4 newpos = math::matmulMV(modelmatrix, position);
+	std::cout << "newpos: "; newpos.print();
 }
 
 void Scene01::update(float deltaTime)
