@@ -424,6 +424,10 @@ ENDIF()
 ####################################################################
 IF(MAKE_MATRIXPIXEL)
 	add_executable(matrixpixel
+        projects/matrixpixel/math/matrix4.h
+        projects/matrixpixel/math/matrix4.cpp
+        projects/matrixpixel/math/vector4.h
+        projects/matrixpixel/math/vector4.cpp
 		projects/matrixpixel/main.cpp
 		projects/matrixpixel/scene01.cpp
 		projects/matrixpixel/scene01.h

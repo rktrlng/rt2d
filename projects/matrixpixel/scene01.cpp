@@ -47,10 +47,10 @@ void Scene01::matrixtest() {
     std::cout << "rotation: "; rotation.print();
     std::cout << "scale: "; scale.print();
 
-    math::Matrix4 modelmatrix = math::Matrix4::modelMatrix(translation, rotation, scale);
+    math::Matrix4 modelmatrix = math::modelMatrix(translation, rotation, scale);
     std::cout << "modelmatrix: "; modelmatrix.print();
 
-    math::Vector4 newpos = math::Matrix4::matmul(modelmatrix, position);
+    math::Vector4 newpos = math::matmulMV(modelmatrix, position);
     std::cout << "newpos: "; newpos.print();
 }
 
@@ -74,13 +74,13 @@ void Scene01::update(float deltaTime)
 		math::Vector4 translation = math::Vector4(canvas->width()/2, canvas->height()/2, 0.0, 0.0);
 
 		// create modelmatrix
-		math::Matrix4 modelmatrix = math::Matrix4::modelMatrix(translation, rotation, scale);
-		//math::Matrix4::print(modelmatrix);
+		math::Matrix4 modelmatrix = math::modelMatrix(translation, rotation, scale);
+		//modelmatrix.print();
 
 		Vector3 drawpoints[8];
 		for (size_t i = 0; i < 8; i++) {
 			// transform each point in 3D object to screen coords
-			math::Vector4 transformed = math::Matrix4::matmul(modelmatrix, points[i]);
+			math::Vector4 transformed = math::matmulMV(modelmatrix, points[i]);
 
 			// convert to Vector3
 			drawpoints[i] = Vector3(transformed.x, transformed.y, transformed.z);
