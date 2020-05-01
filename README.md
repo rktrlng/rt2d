@@ -30,7 +30,9 @@ Linux
 
 On Debian-based Linux, install the following libraries:
 
-	sudo apt-get install git cmake doxygen g++ libgl1-mesa-dev libglu1-mesa-dev libxrandr-dev libxi-dev
+	sudo apt install git cmake doxygen g++
+	sudo apt install libgl1-mesa-dev libglu1-mesa-dev
+	sudo apt install libxrandr-dev libxi-dev libxinerama-dev libxcursor-dev
 
 Run `bootstrap.sh` or:
 
