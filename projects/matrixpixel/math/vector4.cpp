@@ -47,4 +47,8 @@ Vector4 normalize(Vector4 v) {
     return n;
 }
 
+void print(Vector4 v) {
+        std::cout << "vec4 { " << v.x << ", " << v.y << ", " << v.z << ", " << v.w << " }" << std::endl;
+    }
+
 } // namespace math

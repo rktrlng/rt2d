@@ -155,4 +155,16 @@ Vector4 translate(Vector4 origin, Vector4 delta) {
     return matmulMV(translationMatrix(delta), origin);
 }
 
+// #################### Print ####################
+void printMatrix(Matrix4 mat) {
+        std::cout << "mat4 {" << std::endl;
+        for (size_t i = 0; i < 4; i++) {
+            for (size_t j = 0; j < 4; j++) {
+                std::cout << "  " << mat.m[i][j] << " ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << "}" << std::endl;
+    }
+
 } // namespace math

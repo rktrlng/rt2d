@@ -14,17 +14,6 @@ struct Matrix4 {
         { 0.0, 0.0, 1.0, 0.0 },
         { 0.0, 0.0, 0.0, 1.0 }
     }; // Identity
-
-    void print() {
-        std::cout << "mat4 {" << std::endl;
-        for (size_t i = 0; i < 4; i++) {
-            for (size_t j = 0; j < 4; j++) {
-                std::cout << "  " << this->m[i][j] << " ";
-            }
-            std::cout << std::endl;
-        }
-        std::cout << "}" << std::endl;
-    }
 };
 
 extern "C" {
@@ -43,6 +32,7 @@ extern "C" {
     Vector4 rotateX(Vector4 vec, double angle);
     Vector4 rotate(Vector4 vec, Vector4 angles);
     Vector4 translate(Vector4 origin, Vector4 delta);
+    void printMatrix(Matrix4 m);
 }
 
 } // namespace math

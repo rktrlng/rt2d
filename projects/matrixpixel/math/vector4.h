@@ -22,14 +22,6 @@ struct Vector4 {
         this->z = _z;
         this->w = _w;
     }
-
-    ~Vector4() {
-
-    }
-
-    void print() {
-        std::cout << "vec4 { " << this->x << ", " << this->y << ", " << this->z << ", " << this->w << " }" << std::endl;
-    }
 };
 
 extern "C" {
@@ -38,6 +30,7 @@ extern "C" {
     double magnitude(Vector4 v);
     double magnitudeSquared(Vector4 v);
     Vector4 normalize(Vector4 v);
+    void print(Vector4 v);
 }
 
 } // namespace math
