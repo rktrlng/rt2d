@@ -24,14 +24,12 @@ struct Vector4 {
     }
 };
 
-extern "C" {
     double dot(Vector4 a, Vector4 b);
     Vector4 cross(Vector4 a, Vector4 b);
     double magnitude(Vector4 v);
     double magnitudeSquared(Vector4 v);
     Vector4 normalize(Vector4 v);
     void print(Vector4 v);
-}
 
 } // namespace math
 

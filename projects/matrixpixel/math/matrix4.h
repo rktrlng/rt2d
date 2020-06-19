@@ -16,7 +16,6 @@ struct Matrix4 {
     }; // Identity
 };
 
-extern "C" {
     Vector4 matmulMV(Matrix4 m, Vector4 v);
     Matrix4 matmulMM(Matrix4 a, Matrix4 b);
     Matrix4 rotationZMatrix(double angle);
@@ -33,7 +32,6 @@ extern "C" {
     Vector4 rotate(Vector4 vec, Vector4 angles);
     Vector4 translate(Vector4 origin, Vector4 delta);
     void printMatrix(Matrix4 m);
-}
 
 } // namespace math
 
