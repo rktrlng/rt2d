@@ -66,7 +66,7 @@ private:
 	/// @param sprite The Sprite 'component' of the Entity
 	/// @param dynamic Render what we get from ResourceManager or PixelBuffer
 	/// @return void
-	void _renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool dynamic);
+	void _renderSprite(const glm::mat4 modelMatrix, Sprite* sprite);
 
 	/// @brief Renders the Line 'component' of an Entity.
 	/// @param modelMatrix The ModelMatrix of the Entity

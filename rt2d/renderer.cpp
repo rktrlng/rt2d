@@ -182,11 +182,7 @@ void Renderer::_renderEntity(glm::mat4 modelMatrix, Entity* entity, Camera* came
 	Sprite* sprite = entity->sprite();
 	if (sprite != nullptr) {
 		// render the Sprite. Just use the model matrix for the entity since this is a single sprite.
-		if (sprite->dynamic()) {
-			this->_renderSprite(modelMatrix, sprite, true); // dynamic Sprite from PixelBuffer
-		} else {
-			this->_renderSprite(modelMatrix, sprite, false); // static Sprite from ResourceManager
-		}
+		this->_renderSprite(modelMatrix, sprite);
 	}
 
 	// Check for Spritebatch to see if we need to render anything
@@ -308,7 +304,7 @@ void Renderer::_renderSpriteBatch(glm::mat4 modelMatrix, std::vector<Sprite*>& s
 
 }
 
-void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool dynamic)
+void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite)
 {
 	Shader* shader = _resman.getShader(sprite->vertexshader().c_str(), sprite->fragmentshader().c_str());
 	if (shader == nullptr) {
@@ -316,7 +312,7 @@ void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool d
 	}
 
 	Texture* texture = nullptr;
-	if (dynamic) {
+	if (sprite->dynamic()) {
 		if (sprite->texture() != nullptr) {
 			texture = new Texture();
 			texture->createFromBuffer(sprite->texture()->pixels());
@@ -361,7 +357,7 @@ void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool d
 
 	this->_renderMesh(modelMatrix, shader, mesh, mesh->numverts(), GL_TRIANGLES, blendcolor);
 
-	if (dynamic && texture != nullptr) {
+	if (sprite->dynamic() && texture != nullptr) {
 		delete texture;
 	}
 }
