@@ -181,7 +181,7 @@ void Renderer::_renderEntity(glm::mat4 modelMatrix, Entity* entity, Camera* came
 	// Check for Sprites to see if we need to render anything
 	Sprite* sprite = entity->sprite();
 	if (sprite != nullptr) {
-		// render the Sprite. Just use the model matrix for the entity since this is a single sprite.
+		// render the Sprite
 		this->_renderSprite(modelMatrix, sprite);
 	}
 
