@@ -5,6 +5,11 @@
  *   - Initial commit
  */
 
+#ifdef __APPLE__
+/* glEnable first deprecated in MacOS 10.14 */
+#define GL_SILENCE_DEPRECATION
+#endif
+
 #include <rt2d/rt2dconfig.h>
 #include <rt2d/camera.h>
 
