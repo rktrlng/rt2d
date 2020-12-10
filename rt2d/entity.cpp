@@ -100,40 +100,7 @@ void Entity::addSprite(Sprite* spr)
 	*_sprite = *spr;
 }
 
-void Entity::addDynamicSprite(PixelBuffer* pixels)
-{
-	deleteSprite();
-	_sprite = new Sprite();
-	_sprite->setupSpriteByPixelBuffer(pixels);
-}
-
-void Entity::addSprite(const std::string& filename)
-{
-	this->addSprite(filename, 0.5f, 0.5f);
-}
-
-void Entity::addCircleSprite(const std::string& filename, int radius, int segments)
-{
-	deleteSprite();
-	_sprite = new Sprite();
-	_sprite->setupCircleSprite(filename, radius, segments);
-}
-
-void Entity::addSegmentSprite(const std::string& filename, int radius, int segments, int which)
-{
-	deleteSprite();
-	_sprite = new Sprite();
-	_sprite->setupSegmentSprite(filename, radius, segments, which);
-}
-
-void Entity::addSprite(const std::string& filename, float pivotx, float pivoty)
-{
-	deleteSprite();
-	_sprite = new Sprite();
-	_sprite->setupSprite(filename, pivotx, pivoty, 1.0f, 1.0f, DEFAULTFILTER, DEFAULTWRAP); // trilinear filter, mirror repeat
-}
-
-void Entity::addSprite(const std::string& filename, float pivotx, float pivoty, int filter, int wrap)
+void Entity::addSprite(const std::string& filename, float pivotx /* 0.5f */, float pivoty /* 0.5f */, int filter /*DEFAULTFILTER*/, int wrap /*DEFAULTWRAP*/)
 {
 	deleteSprite();
 	_sprite = new Sprite();
@@ -166,6 +133,27 @@ void Entity::addGrid(const std::string& filename, int u, int v, int cols, int ro
 	}
 
 	std::cout << "grid added: " << _spritebatch.size() << " sprites." << std::endl;
+}
+
+void Entity::addCircleSprite(const std::string& filename, int radius, int segments)
+{
+	deleteSprite();
+	_sprite = new Sprite();
+	_sprite->setupCircleSprite(filename, radius, segments);
+}
+
+void Entity::addSegmentSprite(const std::string& filename, int radius, int segments, int which)
+{
+	deleteSprite();
+	_sprite = new Sprite();
+	_sprite->setupSegmentSprite(filename, radius, segments, which);
+}
+
+void Entity::addDynamicSprite(PixelBuffer* pixels)
+{
+	deleteSprite();
+	_sprite = new Sprite();
+	_sprite->setupSpriteByPixelBuffer(pixels);
 }
 
 // ############################################################

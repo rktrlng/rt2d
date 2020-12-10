@@ -75,16 +75,6 @@ public:
 	/// @param spr A pointer to a Sprite.
 	/// @return void
 	void addSprite(Sprite* spr);
-	/// @brief add a Sprite to this Entity by filename.
-	/// @param filename The filename of the image you want to add as a Sprite.
-	/// @return void
-	void addSprite(const std::string& filename);
-	/// @brief add a Sprite to this Entity.
-	/// @param filename The filename of the image you want to add as a Sprite.
-	/// @param pivotx The x component of the pivotpoint.
-	/// @param pivoty The y component of the pivotpoint.
-	/// @return void
-	void addSprite(const std::string& filename, float pivotx, float pivoty);
 	/// @brief add a Sprite to this Entity.
 	/// @param filename The filename of the image you want to add as a Sprite.
 	/// @param pivotx The x component of the pivotpoint.
@@ -92,7 +82,7 @@ public:
 	/// @param filter The filter.
 	/// @param wrap The wrapping.
 	/// @return void
-	void addSprite(const std::string& filename, float pivotx, float pivoty, int filter, int wrap);
+	void addSprite(const std::string& filename, float pivotx = 0.5f, float pivoty = 0.5f, int filter = DEFAULTFILTER, int wrap = DEFAULTWRAP);
 	/// @brief add a SpriteSheet to this Entity.
 	/// @param filename The filename of the image you want to add as a SpriteSheet.
 	/// @param u number of horizontal textures
