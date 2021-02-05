@@ -453,7 +453,7 @@ Point_t<T>& Point_t<T>::operator-=(const Point_t<T>& rhs)
 template <class T>
 Point_t<T> Point_t<T>::operator-(const Point_t<T>& rhs) const
 {
-	return Point_t<T>(x+-rhs.x, y-rhs.y, z-rhs.z);
+	return Point_t<T>(x-rhs.x, y-rhs.y, z-rhs.z);
 }
 
 // Multiply with another Point (and assign)
