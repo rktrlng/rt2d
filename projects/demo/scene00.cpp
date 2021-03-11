@@ -6,7 +6,6 @@
  */
 
 #include <fstream>
-#include <sstream>
 #include "scene00.h"
 
 Scene00::Scene00() : SuperScene()
@@ -115,7 +114,6 @@ void Scene00::filltext()
 	std::ifstream infile("assets/alice.txt");
 	std::string line;
 	while (std::getline(infile, line)) {
-		std::istringstream iss(line);
 		fulltext.push_back(line);
 	}
 }
