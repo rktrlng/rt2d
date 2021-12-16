@@ -1,5 +1,5 @@
 # CMake entry point
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.8.12)
 project (rt2d)
 
 # delete CMakeCache.txt from the build directory when you edit these options
