@@ -34,7 +34,7 @@
 */
 
 /// @brief KeyCode used by Input
-enum KeyCode
+enum class KeyCode
 {
 	Space = 32,
 	Apostrophe = 39,
