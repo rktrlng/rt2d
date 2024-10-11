@@ -141,7 +141,7 @@ public:
 	 *
 	 * @return void
 	 */
-	void setLength(T length);
+	const VectorX_t<T>& setLength(T length);
 	/**
 	 * @brief Get the angle of the Vector2 in radians on the X-axis
 	 *
@@ -180,11 +180,11 @@ public:
 	/**
 	 * @brief normalize this Vector_t<T>
 	 */
-	void normalize();
+	const VectorX_t<T>& normalize();
 	/**
 	 * @brief Get a lerped Vector_t<T> according to some fraction (between 0 and 1)
 	 */
-	void lerp(T frac);
+	const VectorX_t<T>& lerp(T frac);
 	/**
 	 * @brief Get a copy of a lerped Vector_t<T> according to some fraction (between 0 and 1)
 	 *
@@ -215,7 +215,7 @@ public:
 	 * @param angle
 	 * the angle to rotate on the Z-axis
 	 */
-	void rotate(T angle);
+	const VectorX_t<T>& rotate(T angle);
 	/**
 	 * @brief set the Rotation of this Vector2 in radians.
 	 *
@@ -224,7 +224,7 @@ public:
 	 * @param angle
 	 * the angle of rotation on the Z-axis
 	 */
-	void rotation(T angle);
+	const VectorX_t<T>& rotation(T angle);
 	/**
 	 * @brief Rotate this Vector2 in degrees.
 	 *
@@ -233,7 +233,7 @@ public:
 	 * @param angle
 	 * the angle to rotate on the Z-axis
 	 */
-	void rotateDeg(T angle);
+	const VectorX_t<T>& rotateDeg(T angle);
 	/**
 	 * @brief set the Rotation of this Vector2 in degrees.
 	 *
@@ -242,7 +242,7 @@ public:
 	 * @param angle
 	 * the angle of rotation on the Z-axis
 	 */
-	void rotationDeg(T angle);
+	const VectorX_t<T>& rotationDeg(T angle);
 	/**
 	 * @brief Get a rotated copy of this Vector2 in radians.
 	 *
@@ -267,7 +267,7 @@ public:
 	 * @param amount
 	 * the amount to limit to
 	 */
-	void limit(T amount);
+	const VectorX_t<T>& limit(T amount);
 
 	// operator overloaders
 	/**
@@ -457,11 +457,12 @@ const T VectorX_t<T>::getLengthSquared() const
 
 // setLength()
 template <class T>
-void VectorX_t<T>::setLength(T length)
+const VectorX_t<T>& VectorX_t<T>::setLength(T length)
 {
 	this->normalize();
 	this->x *= length;
 	this->y *= length;
+	return *this;
 }
 
 // getAngle()
@@ -514,18 +515,20 @@ const VectorX_t<T> VectorX_t<T>::getNormalized() const
 }
 
 template <class T>
-void VectorX_t<T>::normalize()
+const VectorX_t<T>& VectorX_t<T>::normalize()
 {
 	T l = this->getLength();
 	if (l != 0) {
 		*this /= l;
 	}
+	return *this;
 }
 
 template <class T>
-void VectorX_t<T>::lerp(T frac)
+const VectorX_t<T>& VectorX_t<T>::lerp(T frac)
 {
 	*this *= frac;
+	return *this;
 }
 
 template <class T>
@@ -560,30 +563,34 @@ const VectorX_t<T> VectorX_t<T>::cross(const VectorX_t<T>& other) const
 
 // rotation
 template <class T>
-void VectorX_t<T>::rotate(T angle)
+const VectorX_t<T>& VectorX_t<T>::rotate(T angle)
 {
 	T aa = this->getAngle() + angle;
 	this->rotation(aa);
+	return *this;
 }
 
 template <class T>
-void VectorX_t<T>::rotation(T angle)
+const VectorX_t<T>& VectorX_t<T>::rotation(T angle)
 {
 	T l = this->getLength();
 	this->x = cos(angle) * l;
 	this->y = sin(angle) * l;
+	return *this;
 }
 
 template <class T>
-void VectorX_t<T>::rotateDeg(T angle)
+const VectorX_t<T>& VectorX_t<T>::rotateDeg(T angle)
 {
 	this->rotate(angle * DEG_TO_RAD);
+	return *this;
 }
 
 template <class T>
-void VectorX_t<T>::rotationDeg(T angle)
+const VectorX_t<T>& VectorX_t<T>::rotationDeg(T angle)
 {
 	this->rotation(angle * DEG_TO_RAD);
+	return *this;
 }
 
 template <class T>
@@ -602,12 +609,13 @@ const VectorX_t<T> VectorX_t<T>::getRotatedDeg(T angle) const
 }
 
 template <class T>
-void VectorX_t<T>::limit(T amount)
+const VectorX_t<T>& VectorX_t<T>::limit(T amount)
 {
 	if (this->getLengthSquared() > amount*amount) {
 		this->normalize();
 		*this *= amount;
 	}
+	return *this;
 }
 
 // operator <, >, <=, >= overloader
