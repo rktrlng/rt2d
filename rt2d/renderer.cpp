@@ -166,11 +166,11 @@ void Renderer::_renderEntity(glm::mat4 modelMatrix, Entity* entity, Camera* came
 	//entity->_worldposition = Vector3(realpos.x, realpos.y, realpos.z);
 
 	// send the real world transforms back to Entity (glm::decompose is experimental)
-	glm::vec3 realscale;
-	glm::quat realrot;
-	glm::vec3 realpos;
-	glm::vec3 skew;
-	glm::vec4 perspective;
+	glm::vec3 realscale = {};
+	glm::quat realrot = {};
+	glm::vec3 realpos = {};
+	glm::vec3 skew = {};
+	glm::vec4 perspective = {};
 	glm::decompose(modelMatrix, realscale, realrot, realpos, skew, perspective);
 
 	entity->_worldposition = Point3(realpos.x, realpos.y, realpos.z);
