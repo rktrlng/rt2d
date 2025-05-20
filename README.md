@@ -38,7 +38,7 @@ Run `bootstrap.sh` or:
 
 	mkdir build
 	cd build
-	cmake -Wno-dev ..
+	cmake ..
 	make
 
 Then you can run the demo:
@@ -70,12 +70,13 @@ Then you can run the demo:
 
 Make sure to add any new files you create to the `CMakeLists.txt` file.
 
-MS Windows (VS2015)
--------------------
+MS Windows
+----------
 
 Install the following:
 
-- Visual Studio 2015 Community Edition (VS2013 also works fine) + Visual C++ (do a custom install)
+- Visual Studio Build Tools + Visual C++ (do a custom install)
+	- Or: Visual Studio Community Edition + Visual C++
 - git
 - cmake
 - doxygen
@@ -84,9 +85,14 @@ In the powershell, run:
 
 	mkdir build
 	cd build
-	cmake -Wno-dev ..
+	cmake ..
+	cmake --build .              # for build tools
 
-Then doubleclick the `rt2d.sln` file in the `build` directory. Right-click the 'start' directory in Visual Studio and select 'Set as StartUp Project'. Then press ctrl-F5.
+Then you can run the demo:
+
+	./demo
+
+If you're using Visual Studio Community Edition, doubleclick the `rt2d.sln` file in the `build` directory. Right-click the 'start' directory in Visual Studio and select 'Set as StartUp Project'. Then press ctrl-F5.
 
 Make sure that when you add new files within Visual Studio, you move them to the correct directory in `src` and add them to the `CMakeLists.txt` file.
 

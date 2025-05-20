@@ -29,6 +29,18 @@ OPTION(USE_BOX2D "Use Box2D" OFF)
 OPTION(MAKE_BOX2DSTART "Make Box2D/RT2D box2dstart" OFF)
 ####################################################################
 
+# handle (windows) Debug/Release directories
+SET(BIN_DIR ${CMAKE_BINARY_DIR})
+
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release")
+endif()
+
+if(WIN32)
+	SET(BIN_DIR ${BIN_DIR}/${CMAKE_BUILD_TYPE})
+endif()
+
+
 if( CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR )
     message( FATAL_ERROR "Please select another Build Directory ! (and give it a clever name, like 'build')" )
 endif()
@@ -141,11 +153,11 @@ add_library(rt2d
 )
 file(
 	COPY ${CMAKE_SOURCE_DIR}/rt2d/shaders
-	DESTINATION ${CMAKE_BINARY_DIR}
+	DESTINATION ${BIN_DIR}
 )
 file(
 	COPY ${CMAKE_SOURCE_DIR}/rt2d/fonts
-	DESTINATION ${CMAKE_BINARY_DIR}
+	DESTINATION ${BIN_DIR}
 )
 
 ####################################################################
@@ -165,7 +177,7 @@ IF(MAKE_START)
 	# Copy assets to the build directory
 	file(
 		COPY start/assets
-		DESTINATION ${CMAKE_BINARY_DIR}
+		DESTINATION ${BIN_DIR}
 	)
 ENDIF()
 
@@ -218,7 +230,7 @@ IF(MAKE_DEMO)
 	# Copy assets to the build directory
 	file(
 		COPY projects/demo/assets
-		DESTINATION ${CMAKE_BINARY_DIR}
+		DESTINATION ${BIN_DIR}
 	)
 ENDIF()
 
@@ -260,7 +272,7 @@ IF(MAKE_CANVAS_DEMO)
 	# Copy assets to the build directory
 	file(
 		COPY projects/canvasdemo/assets
-		DESTINATION ${CMAKE_BINARY_DIR}
+		DESTINATION ${BIN_DIR}
 	)
 ENDIF()
 
@@ -281,7 +293,7 @@ IF(MAKE_BASIC3D)
 	# Copy assets to the build directory
 	file(
 		COPY projects/basic3D/assets
-		DESTINATION ${CMAKE_BINARY_DIR}
+		DESTINATION ${BIN_DIR}
 	)
 ENDIF()
 
@@ -333,12 +345,12 @@ IF(MAKE_SHADY)
 	# Copy shaders to the build directory
 	file(
 		COPY projects/slimshady/shaders
-		DESTINATION ${CMAKE_BINARY_DIR}
+		DESTINATION ${BIN_DIR}
 	)
 	# Copy assets to the build directory
 	file(
 		COPY projects/slimshady/assets
-		DESTINATION ${CMAKE_BINARY_DIR}
+		DESTINATION ${BIN_DIR}
 	)
 ENDIF()
 
@@ -358,7 +370,7 @@ IF(MAKE_FLOCKING)
 	# Copy assets to the build directory
 	file(
 		COPY projects/flocking/assets
-		DESTINATION ${CMAKE_BINARY_DIR}
+		DESTINATION ${BIN_DIR}
 	)
 ENDIF()
 
@@ -512,7 +524,7 @@ IF(MAKE_AUDIOSTART AND USE_OPENAL)
 	# Copy assets to the build directory
 	file(
 		COPY projects/audiostart/assets
-		DESTINATION ${CMAKE_BINARY_DIR}
+		DESTINATION ${BIN_DIR}
 	)
 ENDIF()
 
